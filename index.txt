@@ -1,0 +1,26 @@
+- Introduction
+
+- Preliminaries
+
+- Introduction to turbulence
+
+- VMS as a LES
+
+- Segregated RK
+
+- Block preconditioning?
+
+- BDDC?
+
+- Homogeneous turbulent tests
+  - HIT
+  - TGV
+
+- Wall-bounded turbulent tests
+  - TCF
+  - NACA
+
+- Aplications?
+
+- Further work
+

@@ -1,0 +1,38 @@
+% AN INTRODUCTION TO TURBULENCE
+
+\chapter{An introduction to turbulence}
+\label{chap-Turbulence}
+
+%----------------------------------------------------------------------------------------
+
+% Define some commands to keep the formatting separated from the content 
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}
+
+%----------------------------------------------------------------------------------------
+
+One of the main topics of this thesis is the turbulence phenomena that appear in incompressible fluid flows. In order to put the reader in context, it worth describing the main properties and definitions of such kind of flows, albeit rather briefly. Some of the definitions described in this chapter will be used in further chapters.
+
+\section{The Governing equations of Fluid Mechanics}
+In this section I will briefly state the basic concepts that one have to know about fluid mechanics and its mathematical description, which will be used in the forthcomming chapters. Few key concepts are firstly described and later the Navier-Stokes equations are defined.
+\subsection{Elementary concepts}
+In the comming chapters some elmentary conceps will be used. Here I give a brief definition of the most important ones:
+\begin{itemize}
+\item\keyword{Categories of fluid flow:}\\Fluid mechanics and fluid flows are often divided into different regimes. In particular, one can make three different sub-divisions. The first division distinguishes between fluids that may be treated as inviscid or fluids in where the finite viscosity must be taken into account. The second sub-division distingishes between laminar (organized) and turbulent (chaotic) flow. The final sub-division is between irrotational(or potential) flow and rotational flow.
+
+In this thesis I will mainly focus on the second sub-division, distinguishing between laminar and turbulent flows. Except when stated, the fluid will be considered to be viscous and rotational.
+
+%\item\keyword{Newton's law of viscosity}\\In most fluids the shear stress is quantified using an empirical law known as Newton's law of viscosity. This law says that a shear stress, $\tau$, is required to cause relative sliding of the fluid layers. Moreover it states that $\tau$ is directly proportional to the angular distortion rate $\frac{d\gamma}{dt}$. It can be shown that in a one-dimensional flow, $ u_x(y) $, $ \frac{d\gamma}{dt}=\frac{\partial u}{\partial y} $. Then the shear stress can be writen as
+%$$\tau=\rho\nu\frac{\partial u_x}{\partial y},\quad\quad\nu=\frac{\mu}{\rho}.$$
+%Where $ \nu $ is called the kinematic viscosity.
+%
+%In two dimensions, Nwton's law of viscosity becomes
+%$$ \tau_{xy}=\rho\nu\left(\frac{\partial u_x}{\partial y}+\frac{\partial u_y}{\partial x}\right). $$
+%
+%Shear stresses are important not just because they cause fluid elements to distord, but because an imbalance in shear stress can give rise to a net force on individual fluid elements.
+\end{itemize}
+
+blablabla...
