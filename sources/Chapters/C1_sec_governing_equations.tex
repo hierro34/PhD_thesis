@@ -1,0 +1,61 @@
+In this section we will briefly state the basic concepts that one have to know about fluid mechanics and its mathematical description, which will be used in the forthcomming chapters.
+
+\subsection{Navier-Stokes equations}
+Let us start with a review of the equations that govern the fluid flow. In this thesis we will restrict to constant-property Newtonian fluids. 
+
+From the Newton's second law, the momentum equation relates the fluid particle acceleration, $\frac{D\u}{Dt}$ to the external forces acting on such fluid particle. The external forces can be decomposed into the surface forces and the body forces, $\f$. The surface forces are described by the stress tensor $\boldsigma(\x,t)$ that is symmetric and, for constant-property Newtonian fluids, is defined by
+\begin{equation}
+\label{eq-stress_tensor_def}
+\boldsigma = -\hat{p}\boldI + 2\mu\varepsilon(\u), 
+\end{equation}
+where $\hat{p}$ is the pressure field, $\boldI$ the identity tensor, $\mu$ the viscosity and $\varepsilon(\u)$ the strain rate tensor, which is defined by the following expression
+\begin{equation}
+\label{eq-strain_tensor_def}
+\varepsilon(\u)=\frac{1}{2}\left[\nabla\u+\left(\nabla\u\right)^T\right].
+\end{equation}
+
+The acceleration of the fluid particle is caused by the external forces according to the momentum equation
+\begin{equation}
+\label{eq-momentum_equation_def1}
+\rho\frac{D\u}{Dt}=\nabla\cdot\boldsigma+\rho\f,
+\end{equation}
+being $\rho$ the density of the flow. Introducing the defintion of the stress tensor \Eq{stress_tensor_def} into \Eq{momentum_equation_def}, and dividing by the density $\rho$, which we consider to be constant, we get an alternative expression of the momentum equation
+\begin{equation}
+\label{eq-momentum_equation_def2}
+\frac{D\u}{Dt}=-\nabla p+\nabla\cdot(2\nu\varepsilon(\u))+\f,
+\end{equation}
+where we have used that $(1/\rho)\nabla\hat{p}=\nabla(\hat{p}/\rho)=\nabla p$, being $p:=\hat{p}/\rho$ the kinematic pressure, and $\nu=\mu/\rho$ the kinematic viscosity.
+
+The mass conservation or continuity equation is given by 
+\begin{equation}
+\label{eq-continuity_equation_def1}
+\frac{\partial\rho}{\partial t}+\nabla\cdot(\rho\u)=0,
+\end{equation}
+which for constant density can be simplified to the kinematic condition that the velocity field be solenoidal or, what is the same, divergence-free:
+\begin{equation}
+\label{eq-continuity_equation_def2}
+\nabla\cdot\u=0.
+\end{equation}
+
+Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $(0,T]$ the time interval. The strong form of the steady Navier-Stokes problem that govern the fluid flow motion consists of finding the velocity field $\u$ and the pressure field $p$ such that 
+\begin{align}
+\label{eq-NS_strong_momentum}
+\frac{\partial\u}{\partial t}+\u\cdot\nabla\u-\nu\Delta\u+\nabla p=\f&\quad\mbox{in }\Omega\times(0,T],\\
+\label{eq-NS_strong_continuity}
+\nabla\cdot\u=0&\quad\mbox{in }\Omega\times(0,T],
+\end{align}
+where the decomposition of the velocity material derivative into the temporal partial derivative plus the convective derivative, $\frac{D\u}{Dt}=\frac{\partial\u}{\partial t}+\u\cdot\nabla\u$, and the fact that the velocity field is solenoidal have been used to simplify the momentum equation \Eq{momentum_equation_def2} into \Eq{NS_strong_momentum}.
+
+Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be supplied with apropiate boundary and initial conditions. The boundary $\Gamma$ is divided into the Dirichlet ($\Gamma_D$) and the Neumann ($\Gamma_N$) parts such that $\Gamma_D\cup\Gamma_N=\Gamma$ and $\Gamma_D\cap\Gamma_N=\O$. Then, the boundary and intial conditions can be written as
+\begin{align}
+\label{eq-NS_strong_Dir}
+\u&=\u_g&\mbox{on $\Gamma_D\times(0,T]$,}\\
+\label{eq-NS_strong_Neu}
+(-p\cdot\mathbf{I}+\nu(\nabla\u+\nabla\u^T))\cdot\mathbf{n}&=\mathbf{t}_N&\mbox{on $\Gamma_N\times(0,T]$,}\\
+\label{eq-NS_strong_Ini}
+\u(\x,0)&=\u_0(\x)&\mbox{in $\Omega\times\{0\}$,}
+\end{align}
+$\mathbf{n}$ being the unit outward vector normal to $\Gamma$.
+
+
+\subsection{Functional spaces}
