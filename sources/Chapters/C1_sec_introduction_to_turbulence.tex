@@ -121,21 +121,64 @@ where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}
 $$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\L+\nabla\cdot\C+\nabla\cdot\Rbb$$
 
 \subsection{Definition of some turbulent quantities}
-Turbulent flows are considered to be cahotic since, superimposed on the mean flow patern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremly fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow patern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results.
+Turbulent flows are considered to be cahotic since, superimposed on the mean flow patern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremly fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow patern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
+$$\left\langle q\right\rangle=\frac{1}{\Pi_{i=1}^{n_d}N_i}\sum_{j_1,...,j_{n_d}}q_{j_1,...,j_{n_d}},$$
+that is averaged over $n_d$ dimensions, each dimension $i$ having $N_i$ evaluation points. 
 
-In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results againts the references.
+In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results againts the references. We can find a more complete definition of the turbulent quantities that are going to be stated in this section in \cite{orlandi,pope,davidson}.
 
 \begin{itemize}
-\item\keyword{Energy spectrum}
-\item\keyword{Total kinetic energy}
-\item\keyword{Enstrophy}
-\item\keyword{Skewness factor}
-\item\keyword{Root mean square of the velocity field}
-\item\keyword{Integral length scale}
-\item\keyword{Kolmogorov scale}
-\item\keyword{Taylor microscale}
-\item\keyword{Taylor-microscale Reynolds number}
-\item\keyword{Energy dissipation rate}
+\item\keyword{Velocity correlation function}\\ The velocity correlation function is defined by
+\begin{equation}
+\label{eq-velocity_correlation}
+Q_{ij}=\left\langle u_i'(\x)u_j'(\x+\r)\right\rangle.
+\end{equation}
+In general $Q_{ij}$ also depends on time. $Q_{ij}$ tells us about the degree to which, and the manner in which, the velocity components at different points are correlated to each other. However, the velocity correlation function does not, in of itself, tell us how the kinetic energy is distributed across the different eddy sizes. Rather, we must introduce two additional quantities like the second-order structure function and the energy spectrum.
+\item\keyword{Second-order structure function}\\ The second-order longitudinal structure function is defined in terms of the longitudinal velocity increment, $\Delta u(r)=u_x(\x+r\hat{\e}_x)-u_x(\x)$, as follows:
+\begin{equation}
+\label{eq-second_order_structure}
+\left\langle[\Delta u(r)]^2\right\rangle=\left\langle[u_x(\x+r\hat{\e}_x)-u_x(\x)]^2\right\rangle.
+\end{equation}
+Only eddies of size $\sim r$, or less, can make significant contribution to $\Delta u$, and so $\left\langle[\Delta u]^2\right\rangle$ is often taken as an indication of the energy per unit mass contained in the eddies of size $r$ or less. 
+\item\keyword{Energy spectrum}\\ To determine the distribution of the kinetic energy among the eddies of different size we look at the energy spectrum function $E(k)$. Working with wave number, $k$, we define the energy spectrum via the transform pair
+\begin{align}
+\label{eq-energy_spectrum}
+E(k)=\frac{2}{\pi}\int_0^\infty R(r)kr\sin(kr)dr,\\
+\label{eq-autocovariance}
+R(r)=\int_0^\infty E(k)\frac{\sin(kr)}{kr}dk.
+\end{align}
+
+Where $R(r)=\frac{1}{2}\left\langle\u(\x)\cdot\u(\x+\r)\right\rangle=u^2(g+f/2)$ is called the autocovariance function. The functions $f$ and $g$ are called the longitudinal and lateral velocity correlation coefficients and satisfy the relation $2rg=(r^2f)'$.
+\item\keyword{Total kinetic energy}\\ Taking the limit $r\rightarrow 0$, the equation \Eq{autocovariance} leads to
+\begin{equation}
+\label{eq-total_kinetic_energy}
+R(0)=\frac{1}{2}\left\langle\u^2\right\rangle=\int_0^\infty E(k)dk,
+\end{equation}
+which is nothing else than the total kinetic energy, $K:=\frac{1}{2}\left\langle\u^2\right\rangle$. Equation \Eq{total_kinetic_energy} tells us that $E(k)dk$ is the contribution to $K$ from all eddies with wave numbers in the range $k\rightarrow k+dk$, where $k\sim\pi/r$. In fact, it is not true at all, but it works if we are on the range $\eta^{-1}<k<l^{-1}$, being $\eta$ and $l$ the Kolmogorov and integral length scales, respectively, defined in following points.
+\item\keyword{Enstrophy}\\ The energy spectrum $E(k)$ has one further property
+\begin{equation}
+\label{eq-enstrophy}
+\left\langle\boldsymbol{\omega}^2\right\rangle=\int_0^\infty k^2E(k)dk.
+\end{equation}
+If we define the enstrophy as $\Omega:=\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle$, from \Eq{enstrophy}, the quantity $k^2E(k)$ is interpreted as the contribution to the enstrophy from the range of wave numbers $k\rightarrow k+dk$.
+\item\keyword{Skewness factor}\\ The third-order longitudinal structure function is defined, like the second-order longitudinal structure function, as
+\begin{equation*}
+\label{eq-third_order_structure}
+\left\langle[\Delta u(r)]^3\right\rangle=\left\langle[u_x(\x+r\hat{\e}_x)-u_x(\x)]^3\right\rangle.
+\end{equation*}
+For further discussions, it is more usefull to work with the skewness factor. This factor is a normalized version of the third-order structure function
+\begin{equation}
+\label{eq-skewness_factor}
+S(r)=\frac{\left\langle[\Delta u(r)]^3\right\rangle}{\left\langle[\Delta u(r)]^2\right\rangle^{3/2}}.
+\end{equation}
+The skewness factor for a decaying turbulent flow depends slightly on the Reynolds number, but usually has a value of around $-0,4\pm0,1$ for $r\rightarrow0$ for $Re$ up to $10^6$, and decays slowly with $r$.
+\item\keyword{Root mean square of the velocity field}\\ For a three-dimensional flow, the root mean square (RMS) of the velocity field is given by
+$$u=\left(\frac{2}{3}\int_0^\infty E(k)dk\right)^{1/2}.$$
+\item\keyword{Integral length scale}\\ $$l=\int_0^\infty fdr=\frac{1}{u^2}\int_0^\infty R\ dr.$$
+\item\keyword{Kolmogorov scale}\\$$\eta\sim lRe^{-3/4},\quad\quad\eta\sim\left(\nu^3/\varepsilon\right)^{1/4}.$$
+\item\keyword{Taylor microscale}\\$$\lambda^2=\frac{15u^2}{\left\langle\boldsymbol{\omega}^2\right\rangle}=\frac{15\nu u^2}{\varepsilon}.$$
+\item\keyword{Taylor-microscale Reynolds number}\\$$Re_\lambda=\frac{u\lambda}{\nu}=\sqrt{15}\frac{u^2}{\left(\nu\varepsilon\right)^{1/2}}=\frac{1}{\nu}\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\left(\int_0^\infty k^2E(k)dk\right)^{1/2}}.$$
+\item\keyword{Energy dissipation rate}\\$$\varepsilon=2\nu\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle=\frac{15\nu u^2}{\lambda^2}.$$
 \end{itemize}
 
 blablabla...

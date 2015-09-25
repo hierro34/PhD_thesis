@@ -1,8 +1,9 @@
 In this section we will briefly state the basic concepts that one have to know about fluid mechanics and its mathematical description, which will be used in the forthcomming chapters.
 
-\subsection{Navier-Stokes equations}
 Let us start with a review of the equations that govern the fluid flow. In this thesis we will restrict to constant-property Newtonian fluids. 
 
+\subsection{The momentum equation}
+\label{subsec-momentum}
 From the Newton's second law, the momentum equation relates the fluid particle acceleration, $\frac{D\u}{Dt}$ to the external forces acting on such fluid particle. The external forces can be decomposed into the surface forces and the body forces, $\f$. The surface forces are described by the stress tensor $\boldsigma(\x,t)$ that is symmetric and, for constant-property Newtonian fluids, is defined by
 \begin{equation}
 \label{eq-stress_tensor_def}
@@ -26,6 +27,8 @@ being $\rho$ the density of the flow. Introducing the defintion of the stress te
 \end{equation}
 where we have used that $(1/\rho)\nabla\hat{p}=\nabla(\hat{p}/\rho)=\nabla p$, being $p:=\hat{p}/\rho$ the kinematic pressure, and $\nu=\mu/\rho$ the kinematic viscosity.
 
+\subsection{Mass conservation}
+\label{subsec-mass_conservation}
 The mass conservation or continuity equation is given by 
 \begin{equation}
 \label{eq-continuity_equation_def1}
@@ -37,6 +40,8 @@ which for constant density can be simplified to the kinematic condition that the
 \nabla\cdot\u=0.
 \end{equation}
 
+\subsection{Navier-Stokes equations}
+\label{subsec-NS_equations}
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $(0,T]$ the time interval. The strong form of the steady Navier-Stokes problem that govern the fluid flow motion consists of finding the velocity field $\u$ and the pressure field $p$ such that 
 \begin{align}
 \label{eq-NS_strong_momentum}
@@ -57,5 +62,7 @@ Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be suppl
 \end{align}
 $\mathbf{n}$ being the unit outward vector normal to $\Gamma$.
 
+\subsection{Pressure and mass conservation}
+\label{subsec-pressure_mass_conservation}
 
-\subsection{Functional spaces}
+\section{Functional spaces}

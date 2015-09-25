@@ -1,7 +1,109 @@
 % Appendix A
 
-\chapter{Appendix Title Here} % Main appendix title
+\chapter{Energy spectrum computation} % Main appendix title
 
-\label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
+\label{apenA-energy_spectrum_implementation} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Write your Appendix content here.
+In this appendix we will briefly resume the code that has to be implemented to obtain the energy spectra of a turbulent fluid sample.
+
+We assume that we are working with a two-dimensional fluid flow with periodic boundary conditions on both directions. Another consideration that has to be pointed out is the field which we are working with. In this case we work with the velocity field, comming from the Navier-Stoke equations. There also are many works on the turbulence world that use the vorticity field to calculate the energy spectra.
+
+As we are using the Finite Element Method to calculate the velocity field, our data will be a discrete data with the values of the velocity on each node of the FEM mesh. The velocity field, using FEM, usually is stored in a vector with one column. Then, in order to calculate the energy spectra, we must transform the velocity field into an array with the same dimensions as the physical problem dimension, in our case two. Hence, we will have a matrix with the same rows as nodes in the vertical direction and the same columns as nodes in the horitzontal direction. The matrix values must be stored in the equivalent position than the node position in the FEM mesh.
+
+It also has to be said that for a problem with periodic boundary conditions we only have to transform those values that are not repeated. For a two-dimensional grid with $N_x\times N_y$ divisions ($(N_x+1)\times(N_y+1)$ nodes), the values to be transformed are those corresponding to the nodes $1$ to $N_x$, in the $x$-direction, and $1$ to $N_y$, in the $y$-direction. The $(N_x+1)$-th and $(N_y+1)$-th nodes have the same value as the first ones.
+
+Once we have obtained the velocity field and we have ensured that it is stored in a two dimensional array, we follow the following steps.
+
+\begin{itemize}
+\item[1.]\textit{FFT transform of the velocity field}
+
+At this point we perform the Discrete Fast Fourier Transform of each component of the velocity field. To do that we use the \textit{fft99} and \textit{cfft99} packages. The first code transforms a real data vector to a half-complex vector with the transformed field. The second one transforms a complex vector to another complex vector with the transformed field.
+
+Both packages are based on the following Discrete Fast Fourier Transform definitions:
+\begin{equation}
+\label{1.12.1}
+f_k=\sum_{n=0}^{N-1}f_ne^{-i\frac{2\pi kn}{N}},\quad\quad\mbox{(Forward transform)}
+\end{equation}
+\begin{equation}
+\label{1.12.2}
+f_n=\sum_{k=0}^{N-1}f_ke^{i\frac{2\pi kn}{N}},\quad\quad\mbox{(Backward transform)}
+\end{equation}
+with $k$ the wave number, $N$ the number of values to transform, $f_k$ the $k$-th value of the transformed vector and $f_n$ the $n$-th value of the original vector.
+
+We also must have into account that to use these packages the lengths of the transforms must be an even number greater than 4 that has no other prime factors than 2, 3 and 5.
+
+Since we have a two-dimensional real data field, and using the Fourier Transforms theory, we compute the two-dimensional transform by first transforming a set of vectors using \textit{fft99} along one direction and then transforming the results using \textit{cfft99} along the orthogonl direction.
+
+By this way, if we first transform the horitzontal direction, the real to complex transformation give us a half-complex matrix with dimension $\left(N_x\times\left(\frac{N_y}{2}+1\right)\right)$. It means that the matrix is built by $N_x$ vectors each containing the Fourier coeficients $a(k_y)$ and $b(k_y)$ for $0\leq k_y\leq \frac{N_y}{2}$, defining the Fourier transform as
+$$c(k_y)=a(k_y)+ib(k_y).$$
+
+Note that with this stuff we should have a matrix of dimension $\left(N_x\times\left(\frac{N_y}{2}+2\right)\right)$. But the fact that the input values are real implies that $b(0)=b(N_y/2)=0$, then we can get rid of one value for each row.
+
+After that we perform the transform along the vertical direction. As we already have a complex matrix, that is to compute the transforms of $\left(\frac{N_y}{2}+1\right)$ complex vectors with length $N_x$.
+
+The result is a $\left(N_x\times\left(\frac{N_y}{2}+1\right)\right)$ complex matrix with the transformed values.
+
+\item[2.]\textit{Wave number definition}
+
+The next step is to set the wave numbers. The number of wave numbers that we have in each direction is equal to the corresponding size of the original matrix, then, the Nyquist wave number will be $\frac{N_x}{2}$ and $\frac{N_y}{2}$, respectively. It means that wave numbers higher than the Nyquist one will encounter a ``symmetric'' (with respect to the Nyquist wave number), back into lower wave numbers. Hence, we define the wave number vectors as follows.
+\begin{equation}
+\label{1.12.3}
+\vec{k}_x=\left[0,1,...,\frac{N_x}{2},-\frac{N_x}{2}+1,-\frac{N_x}{2}+2,...,-1\right],
+\end{equation}
+\begin{equation}
+\label{1.12.4}
+\vec{k}_y=\left[0,1,...,\frac{N_y}{2}\right].
+\end{equation}
+
+\item[3.]\textit{Energy spectra calculation}
+
+Finally, the third step is to compute the energy spectra. Here, the point is to represent the energy evolution from a two-dimensional field into a one-dimensional. So we need to group the two-dimensional grid values into some strips.
+
+To do that we first define the one-dimensional wave number vector and the maximum one-dimensional wave number as follows.
+\begin{equation}
+\label{1.12.5}
+k(l)=integer\left(\sqrt{\vec{k}_x(i)^2+\vec{k}_y(j)^2}+0.5\right),\quad\quad\left\{\begin{array}{l}
+i=1,...,N_x,\\
+j=1,...,\frac{N_y}{2}+1,\\
+l=0,...,k_{max},\\
+\end{array} \right.
+\end{equation}
+\begin{equation}
+\label{1.12.6}
+k_{max}=\max\left\{integer\left(\sqrt{k_x^2+k_y^2}+0.5\right)\right\}.
+\end{equation}
+
+It is equivalent to say that each one-dimensional wave number $k(l)$ will be composed for all $k_x$ and $k_y$ such that the value of $\sqrt{k_x^2+k_y^2}$ is in the interval $[k-0.5,k+0.5]$.
+
+To compute the energy spectra we only use those wave numbers betwen $0$ and $\frac{k_{max}}{\sqrt{2}}$. Suppose that we have a squared domain with the same number of nodes in both direction, that is $N_x=N_y=N$. Then the maximum wave numer will be:
+\begin{equation}
+\label{1.12.7}
+k_{max}=int\left(\sqrt{\left(\frac{N_x}{2}\right)^2+\left(\frac{N_y}{2}\right)^2}+0.5\right)=int\left(\sqrt{2\left(\frac{N}{2}\right)^2}+0.5\right)=int\left(\sqrt{2}\left(\frac{N}{2}\right)+0.5\right).
+\end{equation}
+
+We can see that the contributions from $k_x$ and $k_y$ will increase until the wave number $k$ reaches $\frac{N}{2}$. After that the number of two-dimensional wave numbers that contributes to the one-dimensional wave number decreases. For this reason, the realistic maximum wave number must be $integer\left(\frac{k_{max}}{\sqrt{2}}\right)$.
+
+If we define the interval $I_k=[k-0.5,k+0.5]$ for each $k$ between $0$ and $\frac{k_{max}}{\sqrt{2}}$, we can construct the energy spectra, $E(l)$, as follows.
+
+For each $i=1,...,N_x$ and for each $j=1,...,\frac{N_y}{2}+1$, $|k|=\sqrt{\vec{k}_x(i)^2+\vec{k}_y(j)^2}$ and 
+\begin{equation}
+\label{1.12.8}
+E(k)=\sum_{i,j\backslash|k|\in I_k}\frac{1}{2}\left[\hat{u}_x(k_x(i),k_y(j))\cdot\hat{u}_x^*(k_x(i),k_y(j))+\hat{u}_y(k_x(i),k_y(j))\cdot\hat{u}_y^*(k_x(i),k_y(j))\right],
+\end{equation}
+where $\hat{u}_i$ is the transformed $i$-direction velocity field and $\hat{u}_i^*$ its complex conjugate.
+
+\end{itemize}
+
+\section{Algorithm}
+\begin{center}
+\fbox{
+\begin{tabular}{l}
+Transform the velocity vector into a matrix corresponding to the mesh points:\\
+$\quad\quad\quad\quad u_x=u_x(1:N_x,1:N_y)$,  $u_y=u_y(1:N_x,1:N_y)$.\\
+Compute the FFT of the velocity fields: $\hat{u}_x=fft(u_x)$, $\hat{u}_y=fft(u_y)$.\\
+Define the wave number vectors:\\
+$\quad\quad\quad\vec{k}_x=\left[0,1,...,\frac{N_x}{2},-\frac{N_x}{2}+1,-\frac{N_x}{2}+2,...,-1\right]$, $\vec{k}_y=\left[0,1,...,\frac{N_y}{2}\right]$.\\
+Calculate the maximum one-dimensional wave number $k_{max}$.\\
+Compute the one-dimensional wave number vector $k$ and the energy spectra $E(k)$.\\
+\end{tabular}}
+\end{center}
