@@ -147,8 +147,9 @@ E(k)=\frac{2}{\pi}\int_0^\infty R(r)kr\sin(kr)dr,\\
 \label{eq-autocovariance}
 R(r)=\int_0^\infty E(k)\frac{\sin(kr)}{kr}dk.
 \end{align}
-
 Where $R(r)=\frac{1}{2}\left\langle\u(\x)\cdot\u(\x+\r)\right\rangle=u^2(g+f/2)$ is called the autocovariance function. The functions $f$ and $g$ are called the longitudinal and lateral velocity correlation coefficients and satisfy the relation $2rg=(r^2f)'$.
+
+In Appendix \ref{appendix-spectrum_implementation}, some tips for the implementation of the energy spectrum calculation are given.
 \item\keyword{Total kinetic energy}\\ Taking the limit $r\rightarrow 0$, the equation \Eq{autocovariance} leads to
 \begin{equation}
 \label{eq-total_kinetic_energy}
@@ -180,5 +181,9 @@ $$u=\left(\frac{2}{3}\int_0^\infty E(k)dk\right)^{1/2}.$$
 \item\keyword{Taylor-microscale Reynolds number}\\$$Re_\lambda=\frac{u\lambda}{\nu}=\sqrt{15}\frac{u^2}{\left(\nu\varepsilon\right)^{1/2}}=\frac{1}{\nu}\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\left(\int_0^\infty k^2E(k)dk\right)^{1/2}}.$$
 \item\keyword{Energy dissipation rate}\\$$\varepsilon=2\nu\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle=\frac{15\nu u^2}{\lambda^2}.$$
 \end{itemize}
+
+\subsection{Isotropic turbulence}
+
+\subsection{Turbulence in wall-bounded flow}
 
 blablabla...

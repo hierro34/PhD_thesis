@@ -1,0 +1,20 @@
+Before describing the variational formulation of Navier-Stokes equations we need an introduction to some functional spaces. In this section we define the notation used in following sections and we give some definitions of fundamental function spaces. A deeper explanation of the concepts introduced in this section can be found in any functional analysis text, for example we refer to \cite{temam}, where we find a numerical analysis for the Stokes and Navier-Stokes equations.
+
+Let us start considering $\Omega$ to be an open set of $\mathbb{R}^n$ with boundary $\Gamma$. Otherwise stated, we assume that the boundary of $\Omega$ is locally Lipschitz. We denote by $L^p(\Omega)$, with $1<p<+\infty$ (or $L^\infty(\Omega)$), the space of real functions defined on $\Omega$ with the $p$-th power absolutely integrable (or essentially bounded real functions for the case $p=\infty$). This is a Banach space with the norm 
+$$\|\u\|_{L^p(\Omega)}:=\left(\int_\Omega|\u(\x)|^pd\Omega\right)^{\frac{1}{p}}$$
+(or, for $p=\infty$,
+$$\|\u\|_{L^\infty(\Omega)}:=\underset{\Omega}{\mbox{ess. sup}}|\u(\x)|).$$
+For $p=2$, $L^2(\Omega)$ is a Hilbert space with the scalar product
+$$(\u,\v)_\Omega:=\int_\Omega\u(\x)\v(\x)d\Omega.$$
+Henceforth, when considering the scalar product over all domain $\Omega$ we will exclude the subscript, reading $(\cdot,\cdot)$. Furthermore, in forthcoming sections, the $L^2(\Omega)$-norm will be simply denoted as $\|\cdot\|$.
+The Sobolev space  $W^{m,p}(\Omega)$ is the space of functions in $L^p(\Omega)$ with derivatives of order less than or equal to $m$ in $L^p(\Omega)$, being $m$ an integer and with $1\leq p\leq+\infty$. This is a Banach space with the norm
+$$\|\u(x)\|_{W^{m,p}(\Omega)}:\left(\sum_{j\leq m}\|D^j\u(\x)\|^p_{L^p(\Omega)}\right)^{\frac{1}{p}},$$
+where $D^j$ is the differentiation operator. When $p=2$, $W^{m,2}(\Omega)=H^m(\Omega)$ is a Hilbert space with the scalar product
+
+...
+
+\subsection{The set $\Omega$}
+
+\subsection{$L^p$ and Sobolev spaces}
+
+\subsection{}

@@ -29,7 +29,7 @@ where we have used that $(1/\rho)\nabla\hat{p}=\nabla(\hat{p}/\rho)=\nabla p$, b
 
 \subsection{Mass conservation}
 \label{subsec-mass_conservation}
-The mass conservation or continuity equation is given by 
+Matching the rate of change of mass in a given volume and the net mass flux across the boundary of such volume, and using the divergence theorem, we get the mass conservation or continuity equation, which is given by 
 \begin{equation}
 \label{eq-continuity_equation_def1}
 \frac{\partial\rho}{\partial t}+\nabla\cdot(\rho\u)=0,
@@ -39,6 +39,7 @@ which for constant density can be simplified to the kinematic condition that the
 \label{eq-continuity_equation_def2}
 \nabla\cdot\u=0.
 \end{equation}
+Equation \Eq{continuity_equation_def2} is also called incompressibility constraint, since it is a constraint on the fluid velocity, $\u$.
 
 \subsection{Navier-Stokes equations}
 \label{subsec-NS_equations}
@@ -60,9 +61,33 @@ Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be suppl
 \label{eq-NS_strong_Ini}
 \u(\x,0)&=\u_0(\x)&\mbox{in $\Omega\times\{0\}$,}
 \end{align}
-$\mathbf{n}$ being the unit outward vector normal to $\Gamma$.
+$\mathbf{n}$ being the unit outward vector normal to $\Gamma$. For a solid wall, the velocity field on the Dirichlet boundary $\Gamma_D$ is governed by two conditions. The first of them is the no penetration condition, the flow can not penetrate the wall.
+\begin{equation}
+\label{eq-NS_no_penetration}
+\u\cdot\n=0\quad\mbox{on $\Gamma_D\times(0,T]$}.
+\end{equation} 
+For the tangential velocity components we impose the so called no-slip condition, which means that there is no relative movement between the wall and the fluid.
+\begin{equation}
+\label{eq-NS_no_slip}
+\u\cdot\t=0\quad\mbox{on $\Gamma_D\times(0,T]$},
+\end{equation}
+being $\t$ a unit vector tangential to the wall. Putting together equations \Eq{NS_no_penetration} and \Eq{NS_no_slip} we have that $\u=\mathbf{0}$ on $\Gamma_D\times(0,T]$. If the wall is moving with a velocity $\u_g$ we recover the Dirichlet boundary condition \Eq{NS_strong_Dir}.
 
 \subsection{Pressure and mass conservation}
 \label{subsec-pressure_mass_conservation}
-
-\section{Functional spaces}
+Let us now focus on the role that pressure field has in the fluid flow equations. If we take the divergence of the momentum equation \Eq{NS_strong_momentum}, assuming that the continuity equation \Eq{NS_strong_continuity} is not satisfied ($\nabla\cdot\u=\epsilon$), we have
+\begin{equation}
+\label{eq-NS_div_momentum}
+\left(\frac{\partial}{\partial t}-\nu\Delta\right)\epsilon=-\Delta p-\nabla\cdot(\u\cdot\nabla\u).
+\end{equation}
+Considering problem \Eq{NS_div_momentum} with the initial condition $\epsilon_0=0$, we can say that the velocity field will be solenoidal ($\epsilon=0$) if, and only if, the following Poisson problem is satisfied
+\begin{equation}
+\label{eq-NS_poisson}
+\Delta p=-\nabla\cdot(\u\cdot\nabla\u).
+\end{equation}
+Hence, we can state that the satisfaction of the Poisson problem \Eq{NS_poisson} is a necessary and sufficient condition for a solenoidal velocity field to remain solenoidal, see \cite{pope}. Furthermore, for infinite domains, the solution of \Eq{NS_poisson} using the Biot-Savart law is given by 
+\begin{equation}
+\label{eq-NS_poisson_solution}
+p(\x,t)=\frac{1}{4\pi}\int_\Omega\frac{\nabla\cdot(\u(\mathbf{y},t)\cdot\nabla\u(\mathbf{y},t))}{|\x-\mathbf{y}|}d\mathbf{y}.
+\end{equation}
+An important consequence of \Eq{NS_poisson_solution} is that the pressure field is non-local, that means that a fluctuation at the point $\mathbf{y}$ affects to the hole domain. A direct repercussion of the non-locality of the pressure is that the pressure waves sent from $\mathbf{y}$ induce far-field pressure forces ($-\nabla p$) that can agitate the fluid motion at large distances from that point. Then, every part of the flow feels every other part. This consequence is more relevant in the case of turbulent fluid flows, where eddies at different locations of the flow can interact each other. 
