@@ -1,6 +1,8 @@
 \chapter{Introduction to turbulence}
 \label{chap-Turbulence}
-One of the main topics of this thesis is the turbulence phenomena that appear in incompressible fluid flows. In order to put the reader in context, it worth describing the main properties and definitions of such kind of flows, albeit rather briefly. Some of the definitions described in this chapter will be used in further chapters.
+One of the main topics of this thesis is the turbulence phenomena that appear in incompressible fluid flows. In order to put the reader in context, it worth describing the main properties and definitions of such kind of flows, albeit rather briefly. 
+
+Some elementary definitions are established in the first section of this chapter. Thereafter, a short introduction to the vorticity is given, together with some characteristic properties of this field. The definition of the Reynolds stresses is stated subsequently, giving some insights of what does \textit{turbulence modelling} mean. In forthcoming chapters, some turbulent quantities will be used to characterize the fluid flow, so we dedicate some lines in this chapter on the explanation of such quantities. Finally, particular characteristics of isotropic turbulence and wall bounded turbulent flows are detailed. Here we introduce the turbulence tests performed during the thesis.
 
 \section{Elementary concepts}
 In the comming chapters some elmentary conceps will be used. Here we give a brief definition of the most important ones:
@@ -163,7 +165,7 @@ which is nothing else than the total kinetic energy, $K:=\frac{1}{2}\left\langle
 \label{eq-enstrophy}
 \left\langle\boldsymbol{\omega}^2\right\rangle=\int_0^\infty k^2E(k)dk.
 \end{equation}
-If we define the enstrophy as $\Omega:=\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle$, from \Eq{enstrophy}, the quantity $k^2E(k)$ is interpreted as the contribution to the enstrophy from the range of wave numbers $k\rightarrow k+dk$.
+If we define the enstrophy as $Z:=\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle$, from \Eq{enstrophy}, the quantity $k^2E(k)$ is interpreted as the contribution to the enstrophy from the range of wave numbers $k\rightarrow k+dk$.
 \item\keyword{Skewness factor}\\ The third-order longitudinal structure function is defined, like the second-order longitudinal structure function, as
 \begin{equation*}
 \label{eq-third_order_structure}
@@ -185,6 +187,100 @@ $$u=\left(\frac{2}{3}\int_0^\infty E(k)dk\right)^{1/2}.$$
 \end{itemize}
 
 \section{Isotropic turbulence}
+\label{sec-isotropic_turbulence}
+We understand by isotropic turbulent flow the one in which there is no mean flow and the rotation is negligible. In this situation we do not have any phenomena that introduce anisotropy into the flow. On the other hand, we say that a flow is homogeneous if the spatial gradients of any averaged quantity are negligible. This condition means that the turbulent flow statistics do not depend on space.
+
+\subsection{Energy dissipation in 3D isotropic turbulent flows}
+\label{subsec-isotropic_energy_dissipation}
+
+\subsection{Kinetic energy spectra for 3D isotropic turbulent flows}
+\label{subsec-isotropic_energy_dissipation}
+
+\subsection{Turbulent tests}
+\label{subsec-isotropic_tests}
+
+\subsubsection{Decaying of homogeneous isotropic turbulence}
+This test is one of the most used benchmarks to test LES models. Here we want to analyse the statistics of an homogeneous isotropic turbulent flow in a 3D box of size $\Omega=\left\{(0,2\pi)\times(0,2\pi)\times(0,2\pi)\right\}$. The flow is initialized with an initial condition that has a predetermined energy spectrum and all the boundary conditions are periodic.
+
+In this work, we have taken the energy spectrum expression from Mansour \& Wray \cite{mansour_decay_1994}.
+\begin{equation}
+\label{eq-DHIT_init_spectrum}
+E(k,0)=\frac{q^2}{2A}k_0^{-(\sigma+1)}k^4\exp\left(-\frac{\sigma}{2}\left(\frac{k}{k_0}\right)^2\right),
+\end{equation}
+with $k_0$ the wavenumber at which $E(k,0)$ is maximum, $\frac{q^2}{2}                                                                                                                                                                                                                  $ the total kinetic energy and $A=\int_0^\infty k^\sigma\exp(-\sigma k^2/2)$. In this thesis we choose $q^2=3$ and $\sigma=4$.
+
+With this setting, it can be shown that $A=\frac{3}{32}\sqrt{\frac{\pi}{2}}$. So, the initial energy spectra will be
+\begin{equation}
+\label{eq-DHIT_init_spectrum2}
+E(k,0)=16\sqrt{\frac{2}{\pi}}k_0^{-5}k^4\exp\left(-2\left(\frac{k}{k_0}\right)^2\right).
+\end{equation}
+
+Going further, from the definitions of the total kinetic energy ,$K$, and the enstrophy, $Z$, given in \Eq{total_kinetic_energy} and \Eq{enstrophy}, respectively, we can evaluate the initial value of these properties. Hence, we have
+\begin{align}
+\label{eq-DHIT_intial_K}
+K&=\frac{1}{2}q^2=\int_0^\infty E(k,0)dk=\\\nonumber
+&=16\sqrt{\frac{2}{\pi}}k_0^{-5}\left(-\frac{k_0^2}{4}\right)\int_0^\infty k^3\left(-\frac{4k}{k_0^2}\right)\exp\left(-2\left(\frac{k}{k_0}\right)^2\right)dk=\\\nonumber
+&=12\sqrt{\frac{2}{\pi}}k_0^{-3}\left(-\frac{k_0^2}{4}\right)\int_0^\infty k\left(-\frac{4k}{k_0^2}\right)\exp\left(-2\left(\frac{k}{k_0}\right)^2\right)dk=\\\nonumber
+&=3\sqrt{\frac{2}{\pi}}k_0^{-1}\left(\frac{k_0}{\sqrt{2}}\right)\int_0^\infty\left(\frac{\sqrt{2}}{k_0}\right)\exp\left(-2\left(\frac{k}{k_0}\right)^2\right)dk=\\\nonumber
+&=3\sqrt{\frac{2}{\pi}}k_0^{-1}\left(\frac{k_0}{\sqrt{2}}\right)\frac{\sqrt{2}}{2}=\frac{3}{2},
+\end{align}
+and
+\begin{align}
+\label{eq-DHIT_inital_Z}
+Z&=\int_0^\infty k^2E(k,0)dk=\\\nonumber
+&=16\sqrt{\frac{2}{\pi}}k_0^{-5}\left(-\frac{k_0^2}{4}\right)\int_0^\infty k^5\left(-\frac{4k}{k_0^2}\right)\exp\left(-2\left(\frac{k}{k_0}\right)^2\right)dk=\\\nonumber
+&=20\sqrt{\frac{2}{\pi}}k_0^{-3}\int_0^\infty k^4\exp\left(-2\left(\frac{k}{k_0}\right)^2\right)dk=\\\nonumber
+&=\frac{5}{4}k_0^2\int_0^\infty E(k,0)dk=\frac{15}{8}k_0^2.
+\end{align}
+
+Following Rogallo \cite{rogallo_numerical_1981}, we generate the initial field on the Fourier space such that it satisfies continuity and has the energy spectrum prescribed in (\ref{4.2.1}). First, we define two complex parameters:
+$$\alpha=\left(\frac{E(k,0)}{2\pi k^2}\right)^{1/2}\exp(i\theta_1)\cos(\phi),$$
+$$\beta=\left(\frac{E(k,0)}{2\pi k^2}\right)^{1/2}\exp(i\theta_2)\cos(\phi).$$
+
+Where $\theta_1$, $\theta_2$ and $\phi$ are random numbers on the interval $(0,2\pi)$. With $\alpha$ and $\beta$ we can construct a solenoidal field in the wave number space whose initial spectrum is equal to $E(k,0)$.
+%\begin{align}
+%\label{4.2.2}
+%\hat{u_1}=(\alpha|k|k_2+\beta k_1k_3)/(|k|k_h),\\\nonumber
+%\hat{u_2}=(-\alpha|k|k_2+\beta k_3k_2)/(|k|k_h),\\\nonumber
+%\hat{u_3}=(-\beta k_h^2)/(|k|k_h),
+%\end{align}
+%
+%where $k_h=\left(k_1^2+k_2^2\right)^{1/2}$ and $|k|=\left(k_1^2+k_2^2+k_3^2\right)^{1/2}$.
+%
+%To have the field (\ref{4.2.2}) in the physical space we apply the inverse Fast Fourier Transform.
+%
+%Finally, we want to compare the results with those showed in \cite{_selection_????}; we set $k_0=6$ and the viscosity such that the asossiated Taylor-microscale Reynolds number is $Re_\lambda=952$,$$Re_\lambda=\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\nu\left(2\int_0^\infty k^2E(k)dk\right)^{1/2}}=952\mbox{, which results in }\nu=3.5014006\cdot 10^{-4}.$$
+%
+%In Figure \ref{Fig4.2.1} we show the initial analytical energy spectrum and the one calculated from the initial velocity field on the Fourier space (\ref{4.2.2}) using a $128^3$ linear elements mesh. We observe that the computed energy spectra is quite similar to the analytical one. It is what we expect since we use the initial field proposed by Rogallo \cite{rogallo_numerical_1981}, which precisely satisfies this condition.
+
+%\begin{figure}[h!]
+%	\centering	
+%	\includegraphics[width=0.5\textwidth]{../../../../Tests/Fempar/par_tests/turbulence_3D/HPC-FF/Decay/Resultats/COMPARATIVA_sk1/Initial_E}
+%	\caption{Analytical and computed initial energy spectra}
+%	\label{Fig4.2.1}
+%\end{figure}
+%
+%\subsubsection{Comments about DHIT}
+%
+%The initial condition has a relevant role on Decaying Homogeneous Isotropic Turbulence (DHIT). In the final periods of decay, as has been exposed by \cite{hinze_turbulence_1975}, the energy spectrum follows the linear decay law,
+%
+%\begin{equation}
+%\label{4.2.3}
+%E(k,t)=E(k,0)\exp(-2\nu k^2t).
+%\end{equation}
+%
+%So, a first conclusion to be said from (\ref{4.2.3}) is that the initial spectra, $E(k,0)$, in the final period of decay, has a direct relation with the decay exponent. The total kinetic energy can be calculated integrating (\ref{4.2.3}) over all wave numbers. Then, when $t\rightarrow\infty$, the power law decay is determined by the shape of the initial spectrum.
+%
+%Moreover, (Staffman 1967) showed that if the initial field is generated by random impulsive forces, a spectrum of the form
+%
+%\begin{equation}
+%\label{4.2.4}
+%E(k,t)\sim k^2\exp(-2\nu k^2t)
+%\end{equation}
+%
+%will ensue. Then, the total kinetic energy will decay with the law $q^2\sim t^{-3/2}$. But, anyway, this is not our case because we do not have any impulsive force acting on the flow.
+%
+%Also in this direction \cite{rohe_analysis_2010} and \cite{chalot_consistent_1998}, say that in the long-run, the energy should decay following the $t^{-1.4}$ law.
 
 \section{Turbulence in wall-bounded flow}
 
