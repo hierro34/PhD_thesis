@@ -1,0 +1,24 @@
+\subsection{Continuous formulation}
+\label{subsec-variational_continuous}
+Let us consider the strong form of the Navier-Stokes problem \Eq{NS_strong_momentum}-\Eq{NS_strong_Ini}. In order to formulate the equivalent variational problem we define a set of variational spaces that incorporates the homogeneous Dirichlet boundary condition and the temporal evolution
+\begin{align}
+\label{eq-NS_u_space}
+&\mathcal{V}_g:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_{\Gamma_D}=\u_g\right\}\equiv\Hbf^1_g(\Omega),\\
+\label{eq-NS_v_space}
+&\mathcal{V}_0:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_\Gamma=0\right\}\equiv\Hbf^1_0(\Omega),\\
+\label{eq-NS_p_space}
+&\mathcal{Q}:=\Lbf^2(\Omega)/\mathbb{R}.
+\end{align}
+Given sufficiently smooth functions $ \v\in\mathcal{V}_0 $ and $ q\in\mathcal{Q} $, we obtain the variational or weak version of the Navier-Stokes equations multiplying \Eq{NS_strong_momentum} by $ \v $  and \Eq{NS_strong_continuity} by $ q $, integrating over $ \Omega $ and integrating by parts the second order derivatives. Then the variational Navier-Stokes problem reads: find $ \u\in\Lbf^2(0,T;\mathcal{V}_g),\\ $ and $ p\in\Lbf^1(0,T;\mathcal{Q}) $ such that: 
+\begin{align}
+(\partial_t\u,\v)+\left(\nu\left(\nabla\u+\nabla\u^T\right),\nabla\v\right)+b(\u,\u,\v)+(\nabla p,\v)=&\left\langle f,\v\right\rangle&\forall\v\in\mathcal{V}_0,\\
+(\nabla\cdot\u,q)=&\ 0&\forall q\in\mathcal{Q}.
+\end{align}
+b()....
+
+\subsection{The Finite Element method}
+\label{subsec-variational_finite_element}
+
+\subsection{Semi-discrete formulation}
+\label{subsec-variational_semidiscrete}
+

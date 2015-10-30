@@ -1,6 +1,6 @@
-Before describing the variational formulation of Navier-Stokes equations we need an introduction to some functional spaces. In this section we define the notation used in following sections and we give some definitions of fundamental function spaces. A deeper explanation of the concepts introduced in this section can be found in any functional analysis text, for example we refer to \cite{temam}, where we find a numerical analysis for the Stokes and Navier-Stokes equations.
+Before describing the variational formulation of Navier-Stokes equations we need an introduction to some functional spaces. In this section we define the notation used in following sections and we give some definitions of fundamental function spaces. A deeper explanation of the concepts introduced in this section can be found in any functional analysis text, for example we refer to \cite{temam}, where we find a numerical analysis for the Stokes and Navier-Stokes equations. Other texts also enhance the concepts briefly defined in this section, see \cite{brenner}.
 
-Let us start considering $\Omega$ to be an open set of $\mathbb{R}^n$ with boundary $\Gamma$. Otherwise stated, we assume that the boundary of $\Omega$ is locally Lipschitz. We denote by $L^p(\Omega)$, with $1<p<+\infty$ (or $L^\infty(\Omega)$), the space of real functions defined on $\Omega$ with the $p$-th power absolutely integrable (or essentially bounded real functions for the case $p=\infty$). This is a Banach space with the norm 
+Let us start considering $\Omega$ to be an open set of $\mathbb{R}^n$ with boundary $\Gamma$. Otherwise stated, we assume that the boundary of $\Omega$ is locally Lipschitz. We denote by $L^p(\Omega)$, with $1<p<+\infty$ (or $L^\infty(\Omega)$), the space of real functions defined on $\Omega$ with the $p$-th power absolutely integrable (or essentially bounded real functions for the case $p=\infty$). Note that we have made an abuse of notation for $ p $, and the reader should not confuse the $ p $-th order with the pressure field symbol defined in previous section. This is a Banach space with the norm 
 $$\|\u\|_{L^p(\Omega)}:=\left(\int_\Omega|\u(\x)|^pd\Omega\right)^{\frac{1}{p}}$$
 (or, for $p=\infty$,
 $$\|\u\|_{L^\infty(\Omega)}:=\underset{\Omega}{\mbox{ess. sup}}|\u(\x)|).$$
@@ -17,13 +17,20 @@ $$\Lbf^p(\Omega):=\{L^p(\Omega)\}^n,\quad\Hbf^m(\Omega):=\{H^m(\Omega)\}^n.$$
 Let $\Dcal(\Omega)$ be the space of $\Ccal^\infty$ functions with compact support contained in $\Omega$. The closure of $\Dcal(\Omega)$ in $H^m(\Omega)$ is denoted by $H^m_0(\Omega)$. The space $H^m_0(\Omega)$ can be though as the space of functions that belong in $H^m(\Omega)$ that vanish on the boundary $\Gamma$ in a general sense. Functions that belong to $H^m_0(\Omega)$ satisfy the Poincaré inequality
 \begin{equation}
 \label{eq-Poincare_inequality}
-\|u\|\leq c(\Omega)\|\nabla\u\|,\quad\forall\u\in\Hbf^m_0(\Omega).
+\|\u\|\leq c(\Omega)\|\nabla\u\|,\quad\forall\u\in\Hbf^m_0(\Omega).
 \end{equation}
 
 From a physical point of view, as noticed in \cite{Foias}, we can think on the space $\Lbf^2(\Omega)$ as the space of all vector fields $\u$ with finite kinetic energy. Moreover, the $\Hbf^1(\Omega)$ can be though as the space of all vector fields $\u$ with finite enstrophy. Further explanation of the kinetic energy and enstrophy concepts is given in Chapter \ref{chap-Turbulence}.
+
+Let $ q $ be the dual index to $ p $, being $ 1\le p\le+\infty $, i.e. $ \frac{1}{q}+\frac{1}{p}=1 $, and $ k $ a negative integer. The Sobolev space $ W^{k,p}(\Omega) $ is defined to be the dual space $ \left(W^{-k,q}(\Omega)\right)' $. For $ p=2 $, $ q=2 $, and the Hilbert space $ H^k(\Omega) $ is the dual space of $ H^{-k}(\Omega) $. We define the duality pairing 
+$$ \left\langle f,v\right\rangle_\Omega:=\int_{\Omega}f(x)v(x)\ d\Omega,\quad\mbox{for $ f\in H^{-1}(\Omega) $ and $ v\in H^1_0(\Omega) $}. $$
+For simplicity hereinafter we will omit the subscript, $ \left\langle\cdot,\cdot\right\rangle $, when the integral is over the domain $ \Omega $.
 
 Let us consider some additional spaces that are useful in the mathematical description of the Navier-Stokes equations. A possible way to deal with the incompressibility constrain \Eq{NS_continuity} is to consider a functional space with less regularity than $\Hbf^1(\Omega)$ defined as
 $$\Hbf(div,\Omega):=\{\u\in\Lbf^2(\Omega)|\nabla\cdot\u\in\Lbf^2(\Omega)\},$$
 which is a Hilbert space with the norm
 $$\|\u\|_{div}:=\|\u\|+\|\nabla\cdot\u\|.$$
 The closure of $\Dcal(\Omega)$ in $\Hbf(div,\Omega)$ is denoted by $\Hbf_0(div,\Omega)$.
+
+Let us assume that $ a $ and $ b $ are two extended real numbers, $ -\infty\le a < b\le\infty $, and let $ \mathcal{X} $ be a Banach space. For a given $ \alpha $, $ 1\le\alpha\l +\infty $, we denote as $ L^\alpha(a,b;\mathcal{X}) $ the space of integrable functions from $ \left[a,b\right] $ into $ \mathcal{X} $.
+... temporal spaces ...
