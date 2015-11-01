@@ -34,17 +34,17 @@ Finally, we compare the results obtained using VMS models against those obtained
 %We do so comparing against other author results for the TGV test, using dynamic Smagorinsky and adaptive local deconvolution methods \cite{fauconnier_construction_2009,hickel_adaptive_2006}.
 %We do so using the Galerkin approximation of the Navier Stokes equations with a Taylor-Hood $Q$2/$Q$1 interpolation which satisfies the inf-sup condition, relying on the Smagorinsky term to stabilize convection as it is usually done in the LES community. 
 
-The chapter is organized as follows. In Section \ref{sec-formulation} we present the VMS formulation, how to compute truly orthogonal subscales and the different models we aim at analyzing, whereas in Section \ref{sec-energy} we discuss energy conservation statements and how they are influenced by the choice of the VMS method and the definition of the convective term. Sections \ref{sec-DHIT},  \ref{sec-TGV},  \ref{sec-TCF} are devoted to the numerical approximation of the DHIT, the TGV, and the TCF problems, respectively. Sections \ref{sec-effect_const} and \ref{sec-small_time_step} discuss the effect of the algorithmic constants on the results and the behavior of the different schemes in the small time step limit. Some remarks close the article in Section \ref{sec-conclusions}.
+The chapter is organized as follows. In Section \ref{sec-C4_formulation} we present the VMS formulation, how to compute truly orthogonal subscales and the different models we aim at analyzing, whereas in Section \ref{sec-C4_energy} we discuss energy conservation statements and how they are influenced by the choice of the VMS method and the definition of the convective term. Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV},  \ref{sec-C4_TCF} are devoted to the numerical approximation of the DHIT, the TGV, and the TCF problems, respectively. Sections \ref{sec-C4_effect_const} and \ref{sec-C4_small_time_step} discuss the effect of the algorithmic constants on the results and the behavior of the different schemes in the small time step limit. Some remarks close the article in Section \ref{sec-C4_conclusions}.
 
 %We will not restrict our atention only in the physical point of view, but we also are interested in the numerical conclusions. For instance, we will evaluate the computational cost of the different methods. Another interesting analysis that has been carried out in this article is the stability for the small time-step limit. Gammitzer et al. \cite{gamnitzer_time-dependent_2010} studied the influence of introducing the dependency of the stabiliztion parameters on the time step, proposed by Bazilevs et al. \cite{bazilevs_variational_2007}, in order to avoid convergence problems at small time-steps.
 
 %Other remarks will be made in the present paper concerning on the importance of a correct formulation of the VMS methods. That will include some analysis on the definition of the nonlinear convective term, the nonlinearity of the advection velocity, the correct definition of the projection when using orthogonal subscales or the importance of the algorithmic constants in the stabilization parameters.
 
 \section{Formulation}
-\label{sec-formulation}
+\label{sec-C4_formulation}
 \subsection{The Galerkin semi-discrete problem}
 %\subsection{Navier-Stokes problem}
-\label{subsec-NS_formulation}
+\label{subsec-C4_C4_NS_formulation}
 In order to improve the readability of this chapter we refresh the Navier-Stokes formulation that was already stated in Chapter \ref{chap-Preliminars}. 
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $[0,T]$ the time interval. The strong form of the incompressible Navier-Stokes problem consists of finding the velocity field $\u$ and the pressure field $p$ such that 
 \begin{align}
@@ -96,11 +96,11 @@ The Galerkin FE approximation of (\ref{eq-C4_NS_weak}) consists in finding $[\u_
 (\partial_t\u_h,\v_h) + B(\u_h;[\u_h,p_h],[\v_h,q_h]) =\left<\f,\v_h\right>
 \quad\quad\forall\v_h\in\mathcal{V}_{0,h},\forall q_h\in\mathcal{Q}_{0,h}.
 \end{equation}
-It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for high mesh Reynolds number problems, i.e., when the nonlinear convective term dominates the viscous term. Another drawback of that formulation is the discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure. These difficulties are overcome by using the VMS approach that follows.
 
-%\subsection{VMS framework}
-%\label{subsec-VMS_framework}
-%
+\subsection{VMS framework}
+\label{subsec-C4_C4_VMS_framework}
+As it was pointed out in Section \ref{sec-VMS_framework}, the Galerkin FE formulation \Eq{C4_NS_galerkin} 
+%It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for high mesh Reynolds number problems, i.e., when the nonlinear convective term dominates the viscous term. Another drawback of that formulation is the discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure. These difficulties are overcome by using the VMS approach that follows.
 %Let us consider a two-scale decomposition of spaces $\mathcal{V}_0$ and $\mathcal{Q}_0$ such that $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subgrid component. Applying the two-scale decomposition to (\ref{eq-C4_NS_weak}) we obtain a discrete problem
 %\begin{equation}
 %\label{eq-C4_NS_discrete}
@@ -155,9 +155,9 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{align}
 %where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression~(\ref{eq-C4_tau_m}):
 %\begin{itemize}
-%\item The influence of the constants $c_1$ and $c_2$ is discussed in Section~\ref{sec-effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
+%\item The influence of the constants $c_1$ and $c_2$ is discussed in Section~\ref{sec-C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
 %\item The definition of $\tau_m$ in~(\ref{eq-C4_tau_m}) is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of~(\ref{eq-C4_tau_m}), $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{Hsu2010,gamnitzer_time-dependent_2010}). We refer to 
-%Section~\ref{sec-small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
+%Section~\ref{sec-C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
 %\item Expression~(\ref{eq-C4_tau_m}) corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{Principe2010}.
 %\end{itemize}
 %
@@ -218,8 +218,8 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%\label{eq-C4_b_skew2_aux2}
 %%b(\a,\u_h,\v_h)=(\a\cdot\nabla\u_h,\v)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\a)-\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\tilde{\u}).
 %%\end{equation}
-%In Subsection (\ref{subsec-result_DHIT}) we will see the influence of the two forms of the convective term on the results.
-%It is worth noting that the same approximations have been introduced in all cases to implement $b(\a,\tilde{\u},\u_h)$, but these approximations are taken into account in the (usual) energy estimates of Section \ref{sec-energy}.
+%In Subsection (\ref{subsec-C4_C4_result_DHIT}) we will see the influence of the two forms of the convective term on the results.
+%It is worth noting that the same approximations have been introduced in all cases to implement $b(\a,\tilde{\u},\u_h)$, but these approximations are taken into account in the (usual) energy estimates of Section \ref{sec-C4_energy}.
 %%Note that \textit{type 2} is the standard choice.
 %\end{remark}
 %
@@ -238,7 +238,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{remark}
 %
 %\subsubsection{The space for the subscales}
-%\label{sec-oss}
+%\label{sec-C4_oss}
 %The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of (\ref{eq-C4_velo_sgs}) and (\ref{eq-C4_press_sgs}). The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
 %%method is characterized by the following projection definition:
 %\begin{equation}
@@ -252,7 +252,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{equation}
 %where $\Pi_h$ is the projection onto the FE space. With this choice, the residual of the momentum equation does not depend on $\partial_t\u_h$. Likewise, $\mathcal{P}(\f)$ in this case is only well defined for $\f\in L^2(\Omega)^d$. In the case of minimum regularity, $\f\in H^{-1}(\Omega)^d$, this term can be simply neglected without upsetting the accuracy of the method.
 %
-%In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec-energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in (\ref{eq-C4_velo_sgs}) and another for the pressure subscales ($\Pi_c$) in (\ref{eq-C4_press_sgs}). We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
+%In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec-C4_energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in (\ref{eq-C4_velo_sgs}) and another for the pressure subscales ($\Pi_c$) in (\ref{eq-C4_press_sgs}). We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
 %\begin{align}
 %\label{eq-C4_Pi_tau_m}
 %&(\tau_m\Pi_m(\w),\v_h)=(\tau_m\w,\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
@@ -261,21 +261,21 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{align}
 %These definitions guarantee the orthogonality between the FE and subscale spaces in the case of static subscales, that is, neglecting temporal derivatives in (\ref{eq-C4_velo_sgs}). It then follows that the term containing the temporal derivative of the subscale in the FE equation (\ref{eq-C4_NS_discrete}) also vanishes.
 %
-%However, if the dynamic version of the method is used, the weight of the projection (\ref{eq-C4_Pi_tau_m}) must be conveniently modified to ensure the mentioned orthogonality. As it can be seen in (\ref{eq-C4_exact_sgs}), the definition of the weight depends on the time integration strategy, as explicitly stated in Section \ref{sec-discrete}.
+%However, if the dynamic version of the method is used, the weight of the projection (\ref{eq-C4_Pi_tau_m}) must be conveniently modified to ensure the mentioned orthogonality. As it can be seen in (\ref{eq-C4_exact_sgs}), the definition of the weight depends on the time integration strategy, as explicitly stated in Section \ref{sec-C4_discrete}.
 %
 %% {\color{blue}However, if the dynamic version of the method is used (see below), the fine scale equation (\ref{eq-C4_velo_sgs}) should be modified in order to ensure the mentioned orthogonality. As the projection $\Pi_m$ is time-dependent since $\tau_m$ depends on time, the velocity subscale time derivative can not belong to the orthogonal subspace $\mathcal{V}_h^\bot$. Then, we must project the time derivative if we want to recover the orthogonality achieved in the static definition.
 %% \begin{equation}
 %% \label{eq-C4_velo_sgs_projected}
 %% \mathcal{P}\left(\partial_t\tilde{\u}\right)+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u).
 %% \end{equation}
-%% Further details will be given in section \ref{sec-energy}, where the energy conservation of the method is discussed.}
+%% Further details will be given in section \ref{sec-C4_energy}, where the energy conservation of the method is discussed.}
 %
 %% {\color{red}OJO!!! si no estoy equivocado, este argumento garantiza que $(\mathcal{P}(\mathcal{L})+\mathcal{L}^*,\tilde{\u})=0$ a nivel semidiscreto, pero se carga la condicion $(\partial_t\tilde{\u},\u_h)=0$, no??}
 %
 %%this definition should be changed modifying the weight in a way that depends on the time integration scheme. For example if equation (\ref{eq-C4_velo_sgs}) is discretized as $\tilde{\u}^{n+1}=\tau_m \mathcal{P}(\R_u) + \frac{1}{\delta t}\tilde{\u}^n$ the projection \ref{eq-C4_Pi_tau_m} must be weighted using $\left(\tau_m^{-1}+{\delta t}^{-1}\right)^{-1}$ instead of  $\tau_m$. It is important to remark that using the weighted projections the residual of the monentum equation does depend on $\partial_t\u_h$. {\color{blue} Oriol, como esta en el codigo? Conservamos la derivada temporal al calcular las proyecciones?}
 %
 %\section{Energy balance statements}
-%\label{sec-energy}
+%\label{sec-C4_energy}
 %
 %In this section we revisit global energy conservation statements of the method. As shown in \cite{Principe2009}, similar statements can be obtained locally (in a volume $\omega \subset \Omega$).
 %
@@ -465,7 +465,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %
 %
 %%% \subsection{Sensitivity with respect to the stabilization parameters}
-%%% \label{subsec-sensivity_tau}
+%%% \label{subsec-C4_C4_sensivity_tau}
 %
 %%% All the VMS models considered herein depend on the stabilization parameters $\tau_m$ and $\tau_c$, which contain constants $c_1$ and $c_2$ whose value is chosen from numerical experiments. However, we can infer from (\ref{eq-C4_static_energy}) or (\ref{eq-C4_transfer}) how this dependency will be. As mentioned before, the last two terms in (\ref{eq-C4_transfer}) are dissipative and therefore increasing $\tau_m$ and/or $\tau_c$ we obtain a more dissipative method. However, from (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}) increasing $\tau_m$ results in a reduction of $\tau_c$. More precisely 
 %%% \begin{equation*}
@@ -481,7 +481,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %
 %
 %%\Subsection{Behavior in the small time step limit}
-%%\label{sec-small_time_step}
+%%\label{sec-C4_small_time_step}
 %%Several references have been made in the literature to the small time step instability, the first of which in \cite{Bochev2004,Bochev2007}, and the purpose of this section is to discuss this issue. The first point to clarify is that the instability described in \cite{Bochev2007} has nothing to do with the one described in \cite{Harari2004}. Whereas the first one is attributed to consistently stabilized approximations of the Navier Stokes equations, i.e. those depending on the FE residual as VMS models, the latter is also found in the convection diffusion problem and its the manifestation of the Gibbs phenomena associated to $L^2$ projections, that dominate the discrete operator in the small time step limit.
 %
 %%Even though the instability described in \cite{Bochev2004,Bochev2007} was numerically observed in \cite{codina_time_2007}, the theoretical analysis in \cite{Bochev2007} is not conclusive. This is because it is shown that the semi discrete pressure operator is not uniformly bounded (it depends on h) but the right hand side is not analyzed. It is also shown, that the dissipation introduced by the time discretization scheme can be used to bound the lowest eigenvalue but introducing a restriction on the time step size. The origin of the problem is the fourth term in (\ref{eq-C4_static_energy}).
@@ -490,18 +490,18 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%{\color{blue} Si no entiendo mal en \cite{Burman2009} se analizan metodos de proyeccion por lo que no contradicen el analisis de \cite{Bochev2007} aunque este no sea concluyente. Dicho de otra forma, si damos por bueno el analisis de \cite{Bochev2007} tampoco hay ninguna contradiccion: los metodos basados en el residuo son inestables y los basados en proyecciones no, siempre que tomes la condicion inicial buena}.
 %%The use of a non discretely divergence free initial condition is a possible explanation of the numerical results reported in \cite{Bochev2004,Bochev2007,codina_time_2007}.
 %
-%%In parallel, small time step instabilities were also reported in \cite{Hsu2010,gamnitzer_time-dependent_2010} although the VMS model used is different in that introduces a time step dependency on the stabilization parameter $\tau_m$. This dependency actually appears in the final discrete problem when dynamic subscales are used, as the final parameter $\tau_{m,t}$ scales with $\delta t$, as discussed in Section \ref{sec-discrete}. {\it However} this happens in conjunction with a term that comes from the discretization of a temporal derivative in (\ref{eq-C4_velo_sgs}), see also \cite[Section 3.2]{codina_time_2007}. The plain introduction of a time step dependency in $\tau_m$ faces serious difficulties.
+%%In parallel, small time step instabilities were also reported in \cite{Hsu2010,gamnitzer_time-dependent_2010} although the VMS model used is different in that introduces a time step dependency on the stabilization parameter $\tau_m$. This dependency actually appears in the final discrete problem when dynamic subscales are used, as the final parameter $\tau_{m,t}$ scales with $\delta t$, as discussed in Section \ref{sec-C4_discrete}. {\it However} this happens in conjunction with a term that comes from the discretization of a temporal derivative in (\ref{eq-C4_velo_sgs}), see also \cite[Section 3.2]{codina_time_2007}. The plain introduction of a time step dependency in $\tau_m$ faces serious difficulties.
 %%\begin{itemize}
 %%\item If the convection diffusion problem is considered the method becomes unstable in the small time step limit just because the Galerkin formulation is recovered, as observed in \cite{Hsu2010}.
 %%\item A similar situation occurs in the Navier-Stokes problem if $\tau_c=0$.
 %%\item If $\tau_c$ is computed from (\ref{eq-C4_tau_c}), as it is usually done, in the small time step limit $\tau_m \sim \delta t$ and $\tau_c \sim \delta t^{-1}$. If this commonly used approach is followed \cite{bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}, when the time step is diminished the essential numerical dissipation given by the fifth term in (\ref{eq-C4_static_energy}) is reduced but the numerical dissipation introduced by the last term in the left hand side of (\ref{eq-C4_static_energy}) is increased which can be a compensating effect in practice.
 %%\end{itemize}
 %
-%%The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-TCF}.
+%%The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-C4_TCF}.
 %
 %\section{Final discrete problem}
-%\label{sec-discrete}
-%Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{sec-DHIT},  \ref{sec-TGV} and \ref{sec-TCF}.
+%\label{sec-C4_discrete}
+%Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV} and \ref{sec-C4_TCF}.
 %
 %\subsection{Algebraic Subgrid Scales (ASGS)}
 %
@@ -625,14 +625,14 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using (\ref{eq-C4_Ru}) and (\ref{eq-C4_Rp}) with $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$, $\u_h^{n,i}$, $\u_h^{n-1}$ and $p_h^{n,i}$. %It is also possible to compute projections explicitly, using the residuals evaluated with $\a^{n-1}=\u_h^{n-1}+\tilde{\u}^{n-1}$, $\u_h^{n-1}$, $\u_h^{n-2}$ and $p_h^{n-1}$ but we do not use this option here.  
 % Note that when convergence of the nonlinear iteration is achieved, (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) and (\ref{eq-C4_dyn_proj}) guarantee that $(\v_h,\tilde{\mathbf{u}}^{n}) = 0$ for any $\v_h\in\mathcal{V}_{0,h}$.
 %
-%%In the following numerical experiments, we use the algorithmic constants $c_1=12$ and $c_2=8$ for $\tau_m$ and we set $\tau_c=0$. A detailed justification of this choice is provided in Section \ref{sec-effect_const}.
+%%In the following numerical experiments, we use the algorithmic constants $c_1=12$ and $c_2=8$ for $\tau_m$ and we set $\tau_c=0$. A detailed justification of this choice is provided in Section \ref{sec-C4_effect_const}.
 %
 %\section{Decay of homogeneous isotropic turbulence}
-%\label{sec-DHIT}
+%\label{sec-C4_DHIT}
 %\subsection{Problem definition}
 %This problem, one of the most used benchmarks to test LES models, consists of analyzing the statistics of the turbulent flow in a 3D box of size $\Omega=(0,2\pi)\times(0,2\pi)\times(0,2\pi)$ with periodic boundary conditions in all directions, which is started with a field having a predetermined energy spectrum. A detailed description of the computational domain, initial conditions, and problem setting is given in \cite{mansour_decay_1994}, %{\color{blue} 
 %which we follow here. A description on the influence of the domain size on the results is given in \cite{ishida_decay_2006}.%} 
-%We solve this problem using the different VMS models of Section \ref{sec-discrete} and structured meshes with $N_x\times N_y\times N_z$ linear, quadratic and cubic hexahedral elements, taking $(N_x,N_y,N_z)= (32,32,32),\,(64,64,64)$ and $(128,128,128)$.
+%We solve this problem using the different VMS models of Section \ref{sec-C4_discrete} and structured meshes with $N_x\times N_y\times N_z$ linear, quadratic and cubic hexahedral elements, taking $(N_x,N_y,N_z)= (32,32,32),\,(64,64,64)$ and $(128,128,128)$.
 %
 %\subsubsection{Initial condition}
 %
@@ -681,12 +681,12 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %% \end{figure}
 %
 %\subsubsection{Setting}
-%\label{subsubsec-DHIT_setting}
+%\label{subsubsec-C4_C4_DHIT_setting}
 %%As said before, we solve the DHIT test using different meshes ($32^3$, $64^3$ and $128^3$ elements). 
 %%The initial energy spectrum is the defined in (\ref{eq-C4_ini_E_DHIT2}) with a peak on the wavenumber $k_0=6$ which supposes that the total kinetic energy at the initial time step should be $1/2q^2=1.5$ and the enstrophy $\frac{1}{2}<w^2>=67.5$.
 %
 %%In what concerns on the tested VMS methods, we use 
-%We test the ASGS method and the OSS method reported in Section \ref{sec-discrete}. The problem is solved considering three different cases for both methods, depending on the definition of the advection velocity and the tracking of the subscales. The advection velocity $\a$ can be linear or nonlinear and the subscales can be dynamic or static (see Subsection \ref{subsec-VMS_framework}). Table \ref{table:DHIT_cases} collects all the VMS combinations to be compared for the different simulations.
+%We test the ASGS method and the OSS method reported in Section \ref{sec-C4_discrete}. The problem is solved considering three different cases for both methods, depending on the definition of the advection velocity and the tracking of the subscales. The advection velocity $\a$ can be linear or nonlinear and the subscales can be dynamic or static (see Subsection \ref{subsec-C4_C4_VMS_framework}). Table \ref{table:DHIT_cases} collects all the VMS combinations to be compared for the different simulations.
 %
 %\begin{table}[h]
 %\centering
@@ -707,24 +707,24 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\label{table:DHIT_cases}
 %\end{table}
 %
-%In terms of the numerical parameters of the methods, we use the skew-symmetric convective term \textit{type 1} defined in Subsection \ref{subsec-NS_formulation}. 
-%The stabilization parameter $\tau_c$ is set equal to zero and the algorithmic constants in $\tau_m$ are $c_1=12$ and $c_2=2$ (see Section \ref{sec-effect_const}).
-%%according what we have exposed in Subsection \ref{subsec-sensivity_tau}. 
+%In terms of the numerical parameters of the methods, we use the skew-symmetric convective term \textit{type 1} defined in Subsection \ref{subsec-C4_NS_formulation}. 
+%The stabilization parameter $\tau_c$ is set equal to zero and the algorithmic constants in $\tau_m$ are $c_1=12$ and $c_2=2$ (see Section \ref{sec-C4_effect_const}).
+%%according what we have exposed in Subsection \ref{subsec-C4_C4_sensivity_tau}. 
 %Further, we use linear, quadratic, and cubic FEs.
 %
 %The time integration has been performed using the Crank-Nicolson scheme with an adaptive time step. The initial time step is set to $\delta t_0=5.0\cdot10^{-3}$ and it is increased at each step multiplying it by an amplification factor. For this test the amplification is equal to $1.1$, reading $\delta t_i=1.1\cdot\delta t_{i-1}$. The time step is increased step by step until it reaches a predefined threshold, e.g., $0.1$ s. If convergence is not attained at either the nonlinear or solver loops,  we apply a reduction factor ($5.0$ for this test) and recalculate the solution using the reduced time step, i.e., $\delta t_i=\frac{1}{5.0}\delta t_{i-1}$. The amplification of the time step when the solution converges %reductions introduce an additional computational cost, since we have to calculate the solution at least two times. But, on the other hand, we compensate this extra cost with 
 %allows one to decrease the total amount of time steps needed for the computation. %, which is a consequence of the amplification of the time step when the solution converges. 
 %%It can be seen that the reduction factor is bigger than the amplification factor, which allows us to extend the interval of time between reductions, therefore, we reduce the number of steps in which we have to calculate the solution more than once.
-%At each time step the nonlinear system is solved as described in Section \ref{sec-discrete}. 
+%At each time step the nonlinear system is solved as described in Section \ref{sec-C4_discrete}. 
 %
 %\subsection{Numerical results}
-%\label{subsec-result_DHIT}
+%\label{subsec-C4_C4_result_DHIT}
 %\subsubsection{Energy Conservation}
-%\label{subsubsec-ene_cons_DHIT}
-%% In order to check the conservation of energy of the problem and to ensure that the arguments developed at section \ref{sec-energy} are correct, we evaluate each term for the DHIT test. Further, this type of test is excellent as a way to check the correct implementation of the method. 
+%\label{subsubsec-C4_C4_ene_cons_DHIT}
+%% In order to check the conservation of energy of the problem and to ensure that the arguments developed at section \ref{sec-C4_energy} are correct, we evaluate each term for the DHIT test. Further, this type of test is excellent as a way to check the correct implementation of the method. 
 %% We show the results obtained solving the DHIT test in a $32^3$ elements mesh for the ASGS and OSS methods using the dynamic and nonlinear cases. 
 %
-%In this section we present results of the energy budget described in Section \ref{sec-energy} obtained in a $32^3$ elements mesh for the ASGS and OSS methods using the dynamic and nonlinear cases.
+%In this section we present results of the energy budget described in Section \ref{sec-C4_energy} obtained in a $32^3$ elements mesh for the ASGS and OSS methods using the dynamic and nonlinear cases.
 %Fig. \ref{fig:ASGS_ene_balance_split} depicts the energy balance evolution for the mean flow equation (\ref{eq-C4_FE_balance2}) and the subscale equation (\ref{eq-C4_sgs_balance2}) separately for the Dyn-Nl-ASGS case. It can be seen that the variation of kinetic energy shown by the FE component in Fig. \ref{fig:ASGS_MF_balance} is offset in a large part by the transfer of energy to the subscales, while remaining energy on the mean flow balance is offset by the viscous term. On the other side, Fig.~\ref{fig:ASGS_ss_balance} shows that the energy transferred from the FE equation is mainly dissipated by the subscale velocity term. There is an small variation of the kinetic energy of the subscale at the beginning of the simulation. Note that since the viscosity is small, so are the viscous effects compared to the dissipation introduced by the subscale velocity. As we use a skew-symmetric form of the convective term, this term does not affect the energy balance and is not plotted in Fig. \ref{fig:ASGS_MF_balance}. Since $\tau_c=0$, the pressure subscale term $\tau_c^{-1}\|\tilde{p}\|^2
 %= \tau_c \Vert {\cal P}(\nabla\cdot\u_h)\Vert^2$ is also zero and does not appear in Fig.~\ref{fig:ASGS_ss_balance}.
 %
@@ -755,8 +755,8 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{figure}
 %
 %%Now we show the 
-%The global energy balance terms obtained solving the problem with the skew-symmetric convective term \textit{type 2} for the Dyn-Nl-ASGS and Dyn-Nl-OSS cases are shown in Fig. \ref{fig:ene_balance_sk2}. We note that the loss of skew-symmetry in the convective term has a non-negligible effect (see Figs.~\ref{fig:ASGS_ene_balance2} and \ref{fig:OSS_ene_balance2}). In particular, this term introduces negative dissipation (production of energy) into the problem. %As we will show in Section \ref{subsubsec-Total_ene_DHIT}, 
-%This fact implies that the method is less dissipative and the energy decays at a slower rate than using the convective term \textit{type 1} and the method seems to be less diffusive. This negative contribution, however, is not predictable and could result in a blow up of the calculation. We refer to Section \ref{sec-effect_const} for further comments about numerical instabilities associated to the \textit{type 2} convective term.%Although no theoretical energy estimates are available we have not observed instabilities in practice.
+%The global energy balance terms obtained solving the problem with the skew-symmetric convective term \textit{type 2} for the Dyn-Nl-ASGS and Dyn-Nl-OSS cases are shown in Fig. \ref{fig:ene_balance_sk2}. We note that the loss of skew-symmetry in the convective term has a non-negligible effect (see Figs.~\ref{fig:ASGS_ene_balance2} and \ref{fig:OSS_ene_balance2}). In particular, this term introduces negative dissipation (production of energy) into the problem. %As we will show in Section \ref{subsubsec-C4_C4_Total_ene_DHIT}, 
+%This fact implies that the method is less dissipative and the energy decays at a slower rate than using the convective term \textit{type 1} and the method seems to be less diffusive. This negative contribution, however, is not predictable and could result in a blow up of the calculation. We refer to Section \ref{sec-C4_effect_const} for further comments about numerical instabilities associated to the \textit{type 2} convective term.%Although no theoretical energy estimates are available we have not observed instabilities in practice.
 %
 %\begin{figure}[h!]
 %	\centering	
@@ -768,10 +768,10 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %
 %\subsubsection{Computational cost analysis}
 %
-%\label{subsubsec-comp_cost_DHIT}
+%\label{subsubsec-C4_C4_comp_cost_DHIT}
 %The actual implementation in the parallel FE multiphysics code FEMPAR \cite{Badia2013a} is based on a classical domain decomposition strategy. At each nonlinear iteration the monolithic linear system is solved using a classical GMRES method applied to the Schur complement over the interfaces of the subdomains. This iterative procedure is preconditioned using a balancing Neumann-Neumann method applied to the monolithic system. The cost of each iteration is that of local Dirichlet solves for the Schur complement application and a local Neumann solve and a global solve for the preconditioner application (see \cite{mandel_balancing_1993,dohrmann_preconditioner_2003,Badia2013}). All local systems are solved using the sparse direct solvers in PARDISO library \cite{Schenk2004,Schenk2006}.
 %
-%An important issue when comparing different computational methods is their corresponding computational cost. In order to characterize the performance of the different VMS methods introduced in Section \ref{sec-formulation},  we analyze  some quantities that define the computational cost of each method, viz. nonlinear iterations, iterative solver iterations, and the adaptive time step evolution.
+%An important issue when comparing different computational methods is their corresponding computational cost. In order to characterize the performance of the different VMS methods introduced in Section \ref{sec-C4_formulation},  we analyze  some quantities that define the computational cost of each method, viz. nonlinear iterations, iterative solver iterations, and the adaptive time step evolution.
 %
 %%All cases compared here have been solved using a $32^3$ linear hexahedral element mesh. This discretization is very coarse and it allows us to stress the differences between the proposed methods. In fact, due to this discretization, the linear and static ASGS case (Sta-Lin-ASGS) and the dynamic and linear ASGS case (Dyn-Lin-ASGS) do not converge at $t=0.0$ and  $t=0.123$, respectively; the nonlinear iterations diverge even reducing the time step size. Anyway, all the methods converge as $h\rightarrow0$.
 %
@@ -785,7 +785,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%The amount of nonlinear iterations required at each time step is a good computational cost measure, but we do not know if the iterations between methods are equivalent. In order to have an idea of the global computational cost, we must have also into account the solver iterations. In Fig. \ref{fig:Soliter} we display the maximum number of solver iterations for each time step for the converged cases. 
 %%Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is highly variable, with values from around 50 to around 270. Meanwhile, all cases of the OSS method seem to remain almost constant around 70.  
 %%{\color{blue}
-%Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is variable, starting from near 600, dropping to 200 and rising to around 300 iterations at the end of the computation. Meanwhile, all cases of the OSS method remain almost constant, around 60 iterations in the dynamic cases and around 40 iterations in the static one. The relation between time step size and solver iterations for each method is analyzed in Section \ref{sec-small_time_step}. %}
+%Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is variable, starting from near 600, dropping to 200 and rising to around 300 iterations at the end of the computation. Meanwhile, all cases of the OSS method remain almost constant, around 60 iterations in the dynamic cases and around 40 iterations in the static one. The relation between time step size and solver iterations for each method is analyzed in Section \ref{sec-C4_small_time_step}. %}
 %
 %\begin{figure}[h!]
 %	\centering	
@@ -815,7 +815,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %% We can clearly state that the most efficient method for this setting, in terms of computational cost, is the dynamic and linear OSS method; all OSS cases are below ASGS. It has to be said that the dynamic nonlinear OSS case has also a good performance. Excluding the fact that it needs two time step reductions around $t=0.6$ and $t=1.1$ , we see that its slope is the lowest one. This happens because it needs less solver iterations and also because it requires less nonlinear iteration than the Dyn-Lin-OSS case; the method would probably be faster than Dyn-Lin-OSS  for larger time step amplification factors.
 %
 %\subsubsection{Total energy evolution}
-%\label{subsubsec-Total_ene_DHIT}
+%\label{subsubsec-C4_C4_Total_ene_DHIT}
 %In this section we present the total energy evolution of the resolved scales, i.e., the FE component. %It can be seen that for a coarse mesh like the $32^3$ linear hexaedral elements mesh that we are using for this test, the total amount of energy at the initial time step (computed after the Inverse Fast Fourier Transform of the velocity field is far from the theoretical starting point $E_0=1.5$. This error is due to the proijection from the Fourier space onto the FE space, which obviously depends on the mesh size. As we refine the mesh, the initial value of total energy tends to $1.5$, as expected. Knowing this behavior, it is difficult to draw conclusions comparing the simulations with DNS results \cite{_selection_????} and therefore  we scale the initial condition in a such way that its initial energy achieve the desired value. 
 %% This has been done multiplying the initial condition by a factor defined as
 %% $$\u_{0_{new}}=\sqrt{\frac{E_{0_{new}}}{E_{0_{old}}}}\u_{0_{old}},\quad\quad\mbox{where $E_{0_{new}}=1.5$}.$$
@@ -840,7 +840,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%The results shown so far have been obtained using the skew-symmetric convective term \textit{type 1} defined in (\ref{eq-C4_b_skew1}). 
 %%But what happens if we choose another definition for this term? We know, by some experience acquired on other tests not reported in this work, e.g. Destabilization of an ordered initial condition test (2D and 3D), that the nonskew-symmetric term (\ref{eq-C4_b_noskew}) can involve convergence problems. So 
 %%We test the influence of this term by solving the same problem with the convective skew-symmetric term (\textit{type 2)}  in (\ref{eq-C4_b_skew2}) for dynamic and nonlinear ASGS and OSS schemes. The results obtained for this test are shown in Fig. \ref{fig:total_ene_32_sk2}, where it is seen that the solution using the \textit{type 2} term is above the one obtained with term \textit{type 1}, which shows that the convective term is actually productive.
-%%. Then, we can say that the solution is less dissipative when we use this convective term which agree with the results shown in the energy conservation analysis done in subsection \ref{subsubsec-ene_cons_DHIT}. This result is a consequence of the fact that the convective term is non zero as it is exposed on remark \ref{rem:skewsym}, equation (\ref{eq-C4_mkgkdfsnmgks}).
+%%. Then, we can say that the solution is less dissipative when we use this convective term which agree with the results shown in the energy conservation analysis done in subsection \ref{subsubsec-C4_C4_ene_cons_DHIT}. This result is a consequence of the fact that the convective term is non zero as it is exposed on remark \ref{rem:skewsym}, equation (\ref{eq-C4_mkgkdfsnmgks}).
 %
 %\subsubsection{Energy spectra}
 %According to \cite{mansour_decay_1994}, the resolution of the small scales in isotropic decaying turbulence is judged by the shape of the energy spectra at high wave numbers, and requires 
@@ -968,7 +968,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %% \end{figure}
 %
 %\section{Taylor-Green Vortex}
-%\label{sec-TGV}
+%\label{sec-C4_TGV}
 %\subsection{Problem definition}
 %
 %The Taylor-Green vortex (TGV) problem is a typical and widely used problem in turbulence numerical simulations. 
@@ -998,8 +998,8 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %
 %We solve the TGV problem using a Reynolds number ${\rm Re}=1600$. 
 %The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
-%We use the same VMS methods as for the DHIT problem defined in Section \ref{sec-DHIT} to solve this test, namely the ASGS and OSS methods, both with linear and nonlinear definitions of the convective term and static or dynamic tracking in time of the subscales, as it is summarized in Table \ref{table:DHIT_cases}.
-%The stabilization parameters for each method are the same as those chosen for the DHIT test, see Subsection~\ref{subsubsec-DHIT_setting}, and discussed in Section \ref{sec-effect_const}.
+%We use the same VMS methods as for the DHIT problem defined in Section \ref{sec-C4_DHIT} to solve this test, namely the ASGS and OSS methods, both with linear and nonlinear definitions of the convective term and static or dynamic tracking in time of the subscales, as it is summarized in Table \ref{table:DHIT_cases}.
+%The stabilization parameters for each method are the same as those chosen for the DHIT test, see Subsection~\ref{subsubsec-C4_C4_DHIT_setting}, and discussed in Section \ref{sec-C4_effect_const}.
 %
 %Initially we consider a mesh of $32^3$ hexahedral linear elements $(Q1)$, but we will redefine this discretization to analyze the method performance when we refine the mesh, decreasing the element size $h$ or increasing the degree of the interpolation polynomial $p$. It implies to solve the problem on meshes with $64^3$ and $128^3$ linear $(Q1)$, quadratic $(Q2)$ or cubic $(Q3)$ hexahedral elements. We also use a $20^3(Q3)$ discretization to compare against other authors results.
 %
@@ -1049,7 +1049,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %% 	\label{fig:ene_spec_32_TG}
 %% \end{figure}
 %
-%% In Fig. \ref{fig:ene_32_TG}, we can see that for a $32^3$ trilinear hexahedral elements mesh all methods show a premature decay of energy. We recognize the same behavior observed for the same mesh in the DHIT test, see Subsection \ref{subsubsec-Total_ene_DHIT}. For this mesh, it is clear that the methods are not able to simulate properly the transition to turbulence. The energy spectra at $t=9.0$ shows us that the flow is isotropic at large wave numbers since it is decaying following the $k^{-5/3}$ Kolmogorov law. 
+%% In Fig. \ref{fig:ene_32_TG}, we can see that for a $32^3$ trilinear hexahedral elements mesh all methods show a premature decay of energy. We recognize the same behavior observed for the same mesh in the DHIT test, see Subsection \ref{subsubsec-C4_C4_Total_ene_DHIT}. For this mesh, it is clear that the methods are not able to simulate properly the transition to turbulence. The energy spectra at $t=9.0$ shows us that the flow is isotropic at large wave numbers since it is decaying following the $k^{-5/3}$ Kolmogorov law. 
 %
 %% As in the DHIT test, the cases with nonlinear and dynamic definitions of the subscales, using either ASGS or OSS methods, seem to be slightly less dissipative. Furthermore, OSS is a little bit less dissipative than ASGS, but the differences are not important.
 %
@@ -1103,8 +1103,8 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %We plot the total dissipation in Fig. \ref{fig:enediss_dynsmag_total}. We can see that the excellent job our implicit LES model does when the $20 (Q3)$ mesh is used, which would result in an excellent prediction of the resolved kinetic energy decay (which is not available in \cite{hickel_adaptive_2006}). 
 %
 %\section{Turbulent channel flow}
-%\label{sec-TCF}
-%%In all the tests shown so far (sections \ref{sec-DHIT} and \ref{sec-TGV}), we have solved homogeneous and free-evolving turbulent problems. But we also are interested on other type of turbulent problems in order to check the behavior of the defined VMS methods. According to \cite{pope_turbulent_2000}, most turbulent flows are bounded by one or more solid surfaces, giving wall-bounded flows. There are several turbulent wall-bounded tests, e.g. fully developed channel flow, fully developed pipe flow and the flat-plate boundary layer. We test just one of them, in particular the fully developed channel flow.
+%\label{sec-C4_TCF}
+%%In all the tests shown so far (sections \ref{sec-C4_DHIT} and \ref{sec-C4_TGV}), we have solved homogeneous and free-evolving turbulent problems. But we also are interested on other type of turbulent problems in order to check the behavior of the defined VMS methods. According to \cite{pope_turbulent_2000}, most turbulent flows are bounded by one or more solid surfaces, giving wall-bounded flows. There are several turbulent wall-bounded tests, e.g. fully developed channel flow, fully developed pipe flow and the flat-plate boundary layer. We test just one of them, in particular the fully developed channel flow.
 %After studying the performance of VMS in the LES of homogeneous flows we turn our attention to wall-bounded turbulent flow and present results of %the simplest among these kind of problems, 
 %fully developed turbulent flow in a channel.
 %%The fully developed channel flow is a widely used wall-bounded turbulent test. 
@@ -1137,7 +1137,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal direction. Here, $\gamma$ is  chosen to be equal to $2.75$ for both  ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$.  We refer the reader to \cite{Avila2014} for a complete study of the influence of the discretization in the results of the TCF.
 %
 %\subsubsection{Setting}
-%\label{subsubsec-TCF_setting}
+%\label{subsubsec-C4_C4_TCF_setting}
 %
 %As it has been said above, we solve the problem using two different friction Reynolds numbers, ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$. We compare our results against those obtained by DNS in \cite{moser_direct_1999,kim_turbulence_1987} and we choose our parameters accordingly.
 %We take the bulk mean velocity and the half channel height equal to one, $\bar{U}=1$ and $\delta=1$. The viscosity is computed from the estimated Reynolds number based on the bulk mean velocity ${\rm Re}$. Then, from the friction Reynolds number ${\rm Re}_\tau$ we compute the friction velocity ($u_\tau$), the wall shear stress ($\tau_w$) and a driving force equivalent to a pressure gradient ($f_x$), given by  \cite{pope_turbulent_2000}:
@@ -1190,7 +1190,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %\end{table}
 %
 %
-%Our purpose is to check the VMS methods defined in Subsection \ref{subsec-VMS_framework} for a wall-bounded flow. Following the computations performed for the previous tests, we solve the problem using the same cases defined in Table \ref{table:DHIT_cases} and the numerical parameters $\tau_c=0$ and $\tau_m$ are defined in the same way, now with the algorithmic constants  $c_1=12$ and $c_2=8$ (see Subsection \ref{sec-effect_const}) and the characteristic length, $h$, is chosen to be the minimum element length. 
+%Our purpose is to check the VMS methods defined in Subsection \ref{subsec-C4_C4_VMS_framework} for a wall-bounded flow. Following the computations performed for the previous tests, we solve the problem using the same cases defined in Table \ref{table:DHIT_cases} and the numerical parameters $\tau_c=0$ and $\tau_m$ are defined in the same way, now with the algorithmic constants  $c_1=12$ and $c_2=8$ (see Subsection \ref{sec-C4_effect_const}) and the characteristic length, $h$, is chosen to be the minimum element length. 
 %%However, in the definition of the stabilization parameters (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), the characteristic length, $h$, is choosen to be the minumum element length.
 %
 %\subsection{Numerical results}
@@ -1254,7 +1254,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%{\color{blue} Esta seccion está perfecta, no tengo que tocar nada. However, si en la turbulencia homogenea calculamos los resultados usando $\u_h$ solamente...porque aca incluimos tambien $\tilde{\u}$?}
 %
 %\section{Sensitivity with respect to the stabilization parameters}
-%\label{sec-effect_const}
+%\label{sec-C4_effect_const}
 %
 %All the VMS models considered herein depend on the stabilization parameters $\tau_m$ and $\tau_c$, which contain constants $c_1$ and $c_2$ whose value is chosen from numerical experiments. However, we can infer from (\ref{eq-C4_static_energy}) or (\ref{eq-C4_transfer}) how this dependency will be. As mentioned before, the last two terms in (\ref{eq-C4_transfer}) are dissipative and therefore, increasing $\tau_m$ and/or $\tau_c$ we obtain a more dissipative method. From (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), increasing $\tau_m$ results in a reduction of $\tau_c$. More precisely 
 %\begin{equation}
@@ -1267,7 +1267,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%All the results presented above have been obtained using the same setting of the numerical stabilization parameters $\tau_m$ and $\tau_c$. In all tests, we take the algorithmic constants $c_1=12$ and $c_2=8$ for $\tau_m$ and we set $\tau_c=0$.  
 %The results presented above have been obtained using different settings of the numerical stabilization parameters $\tau_m$ and $\tau_c$. In DHIT and TGV tests, we take the algorithmic constants $c_1=12$ and $c_2=2$ for $\tau_m$ and we set $\tau_c=0$, while for the TCF test we have used $c_1=12$ and $c_2=8$ for $\tau_m$ and also $\tau_c=0$. In this section we analyze the influence of these parameters on the numerical results and justify our choice of the constants for the large eddy simulation of turbulent flows.%\footnote{We also refer to  (Matias 2013), where a comparison between choosing $c_1=4$ and $c_1=12$ is done for the Turbulent Channel Flow test using dynamic and nonlinear ASGS method, concluding that a less dissipative scheme is obtained setting $c_1=12$. This result follows the argumentation above, where we state that the value of $c_1$ has more influence in $\tau_c$ than in $\tau_m$ for high Reynolds problems.
 %
-%%These values have been chosen according a previous analysis based on the computational cost and the numerical dissipation introduced into the problem for the DHIT test (see section \ref{subsec-sensivity_tau}). 
+%%These values have been chosen according a previous analysis based on the computational cost and the numerical dissipation introduced into the problem for the DHIT test (see section \ref{subsec-C4_C4_sensivity_tau}). 
 %
 %%The selection of these values can be done from an analytical point of view, as it is done from a Fourier analysis in \cite{codina_stabilized_2000}, where is stated that the algorithmic constants may be taken as $c_1=4$ and $c_2=2$ for a 1D scalar convection-diffusion-reaction problem in the advective limit.
 %
@@ -1349,7 +1349,7 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %    \label{fig:OSS_taus_fluc}
 %\end{figure}
 %
-%In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{sec-TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
+%In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{sec-C4_TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
 %%Not only  $\tau_c=0$ but also setting $c_2=8$ (instead of $c_2=2$) give less dissipative results.
 %Figs. \ref{fig:OSS_Matias_ufluc}, \ref{fig:OSS_Matias_vfluc} and \ref{fig:OSS_Matias_wfluc} depict the rms velocity fluctuations in all directions. The fluctuations in the streamwise direction are better predicted using ($c_1=12$, $c_2=8$ and $\tau_c=0$) but the spanwise and wall-normal directions are not.
 %
@@ -1357,26 +1357,26 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%There can be seen that for the fluctuations in the streamwise direction a less dissipative method gives better results. However, for spanwise and wall-normal directions the value of the velocity fluctuations decrease when the dissipation of the method is increased. These results make sense since for a less dissipative method the flow is more unstable and has more oscillations, particularly in the directions where the mean velocity is zero this behavior give grater velocity fluctuations.
 %
 %\section{Behavior in the small time step limit}
-%\label{sec-small_time_step}
+%\label{sec-C4_small_time_step}
 %
 %Small time step instabilities for VMS LES simulations of turbulent flows have been reported in \cite{Hsu2010,gamnitzer_time-dependent_2010}. In these references, the VMS models differ from the ones in this work. Instead of the definition of  $\tau_m$ in (\ref{eq-C4_tau_m}), a time step dependent stabilization parameter $\tau_m$
 %$$
 %\tau_m=\left(\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}\right)^{-1},\\
 %$$
 %is considered in all cases.\footnote{The parameter $\tau_{m,t}$ for the dynamic subscales model also
-%scales with $\delta t$, as discussed in Section (\ref{sec-discrete}). {\it However}, this dependence comes from a consistent time integration of the subscale time derivative (see also \cite[Section 3.2]{codina_time_2007}).} The plain introduction of a time step dependency in $\tau_m$ faces serious difficulties:
+%scales with $\delta t$, as discussed in Section (\ref{sec-C4_discrete}). {\it However}, this dependence comes from a consistent time integration of the subscale time derivative (see also \cite[Section 3.2]{codina_time_2007}).} The plain introduction of a time step dependency in $\tau_m$ faces serious difficulties:
 %\begin{itemize}
 %\item The method becomes unstable in the small time step limit since it converges to the unstable Galerkin formulation.
 %%\item A similar situation occurs in the Navier-Stokes problem if $\tau_c=0$.
 %\item If $\tau_c$ is computed from (\ref{eq-C4_tau_c}) (as it is usually done, see, e.g., \cite{bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}), $\tau_m \sim \delta t$ and $\tau_c \sim \delta t^{-1}$ in the small time step limit. If this approach is followed , the essential numerical dissipation given by the fifth term in (\ref{eq-C4_static_energy}) is reduced as $\delta t \to 0$, whereas the numerical dissipation introduced by the last term in the left hand side (a incompressibility penalty term) of (\ref{eq-C4_static_energy}) is increased. It has a compensating effect in practice, but the penalty term does not properly act as a turbulence model. % , as shown in the previous section.
 %\end{itemize}
-%%The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-TCF}.
+%%The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-C4_TCF}.
 %
-%Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-formulation}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{sec-small_time_step}. 
-%The behavior of all the methods for the TCF test with $\delta t=0.002$ is summarized in Table \ref{table:small_time_step_T}, where YES means that the simulation was successful, NO means that the simulation diverged and $\delta t\downarrow$ means that the simulation was successful only when the adaptive time step strategy described in Section \ref{subsubsec-DHIT_setting} was used.
+%Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-C4_formulation}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{sec-C4_small_time_step}. 
+%The behavior of all the methods for the TCF test with $\delta t=0.002$ is summarized in Table \ref{table:small_time_step_T}, where YES means that the simulation was successful, NO means that the simulation diverged and $\delta t\downarrow$ means that the simulation was successful only when the adaptive time step strategy described in Section \ref{subsubsec-C4_C4_DHIT_setting} was used.
 %
-%%It is worth to point out that all these results have been obtained using the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy. %Either a conservative or non conservative form is usually employed mentioned references and none of this forms conserve energy. As we have shown in Section \ref{subsubsec-ene_cons_DHIT} for the skew-symmetric \textit{type 2}, they could be productive. 
-%It is important to note that the static and nonlinear ASGS formulation used in \cite{bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010} with the convective term \textit{type 2} becomes unstable after some time, as also reported in these works, even for the time step size defined in section \ref{subsubsec-TCF_setting}. However, using the the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy, the simulation ended successfully for the time step defined in section \ref{subsubsec-TCF_setting}, but failed to converge with the small one. This result is a numerical evidence of the fact that the use of convective terms without the skew-symmetric property produce energy (see also Section \ref{subsubsec-Total_ene_DHIT}) that can make simulations unstable. Further, \emph{these results evidence once again that it is a good choice to stick to provably unconditionally stable formulations, i.e., the dynamic formulations and/or orthogonal subscales formulations with a skew-symmetric convective term}. %{\color{blue} 
+%%It is worth to point out that all these results have been obtained using the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy. %Either a conservative or non conservative form is usually employed mentioned references and none of this forms conserve energy. As we have shown in Section \ref{subsubsec-C4_C4_ene_cons_DHIT} for the skew-symmetric \textit{type 2}, they could be productive. 
+%It is important to note that the static and nonlinear ASGS formulation used in \cite{bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010} with the convective term \textit{type 2} becomes unstable after some time, as also reported in these works, even for the time step size defined in section \ref{subsubsec-C4_C4_TCF_setting}. However, using the the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy, the simulation ended successfully for the time step defined in section \ref{subsubsec-C4_C4_TCF_setting}, but failed to converge with the small one. This result is a numerical evidence of the fact that the use of convective terms without the skew-symmetric property produce energy (see also Section \ref{subsubsec-C4_C4_Total_ene_DHIT}) that can make simulations unstable. Further, \emph{these results evidence once again that it is a good choice to stick to provably unconditionally stable formulations, i.e., the dynamic formulations and/or orthogonal subscales formulations with a skew-symmetric convective term}. %{\color{blue} 
 %Similar results have been reported in the finite difference context in \cite{verstappen_symmetry-preserving_2003}, where it is shown that stable simulations of the TCF can be performed using an energy-preserving skew-symmetric formulation.
 %%}
 %
@@ -1421,12 +1421,12 @@ It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for 
 %%\end{figure}
 %
 %\section{Conclusions}
-%\label{sec-conclusions}
+%\label{sec-C4_conclusions}
 %
 %In this paper we have assessed the performance of the numerical formulations previously developed in our group \cite{codina_stabilized_2002,codina_time_2007,Codina-chap-2011,Principe2009} for turbulent incompressible flow problems. 
 %
 %
-%The methods proposed are different to those whose testing in turbulent regimes has been published before, the closest ones being those reported in \cite{bazilevs_variational_2007,gamnitzer_time-dependent_2010}. First, we consider orthogonal subscales formulations. Further, in \cite{bazilevs_variational_2007} the ASGS method with quasi-static subscales is used (in the isogeometrical analysis context) but the time step dependency is included in the stabilization parameter (with the inconsistencies and problems discussed in section \ref{sec-small_time_step}) and the nonlinear scale splitting is applied in the FE equation only (not in the subscale equation). Time dependent subscales are used in \cite{gamnitzer_time-dependent_2010}, but the authors consider a linear scale splitting. Furthermore, in both works $\tau_c \neq 0$. % but computed from (\ref{eq-C4_tau_c}) with the important consequences we have reported.
+%The methods proposed are different to those whose testing in turbulent regimes has been published before, the closest ones being those reported in \cite{bazilevs_variational_2007,gamnitzer_time-dependent_2010}. First, we consider orthogonal subscales formulations. Further, in \cite{bazilevs_variational_2007} the ASGS method with quasi-static subscales is used (in the isogeometrical analysis context) but the time step dependency is included in the stabilization parameter (with the inconsistencies and problems discussed in section \ref{sec-C4_small_time_step}) and the nonlinear scale splitting is applied in the FE equation only (not in the subscale equation). Time dependent subscales are used in \cite{gamnitzer_time-dependent_2010}, but the authors consider a linear scale splitting. Furthermore, in both works $\tau_c \neq 0$. % but computed from (\ref{eq-C4_tau_c}) with the important consequences we have reported.
 %%and only the ASGS method with quasi-static subscales is close to the method tested in \cite{bazilevs_variational_2007}. 
 %%We have checked the numerical performance of using dynamic subscales and also the OSS formulation, with results favorable to these options. 
 %%{\color{red} I am not sure about this comment, what about Gravemeier's work?... they also used dynamic subscales...}
