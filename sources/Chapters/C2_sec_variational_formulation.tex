@@ -2,19 +2,41 @@
 \label{subsec-variational_continuous}
 Let us consider the strong form of the Navier-Stokes problem \Eq{NS_strong_momentum}-\Eq{NS_strong_Ini}. In order to formulate the equivalent variational problem we define a set of variational spaces that incorporates the homogeneous Dirichlet boundary condition and the temporal evolution
 \begin{align}
-\label{eq-NS_u_space}
+\label{eq-C2_varia_NS_u_space}
 &\mathcal{V}_g:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_{\Gamma_D}=\u_g\right\}\equiv\Hbf^1_g(\Omega),\\
-\label{eq-NS_v_space}
+\label{eq-C2_varia_NS_v_space}
 &\mathcal{V}_0:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_\Gamma=0\right\}\equiv\Hbf^1_0(\Omega),\\
-\label{eq-NS_p_space}
+\label{eq-C2_varia_NS_p_space}
 &\mathcal{Q}:=\Lbf^2(\Omega)/\mathbb{R}.
 \end{align}
 Given sufficiently smooth functions $ \v\in\mathcal{V}_0 $ and $ q\in\mathcal{Q} $, we obtain the variational or weak version of the Navier-Stokes equations multiplying \Eq{NS_strong_momentum} by $ \v $  and \Eq{NS_strong_continuity} by $ q $, integrating over $ \Omega $ and integrating by parts the second order derivatives. Then the variational Navier-Stokes problem reads: find $ \u\in\Lbf^2(0,T;\mathcal{V}_g),\\ $ and $ p\in\Lbf^1(0,T;\mathcal{Q}) $ such that: 
 \begin{align}
+\label{eq-C2_varia_NS_weak_momentum}
 (\partial_t\u,\v)+\left(\nu\left(\nabla\u+\nabla\u^T\right),\nabla\v\right)+b(\u,\u,\v)+(\nabla p,\v)=&\left\langle f,\v\right\rangle&\forall\v\in\mathcal{V}_0,\\
+\label{eq-C2_varia_NS_weak_continuity}
 (\nabla\cdot\u,q)=&\ 0&\forall q\in\mathcal{Q}.
 \end{align}
-b()....
+Adding up equations \Eq{C2_varia_NS_weak_momentum}-\Eq{C2_varia_NS_weak_continuity} we obtain an alternative weak form of the incompressible Navier-Stokes problem \Eq{NS_strong_mome}-\Eq{NS_strong_Ini} consists, e.g., in finding $[\u,p]\in {L}^2(0,T;\mathcal{V}_0)\times {\cal D}'(0,T;\mathcal{Q}_0)$ (distributions in time with values in $\mathcal{Q}_0$) such that
+\begin{equation}
+\label{eq-C2_NS_weak}
+(\partial_t\u,\v) + B(\u;[\u,p],[\v,q]) = \left<\f,\v\right> 
+\quad\quad\forall\v\in\mathcal{V}_0,\quad\forall q\in\mathcal{Q}_0,
+\end{equation}
+satisfying the initial condition \Eq{NS_strong_Ini} in a weak sense. Here $\mathcal{V}_0:={H}_0^1(\Omega)^d$, $\mathcal{Q}_0:=L^2(\Omega)/\mathbb{R}$ and the form $B({\a};[\u,p],(\v,q))$ is defined as 
+\begin{equation}
+\label{eq-C2_bilinear}
+B(\a;[\u,p],[\v,q]):=\nu(\nabla\u,\nabla\v)+b(\a,\u,\v)-(p,\nabla\cdot\v)+(q,\nabla\cdot\u)
+\end{equation}
+where the trilinear weak form of the convective term $b(\u,\v,\w)$ can be written in the following three equivalent ways
+\begin{align}
+\label{eq-C2_b_noskew}
+&b(\u,\v,\w)=(\u\cdot\nabla\v,\w)&&\mbox{Non conservative},\\
+\label{eq-C2_b_skew1}
+&b(\u,\v,\mathbf{w})=\frac{1}{2}(\u\cdot\nabla\v,\mathbf{w})-\frac{1}{2}(\v,\u\cdot\nabla\mathbf{w})&&\mbox{Skew-symmetric (type 1)},\\
+\label{eq-C2_b_skew2}
+&b(\u,\v,\mathbf{w})=(\u\cdot\nabla\v,\mathbf{w})+\frac{1}{2}(\v\cdot\mathbf{w},\nabla\cdot\u)&&\mbox{Skew-symmetric (type 2)}.
+\end{align}
+Note that in the trilinear weak forms \Eq{C2_b_noskew}-\Eq{C2_b_skew2} the boundary integral terms that arise from the integration by parts have been neglected. This assumtion is valid when strong Dirichlet boundary conditions are considered over all the boundary. Despite of that, this equivalence is lost at the discrete level. The skew-symmetric form (type 2) (\ref{eq-C4_b_skew2}) is very common when numerical analysis are presented \cite{Badia2013Convergence,Burman2009,guermond_faedogalerkin_2007} but the skew-symmetric form (type 2) (\ref{eq-C4_b_skew1}) has important advantages when the first argument is a discontinuous function, as will be shown in forthcomming chapters.
 
 \subsection{The Finite Element method}
 \label{subsec-variational_finite_element}

@@ -46,6 +46,7 @@ The chapter is organized as follows. In Section \ref{sec-C4_formulation} we pres
 %\subsection{Navier-Stokes problem}
 \label{subsec-C4_C4_NS_formulation}
 In order to improve the readability of this chapter we refresh the Navier-Stokes formulation that was already stated in Chapter \ref{chap-Preliminars}. 
+
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $[0,T]$ the time interval. The strong form of the incompressible Navier-Stokes problem consists of finding the velocity field $\u$ and the pressure field $p$ such that 
 \begin{align}
 \label{eq-C4_NS_strong_mome}
@@ -99,537 +100,346 @@ The Galerkin FE approximation of (\ref{eq-C4_NS_weak}) consists in finding $[\u_
 
 \subsection{VMS framework}
 \label{subsec-C4_C4_VMS_framework}
-As it was pointed out in Section \ref{sec-VMS_framework}, the Galerkin FE formulation \Eq{C4_NS_galerkin} 
-%It is well known that (\ref{eq-C4_NS_galerkin}) has numerical instabilities for high mesh Reynolds number problems, i.e., when the nonlinear convective term dominates the viscous term. Another drawback of that formulation is the discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure. These difficulties are overcome by using the VMS approach that follows.
-%Let us consider a two-scale decomposition of spaces $\mathcal{V}_0$ and $\mathcal{Q}_0$ such that $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subgrid component. Applying the two-scale decomposition to (\ref{eq-C4_NS_weak}) we obtain a discrete problem
-%\begin{equation}
-%\label{eq-C4_NS_discrete}
-%(\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)+B(\a;[\u_h,p_h],[\v_h,q_h])+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>,
-%\end{equation}
-%where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products (\ref{eq-C4_scalar_product}) over each element $K$ of the partition $\mathcal{T}_h$, and
-%\begin{equation}
-%\label{eq-C4_adjoint}
-%\mathcal{L}_{\a}^*(\v_h,q_h):=-\nu\nabla^2\v_h-\a\cdot\nabla\v_h-\nabla q_h
-%\end{equation}
-%is the formal of the adjoint operator of the momentum equation. The term involving the adjoint operator comes from an elementwise integration by parts of the terms involving the subscales, in which the boundary terms 
-%$\left( \v_{h},\nu \n\cdot \nabla \tilde{\u}\right)_{\partial h}$ and
-%$\left( q_{h},\n\cdot \tilde{\u}\right)_{\partial h}$
-%have been neglected (the subscript ${\partial h}$ is used to denote the sum over all elements of the integral on the boundary of each element). It also involves the approximation 
-%$b(\a,\tilde{\u},\u_h) \approx -(\tilde{\u},\a\cdot\nabla\v_h)$
-%which implies neglecting 
-%$\left( \v_{h},\n\cdot \a \tilde{\u}\right)_{\partial h}$ and
-%$(\tilde{\u},\nabla\cdot\a\v_h)$. 
-%These approximations are discussed in  \cite{codina_time_2007} together with the choice of $\a$ which defines the type of scale splitting (linear or nonlinear), also discussed below.
-%
-%The discrete problem depends on $\tilde{\u} \in \widetilde{\mathcal{V}}_0$ and on $\tilde{p}\in \widetilde{\mathcal{Q}}_0$,  $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ being infinite-dimensional. Therefore, the equations for $\tilde{\u}$ and $\tilde{p}$ obtained after applying the two-scale decomposition cannot be directly solved, but some modeling steps are needed to obtain a feasible method. Considering the subscale as a time-dependent variable of the problem (see below) and approximating the Navier-Stokes operator by two stabilization parameters $\tau_m^{-1}$ and $\tau_c^{-1}$ (see for example \cite{codina_time_2007}), the fine scale problem can be written as
+As it was pointed out in Section \ref{sec-VMS_framework}, the Galerkin FE formulation \Eq{C4_NS_galerkin} suffers from numerical instabilities for high mesh Reynolds number problems, i.e., convection dominated flows. The discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure is also a problem that arise in the Galerkin FE formulation. The VMS method described in Section XXX overcomes these two inestabilities.
+
+After the space splitting into the FE space and the supscale space $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. The VMS semi-discrete problem reads: find $[\u_h,p_h]\in {L}^2(0,T;\mathcal{V}_{0,h})\times {\cal D}'(0,T;\mathcal{Q}_{0,h})$ such that
+\begin{equation}
+\label{eq-C4_NS_discrete}
+(\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)+B(\a;[\u_h,p_h],[\v_h,q_h])+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>.
+\end{equation}
+Where $ \mathcal{L}_{\a}^*(\v_h,q_h) $ is the adjoint operator defined in \Eq{C2_vms_adjoint}. The fine scale problem is approximated by
+\begin{align}
+\label{eq-C4_velo_sgs}
+\partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u),\\
+\label{eq-C4_press_sgs}
+\tau_c^{-1}\tilde{p}=\mathcal{P}(R_p).
+\end{align}
+With $ \R_u $ the momentum equation residual \Eq{C2_vms_Ru}, $ R_p $ the continuity equation residual \Eq{C2_vms_Rp}. $ \tau_m $ and $ \tau_c $ are the momentum and continuity equations stabilization parameters, respectively, which definition is given by 
+\begin{align}
+\label{eq-C4_tau_m}
+&\tau_m=\left(\frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}\right)^{-1},\\
+\label{eq-C4_tau_c}
+&\tau_c=\frac{h^2}{c_1\tau_m}.
+\end{align}
+
+The particular VMS method will result from the combination of the three particular ingredients discussed in Sections \ref{subsec-C2_vms_dyn}-\ref{subsec-C2_vms_oss}, the dynamics of the subscale velocity, the nonlinearity of the advection velocity and the definition of the projection.
+
+\section{Energy balance statements}
+\label{sec-C4_energy}
+
+In this section we revisit global energy conservation statements of the method. As shown in \cite{Principe2009}, similar statements can be obtained locally (in a volume $\omega \subset \Omega$).
+
+Taking $\v_h=\u_h$ and $q_h=p_h$ in (\ref{eq-C4_NS_discrete}) we have the energy balance on the FE component
+\begin{align}
+\label{eq-C4_FE_balance2}
+\underbrace{\frac{1}{2}d_t\|\u_h\|^2}_I
+& +\underbrace{\nu\|\nabla\u_h\|^2}_{II}
+  +\underbrace{b(\a,\u_h,\u_h)}_{III} \\ \nonumber
+& +\underbrace{(\partial_t\tilde{\u},\u_h)
++\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h
+-\left(\tilde{p},\nabla\cdot\u_h\right)}_{IV}
+=\underbrace{\left<\mathbf{f},\mathbf{u}_h\right>}_V,
+\end{align}
+In equation (\ref{eq-C4_FE_balance2}) we group the terms as
+% \begin{center}
+% \begin{tabular}{rll}
+% I)&FE time derivative term:&$\frac{1}{2}d_t\|\u_h\|^2$\\
+% II)&FE viscous term:&$\nu\|\nabla\u_h\|^2$\\
+% III)&Convective term:&$b(\a,\u_h,\u_h)$\\
+% IV)&FE to subscale energy transfer terms:&$(\partial_t\tilde{\u},\u_h)-\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)-\left(\tilde{p},\nabla\cdot\u_h\right)$\\
+% V)&FE work of external power:& $\left<\mathbf{f},\mathbf{u}_h\right>$\\
+% \end{tabular}
+% \end{center}
+\begin{center}
+\begin{tabular}{rll}
+I)&FE kinetic energy variation:&$\frac{1}{2}d_t\|\u_h\|^2$\\
+II)&FE viscous dissipation:&$\nu\|\nabla\u_h\|^2$\\
+III)&FE convective term:&$b(\a,\u_h,\u_h)$\\
+IV)&FE to SGS energy transfer:&$\varepsilon_{h} =(\partial_t\tilde{\u},\u_h)+\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h-\left(\tilde{p},\nabla\cdot\u_h\right)$\\
+V)&FE component of external power:& $\left<\mathbf{f},\mathbf{u}_h\right>$\\
+\end{tabular}
+\end{center}
+Multiplying (\ref{eq-C4_velo_sgs}) by $\tilde{\u}$ and (\ref{eq-C4_press_sgs}) by $\tilde{p}$, integrating over the domain and decomposing the residual of the momentum equation as $\R_u=\f-\partial_t\u_h-\mathcal{L}_{\a}(\u_h,p_h)$, % we have from (\ref{eq-C4_sgs_balance1}) 
+we obtain the global energy balance on the fine scale
+\begin{align}
+\label{eq-C4_sgs_balance2}
+\underbrace{\frac{1}{2}d_t\|\tilde{\u}\|^2}_I
+&+\underbrace{\tau_m^{-1}\|\tilde{\u}\|^2}_{II}
++\underbrace{\tau_c^{-1}\|\tilde{p}\|^2}_{III} \\ \nonumber
+&+\underbrace{\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)
++\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right)_h
++\left(\mathcal{P}(\nabla\cdot\u_h),\tilde{p}\right)}_{IV}
+=\underbrace{\left(\mathcal{P}(\f),\tilde{\u}\right)}_V.
+\end{align}
+% In equation (\ref{eq-C4_sgs_balance2}) we group the terms as
+% \begin{center}
+% \begin{tabular}{rll}
+% I)&Subscale time derivative term:&$\frac{1}{2}d_t\|\tilde{\u}\|^2$\\
+% II)&Subscale viscous term:&$\tau_m^{-1}\|\tilde{\u}\|^2$\\
+% III)&Subscale pressure term:&$\tau_c^{-1}\|\tilde{p}\|^2$\\
+% IV)&Subscale to FE energy transfer balance:&$\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)+\left(\tilde{\u},\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))\right)+\left(\tilde{p},\mathcal{P}(\nabla\cdot\u_h)\right)$\\
+% V)&Subscale work of external power:&$\left(\mathcal{P}(\f),\tilde{\u}\right)$\\
+% \end{tabular}
+% \end{center}
+We group the terms in (\ref{eq-C4_sgs_balance2}) as
+\begin{center}
+\begin{tabular}{rll}
+I)&SGS kinetic energy variation:&$\frac{1}{2}d_t\|\tilde{\u}\|^2$\\
+II)&SGS velocity dissipation:&$\tau_m^{-1}\|\tilde{\u}\|^2$\\
+III)&SGS pressure dissipation:&$\tau_c^{-1}\|\tilde{p}\|^2$\\
+IV)&SGS to FE energy transfer:&$\tilde{\varepsilon}= \left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)+\left(\tilde{\u},\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))\right)_h+\left(\tilde{p},\mathcal{P}(\nabla\cdot\u_h)\right)$\\
+V)&SGS component of external power:&$\left(\mathcal{P}(\f),\tilde{\u}\right)$\\
+\end{tabular}
+\end{center}
+Finally, adding up equations (\ref{eq-C4_FE_balance2}) and (\ref{eq-C4_sgs_balance2}) 
+%and using $\mathcal{L}^*(\u_h,p_h)=-\mathcal{L}(\u_h,p_h)$ for linear elements, 
+we obtain an equation for the total kinetic energy
+\begin{align}
+\label{eq-C4_total_balance}
+   \frac{1}{2}d_t\|\u_h\|^2
+& +\frac{1}{2}d_t\|\tilde{\u}\|^2
+  +\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h)
+  +\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2 \\ \nonumber
+& +(\partial_t\tilde{\u},\u_h)
+  +\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)
+  +\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h\\ \nonumber
+& \quad \quad \quad \quad  +\left(\mathcal{P}(\nabla\cdot\u_h)-\nabla\cdot\u_h,\tilde{p}\right)=\left<\mathbf{f},\mathbf{u}_h\right>+\left((\mathcal{P}(\f),\tilde{\u}\right).
+\end{align}
+%Even though it is not our intention to perform a numerical analysis of the methods, let us review known results for each particular VMS model. 
+Let us note the presence of $b(\a,\u_h,\u_h)$, which is zero only when the skew-symmetric type 1 form is considered. Other choices could result in a spurious positive contribution to the FE kinetic energy as it is actually observed in the DHIT problem, and could result in a loss of stability, although that was not observed.
+%We restric the discussion to the linear version of the multiscale splitting, we are not aware of any result about the fully nonlinear case.
+
+\subsection{Static subscales} 
+
+In this case the energy balance for the subscale is meaningless because there are explicit expressions for the subscales (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}). When (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}) are used in (\ref{eq-C4_FE_balance2}), we obtain
+\begin{align}
+\label{eq-C4_static_energy}
+\frac{1}{2}d_t\|\u_h\|^2
+& +\nu\|\nabla\u_h\|^2 + b(\a,\u_h,\u_h)  
+  + \left( \tau_{m} \mathcal{P} \left(  \partial_t \u_h \right), \mathcal{L}^*_{\a} ( \u_{h},p_h)\right)_h \\ \nonumber
+& + \left(\tau_{m} \mathcal{P} \left( \mathcal{L}_{\a} ( \u_{h},p_h) \right),\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h
+%+ \left(\tau_{c} \mathcal{P} (\nabla \cdot \u_{h}),\nabla\cdot\u_h\right)
++ \tau_{c} \left\| \mathcal{P}(\nabla \cdot \u_{h})\right\|^{2}\\ \nonumber
+& = \langle\mathbf{f},\mathbf{u}_h\rangle + \left(\tau_m \mathcal{P}(\mathbf{f}),\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h.
+\end{align}
+In the case of the ASGS method, where $\mathcal{P}:=\mathbf{I}$, the fourth term on the left hand side is a source of problems. One the one hand, it cannot be neglected because it is needed to make the method consistent. On the other hand, it can only be controlled by the dissipation of the time integration scheme and is therefore responsible for the introduction of a restriction on the time step size. As a side problem, it is very inconvenient for an implementation if any explicit (operator splitting) time integration is chosen as it results in a non-symmetric mass matrix. This term is not present if the OSS method is chosen using the projection $\mathcal{P}:=\mathbf{I}-\Pi_h$. Stability of both the fully discrete and the semidiscrete Stokes problem have been proven in \cite{Badia2009a}.
+
+The important term is the fifth one, which permits to control
+$ \tau_{m} \left\| \mathcal{P} \left( \mathbf{a}\cdot \mathbf{\nabla u}_{h}+\mathbf{\nabla }p_{h}\right) \right\|^{2} $; the FE part in the OSS formulation is readily controlled using inverse estimates. It therefore provides the essential numerical stability. The last term acts as a penalty on the divergence constraint, adding volumetric diffusion and provides (extra, non-essential) numerical stability.
+
+For the OSS method, it is proved in \cite{guasch-codina-13} that the dissipative structure of the discrete problem has the same statistical behavior in fully developed turbulence than the continuous problem, in the sense that this dissipation has the same estimates as the molecular one. Both dissipations could be made equal by a proper choice of the stabilization parameters in (\ref{eq-C4_tau_m}). This, however, requires a small change in the advection velocity of this expression, which depends on an integral length of the problem. See \cite{guasch-codina-13} for details.
+
+\subsection{Dynamic subscales} 
+
+In this case, the time derivative of both the FE and subgrid components have to be considered and an estimator for the kinetic energy variation of both the FE and subgrid velocity can be obtained. The stability of the subgrid scale velocity can then be used to obtain a stability estimate of the FE component in a norm that includes the convective and pressure terms \cite{codina_time_2007,Badia2009a,Badia2010}.\footnote{However, it should be kept in mind that the numerical solution of the problem is the FE component. There is no reason to add the subscale to the final solution as the approximation is limited by the interpolation order, see \cite[Remark 10]{codina_time_2007}.} Therefore, the numerical dissipation of the method is actually given by the energy transfer $\varepsilon_h$ from the FE to the subscale component. 
+Using (\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}), we get:
+\begin{align}
+\label{eq-C4_transfer}
+\varepsilon_{h} & = 
+  \left( \partial_t\tilde{\u} , \u_h\right) 
+- \left( \tau_m \partial_t\tilde{\u} , \mathcal{L}^*_{\a} ( \u_{h},p_h)\right) _h 
+- \left( \tau_{m} \mathcal{P} \left(  \partial_t \u_h \right), \mathcal{L}^*_{\a} ( \u_{h},p_h)\right)_h \\ \nonumber
+& 
+- \left( \tau_{m} \mathcal{P} \left(  \mathcal{L}_{\a} ( \u_{h},p_h) \right), \mathcal{L}^*_{\a} ( \u_{h},p_h) \right)_h
++ \tau_{c} \left\| \mathcal{P} \nabla \cdot \u_{h}\right\|^{2}. %\nonumber
+\end{align}
+Except from the viscous contribution, the last two terms in (\ref{eq-C4_transfer}) are positive, providing dissipation of the FE energy, but the first three could be negative, providing these models with a mechanism to predict a backward energy transfer, not frequently found in classical LES models \cite{Sagaut2006}. It is justified in \cite{Codina-chap-2011} that even if the first three terms may be negative at a certain time instant, their averaged contribution in a time window greater than the largest period needs to be positive, which is the behavior expected of backscatter from a physical point of view. 
+
+For the ASGS method, i.e., $\mathcal{P}:=\mathbf{I}$, the last term in the left hand side of (\ref{eq-C4_total_balance}) vanishes and the previous one reads
+\begin{equation}
+\left(\mathcal{L}_{\a}(\u_h,p_h)+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h=
+-2 \left(\nu\Delta\u_h,\tilde{\u}\right)_h.
+\end{equation}
+In turn, the time derivatives of the FE and subscale velocities can be combined as
+\begin{align}
+\label{eq-C4_time_deriv_ASGS}
+\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2+(\partial_t\tilde{\u},\u_h)+\left(\partial_t\u_h,\tilde{\u}\right)=\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2
+\end{align}
+to rewrite (\ref{eq-C4_total_balance}) as
+\begin{align}
+\label{eq-C4_total_balance_ASGS2}
+\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2
+&+\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h) \\ \nonumber
+&+\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2-2 \left(\nu\Delta\u_h,\tilde{\u}\right)=\left<\mathbf{f},\mathbf{u}_h\right>+\left<\mathbf{f},\tilde{\u}\right>.
+\end{align}
+From this equation, a stability estimate for $\|\u_h+\tilde{\u}\|$ can be obtained as the last term on the left hand side can be controlled using the second one (see \cite[Remark 4.7]{Badia2009a}).% where this stability is proven for the Stokes problem.
+
+Another important point of (\ref{eq-C4_total_balance_ASGS2}) is that it immediately shows that when the mesh is fine enough, i.e., 
+\begin{equation*}
+\frac{\left| \mathbf{a}\right| h}{\nu }\ll 1,
+\end{equation*}
+the dissipation of the total energy depends only on the viscosity. Therefore, the dissipative structure is correctly predicted when a laminar flow is considered or when the discretization is fine enough to resolve all scales of the flow, an important advantage over other LES techniques.
+
+On the other hand, for the OSS method, the FE and subgrid kinetic energy can be summed to obtain the total one
+\begin{align}
+\label{eq-C4_time_deriv_OSS}
+\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2=\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2.
+\end{align}
+since $(\partial_t\tilde{\u},\u_h)=(\partial_t\u_h,\tilde{\u})=0$ as soon as we enforce the subscale to be orthogonal to the FE space. This property also guarantees that%{\color{red} (OJO!! si $\mathcal{P}\left(\partial_t\tilde{\u}\right)+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u)$ esto no se cumple con $\mathcal{P}\equiv\Pi^\bot$ porque $(\mathcal{P}(\partial_t\tilde{\u}),\u_h)=0\Rightarrow(\partial_t\tilde{\u},\u_h)=(\Pi_\tau(\partial_t\tilde{\u}),\u_h)\neq0$. Es asi??)} 
+\begin{align}
+\label{eq-C4_Pi_tau_sgs}
+\left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right) = 0 \\
+\left(\Pi_c(\nabla\cdot\u_h),\tilde{p}\right)=0
+\end{align}
+which implies that the last term on the left hand side of (\ref{eq-C4_total_balance}) vanishes and that the previous one can be written as
+\begin{align}
+\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h
+= \left( (\mathcal{L}_{\a}(\u_h,p_h)+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h
+=-2 \left(\nu\Delta\u_h,\tilde{\u}\right)_h
+\end{align}
+as in the ASGS case. Let us note that the Laplacian term can be eliminated without affecting the convergence properties of the method. 
+%It can be justified by replacing the elementwise Laplacian by a discrete Laplacian operator in $\mathcal{L}_{\a}$ (see \cite{Badia2013}). 
+% {\color{blue}Note that if the dynamic definition of the subscales is considered, the condition (\ref{eq-C4_Pi_tau_sgs}) is achieved only if we use the modified subscale equation (\ref{eq-C4_velo_sgs_projected}) instead of (\ref{eq-C4_velo_sgs}). Using the definition (\ref{eq-C4_Pi_tau_m}) we have that
+% \begin{align}
+% \label{eq-C4_Pi_tau_sgs_demo}
+% \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right) 
+% & = \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\mathcal{P}(\R_u)\right)\\\nonumber
+% &  -\left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\mathcal{P}(\partial_t\tilde{\u})\right)\\\nonumber
+% & = \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\R_u\right) 
+%   - \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\Pi_m(\R_u)\right)\\\nonumber
+% & - \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\partial_t\tilde{\u}\right)
+%   + \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\Pi_m(\partial_t\tilde{\u})\right)\\\nonumber
+% & = 0.
+% \end{align}}
+Then, the global energy balance equation (\ref{eq-C4_total_balance}) reads
+\begin{align}
+\label{eq-C4_total_balance_OSS2}
+\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2
+&+\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h) \\ \nonumber
+&+\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2 %- 2 \left(\nu\Delta\u_h,\tilde{\u}\right)
+=\left<\mathbf{f},\mathbf{u}_h\right>+\left(\mathcal{P}(\mathbf{f}),\tilde{\u}\right),
+\end{align}
+which is exactly (\ref{eq-C4_total_balance_ASGS2}) except for the projection of the force in the last term. Stability and convergence of this formulation have been proved in \cite{Badia2010,Badia2013Convergence}.
+
+\section{Final discrete problem}
+\label{sec-C4_discrete}
+Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV} and \ref{sec-C4_TCF}.
+
+\subsection{Algebraic Subgrid Scales (ASGS)}
+
+Taking the nonlinear advection velocity definition (\ref{eq-C4_a_nl}) and considering the time derivative in the fine scales, we have the Dynamic and Nonlinear ASGS method, hereinafter Dyn-Nl-ASGS. 
+%For this method, using linear FEs, the Backward Euler (BE) scheme for the time discretization and the Picard method for the nonlinear term, 
+At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ such that
+% \begin{align}
+% \label{eq-C4_Dyn-Nl-ASGS}
+% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
+% &+\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n+1,i}+N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
+% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)-\frac{1}{\Delta t}\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n+1,i}+N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],\v_h\right)=\\\nonumber
+% &=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\frac{1}{\Delta t}(\tilde{\u}^{n},\v_h)+\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n}+\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^n\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
+% &-\frac{1}{\Delta t}\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n}+\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^n\right],\v_h\right),\\\nonumber
+% \end{align}
+\begin{align}
+\label{eq-C4_Dyn-Nl-ASGS}
+\frac{1}{\delta t}(\u_h^{n,i},\v_h)
+&+ B(\a^{n,i-1};[\u_h^{n,i},p_h^{n,i}],[\v_h,q_h])
+\\ \nonumber
+&+\left(\tau_{m,t} \left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right], \mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)_h\\ \nonumber
+&+\left(\tau_c\nabla\cdot\u_h^{n,i},\nabla\cdot\v_h\right)
+-\frac{1}{\delta t} \left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right],\v_h\right)_h \\\nonumber
+&=\langle\v_h,\mathbf{f}\rangle
++\frac{1}{\delta t}(\u_h^{n-1},\v_h)+\frac{1}{\delta t}(\tilde{\u}^{n-1},\v_h) \\\nonumber
+&-\frac{1}{\delta t}\left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n-1}+\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}\right],\v_h\right) \\\nonumber
+&+\left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n-1}+\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}\right],\mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)_h,
+\label{eq-C4_Dyn-Nl-ASGS}
+\end{align}
+where $\tau_{m,t}=\left(\delta t^{-1}+\tau_m^{-1}\right)^{-1}$ and $\a^{n,i-1}=\u_h^{n,i-1}+\tilde{\u}^{n,i-1}$.
+
+In turn, $\tilde{\u}^{n,i}$ is computed by solving the discretization of the fine scale problem (\ref{eq-C4_velo_sgs}). Note that in the nonlinear version of the algorithm, the stabilization parameter $\tau_{m,t}$ depends on the subscale itself through $\a$ in (\ref{eq-C4_tau_m}), making the fine scale equation also nonlinear, although it is local and does not increase the size of the global linear system to be solved. At each integration point of each element we iteratively solve
+\begin{equation}
+\label{eq-C4_velo_sgs_discrete_expl}
+\tilde{\mathbf{u}}^{n,i,k}=\tau_{m,t}^{k-1}\frac{1}{\delta t}\tilde{\mathbf{u}}^{n-1}
++ \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\a^{n,i,k-1}}(\u_h^{n,i},p_h^{n,i})\right].
+%\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\a^{n+1,i,k-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
+\end{equation}
+where $\a^{n,i,k-1}=\u_h^{n,i}+\tilde{\u}^{n,i,k-1}$  is used in (\ref{eq-C4_tau_m}) to obtain $\tau_{m,t}^{k-1}$. 
+%We can see that in the equation (\ref{eq-C4_Dyn-Nl-ASGS}) appears an extra variable, $\tilde{\u}$. Then, for the last method we need to compute the fine scale velocity at each nonlinear iteration. But is a local unknown and does not increase the age of the resulting linear system. Note that we need the subscale velocity at the previous time-step, $\tilde{\u}^n$, but also at the previous nonlinear iteration of the current step, $\tilde{\u}^{n+1,i-1}$, needed in $\a^{n+1,i-1}$. This extra variable is obtained by solving the discrete fine scale problem
+% \begin{equation}
+% \label{eq-C4_velo_sgs_discrete_expl}
+% \tilde{\mathbf{u}}^{n+1,i,k}=\tau_{m,t}^{k-1}\frac{1}{\Delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}^{k-1}\left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\a^{n+1,i,k-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
+% \end{equation}
+
+%We can observe in equation (\ref{eq-C4_velo_sgs_discrete_expl}) that the fine scale velocity $\tilde{\u}$ is also nonlinear since the stabilization parameter $\tau_{m,t}$ and the advection velocity $\a$ depend on $\tilde{\u}$.
+% TILL HERE
+ Alternatively, one can send the corresponding fine scale convective term $\tilde{\u}\cdot\nabla\u_h$ to the left-hand side, improving the convergence of the iterative process as
+\begin{align}
+\label{eq-C4_velo_sgs_discrete_impl}
+\tilde{\mathbf{u}}^{n,i,k}
+& + \tilde{\u}^{n,i,k}\cdot\nabla\u_h^{n,i}
+  = \tau_{m,t}^{k-1} \frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1} + \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\u_h^{n,i}}(\u_h^{n,i},p_h^{n,i})\right].
+%& + \tau_{m,t}^{k-1} \left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
+\end{align}
+This is a simple fixed-point iterative scheme that we have found efficient and robust for the numerical simulations presented in this paper, although in other situations we have found more convenient to use a conventional Newton-Raphson scheme to solve the nonlinear subscale equation \cite{Avila2011}.
+
+For the simplest ASGS scheme we do not consider the time derivative of the fine scale, we consider them quasi-static, i.e., $(\partial_t\tilde{\u},\v_h)=0$. Note that in any case the subscales will depend on time through the FE residual and the stabilization parameter. On the other hand, the advection velocity is considered to be linear as indicated in (\ref{eq-C4_a_lin}). We label this method as Static Linear ASGS (Sta-Lin-ASGS). Note that the Sta-Lin-ASGS method does not need to explicitly compute $\tilde{\u}$; invoking (\ref{eq-C4_tau_m}) and (\ref{eq-C4_tau_c}) in (\ref{eq-C4_NS_discrete}) we get a discrete equation only in terms of the FE component.%, avoiding to solve (\ref{eq-C4_velo_sgs_discrete_impl}).
+
+We can readily define the rest of possible combinations of time and nonlinear treatment considering the linear advection velocity definition and the time-dependence in the subscales (Dyn-Lin-ASGS method) or keeping the static definition of the subscales with the nonlinear choice for the advection velocity (Sta-Nl-ASGS method).
+
+\subsection{Orthogonal Subscales (OSS)}
+
+Let us state the Dynamic and Nonlinear OSS (Dyn-Nl-OSS) method, which means to take into account the nonlinearity of the advection velocity (\ref{eq-C4_a_nl}) and the time derivative of the subscales. At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ by solving
+%problem using linear FEs, a BE discretization in time and the Picard method for the nonlinear term, at time step $t_{n+1}$ and nonlinear iteration $i$, is the following
+% \begin{align}
+% \label{eq-C4_Dyn-Nl-OSS}
+% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
+% &+\left(\tau_{m,t}\left[N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
+% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^{n}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
+% &-\left(\tau_{m,t}\Pi_m(\R_u^{n+1,i-1}),N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\left(\tau_c\Pi_c\left(R_p^{n+1,i-1}\right),\nabla\cdot\v_h\right).\\\nonumber
+% \end{align}
+\begin{align}
+\label{eq-C4_Dyn-Nl-OSS}
+\frac{1}{\delta t}(\u_h^{n,i},\v_h)
+&+ B(\a^{n,i-1};[\u_h^{n,i},p_h^{n,i}],[\v_h,q_h]) \\ \nonumber
+&+\left(\tau_{m,t} \left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right], \mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)\\ \nonumber
+ &+\left(\tau_c\nabla\cdot\u_h^{n,i},\nabla\cdot\v_h\right) \\\nonumber
+ &=\langle\v_h,\mathbf{f}\rangle
+ +\frac{1}{\delta t}(\u_h^{n-1},\v_h) \\\nonumber
+ &+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}-\boldsymbol{\xi}_m^{n,i-1}\right],\mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right) \\\nonumber
+ &-\left(\tau_c\xi_c^{n,i-1},\nabla\cdot\v_h\right),
+\end{align}
+% \begin{align}
+% \label{eq-C4_Dyn-Nl-OSS}
+% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
+% &+\left(\tau_{m,t}\left[N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
+% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^{n}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
+% &-\left(\tau_{m,t}\Pi_m(\R_u^{n+1,i-1}),N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\left(\tau_c\Pi_c\left(R_p^{n+1,i-1}\right),\nabla\cdot\v_h\right).\\\nonumber
+% \end{align}
+%Here we need to have explicitly defined the projections of the residuals, $\Pi_m(\R_u)$ and $\Pi_c(R_p)$. The implementation on the code of the projection calculations can be done implicitly at each nonlinear iteration ($\Pi_m(\R_u^{n+1,i-1})$ and $\Pi_c(R_p^{n+1,i-1})$), or explicitly at the previous time step ($\Pi_m(\R_u^n)$ and $\Pi_c(R_p^n)$). 
+where $\boldsymbol{\xi}_m$ and $\xi_c$ are the weighted projections of the residuals $\R_u$ and $R_p$ (see below) evaluated at the corresponding time step and nonlinear iteration. 
+
+Like the Dyn-NL-ASGS method, we also need to compute the subscale velocity $\tilde{\u}$ explicitly. We compute the discrete subscale problem with the OSS counterpart of (\ref{eq-C4_velo_sgs_discrete_expl}) or (\ref{eq-C4_velo_sgs_discrete_impl}), viz. 
+% \begin{align}
+% \label{eq-C4_velo_sgs_discrete_impl_OSS}
+% \tilde{\mathbf{u}}^{n+1,i,k}
+% & + N(\tilde{\u}^{n+1,i,k},\u_h^{n+1,i})=
+% \tau_{m,t}^{k-1}\frac{1}{\Delta t}\tilde{\mathbf{u}}^n \\ \nonumber
+% & + \tau_{m,t}^{k-1}\left[\mathbf{f}-\left(N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right]-\tau_{m,t}^{k-1}\Pi_m(\R_u^{n+1,i-1}).
+% \end{align}
+\begin{align}
+\label{eq-C4_velo_sgs_discrete_impl_OSS}
+\tilde{\mathbf{u}}^{n,i,k}
+& + \tilde{\u}^{n,i,k}\cdot\nabla\u_h^{n,i}
+  = \tau_{m,t}^{k-1} \frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1} \\ \nonumber
+& + \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\u_h^{n,i}}(\u_h^{n,i},p_h^{n,i})\right]-\tau_{m,t}^{k-1}\boldsymbol{\xi}_m^{n,i-1}.
+%& + \tau_{m,t}^{k-1} \left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
+\end{align}
+Note that $\boldsymbol{\xi}_m^{n,i}$ actually depends on $\tilde{\u}^{n,i}$ via the advection velocity of the convective term $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$. In order to simplify the fine scale computation (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) we use the projection at the previous nonlinear iteration, i.e., $\boldsymbol{\xi}_m^{n,i-1}$. 
+
+For the dynamic OSS case we should introduce some modifications in the computation of the projection $\Pi_m$. At the fully discrete level, in order for $\tilde{\u}^{n+1}$ to be $L^2$ orthogonal to $\mathcal{V}_{h}$, we must add to the FE residual the subscale time derivative contribution from the previous time step and use $\tau_{m,t}$ instead of $\tau_m$ in the computation of the projections. Finally, the projections of the residuals onto the FE spaces $\boldsymbol{\xi}_m^{n,i}$ and $\xi_c^{n,i}$ are such that
+\begin{align}
+\label{eq-C4_dyn_proj}
+&(\tau_{m,t}\boldsymbol{\xi}_m^{n,i},\v_h)=(\tau_{m,t}(\R_u^{n,i}+\frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1}),\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
+&(\tau_c\xi_c^{n,i},q_h)=(\tau_c R_p^{n,i},q_h)&&\forall q_h\in\mathcal{Q}_{0,h},
+\end{align}
 %\begin{align}
-%\label{eq-C4_velo_sgs}
-%\partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u),\\
-%\label{eq-C4_press_sgs}
-%\tau_c^{-1}\tilde{p}=\mathcal{P}(R_p).
+%&(\tau_{m,t}\boldsymbol{\xi}_m^{n,i},\v_h)=(\tau_{m,t} \R_u^{n,i},\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
+%&(\tau_c\xi_c^{n,i},q_h)=(\tau_c R_p^{n,i},q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
 %\end{align}
-%In (\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) $\mathcal{P}$ denotes the projection onto the space of subscales, which is discussed below. In turn, the vector $\R$ is the residual of the Navier-Stokes equations (\ref{eq-C4_NS_strong_mome})-(\ref{eq-C4_NS_strong_inc}), defined as $\R=[\R_u,R_p]^T$, with
-%\begin{align}
-%\label{eq-C4_Ru}
-%%&\R_u=\f-\left(\partial_t\u_h+N((\u_h+\tilde{\u}),\u_h)+\nabla p_h \right),\\
-%%&\R_u=\f-\left(\partial_t\u_h+ \a \cdot \nabla \u_h + \nabla p_h \right),\\
-%&\R_u=\f-\partial_t\u_h-\mathcal{L}_{\a}(\u_h,p_h),\\
-%\label{eq-C4_Rp}
-%&R_p=-\nabla\cdot\u_h.
-%\end{align}
-%where
-%\begin{equation}
-%\label{eq-C4_operator}
-%\mathcal{L}_{\a}(\v_h,q_h):=-\nu\nabla^2\v_h+\a\cdot\nabla\v_h+\nabla q_h
-%\end{equation}
-%%and $N((\u_h+\tilde{\u}),\u_h)=(\u_h+\tilde{\u})\cdot\nabla\u_h$ is the convective term. 
-%Finally, the expressions of the stabilization parameter $\tau_m$ is 
-%\begin{align}
-%\label{eq-C4_tau_m}
-%&\tau_m=\left(\frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}\right)^{-1},
-%\end{align}
-%whereas we consider two possible definitions of $\tau_c$, viz. $\tau_c = 0$ (which implies $\tilde{p} = 0$) and 
-%\begin{align}
-%\label{eq-C4_tau_c}
-%&\tau_c=\frac{h^2}{c_1\tau_m},
-%\end{align}
-%where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression~(\ref{eq-C4_tau_m}):
-%\begin{itemize}
-%\item The influence of the constants $c_1$ and $c_2$ is discussed in Section~\ref{sec-C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
-%\item The definition of $\tau_m$ in~(\ref{eq-C4_tau_m}) is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of~(\ref{eq-C4_tau_m}), $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{Hsu2010,gamnitzer_time-dependent_2010}). We refer to 
-%Section~\ref{sec-C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
-%\item Expression~(\ref{eq-C4_tau_m}) corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{Principe2010}.
-%\end{itemize}
-%
-%In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{Codina-chap-2011}, together with some numerical experiments. 
-%
-%\subsubsection{The dynamics of the subscales}
-%Stabilized formulations were originally developed for steady convection-diffusion \cite{Brooks_1982} and Stokes \cite{Douglas_1989,Hughes_1986_5} problems. As the numerical instabilities have a spatial nature, the time dependency of the subscales was not considered, and the standard choice \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} was to take 
-%\begin{equation}
-%\label{eq-C4_static_sgs}
-%\tilde{\u}=\tau_m \mathcal{P}(\R_u),
-%\end{equation}
-%that is, to neglect the temporal derivative of the subscales in (\ref{eq-C4_velo_sgs}). In this case, the subscales are called quasi-static in what follows.
-%
-%The subscale as a time dependent variable of the problem was introduced in \cite{codina_stabilized_2002,codina_time_2007}. It gives rise to important properties like commutativity of space and time discretization, stability without restrictions on the time step size \cite{codina_time_2007,Badia2009a} and, combined with orthogonal subscales, to convergence towards weak solutions of the Navier-Stokes equations \cite{Badia2013Convergence} and the possibility of predicting backscatter \cite{Codina-chap-2011,Principe2009}. 
-%
-%Equation (\ref{eq-C4_velo_sgs}) can be analytically integrated to give
-%\begin{equation}
-%\label{eq-C4_exact_sgs}
-%\tilde{\u}(t^*)=\tilde{\u}(0) + \mu^{-1}(t^*) \int_0^{t^*} \mu(t) \mathcal{P}\R_u {\rm d}t, \quad \quad \mu(s)=\exp \int_0^s \tau^{-1}(t){\rm d}t,
-%\end{equation}
-%where it is explicitly seen that the subscale is a function of the residual but also of the flow history. In practice this integration is performed numerically, as described below.
-%
-%\subsubsection{(Non)linear scale splitting}
-%
-%The original VMS formulation \cite{hughes_multiscale_1995,hughes_variational_1998} was developed having linear problems in mind and its extension to the Navier-Stokes equations was implicitly based on a ``linearization'', fixing the advection velocity and applying the multiscale splitting to the rest of the terms. A nonlinear scale splitting was used in \cite{Hughes2000,hughes_large_2001} together with an explicit resolution of the small scales in which a Smagorinsky damping was introduced. A nonlinear scale splitting with modeled subscales was used in \cite{codina_stabilized_2002, bazilevs_variational_2007} and in \cite{codina_time_2007}, where it was shown that it leads to global conservation of momentum. We therefore consider both options
-%%The vector $\a$ appearing in (\ref{eq-C4_bilinear}) and (\ref{eq-C4_adjoint}) is the advection velocity of the convective term. It can be defined in two different ways depending if we use a linear or a nonlinear scheme for the subscales definition. That is, 
-%\begin{align}
-%\label{eq-C4_a_lin}
-%&\a=\u_h&&\mbox{for linear subscales},\\
-%\label{eq-C4_a_nl}
-%&\a=\u_h+\tilde{\u}&&\mbox{for nonlinear subscales}.
-%\end{align}
-%
-%\begin{remark}
-%\label{rem:skewsym}
-%When we use the nonlinear definition for the advection velocity, $\a=\u_h+\tilde{\u}$, the skew-symmetric term \textit{type 2} (\ref{eq-C4_b_skew2}) in the FE equation (\ref{eq-C4_NS_discrete}) reads: 
-%\begin{equation}
-%\label{eq-C4_b_skew2_aux1}
-%b(\a,\u_h,\v_h)=((\u_h+\tilde{\u})\cdot\nabla\u_h,\v_h)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\u_h)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\tilde{\u}).
-%\end{equation}
-%The last term is not well-defined, since it includes derivatives of the discontinuous subscale $\tilde{\u}$. One possibility is to neglect it (as previously done with other similar terms when arriving to (\ref{eq-C4_NS_discrete})), which implies
-%\begin{equation}
-%b(\a,\u_h,\u_h)=-\frac{1}{2}(|\u_h|^2,\nabla\cdot\tilde{\u}),
-%\end{equation}
-%the same result obtained when the non conservative form is used.
-%By contrast, the skew-symmetric term \textit{type 1} in the FE equation (\ref{eq-C4_NS_discrete}) reads
-%\begin{equation}
-%\label{eq-C4_b_skew1_aux1}
-%b(\a,\u_h,\v_h)=\frac{1}{2}((\u_h+\tilde{\u})\cdot\nabla\u_h,\v_h)-\frac{1}{2}((\u_h+\tilde{\u})\cdot\u_h,\nabla\cdot\v_h)
-%\end{equation}
-%from where
-%\begin{equation}
-%b(\a,\u_h,\u_h)=0.
-%\end{equation}
-%% and we can not use the FE shape function derivatives to approximate it because the subscales are on another space. Then we avoid this problem by neglecting this term. 
-%%Therefore, the skew-symmetric term \textit{type 2} implementation for a nonlinear definition of the subscales will be
-%%\begin{equation}
-%%\label{eq-C4_b_skew2_aux2}
-%%b(\a,\u_h,\v_h)=(\a\cdot\nabla\u_h,\v)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\a)-\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\tilde{\u}).
-%%\end{equation}
-%In Subsection (\ref{subsec-C4_C4_result_DHIT}) we will see the influence of the two forms of the convective term on the results.
-%It is worth noting that the same approximations have been introduced in all cases to implement $b(\a,\tilde{\u},\u_h)$, but these approximations are taken into account in the (usual) energy estimates of Section \ref{sec-C4_energy}.
-%%Note that \textit{type 2} is the standard choice.
-%\end{remark}
-%
-%\begin{remark}
-%At the continuous level, the different expressions of the convective term are also equivalent to the so called conservation form
-%\begin{align}
-%b(\u,\v,\w)= -(\u\otimes \v,\nabla\w).\nonumber
-%\end{align}
-%In the discrete problem, the nonlinear scale splitting leads to the following terms in the momentum equation:
-%\begin{align}
-%b(\a,\u_h +\tilde\u,\v_h)= - (\u_h\otimes\u_h, \nabla\v_h)
-%- (\u_h\otimes\tilde\u, \nabla\v_h)- (\tilde\u\otimes\u_h, \nabla\v_h)
-%- (\tilde\u\otimes\tilde\u, \nabla\v_h).\label{eq-C4_nonconconv}
-%\end{align}
-%Even if this is not exactly what we get using the non-conservative or skew-symmetric forms because of the approximation error, this allows us to interpret the different contributions arising from the nonlinear scale splitting. As it is explained in \cite{Codina-chap-2011}, from (\ref{eq-C4_nonconconv}) we can identify the contributions from the cross stresses, the Reynolds stresses and the subgrid scale tensor. 
-%\end{remark}
-%
-%\subsubsection{The space for the subscales}
-%\label{sec-C4_oss}
-%The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of (\ref{eq-C4_velo_sgs}) and (\ref{eq-C4_press_sgs}). The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
-%%method is characterized by the following projection definition:
-%\begin{equation}
-%\label{eq-C4_P_ASGS}
-%\mathcal{P}:=\mathbf{I}.
-%\end{equation}
-%Another possibility introduced in \cite{codina_stabilization_2000} is to consider the space of the subscales orthogonal to the FE space. The main motivation of the method is that a stability estimate for the projection onto the FE space of the pressure and/or the convective terms can already be obtained in the standard Galerkin method and therefore the only ``missing'' part is the orthogonal one. The Orthogonal Subscales (OSS) method is then characterized by the following projection definition:
-%\begin{equation}
-%\label{eq-C4_P_OSS}
-%\mathcal{P}:=\Pi_h^\bot=\mathbf{I}-\Pi_h,
-%\end{equation}
-%where $\Pi_h$ is the projection onto the FE space. With this choice, the residual of the momentum equation does not depend on $\partial_t\u_h$. Likewise, $\mathcal{P}(\f)$ in this case is only well defined for $\f\in L^2(\Omega)^d$. In the case of minimum regularity, $\f\in H^{-1}(\Omega)^d$, this term can be simply neglected without upsetting the accuracy of the method.
-%
-%In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec-C4_energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in (\ref{eq-C4_velo_sgs}) and another for the pressure subscales ($\Pi_c$) in (\ref{eq-C4_press_sgs}). We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
-%\begin{align}
-%\label{eq-C4_Pi_tau_m}
-%&(\tau_m\Pi_m(\w),\v_h)=(\tau_m\w,\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
-%\label{eq-C4_Pi_tau_c}
-%&(\tau_c\Pi_c(r),q_h)=(\tau_cr,q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
-%\end{align}
-%These definitions guarantee the orthogonality between the FE and subscale spaces in the case of static subscales, that is, neglecting temporal derivatives in (\ref{eq-C4_velo_sgs}). It then follows that the term containing the temporal derivative of the subscale in the FE equation (\ref{eq-C4_NS_discrete}) also vanishes.
-%
-%However, if the dynamic version of the method is used, the weight of the projection (\ref{eq-C4_Pi_tau_m}) must be conveniently modified to ensure the mentioned orthogonality. As it can be seen in (\ref{eq-C4_exact_sgs}), the definition of the weight depends on the time integration strategy, as explicitly stated in Section \ref{sec-C4_discrete}.
-%
-%% {\color{blue}However, if the dynamic version of the method is used (see below), the fine scale equation (\ref{eq-C4_velo_sgs}) should be modified in order to ensure the mentioned orthogonality. As the projection $\Pi_m$ is time-dependent since $\tau_m$ depends on time, the velocity subscale time derivative can not belong to the orthogonal subspace $\mathcal{V}_h^\bot$. Then, we must project the time derivative if we want to recover the orthogonality achieved in the static definition.
-%% \begin{equation}
-%% \label{eq-C4_velo_sgs_projected}
-%% \mathcal{P}\left(\partial_t\tilde{\u}\right)+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u).
-%% \end{equation}
-%% Further details will be given in section \ref{sec-C4_energy}, where the energy conservation of the method is discussed.}
-%
-%% {\color{red}OJO!!! si no estoy equivocado, este argumento garantiza que $(\mathcal{P}(\mathcal{L})+\mathcal{L}^*,\tilde{\u})=0$ a nivel semidiscreto, pero se carga la condicion $(\partial_t\tilde{\u},\u_h)=0$, no??}
-%
-%%this definition should be changed modifying the weight in a way that depends on the time integration scheme. For example if equation (\ref{eq-C4_velo_sgs}) is discretized as $\tilde{\u}^{n+1}=\tau_m \mathcal{P}(\R_u) + \frac{1}{\delta t}\tilde{\u}^n$ the projection \ref{eq-C4_Pi_tau_m} must be weighted using $\left(\tau_m^{-1}+{\delta t}^{-1}\right)^{-1}$ instead of  $\tau_m$. It is important to remark that using the weighted projections the residual of the monentum equation does depend on $\partial_t\u_h$. {\color{blue} Oriol, como esta en el codigo? Conservamos la derivada temporal al calcular las proyecciones?}
-%
-%\section{Energy balance statements}
-%\label{sec-C4_energy}
-%
-%In this section we revisit global energy conservation statements of the method. As shown in \cite{Principe2009}, similar statements can be obtained locally (in a volume $\omega \subset \Omega$).
-%
-%Taking $\v_h=\u_h$ and $q_h=p_h$ in (\ref{eq-C4_NS_discrete}) we have the energy balance on the FE component
-%\begin{align}
-%\label{eq-C4_FE_balance2}
-%\underbrace{\frac{1}{2}d_t\|\u_h\|^2}_I
-%& +\underbrace{\nu\|\nabla\u_h\|^2}_{II}
-%  +\underbrace{b(\a,\u_h,\u_h)}_{III} \\ \nonumber
-%& +\underbrace{(\partial_t\tilde{\u},\u_h)
-%+\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h
-%-\left(\tilde{p},\nabla\cdot\u_h\right)}_{IV}
-%=\underbrace{\left<\mathbf{f},\mathbf{u}_h\right>}_V,
-%\end{align}
-%In equation (\ref{eq-C4_FE_balance2}) we group the terms as
-%% \begin{center}
-%% \begin{tabular}{rll}
-%% I)&FE time derivative term:&$\frac{1}{2}d_t\|\u_h\|^2$\\
-%% II)&FE viscous term:&$\nu\|\nabla\u_h\|^2$\\
-%% III)&Convective term:&$b(\a,\u_h,\u_h)$\\
-%% IV)&FE to subscale energy transfer terms:&$(\partial_t\tilde{\u},\u_h)-\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)-\left(\tilde{p},\nabla\cdot\u_h\right)$\\
-%% V)&FE work of external power:& $\left<\mathbf{f},\mathbf{u}_h\right>$\\
-%% \end{tabular}
-%% \end{center}
-%\begin{center}
-%\begin{tabular}{rll}
-%I)&FE kinetic energy variation:&$\frac{1}{2}d_t\|\u_h\|^2$\\
-%II)&FE viscous dissipation:&$\nu\|\nabla\u_h\|^2$\\
-%III)&FE convective term:&$b(\a,\u_h,\u_h)$\\
-%IV)&FE to SGS energy transfer:&$\varepsilon_{h} =(\partial_t\tilde{\u},\u_h)+\left(\tilde{\u},\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h-\left(\tilde{p},\nabla\cdot\u_h\right)$\\
-%V)&FE component of external power:& $\left<\mathbf{f},\mathbf{u}_h\right>$\\
-%\end{tabular}
-%\end{center}
-%Multiplying (\ref{eq-C4_velo_sgs}) by $\tilde{\u}$ and (\ref{eq-C4_press_sgs}) by $\tilde{p}$, integrating over the domain and decomposing the residual of the momentum equation as $\R_u=\f-\partial_t\u_h-\mathcal{L}_{\a}(\u_h,p_h)$, % we have from (\ref{eq-C4_sgs_balance1}) 
-%we obtain the global energy balance on the fine scale
-%\begin{align}
-%\label{eq-C4_sgs_balance2}
-%\underbrace{\frac{1}{2}d_t\|\tilde{\u}\|^2}_I
-%&+\underbrace{\tau_m^{-1}\|\tilde{\u}\|^2}_{II}
-%+\underbrace{\tau_c^{-1}\|\tilde{p}\|^2}_{III} \\ \nonumber
-%&+\underbrace{\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)
-%+\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right)_h
-%+\left(\mathcal{P}(\nabla\cdot\u_h),\tilde{p}\right)}_{IV}
-%=\underbrace{\left(\mathcal{P}(\f),\tilde{\u}\right)}_V.
-%\end{align}
-%% In equation (\ref{eq-C4_sgs_balance2}) we group the terms as
-%% \begin{center}
-%% \begin{tabular}{rll}
-%% I)&Subscale time derivative term:&$\frac{1}{2}d_t\|\tilde{\u}\|^2$\\
-%% II)&Subscale viscous term:&$\tau_m^{-1}\|\tilde{\u}\|^2$\\
-%% III)&Subscale pressure term:&$\tau_c^{-1}\|\tilde{p}\|^2$\\
-%% IV)&Subscale to FE energy transfer balance:&$\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)+\left(\tilde{\u},\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))\right)+\left(\tilde{p},\mathcal{P}(\nabla\cdot\u_h)\right)$\\
-%% V)&Subscale work of external power:&$\left(\mathcal{P}(\f),\tilde{\u}\right)$\\
-%% \end{tabular}
-%% \end{center}
-%We group the terms in (\ref{eq-C4_sgs_balance2}) as
-%\begin{center}
-%\begin{tabular}{rll}
-%I)&SGS kinetic energy variation:&$\frac{1}{2}d_t\|\tilde{\u}\|^2$\\
-%II)&SGS velocity dissipation:&$\tau_m^{-1}\|\tilde{\u}\|^2$\\
-%III)&SGS pressure dissipation:&$\tau_c^{-1}\|\tilde{p}\|^2$\\
-%IV)&SGS to FE energy transfer:&$\tilde{\varepsilon}= \left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)+\left(\tilde{\u},\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))\right)_h+\left(\tilde{p},\mathcal{P}(\nabla\cdot\u_h)\right)$\\
-%V)&SGS component of external power:&$\left(\mathcal{P}(\f),\tilde{\u}\right)$\\
-%\end{tabular}
-%\end{center}
-%Finally, adding up equations (\ref{eq-C4_FE_balance2}) and (\ref{eq-C4_sgs_balance2}) 
-%%and using $\mathcal{L}^*(\u_h,p_h)=-\mathcal{L}(\u_h,p_h)$ for linear elements, 
-%we obtain an equation for the total kinetic energy
-%\begin{align}
-%\label{eq-C4_total_balance}
-%   \frac{1}{2}d_t\|\u_h\|^2
-%& +\frac{1}{2}d_t\|\tilde{\u}\|^2
-%  +\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h)
-%  +\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2 \\ \nonumber
-%& +(\partial_t\tilde{\u},\u_h)
-%  +\left(\mathcal{P}(\partial_t\u_h),\tilde{\u}\right)
-%  +\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h\\ \nonumber
-%& \quad \quad \quad \quad  +\left(\mathcal{P}(\nabla\cdot\u_h)-\nabla\cdot\u_h,\tilde{p}\right)=\left<\mathbf{f},\mathbf{u}_h\right>+\left((\mathcal{P}(\f),\tilde{\u}\right).
-%\end{align}
-%%Even though it is not our intention to perform a numerical analysis of the methods, let us review known results for each particular VMS model. 
-%Let us note the presence of $b(\a,\u_h,\u_h)$, which is zero only when the skew-symmetric type 1 form is considered. Other choices could result in a spurious positive contribution to the FE kinetic energy as it is actually observed in the DHIT problem, and could result in a loss of stability, although that was not observed.
-%%We restric the discussion to the linear version of the multiscale splitting, we are not aware of any result about the fully nonlinear case.
-%
-%\subsection{Static subscales} 
-%
-%In this case the energy balance for the subscale is meaningless because there are explicit expressions for the subscales (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}). When (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}) are used in (\ref{eq-C4_FE_balance2}), we obtain
-%\begin{align}
-%\label{eq-C4_static_energy}
-%\frac{1}{2}d_t\|\u_h\|^2
-%& +\nu\|\nabla\u_h\|^2 + b(\a,\u_h,\u_h)  
-%  + \left( \tau_{m} \mathcal{P} \left(  \partial_t \u_h \right), \mathcal{L}^*_{\a} ( \u_{h},p_h)\right)_h \\ \nonumber
-%& + \left(\tau_{m} \mathcal{P} \left( \mathcal{L}_{\a} ( \u_{h},p_h) \right),\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h
-%%+ \left(\tau_{c} \mathcal{P} (\nabla \cdot \u_{h}),\nabla\cdot\u_h\right)
-%+ \tau_{c} \left\| \mathcal{P}(\nabla \cdot \u_{h})\right\|^{2}\\ \nonumber
-%& = \langle\mathbf{f},\mathbf{u}_h\rangle + \left(\tau_m \mathcal{P}(\mathbf{f}),\mathcal{L}^*_{\a}(\u_h,p_h)\right)_h.
-%\end{align}
-%In the case of the ASGS method, where $\mathcal{P}:=\mathbf{I}$, the fourth term on the left hand side is a source of problems. One the one hand, it cannot be neglected because it is needed to make the method consistent. On the other hand, it can only be controlled by the dissipation of the time integration scheme and is therefore responsible for the introduction of a restriction on the time step size. As a side problem, it is very inconvenient for an implementation if any explicit (operator splitting) time integration is chosen as it results in a non-symmetric mass matrix. This term is not present if the OSS method is chosen using the projection $\mathcal{P}:=\mathbf{I}-\Pi_h$. Stability of both the fully discrete and the semidiscrete Stokes problem have been proven in \cite{Badia2009a}.
-%
-%The important term is the fifth one, which permits to control
-%$ \tau_{m} \left\| \mathcal{P} \left( \mathbf{a}\cdot \mathbf{\nabla u}_{h}+\mathbf{\nabla }p_{h}\right) \right\|^{2} $; the FE part in the OSS formulation is readily controlled using inverse estimates. It therefore provides the essential numerical stability. The last term acts as a penalty on the divergence constraint, adding volumetric diffusion and provides (extra, non-essential) numerical stability.
-%
-%For the OSS method, it is proved in \cite{guasch-codina-13} that the dissipative structure of the discrete problem has the same statistical behavior in fully developed turbulence than the continuous problem, in the sense that this dissipation has the same estimates as the molecular one. Both dissipations could be made equal by a proper choice of the stabilization parameters in (\ref{eq-C4_tau_m}). This, however, requires a small change in the advection velocity of this expression, which depends on an integral length of the problem. See \cite{guasch-codina-13} for details.
-%
-%\subsection{Dynamic subscales} 
-%
-%In this case, the time derivative of both the FE and subgrid components have to be considered and an estimator for the kinetic energy variation of both the FE and subgrid velocity can be obtained. The stability of the subgrid scale velocity can then be used to obtain a stability estimate of the FE component in a norm that includes the convective and pressure terms \cite{codina_time_2007,Badia2009a,Badia2010}.\footnote{However, it should be kept in mind that the numerical solution of the problem is the FE component. There is no reason to add the subscale to the final solution as the approximation is limited by the interpolation order, see \cite[Remark 10]{codina_time_2007}.} Therefore, the numerical dissipation of the method is actually given by the energy transfer $\varepsilon_h$ from the FE to the subscale component. 
-%Using (\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}), we get:
-%\begin{align}
-%\label{eq-C4_transfer}
-%\varepsilon_{h} & = 
-%  \left( \partial_t\tilde{\u} , \u_h\right) 
-%- \left( \tau_m \partial_t\tilde{\u} , \mathcal{L}^*_{\a} ( \u_{h},p_h)\right) _h 
-%- \left( \tau_{m} \mathcal{P} \left(  \partial_t \u_h \right), \mathcal{L}^*_{\a} ( \u_{h},p_h)\right)_h \\ \nonumber
-%& 
-%- \left( \tau_{m} \mathcal{P} \left(  \mathcal{L}_{\a} ( \u_{h},p_h) \right), \mathcal{L}^*_{\a} ( \u_{h},p_h) \right)_h
-%+ \tau_{c} \left\| \mathcal{P} \nabla \cdot \u_{h}\right\|^{2}. %\nonumber
-%\end{align}
-%Except from the viscous contribution, the last two terms in (\ref{eq-C4_transfer}) are positive, providing dissipation of the FE energy, but the first three could be negative, providing these models with a mechanism to predict a backward energy transfer, not frequently found in classical LES models \cite{Sagaut2006}. It is justified in \cite{Codina-chap-2011} that even if the first three terms may be negative at a certain time instant, their averaged contribution in a time window greater than the largest period needs to be positive, which is the behavior expected of backscatter from a physical point of view. 
-%
-%For the ASGS method, i.e., $\mathcal{P}:=\mathbf{I}$, the last term in the left hand side of (\ref{eq-C4_total_balance}) vanishes and the previous one reads
-%\begin{equation}
-%\left(\mathcal{L}_{\a}(\u_h,p_h)+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h=
-%-2 \left(\nu\Delta\u_h,\tilde{\u}\right)_h.
-%\end{equation}
-%In turn, the time derivatives of the FE and subscale velocities can be combined as
-%\begin{align}
-%\label{eq-C4_time_deriv_ASGS}
-%\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2+(\partial_t\tilde{\u},\u_h)+\left(\partial_t\u_h,\tilde{\u}\right)=\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2
-%\end{align}
-%to rewrite (\ref{eq-C4_total_balance}) as
-%\begin{align}
-%\label{eq-C4_total_balance_ASGS2}
-%\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2
-%&+\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h) \\ \nonumber
-%&+\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2-2 \left(\nu\Delta\u_h,\tilde{\u}\right)=\left<\mathbf{f},\mathbf{u}_h\right>+\left<\mathbf{f},\tilde{\u}\right>.
-%\end{align}
-%From this equation, a stability estimate for $\|\u_h+\tilde{\u}\|$ can be obtained as the last term on the left hand side can be controlled using the second one (see \cite[Remark 4.7]{Badia2009a}).% where this stability is proven for the Stokes problem.
-%
-%Another important point of (\ref{eq-C4_total_balance_ASGS2}) is that it immediately shows that when the mesh is fine enough, i.e., 
-%\begin{equation*}
-%\frac{\left| \mathbf{a}\right| h}{\nu }\ll 1,
-%\end{equation*}
-%the dissipation of the total energy depends only on the viscosity. Therefore, the dissipative structure is correctly predicted when a laminar flow is considered or when the discretization is fine enough to resolve all scales of the flow, an important advantage over other LES techniques.
-%
-%On the other hand, for the OSS method, the FE and subgrid kinetic energy can be summed to obtain the total one
-%\begin{align}
-%\label{eq-C4_time_deriv_OSS}
-%\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2=\frac{1}{2}d_t\|\u_h+\tilde{\u}\|^2.
-%\end{align}
-%since $(\partial_t\tilde{\u},\u_h)=(\partial_t\u_h,\tilde{\u})=0$ as soon as we enforce the subscale to be orthogonal to the FE space. This property also guarantees that%{\color{red} (OJO!! si $\mathcal{P}\left(\partial_t\tilde{\u}\right)+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u)$ esto no se cumple con $\mathcal{P}\equiv\Pi^\bot$ porque $(\mathcal{P}(\partial_t\tilde{\u}),\u_h)=0\Rightarrow(\partial_t\tilde{\u},\u_h)=(\Pi_\tau(\partial_t\tilde{\u}),\u_h)\neq0$. Es asi??)} 
-%\begin{align}
-%\label{eq-C4_Pi_tau_sgs}
-%\left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right) = 0 \\
-%\left(\Pi_c(\nabla\cdot\u_h),\tilde{p}\right)=0
-%\end{align}
-%which implies that the last term on the left hand side of (\ref{eq-C4_total_balance}) vanishes and that the previous one can be written as
-%\begin{align}
-%\left(\mathcal{P}(\mathcal{L}_{\a}(\u_h,p_h))+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h
-%= \left( (\mathcal{L}_{\a}(\u_h,p_h)+\mathcal{L}^*_{\a}(\u_h,p_h),\tilde{\u}\right)_h
-%=-2 \left(\nu\Delta\u_h,\tilde{\u}\right)_h
-%\end{align}
-%as in the ASGS case. Let us note that the Laplacian term can be eliminated without affecting the convergence properties of the method. 
-%%It can be justified by replacing the elementwise Laplacian by a discrete Laplacian operator in $\mathcal{L}_{\a}$ (see \cite{Badia2013}). 
-%% {\color{blue}Note that if the dynamic definition of the subscales is considered, the condition (\ref{eq-C4_Pi_tau_sgs}) is achieved only if we use the modified subscale equation (\ref{eq-C4_velo_sgs_projected}) instead of (\ref{eq-C4_velo_sgs}). Using the definition (\ref{eq-C4_Pi_tau_m}) we have that
-%% \begin{align}
-%% \label{eq-C4_Pi_tau_sgs_demo}
-%% \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tilde{\u}\right) 
-%% & = \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\mathcal{P}(\R_u)\right)\\\nonumber
-%% &  -\left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\mathcal{P}(\partial_t\tilde{\u})\right)\\\nonumber
-%% & = \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\R_u\right) 
-%%   - \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\Pi_m(\R_u)\right)\\\nonumber
-%% & - \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\partial_t\tilde{\u}\right)
-%%   + \left(\Pi_m(\mathcal{L}_{\a}(\u_h,p_h)),\tau_m\Pi_m(\partial_t\tilde{\u})\right)\\\nonumber
-%% & = 0.
-%% \end{align}}
-%Then, the global energy balance equation (\ref{eq-C4_total_balance}) reads
-%\begin{align}
-%\label{eq-C4_total_balance_OSS2}
-%\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\tilde{\u}\|^2
-%&+\nu\|\nabla\u_h\|^2+b(\a,\u_h,\u_h) \\ \nonumber
-%&+\tau_m^{-1}\|\tilde{\u}\|^2+\tau_c^{-1}\|\tilde{p}\|^2 %- 2 \left(\nu\Delta\u_h,\tilde{\u}\right)
-%=\left<\mathbf{f},\mathbf{u}_h\right>+\left(\mathcal{P}(\mathbf{f}),\tilde{\u}\right),
-%\end{align}
-%which is exactly (\ref{eq-C4_total_balance_ASGS2}) except for the projection of the force in the last term. Stability and convergence of this formulation have been proved in \cite{Badia2010,Badia2013Convergence}.
-%
-%%\end{itemize}
-%
-%
-%%% \subsection{Sensitivity with respect to the stabilization parameters}
-%%% \label{subsec-C4_C4_sensivity_tau}
-%
-%%% All the VMS models considered herein depend on the stabilization parameters $\tau_m$ and $\tau_c$, which contain constants $c_1$ and $c_2$ whose value is chosen from numerical experiments. However, we can infer from (\ref{eq-C4_static_energy}) or (\ref{eq-C4_transfer}) how this dependency will be. As mentioned before, the last two terms in (\ref{eq-C4_transfer}) are dissipative and therefore increasing $\tau_m$ and/or $\tau_c$ we obtain a more dissipative method. However, from (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}) increasing $\tau_m$ results in a reduction of $\tau_c$. More precisely 
-%%% \begin{equation*}
-%%% \tau_c=\nu + \frac{c_2}{c_1}\frac{|\a|}{h}
-%%% \end{equation*}
-%%% from where we see that increasing $c_1$ reduces both $\tau_m$ and $\tau_c$ but increasing $c_2$ reduces $\tau_m$ but increases $\tau_c$. On the other hand, only the fourth term in (\ref{eq-C4_transfer}) is essential to control
-%%% $ \tau_{m} \left\| \mathcal{P} \left( \mathbf{a}\cdot \mathbf{\nabla u}_{h}+\mathbf{\nabla }p_{h}\right) \right\|^{2} $, and it is possible to choose $\tau_c=0$. 
-%
-%%% %This is the option we followed in this work and 
-%%% %In order to check the sensitivity of VMS turbulence modelling with respect to those parameters, 
-%
-%
-%
-%
-%%\Subsection{Behavior in the small time step limit}
-%%\label{sec-C4_small_time_step}
-%%Several references have been made in the literature to the small time step instability, the first of which in \cite{Bochev2004,Bochev2007}, and the purpose of this section is to discuss this issue. The first point to clarify is that the instability described in \cite{Bochev2007} has nothing to do with the one described in \cite{Harari2004}. Whereas the first one is attributed to consistently stabilized approximations of the Navier Stokes equations, i.e. those depending on the FE residual as VMS models, the latter is also found in the convection diffusion problem and its the manifestation of the Gibbs phenomena associated to $L^2$ projections, that dominate the discrete operator in the small time step limit.
-%
-%%Even though the instability described in \cite{Bochev2004,Bochev2007} was numerically observed in \cite{codina_time_2007}, the theoretical analysis in \cite{Bochev2007} is not conclusive. This is because it is shown that the semi discrete pressure operator is not uniformly bounded (it depends on h) but the right hand side is not analyzed. It is also shown, that the dissipation introduced by the time discretization scheme can be used to bound the lowest eigenvalue but introducing a restriction on the time step size. The origin of the problem is the fourth term in (\ref{eq-C4_static_energy}).
-%
-%%In fact, the analysis in \cite{Burman2009} shows that stability and convergence can be proved without restrictions on the time step size provided the initial condition is appropriately chosen (as a particular projection onto a space of divergence free velocities).
-%%{\color{blue} Si no entiendo mal en \cite{Burman2009} se analizan metodos de proyeccion por lo que no contradicen el analisis de \cite{Bochev2007} aunque este no sea concluyente. Dicho de otra forma, si damos por bueno el analisis de \cite{Bochev2007} tampoco hay ninguna contradiccion: los metodos basados en el residuo son inestables y los basados en proyecciones no, siempre que tomes la condicion inicial buena}.
-%%The use of a non discretely divergence free initial condition is a possible explanation of the numerical results reported in \cite{Bochev2004,Bochev2007,codina_time_2007}.
-%
-%%In parallel, small time step instabilities were also reported in \cite{Hsu2010,gamnitzer_time-dependent_2010} although the VMS model used is different in that introduces a time step dependency on the stabilization parameter $\tau_m$. This dependency actually appears in the final discrete problem when dynamic subscales are used, as the final parameter $\tau_{m,t}$ scales with $\delta t$, as discussed in Section \ref{sec-C4_discrete}. {\it However} this happens in conjunction with a term that comes from the discretization of a temporal derivative in (\ref{eq-C4_velo_sgs}), see also \cite[Section 3.2]{codina_time_2007}. The plain introduction of a time step dependency in $\tau_m$ faces serious difficulties.
-%%\begin{itemize}
-%%\item If the convection diffusion problem is considered the method becomes unstable in the small time step limit just because the Galerkin formulation is recovered, as observed in \cite{Hsu2010}.
-%%\item A similar situation occurs in the Navier-Stokes problem if $\tau_c=0$.
-%%\item If $\tau_c$ is computed from (\ref{eq-C4_tau_c}), as it is usually done, in the small time step limit $\tau_m \sim \delta t$ and $\tau_c \sim \delta t^{-1}$. If this commonly used approach is followed \cite{bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}, when the time step is diminished the essential numerical dissipation given by the fifth term in (\ref{eq-C4_static_energy}) is reduced but the numerical dissipation introduced by the last term in the left hand side of (\ref{eq-C4_static_energy}) is increased which can be a compensating effect in practice.
-%%\end{itemize}
-%
-%%The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-C4_TCF}.
-%
-%\section{Final discrete problem}
-%\label{sec-C4_discrete}
-%Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV} and \ref{sec-C4_TCF}.
-%
-%\subsection{Algebraic Subgrid Scales (ASGS)}
-%
-%Taking the nonlinear advection velocity definition (\ref{eq-C4_a_nl}) and considering the time derivative in the fine scales, we have the Dynamic and Nonlinear ASGS method, hereinafter Dyn-Nl-ASGS. 
-%%For this method, using linear FEs, the Backward Euler (BE) scheme for the time discretization and the Picard method for the nonlinear term, 
-%At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ such that
-%% \begin{align}
-%% \label{eq-C4_Dyn-Nl-ASGS}
-%% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
-%% &+\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n+1,i}+N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
-%% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)-\frac{1}{\Delta t}\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n+1,i}+N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],\v_h\right)=\\\nonumber
-%% &=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\frac{1}{\Delta t}(\tilde{\u}^{n},\v_h)+\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n}+\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^n\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
-%% &-\frac{1}{\Delta t}\left(\tau_{m,t}\left[\frac{1}{\Delta t}\u_h^{n}+\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^n\right],\v_h\right),\\\nonumber
-%% \end{align}
-%\begin{align}
-%\label{eq-C4_Dyn-Nl-ASGS}
-%\frac{1}{\delta t}(\u_h^{n,i},\v_h)
-%&+ B(\a^{n,i-1};[\u_h^{n,i},p_h^{n,i}],[\v_h,q_h])
-%\\ \nonumber
-%&+\left(\tau_{m,t} \left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right], \mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)_h\\ \nonumber
-%&+\left(\tau_c\nabla\cdot\u_h^{n,i},\nabla\cdot\v_h\right)
-%-\frac{1}{\delta t} \left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right],\v_h\right)_h \\\nonumber
-%&=\langle\v_h,\mathbf{f}\rangle
-%+\frac{1}{\delta t}(\u_h^{n-1},\v_h)+\frac{1}{\delta t}(\tilde{\u}^{n-1},\v_h) \\\nonumber
-%&-\frac{1}{\delta t}\left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n-1}+\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}\right],\v_h\right) \\\nonumber
-%&+\left(\tau_{m,t}\left[\frac{1}{\delta t}\u_h^{n-1}+\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}\right],\mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)_h,
-%\label{eq-C4_Dyn-Nl-ASGS}
-%\end{align}
-%where $\tau_{m,t}=\left(\delta t^{-1}+\tau_m^{-1}\right)^{-1}$ and $\a^{n,i-1}=\u_h^{n,i-1}+\tilde{\u}^{n,i-1}$.
-%
-%In turn, $\tilde{\u}^{n,i}$ is computed by solving the discretization of the fine scale problem (\ref{eq-C4_velo_sgs}). Note that in the nonlinear version of the algorithm, the stabilization parameter $\tau_{m,t}$ depends on the subscale itself through $\a$ in (\ref{eq-C4_tau_m}), making the fine scale equation also nonlinear, although it is local and does not increase the size of the global linear system to be solved. At each integration point of each element we iteratively solve
-%\begin{equation}
-%\label{eq-C4_velo_sgs_discrete_expl}
-%\tilde{\mathbf{u}}^{n,i,k}=\tau_{m,t}^{k-1}\frac{1}{\delta t}\tilde{\mathbf{u}}^{n-1}
-%+ \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\a^{n,i,k-1}}(\u_h^{n,i},p_h^{n,i})\right].
-%%\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\a^{n+1,i,k-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
-%\end{equation}
-%where $\a^{n,i,k-1}=\u_h^{n,i}+\tilde{\u}^{n,i,k-1}$  is used in (\ref{eq-C4_tau_m}) to obtain $\tau_{m,t}^{k-1}$. 
-%%We can see that in the equation (\ref{eq-C4_Dyn-Nl-ASGS}) appears an extra variable, $\tilde{\u}$. Then, for the last method we need to compute the fine scale velocity at each nonlinear iteration. But is a local unknown and does not increase the age of the resulting linear system. Note that we need the subscale velocity at the previous time-step, $\tilde{\u}^n$, but also at the previous nonlinear iteration of the current step, $\tilde{\u}^{n+1,i-1}$, needed in $\a^{n+1,i-1}$. This extra variable is obtained by solving the discrete fine scale problem
-%% \begin{equation}
-%% \label{eq-C4_velo_sgs_discrete_expl}
-%% \tilde{\mathbf{u}}^{n+1,i,k}=\tau_{m,t}^{k-1}\frac{1}{\Delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}^{k-1}\left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\a^{n+1,i,k-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
-%% \end{equation}
-%
-%%We can observe in equation (\ref{eq-C4_velo_sgs_discrete_expl}) that the fine scale velocity $\tilde{\u}$ is also nonlinear since the stabilization parameter $\tau_{m,t}$ and the advection velocity $\a$ depend on $\tilde{\u}$.
-%% TILL HERE
-% Alternatively, one can send the corresponding fine scale convective term $\tilde{\u}\cdot\nabla\u_h$ to the left-hand side, improving the convergence of the iterative process as
-%\begin{align}
-%\label{eq-C4_velo_sgs_discrete_impl}
-%\tilde{\mathbf{u}}^{n,i,k}
-%& + \tilde{\u}^{n,i,k}\cdot\nabla\u_h^{n,i}
-%  = \tau_{m,t}^{k-1} \frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1} + \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\u_h^{n,i}}(\u_h^{n,i},p_h^{n,i})\right].
-%%& + \tau_{m,t}^{k-1} \left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
-%\end{align}
-%This is a simple fixed-point iterative scheme that we have found efficient and robust for the numerical simulations presented in this paper, although in other situations we have found more convenient to use a conventional Newton-Raphson scheme to solve the nonlinear subscale equation \cite{Avila2011}.
-%
-%For the simplest ASGS scheme we do not consider the time derivative of the fine scale, we consider them quasi-static, i.e., $(\partial_t\tilde{\u},\v_h)=0$. Note that in any case the subscales will depend on time through the FE residual and the stabilization parameter. On the other hand, the advection velocity is considered to be linear as indicated in (\ref{eq-C4_a_lin}). We label this method as Static Linear ASGS (Sta-Lin-ASGS). Note that the Sta-Lin-ASGS method does not need to explicitly compute $\tilde{\u}$; invoking (\ref{eq-C4_tau_m}) and (\ref{eq-C4_tau_c}) in (\ref{eq-C4_NS_discrete}) we get a discrete equation only in terms of the FE component.%, avoiding to solve (\ref{eq-C4_velo_sgs_discrete_impl}).
-%
-%We can readily define the rest of possible combinations of time and nonlinear treatment considering the linear advection velocity definition and the time-dependence in the subscales (Dyn-Lin-ASGS method) or keeping the static definition of the subscales with the nonlinear choice for the advection velocity (Sta-Nl-ASGS method).
-%
-%\subsection{Orthogonal Subscales (OSS)}
-%
-%Let us state the Dynamic and Nonlinear OSS (Dyn-Nl-OSS) method, which means to take into account the nonlinearity of the advection velocity (\ref{eq-C4_a_nl}) and the time derivative of the subscales. At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ by solving
-%%problem using linear FEs, a BE discretization in time and the Picard method for the nonlinear term, at time step $t_{n+1}$ and nonlinear iteration $i$, is the following
-%% \begin{align}
-%% \label{eq-C4_Dyn-Nl-OSS}
-%% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
-%% &+\left(\tau_{m,t}\left[N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
-%% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^{n}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
-%% &-\left(\tau_{m,t}\Pi_m(\R_u^{n+1,i-1}),N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\left(\tau_c\Pi_c\left(R_p^{n+1,i-1}\right),\nabla\cdot\v_h\right).\\\nonumber
-%% \end{align}
-%\begin{align}
-%\label{eq-C4_Dyn-Nl-OSS}
-%\frac{1}{\delta t}(\u_h^{n,i},\v_h)
-%&+ B(\a^{n,i-1};[\u_h^{n,i},p_h^{n,i}],[\v_h,q_h]) \\ \nonumber
-%&+\left(\tau_{m,t} \left[\frac{1}{\delta t}\u_h^{n,i}+ \mathcal{L}_{\a^{n,i-1}}(\u_h^{n,i},p_h^{n,i})\right], \mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right)\\ \nonumber
-% &+\left(\tau_c\nabla\cdot\u_h^{n,i},\nabla\cdot\v_h\right) \\\nonumber
-% &=\langle\v_h,\mathbf{f}\rangle
-% +\frac{1}{\delta t}(\u_h^{n-1},\v_h) \\\nonumber
-% &+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\delta t}\tilde{\u}^{n-1}-\boldsymbol{\xi}_m^{n,i-1}\right],\mathcal{L}^*_{\a^{n,i-1}}(\v_h,q_h) \right) \\\nonumber
-% &-\left(\tau_c\xi_c^{n,i-1},\nabla\cdot\v_h\right),
-%\end{align}
-%% \begin{align}
-%% \label{eq-C4_Dyn-Nl-OSS}
-%% &\frac{1}{\Delta t}(\u_h^{n+1,i},\v_h)+\nu(\nabla\u_h^{n+1,i},\nabla\v_h)+b(\a^{n+1,i-1},\u_h^{n+1,i},\v_h)-(p_h^{n+1},\nabla\cdot\v_h)+(q_h,\nabla\cdot\u_h^{n+1,i})+\\\nonumber
-%% &+\left(\tau_{m,t}\left[N(\a^{n+1,i-1},\u_h^{n+1,i})+\nabla p_h^{n+1}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)+\\\nonumber
-%% &+\left(\tau_c\nabla\cdot\u_h^{n+1,i},\nabla\cdot\v_h\right)=\langle\v_h,\mathbf{f}\rangle+\frac{1}{\Delta t}(\u_h^{n},\v_h)+\left(\tau_{m,t}\left[\mathbf{f}+\frac{1}{\Delta t}\tilde{\u}^{n}\right],N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\\\nonumber
-%% &-\left(\tau_{m,t}\Pi_m(\R_u^{n+1,i-1}),N(\a^{n+1,i-1},\v_h)+\nabla q_h\right)-\left(\tau_c\Pi_c\left(R_p^{n+1,i-1}\right),\nabla\cdot\v_h\right).\\\nonumber
-%% \end{align}
-%%Here we need to have explicitly defined the projections of the residuals, $\Pi_m(\R_u)$ and $\Pi_c(R_p)$. The implementation on the code of the projection calculations can be done implicitly at each nonlinear iteration ($\Pi_m(\R_u^{n+1,i-1})$ and $\Pi_c(R_p^{n+1,i-1})$), or explicitly at the previous time step ($\Pi_m(\R_u^n)$ and $\Pi_c(R_p^n)$). 
-%where $\boldsymbol{\xi}_m$ and $\xi_c$ are the weighted projections of the residuals $\R_u$ and $R_p$ (see below) evaluated at the corresponding time step and nonlinear iteration. 
-%
-%Like the Dyn-NL-ASGS method, we also need to compute the subscale velocity $\tilde{\u}$ explicitly. We compute the discrete subscale problem with the OSS counterpart of (\ref{eq-C4_velo_sgs_discrete_expl}) or (\ref{eq-C4_velo_sgs_discrete_impl}), viz. 
-%% \begin{align}
-%% \label{eq-C4_velo_sgs_discrete_impl_OSS}
-%% \tilde{\mathbf{u}}^{n+1,i,k}
-%% & + N(\tilde{\u}^{n+1,i,k},\u_h^{n+1,i})=
-%% \tau_{m,t}^{k-1}\frac{1}{\Delta t}\tilde{\mathbf{u}}^n \\ \nonumber
-%% & + \tau_{m,t}^{k-1}\left[\mathbf{f}-\left(N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right]-\tau_{m,t}^{k-1}\Pi_m(\R_u^{n+1,i-1}).
-%% \end{align}
-%\begin{align}
-%\label{eq-C4_velo_sgs_discrete_impl_OSS}
-%\tilde{\mathbf{u}}^{n,i,k}
-%& + \tilde{\u}^{n,i,k}\cdot\nabla\u_h^{n,i}
-%  = \tau_{m,t}^{k-1} \frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1} \\ \nonumber
-%& + \tau_{m,t}^{k-1} \left[\mathbf{f} - \frac{(\u_h^{n,i}-\u_h^{n-1})}{\delta t} - \mathcal{L}_{\u_h^{n,i}}(\u_h^{n,i},p_h^{n,i})\right]-\tau_{m,t}^{k-1}\boldsymbol{\xi}_m^{n,i-1}.
-%%& + \tau_{m,t}^{k-1} \left[\mathbf{f}-\left(\frac{(\u_h^{n+1,i}-\u_h^n)}{\Delta t}+N(\u_h^{n+1,i},\u_h^{n+1,i})+\nabla p_h^{n+1}\right)\right].
-%\end{align}
-%Note that $\boldsymbol{\xi}_m^{n,i}$ actually depends on $\tilde{\u}^{n,i}$ via the advection velocity of the convective term $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$. In order to simplify the fine scale computation (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) we use the projection at the previous nonlinear iteration, i.e., $\boldsymbol{\xi}_m^{n,i-1}$. 
-%
-%For the dynamic OSS case we should introduce some modifications in the computation of the projection $\Pi_m$. At the fully discrete level, in order for $\tilde{\u}^{n+1}$ to be $L^2$ orthogonal to $\mathcal{V}_{h}$, we must add to the FE residual the subscale time derivative contribution from the previous time step and use $\tau_{m,t}$ instead of $\tau_m$ in the computation of the projections. Finally, the projections of the residuals onto the FE spaces $\boldsymbol{\xi}_m^{n,i}$ and $\xi_c^{n,i}$ are such that
-%\begin{align}
-%\label{eq-C4_dyn_proj}
-%&(\tau_{m,t}\boldsymbol{\xi}_m^{n,i},\v_h)=(\tau_{m,t}(\R_u^{n,i}+\frac{1}{\delta t} \tilde{\mathbf{u}}^{n-1}),\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
-%&(\tau_c\xi_c^{n,i},q_h)=(\tau_c R_p^{n,i},q_h)&&\forall q_h\in\mathcal{Q}_{0,h},
-%\end{align}
-%%\begin{align}
-%%&(\tau_{m,t}\boldsymbol{\xi}_m^{n,i},\v_h)=(\tau_{m,t} \R_u^{n,i},\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
-%%&(\tau_c\xi_c^{n,i},q_h)=(\tau_c R_p^{n,i},q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
-%%\end{align}
-%where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using (\ref{eq-C4_Ru}) and (\ref{eq-C4_Rp}) with $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$, $\u_h^{n,i}$, $\u_h^{n-1}$ and $p_h^{n,i}$. %It is also possible to compute projections explicitly, using the residuals evaluated with $\a^{n-1}=\u_h^{n-1}+\tilde{\u}^{n-1}$, $\u_h^{n-1}$, $\u_h^{n-2}$ and $p_h^{n-1}$ but we do not use this option here.  
-% Note that when convergence of the nonlinear iteration is achieved, (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) and (\ref{eq-C4_dyn_proj}) guarantee that $(\v_h,\tilde{\mathbf{u}}^{n}) = 0$ for any $\v_h\in\mathcal{V}_{0,h}$.
-%
-%%In the following numerical experiments, we use the algorithmic constants $c_1=12$ and $c_2=8$ for $\tau_m$ and we set $\tau_c=0$. A detailed justification of this choice is provided in Section \ref{sec-C4_effect_const}.
-%
-%\section{Decay of homogeneous isotropic turbulence}
-%\label{sec-C4_DHIT}
-%\subsection{Problem definition}
+where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using (\ref{eq-C4_Ru}) and (\ref{eq-C4_Rp}) with $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$, $\u_h^{n,i}$, $\u_h^{n-1}$ and $p_h^{n,i}$. %It is also possible to compute projections explicitly, using the residuals evaluated with $\a^{n-1}=\u_h^{n-1}+\tilde{\u}^{n-1}$, $\u_h^{n-1}$, $\u_h^{n-2}$ and $p_h^{n-1}$ but we do not use this option here.  
+ Note that when convergence of the nonlinear iteration is achieved, (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) and (\ref{eq-C4_dyn_proj}) guarantee that $(\v_h,\tilde{\mathbf{u}}^{n}) = 0$ for any $\v_h\in\mathcal{V}_{0,h}$.
+
+\section{Numerical experiments}
+\subsection{Decay of homogeneous isotropic turbulence}
+\label{subsec-C4_DHIT}
 %This problem, one of the most used benchmarks to test LES models, consists of analyzing the statistics of the turbulent flow in a 3D box of size $\Omega=(0,2\pi)\times(0,2\pi)\times(0,2\pi)$ with periodic boundary conditions in all directions, which is started with a field having a predetermined energy spectrum. A detailed description of the computational domain, initial conditions, and problem setting is given in \cite{mansour_decay_1994}, %{\color{blue} 
 %which we follow here. A description on the influence of the domain size on the results is given in \cite{ishida_decay_2006}.%} 
 %We solve this problem using the different VMS models of Section \ref{sec-C4_discrete} and structured meshes with $N_x\times N_y\times N_z$ linear, quadratic and cubic hexahedral elements, taking $(N_x,N_y,N_z)= (32,32,32),\,(64,64,64)$ and $(128,128,128)$.
