@@ -485,11 +485,28 @@ allows one to decrease the total amount of time steps needed for the computation
 %It can be seen that the reduction factor is bigger than the amplification factor, which allows us to extend the interval of time between reductions, therefore, we reduce the number of steps in which we have to calculate the solution more than once.
 At each time step the nonlinear system is solved as described in Section \ref{sec-C4_discrete}. 
 
-... INITIAL KINETIC ENERGY FACTOR ...
-%It can be seen that for a coarse mesh like the $32^3$ linear hexaedral elements mesh that we are using for this test, the total amount of energy at the initial time step (computed after the Inverse Fast Fourier Transform of the velocity field is far from the theoretical starting point $E_0=1.5$. This error is due to the proijection from the Fourier space onto the FE space, which obviously depends on the mesh size. As we refine the mesh, the initial value of total energy tends to $1.5$, as expected. Knowing this behavior, it is difficult to draw conclusions comparing the simulations with DNS results \cite{_selection_????} and therefore  we scale the initial condition in a such way that its initial energy achieve the desired value. 
-% This has been done multiplying the initial condition by a factor defined as
-% $$\u_{0_{new}}=\sqrt{\frac{E_{0_{new}}}{E_{0_{old}}}}\u_{0_{old}},\quad\quad\mbox{where $E_{0_{new}}=1.5$}.$$
-%With this amplification factor applied to the initial condition, we obtain the results shown in Fig. \ref{fig:total_ene_32_sk1}. We observe that all methods perform more or less equal in this test, being far from the DNS result.
+It has been seen that for a coarse mesh like the $32^3$ linear hexaedral elements mesh that we are using for this test, the total amount of energy at the initial time step (computed after the Inverse Fast Fourier Transform of the velocity field is far from the theoretical starting point $E_0=1.5$. This error is due to the projection from the Fourier space onto the FE space, which obviously depends on the mesh size. As we refine the mesh, the initial value of total energy tends to $1.5$, as can be seen in Figure \ref{fig:initial_ene}.
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/Initial_ene}
+	\caption{Initial energy evolution refining the mesh}
+	\label{fig:initial_ene}
+\end{figure}
+
+Knowing this behavior of the initial condition, it is difficult to draw conclusions comparing the simulations with a DNS like AGARD database, \cite{_selection_????}. In order to avoid this problem, we scale the inital condition in a such way that its initial energy achieve the desired value. This has been done multiplying the initial condition by a factor defined as
+$$\u_{0_{new}}=\sqrt{\frac{E_{0_{new}}}{E_{0_{old}}}}\u_{0_{old}},\quad\quad\mbox{where $E_{0_{new}}=1.5$}.$$
+
+\subsubsection{Vorticity}
+As an introductory result, we show the vorticity contour at two different time steps, $t=5.0\cdot10^{-3}$ and $t=2.0$. These results are obtained considering the nonlinear definition of $\a$ and the dynamic subscales tracking for the OSS method with a $64^3$ hexaedral trilinear elements mesh. 
+
+In Figure \ref{fig:vorti_contour} we see that at the earlier time step the structures are much bigger than at $ t=2.0 $. As we will see in forthcomming sections, when the energy of the problem is dissipated, the energy containing eddies become smaller, reducing its vorticity. This mechanism induces a flattening of the energy spectra, as we will discuss later.
+\begin{figure}[h!]
+  \centering
+  \subfigure[$t=5.0\cdot10^{-3}$]{\label{fig:vorti_contour_1}\includegraphics[clip=true, trim=18cm 2.25cm 18cm 2.25cm, width=0.49\textwidth]{Figures/Chapter4/DHIT/vorti_contour_1}}    
+  \subfigure[$t=2.0$]{\label{fig:vorti_contour_2}\includegraphics[clip=true, trim=18cm 2.25cm 18cm 2.25cm, width=0.49\textwidth]{Figures/Chapter4/DHIT/vorti_contour_2}}
+  \caption{Vorticity contour}
+  \label{fig:vorti_contour}
+\end{figure}
 
 \subsubsection{Energy Conservation}
 \label{subsubsec-C4_ene_cons_DHIT}
@@ -500,13 +517,13 @@ In this section we present results of the energy budget described in Section \re
 Fig. \ref{fig:ASGS_ene_balance_split} depicts the energy balance evolution for the mean flow equation (\ref{eq-C4_FE_balance2}) and the subscale equation (\ref{eq-C4_sgs_balance2}) separately for the Dyn-Nl-ASGS case. It can be seen that the variation of kinetic energy shown by the FE component in Fig. \ref{fig:ASGS_MF_balance} is offset in a large part by the transfer of energy to the subscales, while remaining energy on the mean flow balance is offset by the viscous term. On the other side, Fig.~\ref{fig:ASGS_ss_balance} shows that the energy transferred from the FE equation is mainly dissipated by the subscale velocity term. There is an small variation of the kinetic energy of the subscale at the beginning of the simulation. Note that since the viscosity is small, so are the viscous effects compared to the dissipation introduced by the subscale velocity. As we use a skew-symmetric form of the convective term, this term does not affect the energy balance and is not plotted in Fig. \ref{fig:ASGS_MF_balance}. Since $\tau_c=0$, the pressure subscale term $\tau_c^{-1}\|\tilde{p}\|^2
 = \tau_c \Vert {\cal P}(\nabla\cdot\u_h)\Vert^2$ is also zero and does not appear in Fig.~\ref{fig:ASGS_ss_balance}.
 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Mean flow equation energy balance]{\label{fig:ASGS_MF_balance}\includegraphics[width=0.49\textwidth]{Figures/DHIT/MF_ene_balance_ASGS_dyn_nl}}    
-%  \subfigure[Subscale equation energy balance]{\label{fig:ASGS_ss_balance}\includegraphics[width=0.49\textwidth]{Figures/DHIT/SS_ene_balance_ASGS_dyn_nl}}
-%  \caption{Mean flow and subscale energy balances for the Dyn-Nl-ASGS method.}
-%  \label{fig:ASGS_ene_balance_split}
-%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Mean flow equation energy balance]{\label{fig:ASGS_MF_balance}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/MF_ene_balance_ASGS_dyn_nl}}    
+  \subfigure[Subscale equation energy balance]{\label{fig:ASGS_ss_balance}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/SS_ene_balance_ASGS_dyn_nl}}
+  \caption{Mean flow and subscale energy balances for the Dyn-Nl-ASGS method.}
+  \label{fig:ASGS_ene_balance_split}
+\end{figure}
 
 %Note that some oscillations in the FE time derivative term and FE to SS transfer terms
 %can be observed in Fig. \ref{fig:ASGS_MF_balance}.{\color{blue}They can be explained by the coupling between temporal derivatives for the ASGS method in equation (\ref{eq-C4_time_deriv_ASGS}). No lo veo claro.}
@@ -518,24 +535,24 @@ again like in the ASGS method.
 %like the ASGS method. Is important to say that the FE to SGS and SGS to FE energy transfer terms do not have any time derivative contribution, which do happen for the ASGS method. {\color{blue}This fact has a direct implication on the results since here, in the OSS method, there is no coupling between time derivative terms and we do not have oscillations.}
 The only important difference between both methods is that \emph{no oscillations are observed in the FE kinetic energy evolution when the OSS method is used.}
 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Mean flow equation energy balance]{\label{fig:OSS_MF_balance}\includegraphics[width=0.49\textwidth]{Figures/DHIT/MF_ene_balance_OSS_dyn_nl}}    
-%  \subfigure[Subscale equation energy balance]{\label{fig:OSS_ss_balance}\includegraphics[width=0.49\textwidth]{Figures/DHIT/SS_ene_balance_OSS_dyn_nl}}
-%  \caption{Mean flow and subscale energy balances the Dyn-Nl-OSS method.}
-%  \label{fig:OSS_ene_balance_split}
-%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Mean flow equation energy balance]{\label{fig:OSS_MF_balance}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/MF_ene_balance_OSS_dyn_nl}}    
+  \subfigure[Subscale equation energy balance]{\label{fig:OSS_ss_balance}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/SS_ene_balance_OSS_dyn_nl}}
+  \caption{Mean flow and subscale energy balances the Dyn-Nl-OSS method.}
+  \label{fig:OSS_ene_balance_split}
+\end{figure}
 
 The global energy balance terms obtained solving the problem with the skew-symmetric convective term \textit{type 2} for the Dyn-Nl-ASGS and Dyn-Nl-OSS cases are shown in Fig. \ref{fig:ene_balance_sk2}. We note that the loss of skew-symmetry in the convective term has a non-negligible effect (see Figs.~\ref{fig:ASGS_ene_balance2} and \ref{fig:OSS_ene_balance2}). In particular, this term introduces negative dissipation (production of energy) into the problem. %As we will show in Section \ref{subsubsec-C4_Total_ene_DHIT}, 
 This fact implies that the method is less dissipative and the energy decays at a slower rate than using the convective term \textit{type 1} and the method seems to be less diffusive. This negative contribution, however, is not predictable and could result in a blow up of the calculation. We refer to Section \ref{sec-C4_effect_const} for further comments about numerical instabilities associated to the \textit{type 2} convective term.%Although no theoretical energy estimates are available we have not observed instabilities in practice.
 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Global energy balance for Dyn-Nl-ASGS]{\label{fig:ASGS_ene_balance2}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_balance_ASGS_sk2}}
-%	\subfigure[Global energy balance for Dyn-Nl-OSS]{\label{fig:OSS_ene_balance2}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_balance_OSS_sk2}}
-%	\caption{Global energy balance using skew-symmetric convective term \textit{type 2}.}
-%	\label{fig:ene_balance_sk2}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Global energy balance for Dyn-Nl-ASGS]{\label{fig:ASGS_ene_balance2}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/ene_balance_ASGS_sk2}}
+	\subfigure[Global energy balance for Dyn-Nl-OSS]{\label{fig:OSS_ene_balance2}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/ene_balance_OSS_sk2}}
+	\caption{Global energy balance using skew-symmetric convective term \textit{type 2}.}
+	\label{fig:ene_balance_sk2}
+\end{figure}
 
 \subsubsection{Computational cost analysis}
 
@@ -558,16 +575,13 @@ However, the number of nonlinear iterations is not the most relevant measure of 
 %{\color{blue}
 Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is variable, starting from near 600, dropping to 200 and rising to around 300 iterations at the end of the computation. Meanwhile, all cases of the OSS method remain almost constant, around 60 iterations in the dynamic cases and around 40 iterations in the static one. The relation between time step size and solver iterations for each method is analyzed in Section \ref{sec-C4_small_time_step}. %}
 
-%\begin{figure}[h!]
-%	\centering	
-%	%\subfigure[Maximum solver iterations at each time step]{\label{fig:Soliter}\includegraphics[width=0.49\textwidth]{Figures/DHIT/Soliter_32_scaled_cnvgd}}
-%	%\subfigure[Accumulated solver iterations at each time step for]{\label{fig:Acsoliter}\includegraphics[width=0.49\textwidth]{Figures/DHIT/Acsoliter_32_scaled_cnvgd}}
-%	%\caption{Maximum and accumulated solver iterations}
-%	\subfigure[$32^3$ mesh]{\label{fig:soliter32}\includegraphics[width=0.49\textwidth]{Figures/DHIT/Acsoliter_32_scaled_cnvgd}}
-%	\subfigure[$64^3$ mesh]{\label{fig:soliter64}\includegraphics[width=0.49\textwidth]{Figures/DHIT/Acsoliter_64}}
-%	\caption{Accumulated solver iterations.}
-%	\label{fig:com_cost_DHIT}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[$32^3$ mesh]{\label{fig:soliter32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/Acsoliter_32_scaled_cnvgd}}
+	\subfigure[$64^3$ mesh]{\label{fig:soliter64}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/Acsoliter_64}}
+	\caption{Accumulated solver iterations.}
+	\label{fig:com_cost_DHIT}
+\end{figure}
 
 %The adaptive time stepping described in the previous subsection has an important role on the computational cost, as mentioned earlier. If the time step is reduced in order to ensure convergence, the global computational cost is increased. Then, we are looking for those methods that do not require time step reductions, consequently reducing the total amount of time step evaluations. There are some methods that need to reduce the time step to keep  convergence, which can be noticed  in Fig. \ref{fig:Soliter} by a sudden reduction of the solver iterations or in Fig. \ref{fig:Acsoliter} by the density of the points. It is seen in Fig. \ref{fig:com_cost_DHIT} that ASGS schemes perform worse than OSS counterparts in this respect. Comparing the dynamic and nonlinear cases for both methods, we see that ASGS needs to reduce more than twice the time step, while  OSS only twice. As it has been said before, the linear cases for ASGS, both static or dynamic, have not converged at certain time steps. In what refers to the linear cases for the OSS method, there is not any reduction of the time step, rather it is constantly increasing until the threshold.
 %{\color{blue}
@@ -585,22 +599,26 @@ In this section we present the total energy evolution of the resolved scales, i.
 % SB: PUT A COMMENT?
 %{\color{blue} Hay que pensar en el comentario que me hicieron en la ultima charla: no hay que comparar contra DNS sino contra DNS filtrado. Ver Sagaut secciones 9.1.1 and 9.2.1. }
 
-%\begin{figure}[h!]
-%	\centering	
-%	% \subfigure[Using the skew-symmetric term \textit{type 1}]{\label{fig:total_ene_32_sk1}\includegraphics[width=0.49\textwidth]{Figures/DHIT/total_ene_32_scaled}}
-%	% \subfigure[Using the skew-symmetric term \textit{type 2}]{\label{fig:total_ene_32_sk2}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_skew_scaled}}
-%	% \caption{Total energy evolution for a $32^3$ elements mesh with the scaled initial condition}
-%	% \label{fig:total_ene_32}
-%	\subfigure[$32^3$ mesh]{\label{fig:total_ene_32}\includegraphics[width=0.49\textwidth]{Figures/DHIT/total_ene_32_scaled_loglog.pdf}}
-%	\subfigure[$64^3$ mesh]{\label{fig:total_ene_64}\includegraphics[width=0.49\textwidth]{Figures/DHIT/total_ene_64_scaled_loglog.pdf}}
-%	\caption{Total energy evolution for the $32^3$ and $64^3$ elements meshes with the scaled initial condition.}
-%	\label{fig:total_ene}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[$32^3$ mesh]{\label{fig:total_ene_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/total_ene_32_scaled_loglog.pdf}}
+	\subfigure[$64^3$ mesh]{\label{fig:total_ene_64}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/total_ene_64_scaled_loglog.pdf}}
+	\caption{Total energy evolution for the $32^3$ and $64^3$ elements meshes with the scaled initial condition.}
+	\label{fig:total_ene}
+\end{figure}
 
-%The results shown so far have been obtained using the skew-symmetric convective term \textit{type 1} defined in (\ref{eq-C4_b_skew1}). 
-%But what happens if we choose another definition for this term? We know, by some experience acquired on other tests not reported in this work, e.g. Destabilization of an ordered initial condition test (2D and 3D), that the nonskew-symmetric term (\ref{eq-C4_b_noskew}) can involve convergence problems. So 
-%We test the influence of this term by solving the same problem with the convective skew-symmetric term (\textit{type 2)}  in (\ref{eq-C4_b_skew2}) for dynamic and nonlinear ASGS and OSS schemes. The results obtained for this test are shown in Fig. \ref{fig:total_ene_32_sk2}, where it is seen that the solution using the \textit{type 2} term is above the one obtained with term \textit{type 1}, which shows that the convective term is actually productive.
-%. Then, we can say that the solution is less dissipative when we use this convective term which agree with the results shown in the energy conservation analysis done in subsection \ref{subsubsec-C4_ene_cons_DHIT}. This result is a consequence of the fact that the convective term is non zero as it is exposed on remark \ref{rem:skewsym}, equation (\ref{eq-C4_mkgkdfsnmgks}).
+\begin{remark}
+\label{rem-C4_ene_skew2}
+The results shown in Figure \ref{fig:total_ene} have been obtained using the skewsymmetric convective term \textit{type 1}, $b(\a,\u_h,\v_h)=\frac{1}{2}(\a\cdot\nabla\u_h,\v_h)-\frac{1}{2}(\mathbf{a}\cdot\u_h,\nabla\v_h)$. But what happens if we choose another definition for this term? We know that the nonskewsymmetric term (\textit{off}) can involve convergence problems. So we tested the influence of this term by solving the same problem with the convective skewsymmetric term (\textit{type 2)}. We did that for the dynamic and nonlinear cases for both methods, ASGS and OSS. The results obtained for this test are shown in Figure \ref{fig:ene_skew}.
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/ene_skew_scaled}
+	\caption{Total energy evolution. Comparison between different definitions for the convective term}
+	\label{fig:ene_skew}
+\end{figure}
+
+We can clearly see in Figure \ref{fig:ene_skew} that the solution using the \textit{type 2} term is above the obtained with term \textit{type 1}. Then, we can say that the solution is less dissipative when we use this convective term. It has to be said that in Figure \ref{fig:ene_skew} we only represent the cases which exhibit more differences. In other words, in order to see the effect of the convective term definition, we only show the dynamic and nonlinear cases for ASGS and OSS methods. On the other hand, here we also have to take into account what we said on Remark XXX \ref{rem-C2_...}. Introducing the nonlinearity on $\a$ we are increasing its weight on the convective term and changing its correct definition, therefore, it is normal that the differences between each definition increase.
+\end{remark}
 
 \subsubsection{Energy spectra}
 According to \cite{mansour_decay_1994}, the resolution of the small scales in isotropic decaying turbulence is judged by the shape of the energy spectra at high wave numbers, and requires 
@@ -620,14 +638,13 @@ We can see in Fig. \ref{fig:spec_32} that the energy spectra at $t=0.2$ decays w
 For the finer $64^3$ mesh the difference between the spectra obtained using Dyn-Nl-ASGS and Dyn-Lin-OSS are even smaller, as shown in Fig. \ref{fig:spec_64}; OSS is again less dissipative.
 %The Dyn-Lin-OSS method seems to follow the $k^{-5/3}$ Kolmogorov law better at this time, but the Dyn-Nl-OSS case also have a good agreement with the Kolmogorov law for intermediate scales. %}
 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[$32^3$ mesh]{\label{fig:spec_32}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_32_02_scaled}}    
-%  \subfigure[$64^3$ mesh]{\label{fig:spec_64}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_64_08}}
-%%  \includegraphics[width=0.5\textwidth]{Figures/DHIT/spec_32_02_scaled}
-%  \caption{Energy spectra at $t=0.2$ ($32^3$ mesh) and $t=0.8$ ($64^3$ mesh).}
-%  \label{fig:spec_32_64}
-%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[$32^3$ mesh]{\label{fig:spec_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_32_02_scaled}}    
+  \subfigure[$64^3$ mesh]{\label{fig:spec_64}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_64_08}}
+  \caption{Energy spectra at $t=0.2$ ($32^3$ mesh) and $t=0.8$ ($64^3$ mesh).}
+  \label{fig:spec_32_64}
+\end{figure}
 
 \subsubsection{$h$-$p$ refinement}
 
@@ -644,11 +661,11 @@ We choose the Dynamic and Nonlinear OSS method (Dyn-Nl-OSS), which is the one th
 \hline
 Label&Mesh elements&Element type\\
 \hline
-32 ($Q$1)&$32^3$&hexahedral linear ($Q1$)\\
-64 ($Q$1)&$64^3$&hexahedral linear ($Q1$)\\
-128 ($Q$1)&$128^3$&hexahedral linear ($Q1$)\\
-32 ($Q$2)&$32^3$&hexahedral quadratic ($Q2$)\\
-64 ($Q$2)&$64^3$&hexahedral quadratic ($Q2$)\\
+32 ($Q$1)&$32^3$&hexahedral linear ($Q_1$)\\
+64 ($Q$1)&$64^3$&hexahedral linear ($Q_1$)\\
+128 ($Q$1)&$128^3$&hexahedral linear ($Q_1$)\\
+32 ($Q$2)&$32^3$&hexahedral quadratic ($Q_2$)\\
+64 ($Q$2)&$64^3$&hexahedral quadratic ($Q_2$)\\
 32 ($Q$3)&$32^3$&hexahedral cubic ($Q3$)\\
 \hline
 \end{tabular}
@@ -656,58 +673,53 @@ Label&Mesh elements&Element type\\
 \label{table:refinement}
 \end{table}
 
-%To check this assumption we can refine the mesh in two different ways. On one hand, we can decrease $h$, that is to increase the number of mesh elements for each direction. On the other hand, we can use higher order elements, e.g. $Q2$ or $Q3$. We do this analysis using the Dynamic and Nonlinear OSS method (Dyn-Nl-OSS), which is the one that shows the best results for the $32^3$ linear elements mesh. We solve the problem using the following discretizations:
+%To check this assumption we can refine the mesh in two different ways. On one hand, we can decrease $h$, that is to increase the number of mesh elements for each direction. On the other hand, we can use higher order elements, e.g. $Q_2$ or $Q3$. We do this analysis using the Dynamic and Nonlinear OSS method (Dyn-Nl-OSS), which is the one that shows the best results for the $32^3$ linear elements mesh. We solve the problem using the following discretizations:
 %\begin{itemize}
-%\item[-] $32^3$ hexahedral trilinear elements ($Q1$).
-%\item[-] $64^3$ hexahedral trilinear elements ($Q1$).
-%\item[-] $128^3$ hexahedral trilinear elements ($Q1$).
-%\item[-] $32^3$ hexahedral triquadratic elements ($Q2$).
-%\item[-] $64^3$ hexahedral triquadratic elements ($Q2$).
+%\item[-] $32^3$ hexahedral trilinear elements ($Q_1$).
+%\item[-] $64^3$ hexahedral trilinear elements ($Q_1$).
+%\item[-] $128^3$ hexahedral trilinear elements ($Q_1$).
+%\item[-] $32^3$ hexahedral triquadratic elements ($Q_2$).
+%\item[-] $64^3$ hexahedral triquadratic elements ($Q_2$).
 %\item[-] $32^3$ hexahedral tricubic elements ($Q3$).
 %\end{itemize}
 
 In Fig. (\ref{fig:ene_hp}) we show the total kinetic energy evolution obtained using the discretizations defined in Table \ref{table:refinement}. Reducing the mesh size $h$ and/or increasing the polynomial order $p$ (not to be confused with the pressure) the result becomes closer to the DNS, as expected. In Fig. \ref{fig:ene_hp_close} three groups can be clearly observed, namely 32 ($Q$1), 32 ($Q$2) and 64 ($Q$1) and the remaining three. The best results are obtained using $Q$2 elements although the difference is really small.
 %The refinement on $h$ and $p$ not only has effect on the initial energy, but also on the time evolution. When we reduce $h$ or increase $p$ the total kinetic energy evolution becomes closer to the DNS one. It also must be said that the refinement on $p$ is more effective than the refinement on $h$, which is a consequence of the enrichment of the FE space that is achieved when we increase $p$. 
 
-%\begin{figure}[h!]
-%  \centering
-%  % \subfigure[Total evolution]{\label{fig:ene_hp_global}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_hp_scaled}}    
-%  % \subfigure[Close up view]{\label{fig:ene_hp_close}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_hp_close_scaled}}
-%  % \caption{Total kinetic energy evolution}
-%  \subfigure[Total evolution]{\label{fig:ene_hp_global}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_hp_scaled_loglog}}    
-%  \subfigure[Close up view]{\label{fig:ene_hp_close}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_hp_close_scaled_loglog}}
-%  \caption{Total kinetic energy evolution.}
-%  \label{fig:ene_hp}
-%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Total evolution]{\label{fig:ene_hp_global}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/ene_hp_scaled_loglog}}    
+  \subfigure[Close up view]{\label{fig:ene_hp_close}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/ene_hp_close_scaled_loglog}}
+  \caption{Total kinetic energy evolution.}
+  \label{fig:ene_hp}
+\end{figure}
 
 %With respect to the energy spectra, we expect to be related with the different kinetic energy evolutions showed in Fig. \ref{fig:ene_hp}. It means that if the total kinetic energy decays earlier, the energy spectrum must evolve to the $k^{-5/3}$ law earlier. If we think it on the opposite sense, that would suppose that the small scales are dissipating energy on a earlier stage, which implies a premature decaying of the total kinetic energy. In Fig. \ref{fig:spec_hp} we show the energy spectra at time $t=0.2$, $t=0.4$ and $t=0.8$ for the different cases presented before.
 
-Given the differences in the total energy evolution the time at which the $k^{-5/3}$ law is achieved differs for the different methods. We show the energy spectra at time $t=0.8$ and $t=1.0$ for the different cases presented before in Fig. \ref{fig:spec_hp}. As it can be observed in Fig.~\ref{fig:spec_hp_08}, at $t=0.8$, only the energy spectra obtained using the 32 ($Q1$) and  64 ($Q1$) have a steeper slope, while the other cases are almost parallel to the $k^{-3/5}$ line. This is what was expected since the kinetic energy decay occurs earlier in the coarser cases.
-%Effectively, we can see that the results in Fig. \ref{fig:spec_hp} performs as predicted by the total energy evolution. At Fig. \ref{fig:spec_hp_02}, $t=0.2$, the energy cascade for the case Dyn-Nl-OSS-32 ($Q1$) is parallel to the $k^{-3/5}$ line, while the other cases still preserve the energy on the low wavenumbers. This behavior is consistent with the results shown in Fig. \ref{fig:ene_hp}, where the total kinetic energy for the case Dyn-Nl-OSS-32 ($Q1$) decays earlier than all the other methods.
+Given the differences in the total energy evolution the time at which the $k^{-5/3}$ law is achieved differs for the different methods. We show the energy spectra at time $t=0.8$ and $t=1.0$ for the different cases presented before in Fig. \ref{fig:spec_hp}. As it can be observed in Fig.~\ref{fig:spec_hp_08}, at $t=0.8$, only the energy spectra obtained using the 32 ($Q_1$) and  64 ($Q_1$) have a steeper slope, while the other cases are almost parallel to the $k^{-3/5}$ line. This is what was expected since the kinetic energy decay occurs earlier in the coarser cases.
+%Effectively, we can see that the results in Fig. \ref{fig:spec_hp} performs as predicted by the total energy evolution. At Fig. \ref{fig:spec_hp_02}, $t=0.2$, the energy cascade for the case Dyn-Nl-OSS-32 ($Q_1$) is parallel to the $k^{-3/5}$ line, while the other cases still preserve the energy on the low wavenumbers. This behavior is consistent with the results shown in Fig. \ref{fig:ene_hp}, where the total kinetic energy for the case Dyn-Nl-OSS-32 ($Q_1$) decays earlier than all the other methods.
 %At $t=0.4$, as shown in Fig. \ref{fig:spec_hp_04}, the cases with $64^3$ nodes follow the $k^{-5/3}$ law but those cases with more nodes still have the energy on the large eddies and, on the other hand, the case with less nodes has dissipated a large part of it through small scales. Finally, Fig.\ref{fig:spec_hp_08} shows us that the energy spectra for those cases with a finer mesh has a proper energy cascade at $t=0.8$.
 %{\color{blue}
-%At $t=0.4$, as shown in Fig. \ref{fig:spec_hp_04}, the $32$ (Q1) case has the right energy decay slope, while for the cases with more degrees of freedom the contribution of the small scales to the energy is still increasing. Finally, Fig.~\ref{fig:spec_hp_08} shows us that the energy spectra for all cases has a proper energy cascade.
+%At $t=0.4$, as shown in Fig. \ref{fig:spec_hp_04}, the $32$ (Q_1) case has the right energy decay slope, while for the cases with more degrees of freedom the contribution of the small scales to the energy is still increasing. Finally, Fig.~\ref{fig:spec_hp_08} shows us that the energy spectra for all cases has a proper energy cascade.
 %At $t=0.8$ all the cases present a proper energy spectra, as shown in Fig.~\ref{fig:spec_hp_08}.
-In Fig. \ref{fig:spec_hp_1} we show the energy spectra at $t=1.0$, and compare it against the DNS spectrum from \cite{_selection_????} at the same time step. It can be observed that the results tend to the DNS one as we increase resolution, being the $64(Q2)$ case the most accurate one.
+In Fig. \ref{fig:spec_hp_1} we show the energy spectra at $t=1.0$, and compare it against the DNS spectrum from \cite{_selection_????} at the same time step. It can be observed that the results tend to the DNS one as we increase resolution, being the $64(Q_2)$ case the most accurate one.
 
 Note that the DNS spectra is not present in Fig. \ref{fig:spec_hp_08} because it is not available in the database \cite{_selection_????} at this time step.
 
-%\begin{figure}[h!]
-%  \centering
-%%  \subfigure[Energy spectra at $t=0.2$]{\label{fig:spec_hp_02}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_hp_02}}    
-%%  \subfigure[Energy spectra at $t=0.4$]{\label{fig:spec_hp_04}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_hp_04}}
-%  \subfigure[Energy spectra at $t=0.8$]{\label{fig:spec_hp_08}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_hp_08}}
-%  \subfigure[Energy spectra at $t=1.0$]{\label{fig:spec_hp_1}\includegraphics[width=0.5\textwidth]{Figures/DHIT/spec_hp_1}}
-%  \caption{Energy spectra at $t=0.8$ and $t=1.0$ for the $h$-$p$ refinement defined in Table~\ref{table:refinement}.}
-%  \label{fig:spec_hp}
-%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy spectra at $t=0.8$]{\label{fig:spec_hp_08}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_hp_08}}
+  \subfigure[Energy spectra at $t=1.0$]{\label{fig:spec_hp_1}\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/spec_hp_1}}
+  \caption{Energy spectra at $t=0.8$ and $t=1.0$ for the $h$-$p$ refinement defined in Table~\ref{table:refinement}.}
+  \label{fig:spec_hp}
+\end{figure}
 
  \subsubsection{Comparison with a non-stabilized method}
 
-% All the results presented up to this point have been computed using a VMS method, either ASGS or OSS. But, what would be the result using other methods? Are the methods presented here, comparable with classical LES methods? Which methods perform better? To answer all these questions, we have solved the problem adding a physical model without stabilization. To do that, an inf-sup stable element is needed and we have used the Taylor-Hood $Q2/Q1$ element. 
+% All the results presented up to this point have been computed using a VMS method, either ASGS or OSS. But, what would be the result using other methods? Are the methods presented here, comparable with classical LES methods? Which methods perform better? To answer all these questions, we have solved the problem adding a physical model without stabilization. To do that, an inf-sup stable element is needed and we have used the Taylor-Hood $Q_2/Q_1$ element. 
  %This element also has the unknowns at the nodes but uses shape functions of degree $2$ for the velocity degrees of freedom and shape functions of degree $1$ for the pressure DOFs. This type of element give stable results when we solve non convection dominated flows only taking into account the Galerkin terms.
  %We are solving a turbulent problem, so we must add a LES model to the Galerkin formulation in order to take into account the effect of the small scales on the flow when we solve it in a coarse mesh. 
- We use the classical static Smagorinsky model, consisting in adding a turbulent viscosity $\nu_t$ that depends on the velocity gradient and the characteristic element length $h$. This additional viscosity also acts as stabilization of convection, as usual in standard LES simulations. Then, we have to solve the standard Galerkin problem using Taylor-Hood $Q2/Q1$ elements and introducing a modified viscosity defined as
+ We use the classical static Smagorinsky model, consisting in adding a turbulent viscosity $\nu_t$ that depends on the velocity gradient and the characteristic element length $h$. This additional viscosity also acts as stabilization of convection, as usual in standard LES simulations. Then, we have to solve the standard Galerkin problem using Taylor-Hood $Q_2/Q_1$ elements and introducing a modified viscosity defined as
  \begin{equation}
  \label{eq-C4_nu_smago}
  \nu = \nu_l+\nu_t,
@@ -717,15 +729,15 @@ Note that the DNS spectra is not present in Fig. \ref{fig:spec_hp_08} because it
 % In Fig. \ref{fig:ene_spec_q2q1} we show the total kinetic energy time evolution and the energy spectra of this method compared with the dynamic and nonlinear OSS method. In particular, we show the results for those cases from Table \ref{table:refinement} such that they have $65^3$ velocity nodes.
  We can see in Fig. \ref{fig:ene_q2q1} that the total kinetic energy is decaying faster for the non-stabilized method than for the OSS method. This behavior is directly related to the shape of the energy spectra in Figs. \ref{fig:spec_q2q1_02}-\ref{fig:spec_q2q1_08}, where we can see that the Smagorinsky method presents lower values of energy at $t=0.4$. It is important to point out the pile-up that appears in the Smagorinsky spectra, denoting that small scales are not dissipating energy properly.
 
-% \begin{figure}[h!]
-%   \centering
-%   \subfigure[Energy evolution]{\label{fig:ene_q2q1}\includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_q2q1_scaled}}  
-%   \subfigure[Energy spectra at $t=0.2$]{\label{fig:spec_q2q1_02}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_q2q1_scaled_t02}}\\  
-%   \subfigure[Energy spectra at $t=0.4$]{\label{fig:spec_q2q1_04}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_q2q1_scaled_t04}}
-%   \subfigure[Energy spectra at $t=0.8$]{\label{fig:spec_q2q1_08}\includegraphics[width=0.49\textwidth]{Figures/DHIT/spec_q2q1_scaled_t08}}
-%   \caption{Total kinetic energy evolution and energy spectra using OSS and non-stabilized method with an inf-sup stable $Q2/Q1$ element}
-%   \label{fig:ene_spec_q2q1}
-% \end{figure}
+\begin{figure}[h!]
+   \centering
+   \subfigure[Energy evolution]{\label{fig:ene_q2q1}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/ene_q2q1_scaled}}  
+   \subfigure[Energy spectra at $t=0.2$]{\label{fig:spec_q2q1_02}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_q2q1_scaled_t02}}\\  
+   \subfigure[Energy spectra at $t=0.4$]{\label{fig:spec_q2q1_04}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_q2q1_scaled_t04}}
+   \subfigure[Energy spectra at $t=0.8$]{\label{fig:spec_q2q1_08}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/DHIT/spec_q2q1_scaled_t08}}
+   \caption{Total kinetic energy evolution and energy spectra using OSS and non-stabilized method with an inf-sup stable $Q_2/Q_1$ element}
+   \label{fig:ene_spec_q2q1}
+\end{figure}
 
 \subsection{Taylor-Green Vortex}
 \label{subsec-C4_TGV}
@@ -757,26 +769,19 @@ The TGV test is characterized by its laminar evolution at the initial time steps
 
 In Fig. \ref{fig:isovor_vel_TG} we present some vorticity isosurface images showing this process for  a $128^3$ linear hexahedral elements mesh, for the dynamic and nonlinear OSS method. Note that the initial condition (Fig. \ref{fig:isvor_vel_1}) consists in eight vortices with the same scale corresponding to the eight Fourier modes located at $\mathbf{k}=(\pm1,\pm1,\pm1)$, as it has been pointed out previously.
 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Isosurface for $|\omega|=1.0$ at $t=0.0$]{\label{fig:isvor_vel_1}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_1}}    
-%  \subfigure[Isosurface for $|\omega|=1.0$ at $t=2.0$]{\label{fig:isvor_vel_2}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_2}}\\
-%    \centering
-%  \subfigure[Isosurface for $|\omega|=2.5$ at $t=4.1$]{\label{fig:isvor_vel_3}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_3}}    
-%  \subfigure[Isosurface for $|\omega|=5.0$ at $t=6.1$]{\label{fig:isvor_vel_4}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_4}}\\
-%    \centering
-%  \subfigure[Isosurface for $|\omega|=8.0$ at $t=8.2$]{\label{fig:isvor_vel_5}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_5}}    
-%  \subfigure[Isosurface for $|\omega|=9.0$ at $t=10.2$]{\label{fig:isvor_vel_6}\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.45\textwidth]{Figures/TG/isovorti_veloc_6}}\\
-%  \caption{Vorticity isosurfaces with velocity contour at different time steps.}
-%  \label{fig:isovor_vel_TG}
-%\end{figure}
-%
-%%\begin{figure}[h!]
-%%	\centering	
-%%	\includegraphics[clip=true, trim=13cm 0cm 13cm 0cm, width=0.5\textwidth]{Figures/TG/isovorti_streaml_veloc_1}
-%%	\caption{Vorticity isosurfaces at $t=4.0$ with streamlines}
-%%	\label{fig:vorti_stream_TG}
-%%\end{figure}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Isosurface for $|\omega|=1.0$ at $t=0.0$]{\label{fig:isvor_vel_1}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_1}}    
+  \subfigure[Isosurface for $|\omega|=1.0$ at $t=2.0$]{\label{fig:isvor_vel_2}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_2}}\\
+    \centering
+  \subfigure[Isosurface for $|\omega|=2.5$ at $t=4.1$]{\label{fig:isvor_vel_3}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_3}}    
+  \subfigure[Isosurface for $|\omega|=5.0$ at $t=6.1$]{\label{fig:isvor_vel_4}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_4}}\\
+    \centering
+  \subfigure[Isosurface for $|\omega|=8.0$ at $t=8.2$]{\label{fig:isvor_vel_5}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_5}}    
+  \subfigure[Isosurface for $|\omega|=9.0$ at $t=10.2$]{\label{fig:isvor_vel_6}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_6}}\\
+  \caption{Vorticity isosurfaces with velocity contour at different time steps.}
+  \label{fig:isovor_vel_TG}
+\end{figure}
 
 \subsubsection{Comparison of VMS methods}
 
@@ -786,13 +791,13 @@ we solve the TGV test on a $32^3$ and $64^3$ linear elements mesh with a Reynold
 
 We want to show the amount of numerical dissipation, the energy cascade in the spectra and the enstrophy evolution (compared to DNS) in all cases. We compare first the kinetic energy evolution  with the kinetic energy evolution obtained by Brachet \emph{et al.} \cite{brachet_small-scale_1983}, (Fig. \ref{fig:ene_32_TG}). We also present the energy spectra at $t=9$, when the flow is supposed to be nearly isotropic at large wave numbers, (Fig. \ref{fig:spec_32_TG}).
 
-%  \begin{figure}[h!]
-% 	\centering	
-% 	\subfigure[Total kinetic energy evolution]{\label{fig:ene_32_TG}\includegraphics[width=0.4\textwidth]{Figures/TG/ene_32_new}}
-% 	\subfigure[Energy spectra at $t=9.0$]{\label{fig:spec_32_TG}\includegraphics[width=0.4\textwidth]{Figures/TG/spec_32_x2_new}}
-% 	\caption{Total kinetic energy evolution and energy spectra}
-% 	\label{fig:ene_spec_32_TG}
-% \end{figure}
+  \begin{figure}[h!]
+ 	\centering	
+ 	\subfigure[Total kinetic energy evolution]{\label{fig:ene_32_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ene_32_new}}
+ 	\subfigure[Energy spectra at $t=9.0$]{\label{fig:spec_32_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/spec_32_x2_new}}
+ 	\caption{Total kinetic energy evolution and energy spectra}
+ 	\label{fig:ene_spec_32_TG}
+ \end{figure}
 
 In Fig. \ref{fig:ene_32_TG}, we can see that for a $32^3$ trilinear hexahedral elements mesh all methods show a premature decay of energy. We recognize the same behavior observed for the same mesh in the DHIT test, see Subsection \ref{subsubsec-C4_Total_ene_DHIT}. For this mesh, it is clear that the methods are not able to simulate properly the transition to turbulence. The energy spectra at $t=9.0$ shows us that the flow is isotropic at large wave numbers since it is decaying following the $k^{-5/3}$ Kolmogorov law. 
 
@@ -805,51 +810,51 @@ As for the DHIT test, the results obtained using the different methods listed in
 As in the DHIT problem, we perform a refinement study reducing $h$ and/or increasing $p$ using  Dyn-Nl-OSS. 
 The global energy evolution and the energy spectra are shown in Fig. \ref{fig:ene_spec_hp_TG}. Fig. \ref{fig:ene_hp_TG} displays the total kinetic energy evolution compared with the DNS \cite{brachet_small-scale_1983}. The results show that all cases, excluding the $32^3$ and $64^3$ linear hexahedral mesh, follow almost perfectly the line defined by the DNS result points. On the other hand, Fig. \ref{fig:spec_hp_TG} displays the energy spectra at $t=9$, when the dissipation is maximum and the flow is evolving to turbulence. We compare the energy spectra obtained solving all the cases considered before with the DNS computed by \cite{gassner_accuracy_????}, using the same Reynolds number (${\rm Re}=1600$) at the same time. 
 
-% \begin{figure}[h!]
-% 	\centering
-%	\subfigure[Total kinetic energy evolution]{\label{fig:ene_hp_TG}\includegraphics[width=0.49\textwidth]{Figures/TG/ene_hp_10_new}}
-%	\subfigure[Energy spectra at $t=9$]{\label{fig:spec_hp_TG}\includegraphics[width=0.49\textwidth]{Figures/TG/spec_hp_x2_new}}
-% 	\caption{Total kinetic energy evolution and energy spectra for the $h-p$ refinement cases.}
-% 	\label{fig:ene_spec_hp_TG}
-% \end{figure}
+\begin{figure}[h!]
+	\centering
+	\subfigure[Total kinetic energy evolution]{\label{fig:ene_hp_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ene_hp_10_new}}
+	\subfigure[Energy spectra at $t=9$]{\label{fig:spec_hp_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/spec_hp_x2_new}}
+	\caption{Total kinetic energy evolution and energy spectra for the $h-p$ refinement cases.}
+	\label{fig:ene_spec_hp_TG}
+\end{figure}
 
-% Excluding the too coarse $32^3 (Q1)$ approximation, the energy spectra follow accurately the DNS energy spectra. For low wave numbers, the differences with the DNS are minimal. It is on the highest wave numbers where some differences between the methods appear. Note that the $32^3(Q3)$ case follows very accurately the DNS spectrum. In general, we see that the spectra decay following a slope close to the $k^{-5/3}$ Kolmogorov law.
+% Excluding the too coarse $32^3 (Q_1)$ approximation, the energy spectra follow accurately the DNS energy spectra. For low wave numbers, the differences with the DNS are minimal. It is on the highest wave numbers where some differences between the methods appear. Note that the $32^3(Q3)$ case follows very accurately the DNS spectrum. In general, we see that the spectra decay following a slope close to the $k^{-5/3}$ Kolmogorov law.
 % %Anyway, we must emphasize that the flow is supposed to be isotropic after $t=9$, so we expect that this slope becomes closer to the predicted by Kolmogorov.
 
 In Fig. \ref{fig:enediss_hp_TG} we show the dissipation rate of the problem, compared to the DNS results. The dissipation rate is directly related to the enstrophy of the problem, $\epsilon = 2\nu\left(\frac{1}{2}\left\langle|\omega|^2\right\rangle\right)$, where $|\omega|$ is the modulus of the vorticity. At the continuous level, it determines the kinetic energy decay which, at the discrete level, is also influenced by the numerical dissipation (see equation (\ref{eq-C4_FE_balance2})). When an explicit model is used, the dissipation introduced by the subgrid model also needs to be included. The FE viscous dissipation $\nu\|\nabla\u_h\|^2$, is shown in Fig. \ref{fig:enediss_hp_TG_resolved} whereas the total dissipation rate $ \nu\|\nabla\u_h\|^2 + \varepsilon_{h}$ defined by equation (\ref{eq-C4_FE_balance2}) is shown in Fig. \ref{fig:enediss_hp_TG_total}. 
 
 %Fig. \ref{fig:ene_hp_TG} displays the total kinetic energy dissipation rate evolution for all the cases defined in Table \ref{table:refinement}, compared with the DNS \cite{brachet_small-scale_1983}. The results show that all cases, excluding the $32^3$ linear hexahedral mesh, follow almost perfectly the line defined by the DNS result points.
 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Resolved]{\label{fig:enediss_hp_TG_resolved}\includegraphics[width=0.49\textwidth]{Figures/TG/ens_hp_10_new_resolved}}
-%	\subfigure[Total]{\label{fig:enediss_hp_TG_total}\includegraphics[width=0.49\textwidth]{Figures/TG/ens_hp_10_new_total}}
-%	\caption{Dissipation rate evolution for the $h$-$p$ refinement cases.}
-%	\label{fig:enediss_hp_TG}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Resolved]{\label{fig:enediss_hp_TG_resolved}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_hp_10_new_resolved}}
+	\subfigure[Total]{\label{fig:enediss_hp_TG_total}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_hp_10_new_total}}
+	\caption{Dissipation rate evolution for the $h$-$p$ refinement cases.}
+	\label{fig:enediss_hp_TG}
+\end{figure}
 
-As in the DHIT problem, the results obtained using the coarser $32^3 (Q1)$ and $64^3 (Q1)$ meshes are not accurate, the FE viscous dissipation being far from the exact viscous dissipation, as shown in Fig. \ref{fig:enediss_hp_TG_resolved}. The total dissipation introduced by the method is too large and, especially for the $32^3 (Q1)$, peaked at earlier times, i.e., the energy decays faster and earlier than it should (see Fig. \ref{fig:enediss_hp_TG_total}). When finer resolutions are used, the flows dynamics are much better predicted. Even when the resolution is not enough to completely capture the viscous dissipation, the total dissipation compares very well with the exact one, as shown in  Fig. \ref{fig:enediss_hp_TG}. This is a \emph{clear illustration of the very good performance of the method, which adds the right amount of dissipation when the gradients are not captured by the resolution.}
+As in the DHIT problem, the results obtained using the coarser $32^3 (Q_1)$ and $64^3 (Q_1)$ meshes are not accurate, the FE viscous dissipation being far from the exact viscous dissipation, as shown in Fig. \ref{fig:enediss_hp_TG_resolved}. The total dissipation introduced by the method is too large and, especially for the $32^3 (Q_1)$, peaked at earlier times, i.e., the energy decays faster and earlier than it should (see Fig. \ref{fig:enediss_hp_TG_total}). When finer resolutions are used, the flows dynamics are much better predicted. Even when the resolution is not enough to completely capture the viscous dissipation, the total dissipation compares very well with the exact one, as shown in  Fig. \ref{fig:enediss_hp_TG}. This is a \emph{clear illustration of the very good performance of the method, which adds the right amount of dissipation when the gradients are not captured by the resolution.}
 
 \subsubsection{Comparison with a non-stabilized method}
 
-All the results presented up to this point have been computed using a VMS method, either ASGS or OSS. But, what would be the result using other methods? Are the methods presented here, comparable to classical LES methods? Which methods perform better? To answer all these questions, we compare the results obtained here against those obtained using the dynamic Smagorinsky model \cite{fauconnier_construction_2009} and the adaptive local deconvolution method \cite{hickel_adaptive_2006} specifically designed as an implicit LES model. The former has been obtained with a filter of size $2 \pi / 64$ and spectral resolution up to $2 \pi / 256$, thus not having numerical but only modeling error. In turn, the latter has been obtained using a $64^3$ grid without explicit subgrid model, an explicit third-order Runge-Kutta scheme for the time discretization, a fourth order spatial approximation of the symmetric terms and its particular approximation of the convective term which is based on the (forth order) five-point central stencils approximation of the convective term \cite{hickel_adaptive_2006}. To make the comparison as fair as possible we select those combinations of $h$ and $p$ that result in a similar number of degrees of freedom, which are $64^3 (Q1)$ (second order), $32^3 (Q2)$ (third order) and $20 (Q3)$ (fourth order) meshes (the last one having actually a bit less degrees of freedom).
+All the results presented up to this point have been computed using a VMS method, either ASGS or OSS. But, what would be the result using other methods? Are the methods presented here, comparable to classical LES methods? Which methods perform better? To answer all these questions, we compare the results obtained here against those obtained using the dynamic Smagorinsky model \cite{fauconnier_construction_2009} and the adaptive local deconvolution method \cite{hickel_adaptive_2006} specifically designed as an implicit LES model. The former has been obtained with a filter of size $2 \pi / 64$ and spectral resolution up to $2 \pi / 256$, thus not having numerical but only modeling error. In turn, the latter has been obtained using a $64^3$ grid without explicit subgrid model, an explicit third-order Runge-Kutta scheme for the time discretization, a fourth order spatial approximation of the symmetric terms and its particular approximation of the convective term which is based on the (forth order) five-point central stencils approximation of the convective term \cite{hickel_adaptive_2006}. To make the comparison as fair as possible we select those combinations of $h$ and $p$ that result in a similar number of degrees of freedom, which are $64^3 (Q_1)$ (second order), $32^3 (Q_2)$ (third order) and $20 (Q3)$ (fourth order) meshes (the last one having actually a bit less degrees of freedom).
 
 The FE viscous dissipation is shown in Fig. \ref{fig:enediss_dynsmag_resolved} compared to the resolved dissipation obtained using the dynamic Smagorinsky model \cite{fauconnier_construction_2009} and the ``molecular dissipation'' of \cite{hickel_adaptive_2006} (the one computed using the molecular viscosity and the approximated solution, equivalent to our FE viscous dissipation but in the finite volume context). The total dissipations of the three methods are compared in Fig. \ref{fig:enediss_dynsmag_total}. 
 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Resolved]{\label{fig:enediss_dynsmag_resolved}\includegraphics[width=0.49\textwidth]{Figures/TG/ens_64dofs_dynsmag_resolved}}
-%	\subfigure[Total]{\label{fig:enediss_dynsmag_total}\includegraphics[width=0.49\textwidth]{Figures/TG/ens_64dofs_dynsmag_total}}
-%	\caption{Dissipation rate evolution compared to the dynamic Smagorinsky \cite{fauconnier_construction_2009} and ALDM models \cite{hickel_adaptive_2006}.}
-%	\label{fig:enediss_dynsmag}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Resolved]{\label{fig:enediss_dynsmag_resolved}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_64dofs_dynsmag_resolved}}
+	\subfigure[Total]{\label{fig:enediss_dynsmag_total}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_64dofs_dynsmag_total}}
+	\caption{Dissipation rate evolution compared to the dynamic Smagorinsky \cite{fauconnier_construction_2009} and ALDM models \cite{hickel_adaptive_2006}.}
+	\label{fig:enediss_dynsmag}
+\end{figure}
 
 It can be observed in Fig. \ref{fig:enediss_dynsmag_resolved} that all the methods produce similar results, %. , ``certainly acceptable'' according to \cite{fauconnier_construction_2009} 
 The dynamic Smagorinsky is more accurate in predicting the resolved dissipation at earlier times (up to $t\approx{}6$) but less accurate at later times (see Fig. \ref{fig:enediss_dynsmag_resolved}). 
 %Nevertheless, 
 We plot the total dissipation in Fig. \ref{fig:enediss_dynsmag_total}. We can see that the excellent job our implicit LES model does when the $20 (Q3)$ mesh is used, which would result in an excellent prediction of the resolved kinetic energy decay (which is not available in \cite{hickel_adaptive_2006}). 
 
-\section{Turbulent channel flow}
+\subsection{Turbulent channel flow}
 \label{sec-C4_TCF}
 After studying the performance of VMS in the LES of homogeneous flows we turn our attention to wall-bounded turbulent flow and present results of fully developed turbulent flow in a channel.
 
@@ -858,7 +863,7 @@ This test consists of a fluid that flows between two parallel walls driven by an
 \subsubsection{Setting}
 \label{subsubsec-C4_TCF_setting}
 
-We solve the problem using the coarsest mesh from previous tests, $32^3$ linear hexahedral $(Q1)$ elements. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{Calderer2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
+We solve the problem using the coarsest mesh from previous tests, $32^3$ linear hexahedral $(Q_1)$ elements. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{Calderer2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
 $$y_i=\frac{\tanh\left(\gamma\left(\frac{2i}{np_y}-1\right)\right)}{\tanh(\gamma)},$$
 where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal direction. Here, $\gamma$ is  chosen to be equal to $2.75$ for both  ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$.  We refer the reader to \cite{Avila2014} for a complete study of the influence of the discretization in the results of the TCF.
 
@@ -896,15 +901,15 @@ We first present the mean streamwise velocity profile scaled by the wall shear s
 
 In Fig. \ref{fig:Channel_umean_32} we show the mean streamwise velocity normalized by the wall-shear velocity, $u_\tau$, obtained for all cases considered in Table \ref{table:DHIT_cases} in a $32^3$ linear elements mesh for the ${\rm Re}_\tau=395$ case. We compare the results with the DNS one obtained in  \cite{moser_direct_1999}. We can observe in Fig. \ref{fig:Channel_umean_32} that all methods perform quite similar and are very close to the DNS result. Fig. \ref{fig:Channel_re395_32} also depicts the streamwise, spanwise and wall-normal root mean square (rms) velocity fluctuation components normalized by the wall-shear stress velocity. 
 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Mean streamwise velocity]{\label{fig:Channel_umean_32}\includegraphics[width=0.49\textwidth]{Figures/CF/umean}}
-%	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:Channel_ufluc_32}\includegraphics[width=0.49\textwidth]{Figures/CF/ufluc}}\\   
-%  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:Channel_vfluc_32}\includegraphics[width=0.49\textwidth]{Figures/CF/vfluc}}
-%  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:Channel_wfluc_32}\includegraphics[width=0.49\textwidth]{Figures/CF/wfluc}}
-%	\caption{Mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=395$ case using a $32^3$ $Q$1 mesh.}
-%	\label{fig:Channel_re395_32}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Mean streamwise velocity]{\label{fig:Channel_umean_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean}}
+	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:Channel_ufluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/ufluc}}\\   
+  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:Channel_vfluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/vfluc}}
+  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:Channel_wfluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc}}
+	\caption{Mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=395$ case using a $32^3$ $Q$1 mesh.}
+	\label{fig:Channel_re395_32}
+\end{figure}
 
 \subsubsection{Reynolds shear stress}
 
@@ -926,16 +931,16 @@ being $a_i$ the $i$-th component of the advection velocity. In (\ref{eq-C4_Rey_s
 The first term on the second part of  (\ref{eq-C4_Rey_shear_disc}) (term $I$) is the contribution of the resolved scales (FE component) to the cross term $\left\langle a_x'a_y'\right\rangle$. Term $II$ denotes the contribution of the subgrid scales and their interaction with the FE components, that is, the unresolved part of the equation. Finally, term $III$ accounts for the viscous portion of the Reynolds shear stress. Note that the derivatives of the approximated subscales are not computable, since these approximated subscales are discontinuous and have been designed to approximate the effect of the exact subscales on the FE scales elementwise. 
 
 For a fully developed and statistically stable turbulent flow, the Reynolds shear stress along the wall-normal direction has a linear shape  (see \cite{kim_turbulence_1987}). Normalized by the viscous term $III$ value at the wall, the total Reynolds shear stress in terms of $y/	\delta$ should have the following expression: $R_{xy}(y/\delta)=(-y/\delta)$. Fig.~\ref{fig:OSS_dyn_Nl_reystr} depicts the absolute value of the Reynolds shear stress along the upper half channel ($y>0$), with the different terms appearing in (\ref{eq-C4_Rey_shear_disc}) and compared with the DNS in \cite{moser_direct_1999}, for the Dyn-Nl-OSS case with ${\rm Re}_\tau=395$. The computed results are almost identical to the DNS ones. It has to be noted that the computed results are evaluated at the integration points due to the presence of the derivative in the Reynolds shear stress, which using linear FEs is constant at each element. Then, using two integration points per direction for the numerical integration, term $III$ will be constant for those two integration points being in the same element. This behavior is observed in Fig.~\ref{fig:OSS_dyn_Nl_reystr}, where the viscous term is pairwise constant. This last fact also affects the total Reynolds shear stress. Since the resolved term has different values at each element Gauss point, the sum of terms $I$ and $III$ results in an oscillatory shape near the wall, where the viscous term is more relevant. It is also seen that the unresolved term $II$ does not contribute to the Reynolds shear stress, which is a good property of the tested VMS methods. The results for the remaining cases in Table \ref{table:DHIT_cases} are similar to those presented in Fig. \ref{fig:OSS_dyn_Nl_reystr} and have not been reported. 
-%\begin{figure}[h!]
-%	\centering	
-%	\includegraphics[width=0.5\textwidth]{Figures/CF/reystr_395_Dyn_Nl_OSS}
-%	\caption{Reynolds stress of the Dyn-Nl-OSS case.}
-%	\label{fig:OSS_dyn_Nl_reystr}
-%\end{figure}
-%% SB: Some change?
-%%{\color{blue} Esta seccion está perfecta, no tengo que tocar nada. However, si en la turbulencia homogenea calculamos los resultados usando $\u_h$ solamente...porque aca incluimos tambien $\tilde{\u}$?}
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/CF/reystr_395_Dyn_Nl_OSS}
+	\caption{Reynolds stress of the Dyn-Nl-OSS case.}
+	\label{fig:OSS_dyn_Nl_reystr}
+\end{figure}
+% SB: Some change?
+%{\color{blue} Esta seccion está perfecta, no tengo que tocar nada. However, si en la turbulencia homogenea calculamos los resultados usando $\u_h$ solamente...porque aca incluimos tambien $\tilde{\u}$?}
 
-\section{Sensitivity with respect to the stabilization parameters}
+\subsection{Sensitivity with respect to the stabilization parameters}
 \label{sec-C4_effect_const}
 
 All the VMS models considered herein depend on the stabilization parameters $\tau_m$ and $\tau_c$, which contain constants $c_1$ and $c_2$ whose value is chosen from numerical experiments. However, we can infer from (\ref{eq-C4_static_energy}) or (\ref{eq-C4_transfer}) how this dependency will be. As mentioned before, the last two terms in (\ref{eq-C4_transfer}) are dissipative and therefore, increasing $\tau_m$ and/or $\tau_c$ we obtain a more dissipative method. From (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), increasing $\tau_m$ results in a reduction of $\tau_c$. More precisely 
@@ -965,68 +970,68 @@ Concerning the energy spectra, it is also shown in Fig.~\ref{fig:spec_tauc0_t04}
 %{\color{red} To improve with references and better explanation of the energy spectra correct behavior}
 This analysis led us to choose $c_1=12$ and $c_2=2$ for $\tau_m$ and set $\tau_c=0$ for homogeneous turbulence, i.e., DHIT and TGV tests.
 
-%%\begin{figure}[h!]
-%%  \centering
-%%  \subfigure[Energy with $c_1=12$, $c_2=8$ and $c_c$ variable]{\label{fig:tau_analysis_cc} 
-%%  \includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_tauc_close}}    
-%%  \subfigure[Energy with $c_1$ and $c_2$ variable and $c_c=0$]{\label{fig:tau_analysis_c12}
-%%  \includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_taum_close}}
-%%  \caption{Comparison of the global energy in the DHIT test for Dyn-Nl-OSS method using a $32^3$ $Q$1 mesh}
-%%  \label{fig:tau_analysis}
-%%\end{figure}
-%
-%% \afterpage{
-%% \begin{landscape}
 %\begin{figure}[h!]
-%\begin{center}
-%%\begin{tabular}{c@{}c@{}c@{}c}
-%\begin{tabular}{@{}c@{}c}
-%%\multirow{2}{*}{\subfigure[Legend]{\label{fig:legend}
-%%\includegraphics[clip=true,trim=14cm 15cm 16cm 4cm,width=0.2\textwidth]{Figures/DHIT/legend}}} &
-%%\subfigure[Global energy with $c_c=0$]{\label{fig:ene_tauc0}
-%%\includegraphics[width=0.42\textwidth]{Figures/DHIT/ene_tauc0}} &
-%\subfigure[Energy spectra at $t=0.4$ with $c_c=0$]{\label{fig:spec_tauc0_t04}
-%\includegraphics[width=0.48\textwidth]{Figures/DHIT/spec_tauc0_t04}} &
-%\subfigure[Energy spectra at $t=0.8$ with $c_c=0$]{\label{fig:spec_tauc0_t08}
-%\includegraphics[width=0.48\textwidth]{Figures/DHIT/spec_tauc0_t08}} \\
-%%\subfigure[Global energy with $c_c=1$]{\label{fig:ene_tauc1}
-%%\includegraphics[width=0.42\textwidth]{Figures/DHIT/ene_tauc1}} &
-%\subfigure[Energy spectra at $t=0.4$ with $c_c=1$]{\label{fig:spec_tauc1_t04}
-%\includegraphics[width=0.48\textwidth]{Figures/DHIT/spec_tauc1_t04}} &
-%\subfigure[Energy spectra at $t=0.8$ with $c_c=1$]{\label{fig:spec_tauc1_t08}
-%\includegraphics[width=0.48\textwidth]{Figures/DHIT/spec_tauc1_t08}} \\
-%\multicolumn{2}{c}{\subfigure[Legend]{\label{fig:legend}
-%\includegraphics[clip=true,trim=0cm 0cm 0cm 0cm,width=0.6\textwidth]{Figures/DHIT/legend2}}}
-%\end{tabular}
-%\end{center}
-%\caption{Comparison of energy spectra for different $c_1$, $c_2$ and $c_c$ in the DHIT test.}
-%\label{fig:tau_analysis}
+%  \centering
+%  \subfigure[Energy with $c_1=12$, $c_2=8$ and $c_c$ variable]{\label{fig:tau_analysis_cc} 
+%  \includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_tauc_close}}    
+%  \subfigure[Energy with $c_1$ and $c_2$ variable and $c_c=0$]{\label{fig:tau_analysis_c12}
+%  \includegraphics[width=0.49\textwidth]{Figures/DHIT/ene_taum_close}}
+%  \caption{Comparison of the global energy in the DHIT test for Dyn-Nl-OSS method using a $32^3$ $Q$1 mesh}
+%  \label{fig:tau_analysis}
 %\end{figure}
-%%\end{landscape}
-%%}
-%
-%%{\color{blue}Looking at Figure \ref{fig:tau_analysis}, it seems that the decision to choose $c_1=12$ and $c_2=2$ for $\tau_m$ and set $\tau_c=0$ is the best option among those analysed} {\color{red} for homogeneous turbulence, i.e., DHIT and TGV tests????}.
-%
-%%{\color{blue}
+
+% \afterpage{
+% \begin{landscape}
+\begin{figure}[h!]
+\begin{center}
+%\begin{tabular}{c@{}c@{}c@{}c}
+\begin{tabular}{@{}c@{}c}
+%\multirow{2}{*}{\subfigure[Legend]{\label{fig:legend}
+%\includegraphics[clip=true,trim=14cm 15cm 16cm 4cm,width=0.2\textwidth]{Figures/DHIT/legend}}} &
+%\subfigure[Global energy with $c_c=0$]{\label{fig:ene_tauc0}
+%\includegraphics[width=0.42\textwidth]{Figures/DHIT/ene_tauc0}} &
+\subfigure[Energy spectra at $t=0.4$ with $c_c=0$]{\label{fig:spec_tauc0_t04}
+\includegraphics[width=0.48\textwidth]{Figures/Chapter4/DHIT/spec_tauc0_t04}} &
+\subfigure[Energy spectra at $t=0.8$ with $c_c=0$]{\label{fig:spec_tauc0_t08}
+\includegraphics[width=0.48\textwidth]{Figures/Chapter4/DHIT/spec_tauc0_t08}} \\
+%\subfigure[Global energy with $c_c=1$]{\label{fig:ene_tauc1}
+%\includegraphics[width=0.42\textwidth]{Figures/Chapter4/DHIT/ene_tauc1}} &
+\subfigure[Energy spectra at $t=0.4$ with $c_c=1$]{\label{fig:spec_tauc1_t04}
+\includegraphics[width=0.48\textwidth]{Figures/Chapter4/DHIT/spec_tauc1_t04}} &
+\subfigure[Energy spectra at $t=0.8$ with $c_c=1$]{\label{fig:spec_tauc1_t08}
+\includegraphics[width=0.48\textwidth]{Figures/Chapter4/DHIT/spec_tauc1_t08}} \\
+\multicolumn{2}{c}{\subfigure[Legend]{\label{fig:legend}
+\includegraphics[clip=true,trim=0cm 0cm 0cm 0cm,width=0.6\textwidth]{Figures/Chapter4/DHIT/legend2}}}
+\end{tabular}
+\end{center}
+\caption{Comparison of energy spectra for different $c_1$, $c_2$ and $c_c$ in the DHIT test.}
+\label{fig:tau_analysis}
+\end{figure}
+%\end{landscape}
+%}
+
+%{\color{blue}Looking at Figure \ref{fig:tau_analysis}, it seems that the decision to choose $c_1=12$ and $c_2=2$ for $\tau_m$ and set $\tau_c=0$ is the best option among those analysed} {\color{red} for homogeneous turbulence, i.e., DHIT and TGV tests????}.
+
+%{\color{blue}
 In order to go in depth on the effect of the algorithmic constants $c_1$ and $c_2$ and the stabilization parameter $\tau_c$ of the incompressibility equation, we compare the results for the TCF problem with a friction Reynolds number ${\rm Re}_\tau=180$ using the same choice made for homogeneous turbulence 
 %the setting used until now 
-($c_1=12$, $c_2=2$ and $\tau_c=0$) against the setting of the incompressible case in \cite{Avila2014} ($c_1=12$, $c_2=2$ and $\tau_c$ as in (\ref{eq-C4_tau_c})) and a less dissipative setting with $c_1=12$, $c_2=8$ and $\tau_c=0$. These tests have been done using the Dyn-Nl-OSS case in a $32^3$ $Q1$ mesh.
+($c_1=12$, $c_2=2$ and $\tau_c=0$) against the setting of the incompressible case in \cite{Avila2014} ($c_1=12$, $c_2=2$ and $\tau_c$ as in (\ref{eq-C4_tau_c})) and a less dissipative setting with $c_1=12$, $c_2=8$ and $\tau_c=0$. These tests have been done using the Dyn-Nl-OSS case in a $32^3$ $Q_1$ mesh.
 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Mean streamwise velocity]{\label{fig:OSS_taus_umean}\includegraphics[width=0.49\textwidth]{Figures/CF/umean_taus_DOSS}}
-%  	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:OSS_Matias_ufluc}\includegraphics[width=0.49\textwidth]{Figures/CF/ufluc_taus_DOSS}}\\    
-%  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:OSS_Matias_vfluc}\includegraphics[width=0.49\textwidth]{Figures/CF/vfluc_taus_DOSS}}
-% 	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:OSS_Matias_wfluc}\includegraphics[width=0.49\textwidth]{Figures/CF/wfluc_taus_DOSS}}
-% 	\caption{Comparison of mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=180$ case using a $32^3$ $Q$1 mesh.}
-%    \label{fig:OSS_taus_fluc}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Mean streamwise velocity]{\label{fig:OSS_taus_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean_taus_DOSS}}
+  	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:OSS_Matias_ufluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/ufluc_taus_DOSS}}\\    
+  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:OSS_Matias_vfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/vfluc_taus_DOSS}}
+ 	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:OSS_Matias_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc_taus_DOSS}}
+ 	\caption{Comparison of mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=180$ case using a $32^3$ $Q$1 mesh.}
+    \label{fig:OSS_taus_fluc}
+\end{figure}
 
 In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{sec-C4_TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
 %Not only  $\tau_c=0$ but also setting $c_2=8$ (instead of $c_2=2$) give less dissipative results.
 Figs. \ref{fig:OSS_Matias_ufluc}, \ref{fig:OSS_Matias_vfluc} and \ref{fig:OSS_Matias_wfluc} depict the rms velocity fluctuations in all directions. The fluctuations in the streamwise direction are better predicted using ($c_1=12$, $c_2=8$ and $\tau_c=0$) but the spanwise and wall-normal directions are not.
 
-\section{Behavior in the small time step limit}
+\subsection{Behavior in the small time step limit}
 \label{sec-C4_small_time_step}
 
 Small time step instabilities for VMS LES simulations of turbulent flows have been reported in \cite{Hsu2010,gamnitzer_time-dependent_2010}. In these references, the VMS models differ from the ones in this work. Instead of the definition of  $\tau_m$ in (\ref{eq-C4_tau_m}), a time step dependent stabilization parameter $\tau_m$
@@ -1069,14 +1074,14 @@ Converged&Yes&No&Yes&Yes&$\delta t\downarrow$&$\delta t\downarrow$&Yes&Yes\\\hli
 To the best of our knowledge, the stability (or instability) of dynamic ASGS methods has not been proved. In our numerical experiments the static and dynamic linear versions fail to converge in some problems (e.g DHIT) but we have not found these problems with the Dyn-Nl-ASGS method. Nevertheless, we have found an important increase in the computational cost when the time step is reduced. 
 %the time step size also has an effect on the computational cost. 
 %In particular, the number of solver iterations for ASGS methods increase when the time step is reduced. 
-This behavior is explained in Fig. \ref{fig:1st_step_comp_cost}, where the number of solver iterations at the first time step is plotted against the time step size for the dynamic and nonlinear cases of ASGS and OSS methods, with $32^3$ and $64^3$ $Q1$ mesh, for the DHIT test case. \emph{The number of required solver iterations (and as a result the condition number of the system matrix) blows up exponentially for the ASGS method as we reduce the time step size, whereas it remains constant for the OSS method.} This important observation explains the computational cost trends observed in the previous section.
+This behavior is explained in Fig. \ref{fig:1st_step_comp_cost}, where the number of solver iterations at the first time step is plotted against the time step size for the dynamic and nonlinear cases of ASGS and OSS methods, with $32^3$ and $64^3$ $Q_1$ mesh, for the DHIT test case. \emph{The number of required solver iterations (and as a result the condition number of the system matrix) blows up exponentially for the ASGS method as we reduce the time step size, whereas it remains constant for the OSS method.} This important observation explains the computational cost trends observed in the previous section.
 
-%\begin{figure}[h!]
-%	\centering	
-%	\includegraphics[width=0.5\textwidth]{Figures/DHIT/1st_step_comp_cost}
-%	\caption{Solver iterations at the first time step for DHIT test.}
-%	\label{fig:1st_step_comp_cost}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/1st_step_comp_cost}
+	\caption{Solver iterations at the first time step for DHIT test.}
+	\label{fig:1st_step_comp_cost}
+\end{figure}
 
 %Finally, it is clearly seen in Fig. \ref{fig:1st_step_comp_cost} the exponential increase of solver iterations for the ASGS methods when the time step tends to zero, independently of the mesh size. This performance denotes the \emph{ill conditioning of the ASGS system matrix with respecto to the time step size}. On the other hand, \emph{the number of solver iterations remains constant for the OSS method}, regardless of the time step size.
 
