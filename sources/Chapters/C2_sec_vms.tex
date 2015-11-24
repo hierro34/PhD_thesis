@@ -4,13 +4,13 @@ It is well known that the Galerkin FE approximation \Eq{NS_galerkin} has numeric
 
 Let us consider a two-scale decomposition of spaces $\mathcal{V}_0$ and $\mathcal{Q}_0$ such that $$\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$$ and $$\mathcal{Q}_0=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0,$$ where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subgrid component. Applying the two-scale decomposition to \Eq{NS_weak} we obtain a discrete problem
 \begin{align}
-\label{eq-C2_vms_NS_discrete}
+\label{eq-C2_NS_discrete}
 (\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)&+B(\a;[\u_h,p_h],[\v_h,q_h])\\\nonumber
 &+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>,
 \end{align}
 where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products (\ref{eq:scalar_product}) over each element $K$ of the partition $\mathcal{T}_h$, and
 \begin{equation}
-\label{eq-C2_vms_adjoint}
+\label{eq-C2_adjoint}
 \mathcal{L}_{\a}^*(\v_h,q_h):=-\nu\nabla^2\v_h-\a\cdot\nabla\v_h-\nabla q_h
 \end{equation}
 is the formal of the adjoint operator of the momentum equation. The term involving the adjoint operator comes from an elementwise integration by parts of the terms involving the subscales, in which the boundary terms 
@@ -25,34 +25,34 @@ These approximations are discussed in  \cite{codina_time_2007} together with the
 
 The discrete problem depends on $\tilde{\u} \in \widetilde{\mathcal{V}}_0$ and on $\tilde{p}\in \widetilde{\mathcal{Q}}_0$,  $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ being infinite-dimensional. Therefore, the equations for $\tilde{\u}$ and $\tilde{p}$ obtained after applying the two-scale decomposition cannot be directly solved, but some modeling steps are needed to obtain a feasible method. Considering the subscale as a time-dependent variable of the problem (see below) and approximating the Navier-Stokes operator by two stabilization parameters $\tau_m^{-1}$ and $\tau_c^{-1}$ (see for example \cite{codina_time_2007}), the fine scale problem can be written as
 \begin{align}
-\label{eq-C2_vms_velo_sgs}
+\label{eq-C2_velo_sgs}
 \partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u),\\
-\label{eq-C2_vms_press_sgs}
+\label{eq-C2_press_sgs}
 \tau_c^{-1}\tilde{p}=\mathcal{P}(R_p).
 \end{align}
 In \Eq{velo_sgs}-\Eq{press_sgs} $\mathcal{P}$ denotes the projection onto the space of subscales, which is discussed below. In turn, the vector $\R$ is the residual of the Navier-Stokes equations \Eq{NS_strong_mome}-\Eq{NS_strong_inc}, defined as $\R=[\R_u,R_p]^T$, with
 \begin{align}
-\label{eq-C2_vms_Ru}
+\label{eq-C2_Ru}
 %&\R_u=\f-\left(\partial_t\u_h+N((\u_h+\tilde{\u}),\u_h)+\nabla p_h \right),\\
 %&\R_u=\f-\left(\partial_t\u_h+ \a \cdot \nabla \u_h + \nabla p_h \right),\\
 &\R_u=\f-\partial_t\u_h-\mathcal{L}_{\a}(\u_h,p_h),\\
-\label{eq-C2_vms_Rp}
+\label{eq-C2_Rp}
 &R_p=-\nabla\cdot\u_h.
 \end{align}
 where
 \begin{equation}
-\label{eq-C2_vms_operator}
+\label{eq-C2_operator}
 \mathcal{L}_{\a}(\v_h,q_h):=-\nu\nabla^2\v_h+\a\cdot\nabla\v_h+\nabla q_h
 \end{equation}
 %and $N((\u_h+\tilde{\u}),\u_h)=(\u_h+\tilde{\u})\cdot\nabla\u_h$ is the convective term. 
 Finally, the expressions of the stabilization parameter $\tau_m$ is 
 \begin{align}
-\label{eq-C2_vms_tau_m}
+\label{eq-C2_tau_m}
 &\tau_m=\left(\frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}\right)^{-1},
 \end{align}
 whereas we consider two possible definitions of $\tau_c$, viz. $\tau_c = 0$ (which implies $\tilde{p} = 0$) and 
 \begin{align}
-\label{eq-C2_vms_tau_c}
+\label{eq-C2_tau_c}
 &\tau_c=\frac{h^2}{c_1\tau_m},
 \end{align}
 where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression \Eq{tau_m}:
@@ -66,10 +66,10 @@ Section XXXX~\ref{sec:small_time_step} for a more detailed discussion about this
 In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{Codina-chap-2011}, together with some numerical experiments. 
 
 \subsection{The dynamics of the subscales}
-\label{subsec-C2_vms_dyn}
+\label{subsec-C2_dyn}
 Stabilized formulations were originally developed for steady convection-diffusion \cite{Brooks_1982} and Stokes \cite{Douglas_1989,Hughes_1986_5} problems. As the numerical instabilities have a spatial nature, the time dependency of the subscales was not considered, and the standard choice \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} was to take 
 \begin{equation}
-\label{eq-C2_vms_static_sgs}
+\label{eq-C2_static_sgs}
 \tilde{\u}=\tau_m \mathcal{P}(\R_u),
 \end{equation}
 that is, to neglect the temporal derivative of the subscales in (\ref{eq:velo_sgs}). In this case, the subscales are called quasi-static in what follows.
@@ -84,13 +84,13 @@ Equation \Eq{velo_sgs} can be analytically integrated to give
 where it is explicitly seen that the subscale is a function of the residual but also of the flow history. In practice this integration is performed numerically, as described below.
 
 \subsection{(Non)linear scale splitting}
-\label{subsec-C2_vms_nl}
+\label{subsec-C2_nl}
 The original VMS formulation \cite{hughes_multiscale_1995,hughes_variational_1998} was developed having linear problems in mind and its extension to the Navier-Stokes equations was implicitly based on a ``linearization'', fixing the advection velocity and applying the multiscale splitting to the rest of the terms. A nonlinear scale splitting was used in \cite{Hughes2000,hughes_large_2001} together with an explicit resolution of the small scales in which a Smagorinsky damping was introduced. A nonlinear scale splitting with modeled subscales was used in \cite{codina_stabilized_2002, bazilevs_variational_2007} and in \cite{codina_time_2007}, where it was shown that it leads to global conservation of momentum. We therefore consider both options
 %The vector $\a$ appearing in (\ref{eq:bilinear}) and (\ref{eq:adjoint}) is the advection velocity of the convective term. It can be defined in two different ways depending if we use a linear or a nonlinear scheme for the subscales definition. That is, 
 \begin{align}
-\label{eq-C2_vms_a_lin}
+\label{eq-C2_a_lin}
 &\a=\u_h&&\mbox{for linear subscales},\\
-\label{eq-C2_vms_a_nl}
+\label{eq-C2_a_nl}
 &\a=\u_h+\tilde{\u}&&\mbox{for nonlinear subscales}.
 \end{align}
 
@@ -98,7 +98,7 @@ The original VMS formulation \cite{hughes_multiscale_1995,hughes_variational_199
 \label{rem-skewsym}
 When we use the nonlinear definition for the advection velocity, $\a=\u_h+\tilde{\u}$, the skew-symmetric term \textit{type 2} \Eq{b_skew2} in the FE equation \Eq{NS_discrete} reads: 
 \begin{equation}
-\label{eq-C2_vms_b_skew2_aux1}
+\label{eq-C2_b_skew2_aux1}
 b(\a,\u_h,\v_h)=((\u_h+\tilde{\u})\cdot\nabla\u_h,\v_h)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\u_h)+\frac{1}{2}(\u_h\cdot\v_h,\nabla\cdot\tilde{\u}).
 \end{equation}
 The last term is not well-defined, since it includes derivatives of the discontinuous subscale $\tilde{\u}$. One possibility is to neglect it (as previously done with other similar terms when arriving to \Eq{NS_discrete}), which implies
@@ -108,7 +108,7 @@ b(\a,\u_h,\u_h)=-\frac{1}{2}(|\u_h|^2,\nabla\cdot\tilde{\u}),
 the same result obtained when the non conservative form is used.
 By contrast, the skew-symmetric term \textit{type 1} in the FE equation \Eq{NS_discrete} reads
 \begin{equation}
-\label{eq-C2_vms_b_skew1_aux1}
+\label{eq-C2_b_skew1_aux1}
 b(\a,\u_h,\v_h)=\frac{1}{2}((\u_h+\tilde{\u})\cdot\nabla\u_h,\v_h)-\frac{1}{2}((\u_h+\tilde{\u})\cdot\u_h,\nabla\cdot\v_h)
 \end{equation}
 from where
@@ -141,25 +141,25 @@ Even if this is not exactly what we get using the non-conservative or skew-symme
 \end{remark}
 
 \subsection{The space for the subscales}
-\label{subsec-C2_vms_oss}
+\label{subsec-C2_oss}
 The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{velo_sgs} and \Eq{press_sgs}. The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
 %method is characterized by the following projection definition:
 \begin{equation}
-\label{eq-C2_vms_P_ASGS}
+\label{eq-C2_P_ASGS}
 \mathcal{P}:=\mathbf{I}.
 \end{equation}
 Another possibility introduced in \cite{codina_stabilization_2000} is to consider the space of the subscales orthogonal to the FE space. The main motivation of the method is that a stability estimate for the projection onto the FE space of the pressure and/or the convective terms can already be obtained in the standard Galerkin method and therefore the only ``missing'' part is the orthogonal one. The Orthogonal Subscales (OSS) method is then characterized by the following projection definition:
 \begin{equation}
-\label{eq-C2_vms_P_OSS}
+\label{eq-C2_P_OSS}
 \mathcal{P}:=\Pi_h^\bot=\mathbf{I}-\Pi_h,
 \end{equation}
 where $\Pi_h$ is the projection onto the FE space. With this choice, the residual of the momentum equation does not depend on $\partial_t\u_h$. Likewise, $\mathcal{P}(\f)$ in this case is only well defined for $\f\in L^2(\Omega)^d$. In the case of minimum regularity, $\f\in H^{-1}(\Omega)^d$, this term can be simply neglected without upsetting the accuracy of the method.
 
 In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec:energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in \Eq{velo_sgs} and another for the pressure subscales ($\Pi_c$) in \Eq{press_sgs}. We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
 \begin{align}
-\label{eq-C2_vms_Pi_tau_m}
+\label{eq-C2_Pi_tau_m}
 &(\tau_m\Pi_m(\w),\v_h)=(\tau_m\w,\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
-\label{eq-C2_vms_Pi_tau_c}
+\label{eq-C2_Pi_tau_c}
 &(\tau_c\Pi_c(r),q_h)=(\tau_cr,q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
 \end{align}
 These definitions guarantee the orthogonality between the FE and subscale spaces in the case of static subscales, that is, neglecting temporal derivatives in \Eq{velo_sgs}. It then follows that the term containing the temporal derivative of the subscale in the FE equation \Eq{NS_discrete} also vanishes.
