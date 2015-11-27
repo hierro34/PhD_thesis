@@ -6,7 +6,7 @@
 
 The VMS method for incompressible turbulent flows has been analysed previously in Chapter \ref{chap-Rb_VMS}. As stated there, the VMS method introduced by Hughes in \cite{hughes_multiscale_1995,hughes_variational_1998} is a framework to develop stable and accurate numerical approximations of partial differential equations, preventing numerical instabilities that arise when the standard Galerkin FE method is used. 
 
-We also recall here that the use of VMS method as an ILES method in \cite{hughes_multiscale_2001,hughes_large_2001,codina_stabilized_2002} and, since then, several VMS methods have been developed and used as ILES. We can distinguish between those that introduce a three scale decomposition into resolved large and small scales and unresolved scales \cite{koobus_variational_2004,john_variants_2008, john_numerical_2010, masud_variational_2011}, with a Smagorinsky type model for the influence of unresolved scales onto the small resolved ones, and those that introduce a two scale decomposition into resolved and unresolved ones \cite{bazilevs_variational_2007,colomes_assessment_2015} using a residual based or projection based model of the unresolved scales to account for their influence into the resolved ones.
+We also recall here that the use of VMS method as an ILES method was firstly suggested in \cite{hughes_multiscale_2001,hughes_large_2001,codina_stabilized_2002} and, since then, several VMS methods have been developed and used as ILES. We can distinguish between those that introduce a three scale decomposition into resolved large and small scales and unresolved scales \cite{koobus_variational_2004,john_variants_2008, john_numerical_2010, masud_variational_2011}, with a Smagorinsky type model for the influence of unresolved scales onto the small resolved ones, and those that introduce a two scale decomposition into resolved and unresolved ones \cite{bazilevs_variational_2007,colomes_assessment_2015} using a residual based or projection based model of the unresolved scales to account for their influence into the resolved ones.
 
 In \cite{codina_stabilization_2000}, a two scale VMS approach through OSS was firstly introduced. The main idea of the OSS method is to select the space of small scales orthogonal to the FE space, in contrast to the traditional choice of taking the subscales proportional to the residual, which is called ASGS in \cite{codina_stabilization_2000}. Apart from the choice of the space of subscales, their time dependency and the VMS splitting of nonlinear terms was studied in \cite{codina_time_2007}. Several combinations of these modelling possibilities where exhaustively assessed for homogeneous and wall bounded turbulent flows in \cite{colomes_assessment_2015}\footnote{Chapter \ref{chap-Rb_VMS} collects most of the work exposed in \cite{colomes_assessment_2015}, which has been extended and adapted to fit in the argumentation of this thesis.}. In that work, an explicit algorithm to compute the orthogonal projections was used and the projection of the whole residual was considered.
 
@@ -396,7 +396,6 @@ being $\St:=\Kt_\tau-\Bt_\tau^T\Mt_\tau^{-1}\Bt_\tau$ the Schur complement with 
 \end{array}\right].
 \end{align}
 To apply \Eq{C5_NS_d_precond}-\Eq{C5_NS_l_precond} we need to compute the action of $\Mt_\tau^{-1}$ and $\St^{-1}$. In the first case, $\Mt_\tau^{-1}$ is block diagonal thus requiring the inverse of each projection mass matrix, $\M_{\eta,\tau}^{-1}$ and $\M_{\xi,\tau}^{-1}$. In a serial computation, they are applied by a direct method whereas in a parallel computation they are approximated by one application of a diagonal DD preconditioner constructed with the values of the diagonal of $\M_{\eta,\tau}$ and $\M_{\xi,\tau}$, respectively. In the second case we approximate the Schur complement inverse as $\St \approx \Kt_\tau$, that is, we neglect the contribution form the projections $-\Bt_\tau^T\Mt_\tau^{-1}\Bt_\tau$  in the preconditioner. This approximation corresponds to use the solution of a system arising from a non-consistent formulation in which artificial pressure and streamline diffusion are added. Stability of the preconditioner is therefore guaranteed.
-%In \Eq{C5_NS_d_precond}-\Eq{C5_NS_l_precond} the inverse matrices $\Mt_\tau^{-1}$ and $\St^{-1}$ are not computed exactly, so we consider a second level of $2\times2$ block preconditioners. We will approximate the Schur complement inverse by the block diagonal mass matrix inverse  $\St^{-1}\sim\Mt_\tau^{-1}$, which will be preconditioned with a diagonal block preconditioner $P_D(\Mt_\tau)$ equivalent to \Eq{C5_NS_d_precond}. The inverse of each projection mass matrix, $\M_{\eta,\tau}^{-1}$ and $\M_{\xi,\tau}^{-1}$, when serial computation is considered, are solved by a direct method. Otherwise, in the case of parallel computation, these matrices are approximated by one application of a diagonal DD precondiner constructed with the values of the diagonal of $\M_{\eta,\tau}$ and $\M_{\xi,\tau}$, respectively. Alternatively, one can also consider to build a preconditioner for the mass matrix inverse using the diagonal values of a lumped mass matrix.
 
 For the application of $\Kt_\tau^{-1}$ we consider other three preconditioners equivalent to \Eq{C5_NS_d_precond}-\Eq{C5_NS_l_precond}. Using the notation $\K_\tau:=\frac{1}{\delta t}\M+\K+\C+\A_\tau$ for the velocity block matrix and $\Sb:\L_\tau-\D\K_\tau^{-1}\G$ for the Schur complement associated to the pressure field, we have the following block preconditioners
 \begin{align}
@@ -427,319 +426,308 @@ For the application of $\Kt_\tau^{-1}$ we consider other three preconditioners e
 \end{align}
 As usual, the inverse of the Schur complement is approximated by a pressure Laplacian matrix, $\Sb^{-1}\sim \delta t \L_p^{-1}$. In regimes where the viscous term becomes dominant, one can use the Cahouet-Chabard preconditioner to approximate the inverse of the Schur complement, i.e., $\Sb^{-1}\sim (\nu+\tau_c)\M_p + \delta t \L_p^{-1}$. For the serial case, the Laplacian matrix is inverted using a direct method, but in a parallel context we approximate the inverse of $\L_p$ by one application of a BDDC preconditioner over such matrix. Something similar is done for the inverse of the velocity block matrix $\K_\tau$. Here we use a direct method for the serial case and one application of BDDC preconditioner when parallel solvers are treated. We refer to \cite{yano_bddc_2010} for the application of the BDDC preconditioner to nonsymmetric problems. For a more detailed description of the implementation and algorithms used for the recursive block-preconditioning technique we refer to \cite{badia_block_2014}. Besides monolithic approaches, splitting velocity-pressure techniques are commonly used for high Reynolds turbulent flows, which can be interpreted as one application of a block-preconditioner \cite{elman_finite_2005,badia_algebraic_2008}. High order time integration schemes that segregate velocity and pressure computation have recently been proposed in \cite{colomes_segregated_2015}. The use of the stabilized inf-sup stable FEs proposed herein are particularly well-suited for this type of schemes, because it keeps the index-2 differential-algebraic nature of the problem. 
 
-%\section{Numerical tests}
-%\label{sec-C5_results}
-%In this section we provide some numerical results for turbulent incompressible flow simulations using all the methods stated above. First, we do a comparative analysis between the three stabilization methods developed in Section~\ref{sec-C5_VMS_framework}. The parameter election for the pressure subscale term is assessed in all numerical tests performed in this section.
-%But, first of all, we show some results about the computational cost of the VMS methods considered in this work. To check the efficiency of each method we solve a simple 2D steady problem with analytical solution.
-%
-%\subsection{Analytical colliding flow}
-%\label{subsec-C5_colliding}
-%In this section we solve a problem with analytical solution that models a colliding flow. This test have been used in \cite{elman_finite_2005} to discuss error estimates for the Stokes and Navier-Stokes problems using ISS FE velocity-pressure pairs. It has an analytical solution with the expression:
-%\begin{eqnarray}
-%\label{eq-C5_analytical_u}
-%&\u(x,y,t) = \left[ \begin{array}{c}
-%20xy^3\\
-%5x^4-5y^4
-%\end{array}\right],\\
-%\label{eq-C5_analytical_p}
-%&p(x,y) = 60x^2y-20y^3+40.
-%\end{eqnarray}
-%The problem is solved in the square domain $[-1,1]\times[-1,1]$ with a Reynolds number $Re=25$. Here we analyse the solver iterations convergence in $h$ for each preconditioner defined in Section \ref{subsec-C5_block_precond} as well as the elapsed CPU time and the error on the velocity and pressure fields. Due to the simplicity of the test, we will solve the problem in serial using $Q1/Q1$ elements meshes for the ASGS and term-by-term OSS, and $Q2/Q1$ elements mesh for the OSS-ISS method.
-%
-%We only show the results when using the lower-triangular preconditioner for the global matrix $P_L(\At)$, defined in \Eq{C5_NS_l_precond}. The diagonal version $P_D(\At)$ defined in \Eq{C5_NS_d_precond} give poorer performance and same results are obtained with the upper-triangular version $P_U(\At)$ \Eq{C5_NS_u_precond}. For the velocity-pressure block, all preconditioners defined in \Eq{C5_Stokes_d_precond}-\Eq{C5_Stokes_l_precond} are considered.
-%
-%In Fig. \ref{fig-soliter-CPUtime} we depict the solver iterations needed to solve the problem as well the total elapsed CPU time for different meshes composed by $4,8,16,32$ or $64$ elements per direction. When the OSS-ISS method is considered, as we use $Q2/Q1$ elements, the number of elements per direction is divided by two. The amount of solver iterations shown in Fig. \ref{fig-soliterU} is computed adding all solver iterations needed for all nonlinear iterations. We see in this figure that the OSS-ISS method has an increase of solver iterations for the coarser mesh, compared with the other two methods. This behaviour is produced by the fact that for this case the mesh is too coarse, $2\times2$ $Q2/Q1$ elements, and the nonlinear iterations suffer a drastic increase. For finer meshes, the OSS-ISS method needs less solver iterations than the other two. We see that for the diagonal preconditioner $P_D(\K_\tau)$ the OSS-ISS is the only that scales when we refine the mesh. The upper and lower preconditioners, $P_U(\K_\tau)$ and $P_L(\K_\tau)$, have similar results with a slightly better performance of the upper version for all methods. The ASGS and OSS methods also need a similar number of iterations to solve the problem, being the OSS method a little bit over the ASGS.
-%
-%Looking at the elapsed computational time, Fig. \ref{fig-CPUtimeU}, we see that the OSS method is clearly more expensive, in terms of consumed time, than the other two methods. The ASGS method is slightly faster than the OSS-ISS, but the differences are almost negligible for the $P_U(\K_\tau)$ preconditioner. The fact that the most expensive method is the OSS method is justified by the number of Degrees Of Freedom (DOFs) that appear in the system of equations. As stated in Section \ref{subsec-C5_block_precond}, the OSS method has two vectorial unknowns more than ASGS method. On the other hand, the OSS-ISS method also has an additional vectorial unknown than ASGS, but the pressure field is approximated with half nodes. Without taking into account the boundary conditions, for the $4\times4$ elements mesh ($2\times2$ for the OSS-ISS case), we would have $175$ DOFs for the OSS method, $75$ DOFs for the ASGS method and $109$ DOFs for the OSS-ISS method. Then, we see that, although it has more DOFs, the OSS-ISS method is comparable in terms of computational time with the ASGS. Further, the number of DOFs is a wrong measure of the CPU cost. The most expensive problem in such simulations is the pressure Poisson equation, which in this case is smaller (one order less) for ISS elements. Further, the projection DOFs are almost for free, since they just involve a mass matrix solve. Further, the ISS method exhibit a clearly lower number of iterations.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Solver iterations]{\label{fig-soliterU}\includegraphics[width=0.49\textwidth]{Figures/colliding/iter}}
-%  \subfigure[Elapsed CPU time]{\label{fig-CPUtimeU}\includegraphics[width=0.49\textwidth]{Figures/colliding/time}}
-%  \caption{Colliding flow solver iterations and elapsed CPU time using $P_U(\At)$ for the global matrix.}
-%  \label{fig-soliter-CPUtime}
-%\end{figure}
-%
-%Let us now focus on the error in the velocity and pressure fields. Since we are solving a problem with analytical solution, we can evaluate exactly the error of the FE approximation, $e_u:=\|\u_h-\u\|$  and $e_p:=\|p_h-p\|$. Fig. \ref{fig-error} depicts the convergence of both errors when refining the mesh. In Fig. \ref{fig-erroru} we see that the velocity error converges as expected, with a 2nd order rate for the ASGS and OSS methods, which are approximated by $Q1/Q1$ elements, and with a 3rd order rate for the OSS-ISS method, which is approximated by a $Q2/Q1$ element. 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Velocity error]{\label{fig-erroru}\includegraphics[width=0.49\textwidth]{Figures/colliding/erru}}
-%  \subfigure[Pressure error]{\label{fig-errorp}\includegraphics[width=0.49\textwidth]{Figures/colliding/errp}}
-%  \caption{Colliding flow error convergence using $P_U(\At)$ for the global matrix.}
-%  \label{fig-error}
-%\end{figure}
-%Looking at Fig. \ref{fig-errorp}, it is seen that the pressure error norm converges with a 2nd order rate for all the methods, as expected.
-%%for the OSS-ISS and a slightly lower rate for the other two cases. 
-%Note that there is no difference between the results changing the preconditioner, since the solution is the same for all cases because we are not modifying the system that is solved.
-%
-%In order to check the efficiency of each method we compare the error norm with the elapsed computational time. In this way we have an idea of the time needed for a given method to achieve certain solution accuracy. Fig. \ref{fig-error-time} shows this comparison for velocity (Fig. \ref{fig-erroru-time}) and pressure (Fig. \ref{fig-errorp-time}) fields, where we see that, excluding the coarser mesh, the OSS-ISS method is much more efficient than the other two. Furthermore, the most efficient preconditioner is the upper version $P_U(\K_\tau)$.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Velocity error vs.  CPU time]{\label{fig-erroru-time}\includegraphics[width=0.49\textwidth]{Figures/colliding/errtu}}
-%  \subfigure[Pressure error vs.  CPU time]{\label{fig-errorp-time}\includegraphics[width=0.49\textwidth]{Figures/colliding/errtp}}
-%  \caption{Colliding flow error vs. CPU time using $P_U(\At)$ for the global matrix.}
-%  \label{fig-error-time}
-%\end{figure}
-%
-%\subsection{Taylor Green Vortex flow}
-%\label{subsec-C5_TGV-VMS}
-%It has been shown by many authors that VMS stabilization terms can act as a LES model for turbulent flows, introducing the appropriate dissipation of the small scales that are not captured by the coarse solution. In particular, ASGS and OSS methods were assessed in \cite{colomes_assessment_2015}, showing that these methods are capable to perform a good LES simulation of different turbulent benchmark problems.
-%In order to check the performance of the convection-only OSS stabilization of ISS elements for a LES simulation, we analyse its behaviour in the Taylor Green Vortex (TGV) flow. This problem is widely used for benchmarking turbulent numerical simulations. 
-%
-%\subsubsection{Test setting}
-%\label{subsubsec-C5_TFV_setting}
-%The computational domain is the cube $(0,2\pi)^3$ with periodical boundary conditions and the initial condition is given by an analytical field (see, e.g., \cite{brachet_direct_1991})
-%\begin{align}
-%\label{eq:ini_sol_TG}
-%&\u(x,y,z,0)=\left(\begin{array}{c}
-%u_x\\
-%u_y\\
-%u_z
-%\end{array}\right)=\left(\begin{array}{c}
-%u_0\cos(x)\sin(y)\sin(z)\\
-%-u_0\sin(x)\cos(y)\sin(z)\\
-%0
-%\end{array}\right)\\\nonumber
-%&p(x,y,z,0)=p_0+\frac{1}{16}\left(\cos(2x)+\cos(2y)\right)\left(\cos(2z)+2\right),
-%\end{align}
-%with
-%$$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
-%We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. We solve the TGV problem using a Reynolds number ${\rm Re}=1600$.
-%
-%\subsubsection{Comparison between different VMS methods}
-%The problem is solved from $t=0.0$ to $T=10.0$ with a fixed time step size of $\delta t=5.0\cdot10^{-2}$ using a Crank-Nicolson time integration scheme, and the results are compared against a DNS by Brachet et al. \cite{brachet_direct_1991}. We discretize the domain using different choices of the number of elements and the order of approximation, having two differentiated group of discretizations; one with $32^3$ velocity DOFs and another with $64^3$ velocity DOFs. The former will be composed by the following meshes: $32^3$ $Q1/Q1$, $16^3$ $Q2/Q2$ elements or $16^3$ $Q2/Q1$ elements when we use ISS discretization. The second group of meshes is made by: $64^3$ $Q1/Q1$, $32^3$ $Q2/Q2$ or $32^3$ $Q2/Q1$ elements. For the stabilized formulations, ASGS and OSS, the algorithmic constants are $c_1=12$ $c_2=2$ and $c_c=0.0$, and for the OSS-ISS method the same $c_1$ and $c_2$ algorithmic constants are used, but $c_c=4.0$ unless noted otherwise. This choice of $c_c$ for the OSS-ISS method is assessed in a following subsection.
-%
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-TGV_OSS_32_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/32/plt_tg3d_ene/plt_tg3d_ene}}
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_32_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/32/plt_tg3d_tot/plt_tg3d_tot}}
-%  \caption{Energy and Total energy dissipation rate evolution with $32^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_32_ene_dis}
-%\end{figure}
-%In Fig. \ref{fig-TGV_OSS_32_ene_dis} we show the energy evolution and the energy dissipation rate for the ASGS, the OSS, and the OSS-ISS methods. A first thing that we have to state at this point is that the ASGS method with $32^3$ $Q1/Q1$ has failed to converge at early stages of the problem, a behaviour also observed in \cite{colomes_assessment_2015}. Looking at Fig. \ref{fig-TGV_OSS_32_ene} it is clear that the degree of interpolation makes a great difference on the solution, even with the same number of DOFs, the solution is more accurate when a higher order of interpolation is used. In the same figure we see that the loose of precision in the pressure for the ISS elements $Q2/Q1$ does affect the solution, giving a result between the $Q1/Q1$ and $Q2/Q2$ solutions. At Fig. \ref{fig-TGV_OSS_32_dis} we see that the OSS-ISS method is more dissipative than the others. This behaviour is caused by the lack of accuracy in the pressure field, which in turn affects the conservation of mass of the problem. A more exhaustive analysis of the effect of this term is done below.
-%
-%Although an important improvement of the solution is achieved by increasing the order of interpolation, $32^3$ velocity DOFs is still a very coarse mesh and the results shown in Fig. \ref{fig-TGV_OSS_32_ene_dis} are far from the DNS ones. Then, the same problem is solved in a finer mesh, with the double of velocity DOFs per direction, with the results shown in Fig. \ref{fig-TGV_OSS_64_ene_dis}. In this case, all methods converge at all time steps. Fig. \ref{fig-TGV_OSS_64_ene} depicts the energy evolution and it is also seen that the increase on the degree of interpolation results in a more accurate solution. Both ASGS and OSS methods with $32^3$ $Q2/Q2$ elements have very accurate results, providing a solution almost on top of the DNS. There are very little differences between stabilization methods when the same discretization is used. Furthermore, the results of the OSS-ISS method are closer to the $Q1/Q1$ discretization than to the $Q2/Q2$ one. The total energy dissipation rate shown in Fig. \ref{fig-TGV_OSS_64_dis} denote a very good agreement of the $Q2/Q2$ solution with the DNS, while the $Q1/Q1$ discretization for both ASGS and OSS methods are still more diffusive. Note that the OSS-ISS method for this discretization has more or less the same energy dissipation than the $Q1/Q1$ discretizations.
-%\begin{figure}[h]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-TGV_OSS_64_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/64/plt_tg3d_ene/plt_tg3d_ene}}
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_64_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/64/plt_tg3d_tot/plt_tg3d_tot}}
-%  \caption{Energy and Total energy dissipation rate evolution with $64^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_64_ene_dis}
-%\end{figure}
-%
-%When analysing the suitability of a LES model, a very important turbulent quantity to take into account is the energy spectra. It gives us information about how the energy is distributed among the scales of the problem. In order to assess the behaviour of the proposed methods in that aspect, we compare our results by the DNS by Gassner et al. \cite{gassner_accuracy_2013}. In Fig. \ref{fig-TGV_OSS_spe} the energy spectra at $t=9.0$ is depicted for both discretization groups. The coarser cases shown in Fig. \ref{fig-TGV_OSS_32_spe} are all far from the DNS result, but follow the same pattern, with most of the energy on the greatest scales and little energy on the small scales, without any pileup of energy on the small scales. When the mesh is refined, see Fig. \ref{fig-TGV_OSS_64_spe}, the computed energy spectra tends to the DNS one. Note that also in this plot, $Q2/Q2$ discretization have better agreement with the DNS, specially on the small scales, where the influence of the enrichment of the interpolation space is patent.
-%\begin{figure}[h]
-%  \centering
-%  \subfigure[$32^3$ velocity DOFs]{\label{fig-TGV_OSS_32_spe}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/32/plt_tg3d_spe/plt_tg3d_spe}}
-%  \subfigure[$64^3$ velocity DOFs]{\label{fig-TGV_OSS_64_spe}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/64/plt_tg3d_spe/plt_tg3d_spe}}
-%  \caption{Energy spectra at $t=9.0$}
-%  \label{fig-TGV_OSS_spe}
-%\end{figure}
-%
-%\subsubsection{Computational cost}
-%It is clear that a good LES model has to reproduce as accurately as possible all the turbulent quantities, even for coarse meshes. The results presented until now show that ASGS and OSS methods perform better than the OSS-ISS when $Q2/Q2$ elements are used. Additionally, it has been seen that all methods converge to the DNS results when the mesh is refined. But a crucial point that has to be always taken into account when we talk about numerical simulations is the computational cost. At the end, we are looking for the cheapest method that allow us to reproduce accurately the physical phenomena that takes place in a turbulent flow. So in this subsection we will discuss the computational cost associated to each method and their efficiency when solving this kind of flows.
-%
-%To check the computational cost we look at the number of solver iterations needed for each method, shown in Fig. \ref{fig-TGV_OSS_iter}. In particular, Fig. \ref{fig-TGV_OSS_iter_ite} depicts the total amount of solver iterations at each time step, adding up all nonlinear iterations. Note that the change of the nonlinear iterations along the time can be clearly noticed by the jumps on the curves. We see that the cheapest method is the OSS-ISS for both discretizations, $32^3$ and $64^3$ velocity DOFs, with much less solver iterations per time step than the other methods. It is also seen that ASGS is a little bit cheaper than the OSS method, which can be caused by the size of the system, much bigger for the OSS case due to the implicit treatment of the projections. An interesting result also seen in \ref{fig-TGV_OSS_iter_ite} is the improvement on the computational cost when we go from $Q1/Q1$ to $Q2/Q2$ discretization, keeping constant the number of DOFs.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Solver iterations per time step]{\label{fig-TGV_OSS_iter_ite}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/all/plt_tg3d_ite/plt_tg3d_ite}}
-%  \subfigure[Acumulated solver iterations]{\label{fig-TGV_OSS_iter_acu}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/all/plt_tg3d_acu/plt_tg3d_acu}}
-%  \caption{Computational cost}
-%  \label{fig-TGV_OSS_iter}
-%\end{figure}
-%Looking at \ref{fig-TGV_OSS_iter_acu} we realize that at the end of the computation, the total amount of solver iterations needed by OSS-ISS method is around 1.5 times less than the ASGS method, for the finer mesh, and half of them for the coarse mesh. This result indicates that the OSS-ISS is a very good approach as a LES model for turbulent problems since, although it has been seen that is not the most accurate when looking to the turbulent quantities, it is much cheaper and we can refine the mesh in order to get better results remaining competitive with the other methods. Further, let us remark that the pressure Poisson solvers are the most computationally intensive, and ISS methods involve Q1 pressure spaces for Q2 ones for stabilized methods.
-%
-%\subsubsection{Influence of the pressure subscale term}
-%As said above and also stated in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale $\tau_c(\nabla\cdot\u_h,\nabla\cdot\v_h)$ term has an important role when using ISS elements. In this subsection we are going to analyse the effect of this term on the results when simulating the TGV problem. Hence, we redefine the $\tau_c$ definition in \Eq{C5_tau_c} by
-%\begin{equation}
-%\label{eq-C5_tau_c_2}
-%\tau_c=c_c\left(\nu+\frac{c_2}{c_1}h|\u_h|\right),
-%\end{equation}
-%which is equivalent to \Eq{C5_tau_c} when $c_c=1.0$. We keep the algorithmic parameters $c1=12.0$ and $c2=2.0$ constant, so considering different values of $c_c$ we can evaluate the influence of the pressure subscale term on the solution. In this case we choose six different configurations $c_c=\{0.0,0.25,0.5,1.0,2.0,4.0\}$ and solve the problem with the $16^3$ $Q2/Q1$ elements mesh. We compare the solution against the one obtained with the OSS method with $16^3$ $Q2/Q2$ elements discretization. 
-%%In this test, a second order SRK scheme with explicit time integration of the convective term has been used to solve the problem, with a time step size of $\delta t=5.0\cdot10^{-2}$. The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers.
-%
-%In Fig. \ref{fig-TGV_OSS_tauc_vis} the energy dissipation rate of the FE counterpart is shown. That is the viscous term $\nu\|\nabla\u_h\|^2$ that appears in equation \Eq{C5_ene_total}. We see that when we reduce $c_c$ the method becomes more dissipative and it may seem a good idea to keep this term as small as possible in order to get closer to the DNS curve. But if we look at the energy spectra shown in Fig. \ref{fig-TGV_OSS_tauc_spe}, we see that this is not a good choice. What is actually happening when $c_c$ goes to zero is that the dissipation is taking place in the largest scales of the problem, while the smallest ones keep the energy, resulting in an energy pileup at the tail of the spectra. This means that the energy is not dissipating in the correct way and the small scales, which are the ones that have more influence on the viscous dissipation term, have more energy than the desired one. Therefore, a good selection is to choose $c_c=4.0$, which results are closer to the OSS method and has a better energy spectra shape. A higher value of $c_c$ eventually lead to unstable solutions, for instance, with $c_c=8.0$ and $\delta t=5.0\cdot10^{-2}$ the solution fails to converge at $t=0.4$.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Viscous energy dissipation rate]{\label{fig-TGV_OSS_tauc_vis}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/ktauc/plt_tg3d_vis/plt_tg3d_vis}}
-%  \subfigure[Energy spectra]{\label{fig-TGV_OSS_tauc_spe}\includegraphics[width=0.49\textwidth]{Figures/TGV/OSS/ktauc/plt_tg3d_spe/plt_tg3d_spe}}
-%  \caption{Comparison for different $c_c$ choices for OSS-ISS with $32^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_tauc}
-%\end{figure}
-%
-%As stated in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale term is essential to enforce the incompressibility constrain at the discrete level. In Fig. \ref{fig-TGV_OSS_tauc_divvel} the total energy dissipation rate (Fig. \ref{fig-TGV_OSS_tauc_dis}) is depicted together with the velocity divergence $L2$-norm $\|\nabla\cdot\u_h\|$ (Fig. \ref{fig-TGV_OSS_tauc_div}). We see that, effectively, $\|\nabla\cdot\u_h\|$ is reduced when $\tau_c$ is increased. The case of $c_c=0.0$ give especially bad results in terms of mass conservation, affecting also to the energy dissipation rate. In this case, as seen in Fig. \ref{fig-TGV_OSS_tauc_spe}, the over-dissipation on the large scales and the under-dissipation on the smallest ones makes the spatial derivatives too relevant on the fluid flow, increasing the $\|\nabla\cdot\u_h\|$ term. The introduction of $\tau_c\|\nabla\cdot\u_h\|$ into the energy dissipation equation \Eq{C5_ene_total} changes the way in which the flow dissipates its energy among the different scales, decreasing the energy of the small scales and, then, reducing the importance of the spatial derivatives, which is reflected in a lower value of $\|\nabla\cdot\u_h\|$ but also in a lower dissipation rate, as seen in Fig. \ref{fig-TGV_OSS_tauc_dis}, even if a positive term has been added to \Eq{C5_ene_total}.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_tauc_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_32vDOFs/dis}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_tauc_div}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_32vDOFs/divvel}}
-%  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $32^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_tauc_divvel}
-%\end{figure}
-%
-%\subsubsection{Refinement analysis for the OSS-ISS method}
-%In the computational cost analysis shown above we have seen that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. This subsection aims to check the performance of this method when we refine the mesh both reducing the element size and increasing the interpolation order. 
-%%As done in previous subsection the time integration technique used in these tests is the Segregated Runge-Kutta method.
-%
-%Once determined that the best algorithmic constant for the pressure subscale term is $c_c=4.0$ when ISS FEs are used, we keep this value constant and change the discretization. A refinement analysis can be done to determine if the LES approach presented in this work effectively converge to the DNS solution when we refine the mesh. In section \ref{subsec-C5_TGV-VMS} the TGV problem has been solved using different discretizations with $32^3$ and $64^3$ velocity DOFs. Now we go further and also solve the problem with $96^3$ velocity DOFs, that is a $48^3$ $Q2/Q1$ elements mesh. Furthermore, here we also use $Q3/Q2$ FEs. In particular, a $21^3$ and $32^3$ $Q3/Q2$ elements meshes are used, corresponding to the group of $64^3$ and $96^3$ velocity DOFs, respectively. We also decrease the time step to $\delta t=2.5\cdot10^{-2}$ for the discretizations with $64^3$ velocity DOFs and $\delta t=1.5\cdot10^{-2}$ for the discretizations with $96^3$ velocity DOFs.
-%
-%%As we are solving the problem with an explicit treatment of the convective term, we have to pay attention on the hyperbolic CFL number. In this case, in order to keep the CFL below to the critical value $1.0$, we use a time step size of $\delta t=2.5\cdot10^{-2}$ for the discretizations with $64^3$ velocity DOFs and $\delta t=1.5\cdot10^{-2}$ for the discretizations with $96^3$ velocity DOFs.
-%
-%In Fig. \ref{fig-TGV_OSS_tauc_refinement} we depict the kinetic energy and the total energy dissipation rate evolution for the different discretizations considered in this refinement analysis. Looking at the energy evolution in Fig. \ref{fig-TGV_OSS_tauc_refinement_ene} it is clearly seen that the solution converge to the DNS results, giving the $32^3$ $Q3/Q2$ elements mesh a very accurate solution, which is also evident in Fig. \ref{fig-TGV_OSS_tauc_refinement_dis} where the total energy dissipation rate of this discretization is on top of the DNS solution. We also see in Fig. \ref{fig-TGV_OSS_tauc_refinement} the relevance of the degree of interpolation, giving much better results the discretization of higher order for a given number of DOFs.
-%\begin{figure}[h]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-TGV_OSS_tauc_refinement_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots/ene}}
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_tauc_refinement_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots/dis}}
-%  \caption{Energy and Total energy dissipation rate evolution refining the mesh with $c_c=4.0$.}
-%  \label{fig-TGV_OSS_tauc_refinement}
-%\end{figure}
-%
-%Now, we ask ourselves how the tuning of the parameter $\tau_c$ affects when finer meshes are used. In particular, we want to know how important the $c_c$ parameter becomes when higher order FEs are used. To answer this question we solve the TGV problem for two different discretizations: $32^3$ $Q2/Q1$ and $21^3$ $Q3/Q2$ elements meshes, and three different values of $c_c$: $0.0$, $1.0$ and $4.0$.
-%
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_refinement_tauc_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_64vDOFs/dis}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_refinement_tauc_div}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_64vDOFs/divvel}}
-%  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $64^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_refinement_tauc_divvel}
-%\end{figure}
-%Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel} depicts the total energy dissipation rate (Fig. \ref{fig-TGV_OSS_refinement_tauc_dis})  and the velocity divergence $L2$-norm (Fig. \ref{fig-TGV_OSS_refinement_tauc_div}) for the two discretizations considered and for different choices of $c_c$. We still see a dependence on $c_c$, but differences reduce when higher order of interpolation is used, as expected. It is also seen that when increasing $c_c$, the differences between the two discretizations are reduced (for a fixed $c_c$). This behaviour is particularly significant when we look at the velocity divergence norm in Fig. \ref{fig-TGV_OSS_refinement_tauc_div}, where we see that for $c_c=0$ the two discretizations give a completely different evolution of $\|\nabla\cdot\u_h\|$, while for $c_c=4.0$ the results are almost the same. In the same figure, we can see that the largest value of $\|\nabla\cdot\u_h\|$ for $c_c$ is larger than the largest one depicted in Fig. \ref{fig-TGV_OSS_tauc_div}, which is a result of a $16^3$ $Q2/Q1$ elements mesh. 
-%
-%Going further we also do the same test for the $48^3$ $Q2/Q1$ and $32^3$ $Q3/Q2$ elements mesh (Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel_96}). In this figure we see that the differences between the three $c_c$ cases are reduced. Looking at Fig. \ref{fig-TGV_OSS_refinement_tauc_dis_96} it is seen that for $c_c=0$ and $Q2/Q1$ elements, although the result is far from the DNS, the maximum value of the dissipation rate is much lower than the given in Fig. \ref{fig-TGV_OSS_refinement_tauc_dis}. When using $Q3/Q2$ elements, the changes on $c_c$ produce lower differences compared against the $Q2/Q1$ approximation. The divergence norm depicted in Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel_96} also show improvements with respect to Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel}. In this case, the maximum value of the divergence for $c_c$ for $Q2/Q1$ elements is lower than the case of $64^3$ velocity DOFs and also for the case of $32^3$ velocity DOFs.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_refinement_tauc_dis_96}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_96vDOFs/dis}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_refinement_tauc_div_96}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/ktauc_new_fempar/plots_96vDOFs/divvel}}
-%  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $96^3$ velocity DOFs}
-%  \label{fig-TGV_OSS_refinement_tauc_divvel_96}
-%\end{figure}
-%
-%To summarize, we have checked that refining the mesh we converge to the DNS results and, for a given number of DOFs, the results improve when higher order interpolation is used. On the hand, we have seen that increasing $c_c$ we reduce $\|\nabla\cdot\u\|$, and consequently the accuracy of the solution. %Furthermore, the difference on the results changing $c_c$ is smaller when we refine the mesh, and for a given amount of DOFs, this difference is still lower when higher order interpolations are used.
-%
-%\subsection{Turbulent channel flow at $Re_\tau=395$}
-%\label{subsec-C5_turb_channel}
-%In Section \ref{subsec-C5_TGV-VMS} we have tested an homogeneous turbulent flow. Now, we want to check the behaviour of the proposed OSS-ISS stabilization method for a wall bounded turbulent test. To do so, we use the Turbulent Channel Flow (TCF) test with a Reynolds number based on the wall friction ($Re_\tau$) equal to 395. This test was exhaustively tested using a VMS method with OSS in \cite{colomes_assessment_2015}. %, where a monolithic Crank-Nicolson time integration approach was followed. The goal of this section is to check the performance of OSS-ISS method using SRK time integration schemes for wall-bounded turbulent flows.
-%
-%\subsubsection{Test setting}
-%The domain of the TCF problem for $Re_\tau=395$ is given by a box of length $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. Homogeneous Dirichlet boundary conditions for the velocity DOFs are imposed on wall-normal direction boundaries ($y=-\delta$ and $y=\delta$), while periodic boundary conditions are defined on the stream-wise and span-wise directions. Fig. \ref{fig:Channel_geo} depicts schematically the geometry of the computational domain for this test.
-%
-%\begin{figure}[h!]
-%	\centering	
-%	\includegraphics[width=0.5\textwidth]{Figures/TCF/channel_geom}
-%	\caption{Channel computational domain.}
-%	\label{fig:Channel_geo}
-%\end{figure}
-%
-%The problem is solved using two different meshes, with $32^3$ $Q2-Q1$ and $21^3$ $Q3/Q2$ elements mesh. Both meshes have refined elements near the wall in the wall-normal direction, like the one used in \cite{colomes_assessment_2015}. The algorithmic constants that appear in the OSS-ISS method will be discussed in the following subsections.
-%
-%The obtained results are compared against a DNS computed in \cite{moser_direct_1999,kim_turbulence_1987} (MKM-DNS), then, the parameter election will be according to the ones defined in the cited paper. The bulk mean velocity and the half channel height are taken equal to one, $\bar{U}=1$ and $\delta=1$. Knowing the estimated Reynolds number based on the bulk mean velocity, $Re=\bar{U}2\delta/\nu\approx 13,750$ (see \cite{pope_turbulent_2000}), one can obtain the value of the viscosity, $\nu=1.4545\cdot10^{-4}$. From the Reynolds number based on the friction velocity, we can determine the friction velocity magnitude: $u_\tau=Re_\tau\nu/\delta=5.745\cdot10^{-2}$. Thus, the wall shear stress reads $\tau_w=u_\tau^2=3.3010\cdot10^{-3}$. A force equivalent to a pressure gradient is imposed to drive the movement of the flow in the stream-wise direction, $f_x=\tau_w/\delta$.
-%
-%In order to achieve the statistically steady state solution, an initial solution is provided following \cite{moin_numerical_1980}. This initial solution consists in a unidirectional velocity profile over which is added a fluctuation:
-%\begin{align}
-%\label{eq-C5_TCF_initial_sol}
-%&u_x = C\left(1-y^8\right)+\epsilon\frac{L_x}{2}\sin(\pi y)\cos\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\\nonumber
-%&u_y = -\epsilon(1+\cos(\pi y))\sin(\pi y)\sin\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\
-%&u_z = -\epsilon\frac{L_z}{2}\sin\left(\frac{4\pi x}{L_x}\right)\sin(\pi y)\cos\left(\frac{2\pi z}{L_z}\right).\nonumber
-%\end{align}
-%The constant $C$ is chosen in a such way that the field without fluctuations would have a bulk mean velocity $\bar{U}=1.0$. The fluctuation constant $\epsilon$ is $10\%$ of the bulk mean velocity.
-%
-%\subsubsection{Effect of the pressure subscale term on the conservation of mass}
-%As it has been said in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale term has a noticeable effect on the solution when ISS elements are used. The effect of this term has also been analysed in a previous test, see Section \ref{subsec-C5_TGV-VMS}. Here we will also assess the effect of this term on a wall-bounded flow.
-%
-%First we will focus on the effect of the second term in \Eq{C5_tau_c_2}, looking how the $c_2/c_1$ ratio affects the solution keeping $c_c=1.0$. As we are in a turbulent regime, we do not expect that the viscous counterpart in \ref{eq-C5_tau_m} will have relevance on the solution, but we do expect it for the convective counterpart. Then, we will keep $c_1=12.0$ and we will increase $c_2$ from $1.0$ to $16.0$. The variations on $c_2$ not only have an effect on $\tau_c$ but also on $\tau_m$. We solve the problem from $t=0$ to $t=20\pi$ (time needed to cross the channel 10 times, based on the initial mean bulk velocity $\bar{U}$) starting from the initial solution \Eq{C5_TCF_initial_sol} using the implicit version of \textit{(3-3)} SRK scheme. The energy and $\|\nabla\cdot\u_h\|$ evolution are plotted in Fig. \ref{fig-cha_c2}.
-%
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-cha_c2_ene}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktau2/ene}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_c2_div}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktau2/divel}}
-%  \caption{Energy evolution and velocity divergence norm for different values of $c_2$, keeping $c_1=12.0$ and $c_c=1.0$}
-%  \label{fig-cha_c2}
-%\end{figure}
-%It is clearly seen in Fig. \ref{fig-cha_c2} that the modification of $c_2$ has an effect on the solution. We see in Fig. \ref{fig-cha_c2_ene} that the energy drops faster when lower values of $c_2$ are used. Looking at Fig. \ref{fig-cha_c2_div} we see that the velocity divergence $L_2$-norm is higher when lower values of $c_2$ are taken. The evolution of $\|\nabla\cdot\u_h\|$ gives us information about how the flow is evolving. From an initial and structured condition, the flow starts becoming chaotic around $t=10$, depending on the case, when the turbulent structures increase the rotation of the flow particles, growing the spatial derivatives. At this stage, the energy dissipates until the equilibrium between the internal energy and the external forces is reached. These stages can be seen in Fig. \ref{fig-cha_c2_1.0_vel}, where we depict the vorticity isosurfaces for $|\omega|=5.0$ coloured with the velocity field module at $t=0.15$ (Fig. \ref{fig-cha_c2_1.0_vel_1.0}),  at $t=12.0$ (Fig. \ref{fig-cha_c2_1.0_vel_12.0}) and at $t=70.0$ (Fig. \ref{fig-cha_c2_1.0_vel_60.0}) setting $c2=1.0$ and $c_c=32.0$, and using a $32^3$ $Q2/Q1$ elements mesh.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[$t=0.15$]{\label{fig-cha_c2_1.0_vel_1.0}\includegraphics[width=0.30\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/cha395/divergence/ktauc/cha395_32el_0dot15}}
-%  \subfigure[$t=12.0$]{\label{fig-cha_c2_1.0_vel_12.0}\includegraphics[width=0.30\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/cha395/divergence/ktauc/cha395_32el_12}}
-%  \subfigure[$t=70.0$]{\label{fig-cha_c2_1.0_vel_60.0}\includegraphics[width=0.30\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/cha395/divergence/ktauc/cha395_32el_70}}
-%  \subfigure{\label{fig-cha_c2_1.0_vel_60.0}\includegraphics[width=0.065\textwidth,clip=true,trim=35.0cm 7.0cm 3.0cm 8.0cm]{Figures/cha395/divergence/ktauc/cha395_32el_70}}
-%  \caption{Velocity module at different times with $c_1=12.0$, $c_2=1.0$ and $c_c=32.0$ using a $32^3$ $Q2/Q1$ elements mesh.}
-%  \label{fig-cha_c2_1.0_vel}
-%\end{figure}
-%
-%When increasing $c_2$ we are decreasing the value of $\tau_m$, but increasing $\tau_c$. This means that in the energy dissipation equation \Eq{C5_ene_total}, the dissipation through the convective term $\|\tau_m^{1/2}(\u_h\cdot\nabla\u_h-\etaa_h)\|^2$ becomes less relevant in front of the $\|\tau_c^{1/2}\nabla\cdot\u_h\|^2$.
-%
-%Now, knowing the influence of $c_2$, and with the aim to distinguish the effect of modifying $\tau_m$ or $\tau_c$, we keep this constant fixed with a value $c_2=8.0$ and we analyse the influence of $\tau_c$ on the solution, by changing $c_c$. In this situation, $\tau_m$ will remain constant for all cases and we will see the effect of the pressure subscale term. For this test, we solve the problem until $t=300$, where the energy evolution stabilizes for all $c_c$ choices.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-cha_cc_ene}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/ene}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_cc_div}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/divel}}
-%  \caption{Energy evolution and velocity divergence norm for different values of $c_c$, keeping $c_1=12.0$ and $c_2=8.0$}
-%  \label{fig-cha_cc}
-%\end{figure}
-%In Fig. \ref{fig-cha_cc} we see that the energy evolution (Fig. \ref{fig-cha_cc_ene}) and the divergence norm evolution (Fig. \ref{fig-cha_cc_div}) follow the same pattern observed in Fig. \ref{fig-cha_c2}. In this case we see that the improvement on the mass conservation is more pronounced when increasing $c_c$ than when increasing $c_2$. We also see in Fig. \ref{fig-cha_cc_ene} that there is a certain threshold after which the result is improving very little. In this case, the results for $c_c=32.0$ and $c_c=64.0$ are almost the same.
-%
-%We can compare our results with the MKM-DNS, contrasting the mean velocity and its fluctuations in Fig. \ref{fig-cha_cc_16}. To obtain these results we have solved the problem from $t=300$ to $t=330$ with a time step size of $\delta t=0.03$, collecting $1000$ samples to obtain the mean quantities. The mean quantities are computed integrating the desired quantity within each element and adding up all elemental results belonging to the same $y$-orthogonal plane. Thus, since we are using high-order elements, the number of points that will appear in the graphics will be smaller than the number of DOFs. This procedure was also followed in \cite{gamnitzer_time-dependent_2010} noting that the integral averaging procedure takes into account information from the secondary nodes that the widely used point-wise averaging does not contemplate.
-%
-%Fig. \ref{fig-cha_cc_16_umean} depicts the mean stream-wise velocity normalized by the prescribed wall-shear velocity, $u_\tau$. In this picture we see the difference when changing $c_c$, where the dissipation of energy shown in Fig. \ref{fig-cha_cc_ene} becomes clear looking at the velocity magnitude. The increase of $\|\nabla\cdot\u_h\|$, and its consequent loose of mass conservation, results in a mean velocity profile much lower than the DNS. We see that for $c_c=32.0$ and $c_c=64.0$ the mean velocity profile is on top the DNS result, even for the coarse mesh in which we are solving the problem. 
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Mean streamwise velocity]{\label{fig-cha_cc_16_umean}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/umean}}
-%	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_cc_16_ufluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/ufluc}}\\   
-%  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_cc_16_vfluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/vfluc}}
-%  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_cc_16_wfluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/divergence/ktauc/wfluc}}
-%	\caption{Mean stream-wise velocity and rms velocity fluctuations using a $16^3$ $Q2/Q1$ mesh for different choices of $c_c$.}
-%	\label{fig-cha_cc_16}
-%\end{figure}
-%Looking at the stream-wise velocity fluctuation (Fig. \ref{fig-cha_cc_16_ufluc}) we see that it increases as we increase $c_c$. This behaviour is justified by the fact that for low $c_c$ values we have less energy in the system, and then, the fluctuating magnitude is also lower. The wall-normal and span-wise velocity fluctuations also give the smallest fluctuation magnitude for the smallest $c_c$ value, but increasing $c_c$ the fluctuation grows until certain point and then it decreases, becoming closer to the DNS curve.
-%
-%From Fig. \ref{fig-cha_cc_16} we clearly see that increasing $c_c$ the results improve, but this procedure may have some drawbacks. On of them is the ill-conditioning of the system of equations when $c_c\rightarrow\infty$. Table \ref{tab-cha_cc_16} summarizes the total accumulated solver iterations as well as the elapsed time needed to solve the problem for the different choices of $c_c$.
-%\begin{table}[h]
-%\caption{Solver iterations and elapsed time to solve the TCF problem from $t=300$ to $t=330$ for different $c_c$ values.}
-%\label{tab-cha_cc_16}
-%\centering
-%\begin{tabular}{cccc}
-%\toprule
-%$c_c$&Solver iterations&Elapsed time (s)&Increment in time ($\%$)\\
-%\midrule
-%$1.0$&$397899$&$19238$&$0.0$\\
-%$4.0$&$402490$&$19674$&$2.27$\\
-%$8.0$&$422217$&$19987$&$3.89$\\
-%$16.0$&$466687$&$20803$&$8.13$\\
-%$32.0$&$539879$&$22794$&$18.48$\\
-%$64.0$&$626487$&$24817$&$29.00$\\
-%\bottomrule
-%\end{tabular}
-%\end{table}
-%As we see in Table \ref{tab-cha_cc_16}, to solve the TCF problem with $c_c=64.0$ is a $29.0\%$ more expensive than solving it with $c_c=1.0$. Thus, it is clear that at some point it could be preferable to refine the mesh rather than increase the $c_c$ value if we want more accurate results. 
-%
-%Provided that in all results shown until now, the case $c_c=32.0$ gives almost the same solution than the $c_c=64.0$ case, hereinafter we will only consider the case in which the parametric constants are $c_1=12.0$, $c_2=8.0$ and $c_c=32.0$.
-%
-%\subsubsection{Refinement for a given $c_c$}
-%Let us now explore what happens when the mesh is refined in the TCF test. Here we consider four different discretizations changing both the element size and the order of interpolation: $16^3$ $Q2/Q1$, $24^3$ $Q2/Q1$, $16^3$ $Q3/Q2$ and $32^3$ $Q2/Q1$. These discretizations have $32^3$, $48^3$, $48^3$ and $64^3$ velocity DOFs, respectively.
-%
-%Looking at the energy evolution (Fig. \ref{fig-cha_refinement_ene}) and the velocity divergence $L_2$-norm (Fig. \ref{fig-cha_refinement_div}) depicted in Fig. \ref{fig-cha_refinement} we see that there are very little differences between the cases considered in this section. This means that given the appropriate parametric constants, the energy evolves in a similar way for all discretizations, with a similar evolution of the mass conservation. 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Energy evolution]{\label{fig-cha_refinement_ene}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/ene}}
-%  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_refinement_div}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/divel}}
-%  \caption{Energy evolution and velocity divergence norm refining the mesh, keeping $c_1=12.0$, $c_2=8.0$ and $c_c=32.0$}
-%  \label{fig-cha_refinement}
-%\end{figure}
-%
-%If we focus on the averaged turbulent quantities shown in Fig. \ref{fig-cha_refinement_vel}, we also see similar results between the different cases. In Fig. \ref{fig-cha_refinement_umean} the mean stream-wise velocity is plotted, and it is seen that all methods are almost on top of the DNS curve. The $16^3$ $Q3/Q2$ discretization gives  a mean velocity profile slightly lower than the other discretizations, which is also reflected on the energy evolution shown in Fig. \ref{fig-cha_refinement_ene}. If we look at the velocity fluctuations in span-wise, wall-normal, and span-wise directions depicted in Fig. \ref{fig-cha_refinement_ufluc}, Fig. \ref{fig-cha_refinement_vfluc} and Fig. \ref{fig-cha_refinement_wfluc}, respectively, the convergence to the DNS solution is clear.
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Mean streamwise velocity]{\label{fig-cha_refinement_umean}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/umean}}
-%	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_refinement_ufluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/ufluc}}\\   
-%  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_refinement_vfluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/vfluc}}
-%  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_refinement_wfluc}\includegraphics[width=0.49\textwidth]{Figures/cha395/refinement/wfluc}}
-%	\caption{Mean stream-wise velocity and rms velocity fluctuations for using different discretizations.}
-%	\label{fig-cha_refinement_vel}
-%\end{figure}
-%
-%
-%\section{Conclusions}
-%\label{sec-conclusions}
-%In this article we have considered the numerical simulation of turbulent incompressible flows using the term-by-term OSS method for convection-stabilization applied to ISS elements. We have considered an implicit treatment of the projection. For the solution of the monolithic linear systems a  block preconditioning strategy that makes use of recursive block factorizations has been proposed. Among the three variants we proposed, namely diagonal, lower and upper triangular, the last two are much faster than the first one, as expected, the upper triangular being slightly faster for the problems considered. 
-%
-%Using this strategy, the comparison of the three methods, ASGS, term-by-term OSS, and convection-only OSS with ISS elements reveals that the accuracy is similar for the same order of interpolation of the velocity, the OSS-ISS being slightly inferior in this respect. But on the other hand, when computational cost is analysed the OSS-ISS is clearly the cheapest one so a finer discretization can be used. Another advantage of the OSS-ISS method is that it does not change the nature in time of the problem, i.e., the discrete system is an index-2 differential-algebraic equation. Thus, it allow us, e.g., to use Segregated Runge-Kutta (SRK) time integration schemes that cannot be applied to the ASGS or OSS methods. This issue will be discussed in further works, but we can say that SRK schemes are well suited to perform high-order time integration as well as the use of an adaptive time-stepping technique. This method was firstly introduced and tested for laminar incompressible flows in \cite{colomes_segregated_2015}.
-%
-%Finally, we have also analysed the influence of the grad-div stabilization on the results when ISS discretizations are considered. It has been clearly shown that this term affects the solution. Increasing the value of $c_c$ results in a better mass conservation and better results but this saturates at some point. Moreover, this effect is smaller when the mesh is refined and also when higher order interpolations are used.
+\section{Numerical experiments}
+\label{sec-C5_results}
+In this section we provide some numerical results for turbulent incompressible flow simulations using all the methods stated above. First, we do a comparative analysis between the three stabilization methods developed in Section~\ref{sec-C5_VMS_framework}. The parameter election for the pressure subscale term is assessed in all numerical tests performed in this section.
+But, first of all, we show some results about the computational cost of the VMS methods considered in this work. To check the efficiency of each method we solve a simple 2D steady problem with analytical solution.
+
+\subsection{Analytical colliding flow}
+\label{subsec-C5_colliding}
+In this section we solve a problem with analytical solution that models a colliding flow. This test have been used in \cite{elman_finite_2005} to discuss error estimates for the Stokes and Navier-Stokes problems using ISS FE velocity-pressure pairs. It has an analytical solution with the expression:
+\begin{eqnarray}
+\label{eq-C5_analytical_u}
+&\u(x,y,t) = \left[ \begin{array}{c}
+20xy^3\\
+5x^4-5y^4
+\end{array}\right],\\
+\label{eq-C5_analytical_p}
+&p(x,y) = 60x^2y-20y^3+40.
+\end{eqnarray}
+The problem is solved in the square domain $[-1,1]\times[-1,1]$ with a Reynolds number $Re=25$. Here we analyse the solver iterations convergence in $h$ for each preconditioner defined in Section \ref{subsec-C5_block_precond} as well as the elapsed CPU time and the error on the velocity and pressure fields. Due to the simplicity of the test, we will solve the problem in serial using $Q_1/Q_1$ elements meshes for the ASGS and term-by-term OSS, and $Q_2/Q_1$ elements mesh for the OSS-ISS method.
+
+We only show the results when using the lower-triangular preconditioner for the global matrix $P_L(\At)$, defined in \Eq{C5_NS_l_precond}. The diagonal version $P_D(\At)$ defined in \Eq{C5_NS_d_precond} give poorer performance and same results are obtained with the upper-triangular version $P_U(\At)$ \Eq{C5_NS_u_precond}. For the velocity-pressure block, all preconditioners defined in \Eq{C5_Stokes_d_precond}-\Eq{C5_Stokes_l_precond} are considered.
+
+In Fig. \ref{fig-soliter-CPUtime} we depict the solver iterations needed to solve the problem as well the total elapsed CPU time for different meshes composed by $4,8,16,32$ or $64$ elements per direction. When the OSS-ISS method is considered, as we use $Q_2/Q_1$ elements, the number of elements per direction is divided by two. The amount of solver iterations shown in Fig. \ref{fig-soliterU} is computed adding all solver iterations needed for all nonlinear iterations. We see in this figure that the OSS-ISS method has an increase of solver iterations for the coarser mesh, compared with the other two methods. This behaviour is produced by the fact that for this case the mesh is too coarse, $2\times2$ $Q_2/Q_1$ elements, and the nonlinear iterations suffer a drastic increase. For finer meshes, the OSS-ISS method needs less solver iterations than the other two. We see that for the diagonal preconditioner $P_D(\K_\tau)$ the OSS-ISS is the only that scales when we refine the mesh. The upper and lower preconditioners, $P_U(\K_\tau)$ and $P_L(\K_\tau)$, have similar results with a slightly better performance of the upper version for all methods. The ASGS and OSS methods also need a similar number of iterations to solve the problem, being the OSS method a little bit over the ASGS.
+
+Looking at the elapsed computational time, Fig. \ref{fig-CPUtimeU}, we see that the OSS method is clearly more expensive, in terms of consumed time, than the other two methods. The ASGS method is slightly faster than the OSS-ISS, but the differences are almost negligible for the $P_U(\K_\tau)$ preconditioner. The fact that the most expensive method is the OSS method is justified by the number of Degrees Of Freedom (DOFs) that appear in the system of equations. As stated in Section \ref{subsec-C5_block_precond}, the OSS method has two vectorial unknowns more than ASGS method. On the other hand, the OSS-ISS method also has an additional vectorial unknown than ASGS, but the pressure field is approximated with half nodes. Without taking into account the boundary conditions, for the $4\times4$ elements mesh ($2\times2$ for the OSS-ISS case), we would have $175$ DOFs for the OSS method, $75$ DOFs for the ASGS method and $109$ DOFs for the OSS-ISS method. Then, we see that, although it has more DOFs, the OSS-ISS method is comparable in terms of computational time with the ASGS. Further, the number of DOFs is a wrong measure of the CPU cost. The most expensive problem in such simulations is the pressure Poisson equation, which in this case is smaller (one order less) for ISS elements. Further, the projection DOFs are almost for free, since they just involve a mass matrix solve. Further, the ISS method exhibit a clearly lower number of iterations.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Solver iterations]{\label{fig-soliterU}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/iter}}
+  \subfigure[Elapsed CPU time]{\label{fig-CPUtimeU}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/time}}
+  \caption{Colliding flow solver iterations and elapsed CPU time using $P_U(\At)$ for the global matrix.}
+  \label{fig-soliter-CPUtime}
+\end{figure}
+
+Let us now focus on the error in the velocity and pressure fields. Since we are solving a problem with analytical solution, we can evaluate exactly the error of the FE approximation, $e_u:=\|\u_h-\u\|$  and $e_p:=\|p_h-p\|$. Fig. \ref{fig-error} depicts the convergence of both errors when refining the mesh. In Fig. \ref{fig-erroru} we see that the velocity error converges as expected, with a 2nd order rate for the ASGS and OSS methods, which are approximated by $Q_1/Q_1$ elements, and with a 3rd order rate for the OSS-ISS method, which is approximated by a $Q_2/Q_1$ element. 
+\begin{figure}[h!]
+  \centering
+  \subfigure[Velocity error]{\label{fig-erroru}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/erru}}
+  \subfigure[Pressure error]{\label{fig-errorp}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/errp}}
+  \caption{Colliding flow error convergence using $P_U(\At)$ for the global matrix.}
+  \label{fig-error}
+\end{figure}
+Looking at Fig. \ref{fig-errorp}, it is seen that the pressure error norm converges with a 2nd order rate for all the methods, as expected.
+%for the OSS-ISS and a slightly lower rate for the other two cases. 
+Note that there is no difference between the results changing the preconditioner, since the solution is the same for all cases because we are not modifying the system that is solved.
+
+In order to check the efficiency of each method we compare the error norm with the elapsed computational time. In this way we have an idea of the time needed for a given method to achieve certain solution accuracy. Fig. \ref{fig-error-time} shows this comparison for velocity (Fig. \ref{fig-erroru-time}) and pressure (Fig. \ref{fig-errorp-time}) fields, where we see that, excluding the coarser mesh, the OSS-ISS method is much more efficient than the other two. Furthermore, the most efficient preconditioner is the upper version $P_U(\K_\tau)$.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Velocity error vs.  CPU time]{\label{fig-erroru-time}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/errtu}}
+  \subfigure[Pressure error vs.  CPU time]{\label{fig-errorp-time}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/colliding/errtp}}
+  \caption{Colliding flow error vs. CPU time using $P_U(\At)$ for the global matrix.}
+  \label{fig-error-time}
+\end{figure}
+
+\subsection{Taylor Green Vortex flow}
+\label{subsec-C5_TGV-VMS}
+It has been shown by many authors that VMS stabilization terms can act as a LES model for turbulent flows, introducing the appropriate dissipation of the small scales that are not captured by the coarse solution. In particular, ASGS and OSS methods were assessed in \cite{colomes_assessment_2015}, showing that these methods are capable to perform a good LES simulation of different turbulent benchmark problems.
+In order to check the performance of the convection-only OSS stabilization of ISS elements for a LES simulation, we analyse its behaviour in the TGV flow, extensively described in section XXX. 
+
+We recall that this test is solved in a computational domain given by the cube $(0,2\pi)^3$ with periodical boundary conditions and the initial condition is given by an analytical field (see, e.g., \cite{brachet_direct_1991})
+\begin{align}
+\label{eq:ini_sol_TG}
+&\u(x,y,z,0)=\left(\begin{array}{c}
+u_x\\
+u_y\\
+u_z
+\end{array}\right)=\left(\begin{array}{c}
+u_0\cos(x)\sin(y)\sin(z)\\
+-u_0\sin(x)\cos(y)\sin(z)\\
+0
+\end{array}\right)\\\nonumber
+&p(x,y,z,0)=p_0+\frac{1}{16}\left(\cos(2x)+\cos(2y)\right)\left(\cos(2z)+2\right),
+\end{align}
+with
+$$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
+Being $\gamma=0$, resulting in a mean initial velocity  $u_0=1$. We consider the TGV problem with a Reynolds number ${\rm Re}=1600$.
+
+\subsubsection{Setting}
+\label{subsubsec-C5_TFV_setting}
+The problem is solved from $t=0.0$ to $T=10.0$ with a fixed time step size of $\delta t=5.0\cdot10^{-2}$ using a Crank-Nicolson time integration scheme, and the results are compared against a DNS by Brachet et al. \cite{brachet_direct_1991}. We discretize the domain using different choices of the number of elements and the order of approximation, having two differentiated group of discretizations; one with $32^3$ velocity DOFs and another with $64^3$ velocity DOFs. The former will be composed by the following meshes: $32^3$ $Q_1/Q_1$, $16^3$ $Q_2/Q_2$ elements or $16^3$ $Q_2/Q_1$ elements when we use ISS discretization. The second group of meshes is made by: $64^3$ $Q_1/Q_1$, $32^3$ $Q_2/Q_2$ or $32^3$ $Q_2/Q_1$ elements. For the stabilized formulations, ASGS and OSS, the algorithmic constants are $c_1=12$ $c_2=2$ and $c_c=0.0$, and for the OSS-ISS method the same $c_1$ and $c_2$ algorithmic constants are used, but $c_c=4.0$ unless noted otherwise. This choice of $c_c$ for the OSS-ISS method is assessed in a following subsection.
+
+\subsubsection{Comparison between VMS methods}
+In Fig. \ref{fig-TGV_OSS_32_ene_dis} we show the energy evolution and the energy dissipation rate for the ASGS, the OSS, and the OSS-ISS methods. A first thing that we have to state at this point is that the ASGS method with $32^3$ $Q_1/Q_1$ has failed to converge at early stages of the problem, a behaviour also observed in \cite{colomes_assessment_2015}. Looking at Fig. \ref{fig-TGV_OSS_32_ene} it is clear that the degree of interpolation makes a great difference on the solution, even with the same number of DOFs, the solution is more accurate when a higher order of interpolation is used. In the same figure we see that the loose of precision in the pressure for the ISS elements $Q_2/Q_1$ does affect the solution, giving a result between the $Q_1/Q_1$ and $Q_2/Q_2$ solutions. At Fig. \ref{fig-TGV_OSS_32_dis} we see that the OSS-ISS method is more dissipative than the others. This behaviour is caused by the lack of accuracy in the pressure field, which in turn affects the conservation of mass of the problem. A more exhaustive analysis of the effect of this term is done below.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-TGV_OSS_32_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_32_ene}}
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_32_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_32_tot}}
+  \caption{Energy and Total energy dissipation rate evolution with $32^3$ velocity DOFs}
+  \label{fig-TGV_OSS_32_ene_dis}
+\end{figure}
+
+Although an important improvement of the solution is achieved by increasing the order of interpolation, $32^3$ velocity DOFs is still a very coarse mesh and the results shown in Fig. \ref{fig-TGV_OSS_32_ene_dis} are far from the DNS ones. Then, the same problem is solved in a finer mesh, with the double of velocity DOFs per direction, with the results shown in Fig. \ref{fig-TGV_OSS_64_ene_dis}. In this case, all methods converge at all time steps. Fig. \ref{fig-TGV_OSS_64_ene} depicts the energy evolution and it is also seen that the increase on the degree of interpolation results in a more accurate solution. Both ASGS and OSS methods with $32^3$ $Q_2/Q_2$ elements have very accurate results, providing a solution almost on top of the DNS. There are very little differences between stabilization methods when the same discretization is used. Furthermore, the results of the OSS-ISS method are closer to the $Q_1/Q_1$ discretization than to the $Q_2/Q_2$ one. The total energy dissipation rate shown in Fig. \ref{fig-TGV_OSS_64_dis} denote a very good agreement of the $Q_2/Q_2$ solution with the DNS, while the $Q_1/Q_1$ discretization for both ASGS and OSS methods are still more diffusive. Note that the OSS-ISS method for this discretization has more or less the same energy dissipation than the $Q_1/Q_1$ discretizations.
+\begin{figure}[h]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-TGV_OSS_64_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_64_ene}}
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_64_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_64_tot}}
+  \caption{Energy and Total energy dissipation rate evolution with $64^3$ velocity DOFs}
+  \label{fig-TGV_OSS_64_ene_dis}
+\end{figure}
+
+When analysing the suitability of a LES model, a very important turbulent quantity to take into account is the energy spectra. It gives us information about how the energy is distributed among the scales of the problem. In order to assess the behaviour of the proposed methods in that aspect, we compare our results by the DNS by Gassner et al. \cite{gassner_accuracy_2013}. In Fig. \ref{fig-TGV_OSS_spe} the energy spectra at $t=9.0$ is depicted for both discretization groups. The coarser cases shown in Fig. \ref{fig-TGV_OSS_32_spe} are all far from the DNS result, but follow the same pattern, with most of the energy on the greatest scales and little energy on the small scales, without any pileup of energy on the small scales. When the mesh is refined, see Fig. \ref{fig-TGV_OSS_64_spe}, the computed energy spectra tends to the DNS one. Note that also in this plot, $Q_2/Q_2$ discretization have better agreement with the DNS, specially on the small scales, where the influence of the enrichment of the interpolation space is patent.
+\begin{figure}[h]
+  \centering
+  \subfigure[$32^3$ velocity DOFs]{\label{fig-TGV_OSS_32_spe}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_32_spe}}
+  \subfigure[$64^3$ velocity DOFs]{\label{fig-TGV_OSS_64_spe}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_64_spe}}
+  \caption{Energy spectra at $t=9.0$}
+  \label{fig-TGV_OSS_spe}
+\end{figure}
+
+\subsubsection{Computational cost}
+It is clear that a good LES model has to reproduce as accurately as possible all the turbulent quantities, even for coarse meshes. The results presented until now show that ASGS and OSS methods perform better than the OSS-ISS when $Q_2/Q_2$ elements are used. Additionally, it has been seen that all methods converge to the DNS results when the mesh is refined. But a crucial point that has to be always taken into account when we talk about numerical simulations is the computational cost. At the end, we are looking for the cheapest method that allow us to reproduce accurately the physical phenomena that takes place in a turbulent flow. So in this subsection we will discuss the computational cost associated to each method and their efficiency when solving this kind of flows.
+
+To check the computational cost we look at the number of solver iterations needed for each method, shown in Fig. \ref{fig-TGV_OSS_iter}. In particular, Fig. \ref{fig-TGV_OSS_iter_ite} depicts the total amount of solver iterations at each time step, adding up all nonlinear iterations. Note that the change of the nonlinear iterations along the time can be clearly noticed by the jumps on the curves. We see that the cheapest method is the OSS-ISS for both discretizations, $32^3$ and $64^3$ velocity DOFs, with much less solver iterations per time step than the other methods. It is also seen that ASGS is a little bit cheaper than the OSS method, which can be caused by the size of the system, much bigger for the OSS case due to the implicit treatment of the projections. An interesting result also seen in \ref{fig-TGV_OSS_iter_ite} is the improvement on the computational cost when we go from $Q_1/Q_1$ to $Q_2/Q_2$ discretization, keeping constant the number of DOFs.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Solver iterations per time step]{\label{fig-TGV_OSS_iter_ite}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_all_ite}}
+  \subfigure[Acumulated solver iterations]{\label{fig-TGV_OSS_iter_acu}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_all_acu}}
+  \caption{Computational cost}
+  \label{fig-TGV_OSS_iter}
+\end{figure}
+Looking at \ref{fig-TGV_OSS_iter_acu} we realize that at the end of the computation, the total amount of solver iterations needed by OSS-ISS method is around 1.5 times less than the ASGS method, for the finer mesh, and half of them for the coarse mesh. This result indicates that the OSS-ISS is a very good approach as a LES model for turbulent problems since, although it has been seen that is not the most accurate when looking to the turbulent quantities, it is much cheaper and we can refine the mesh in order to get better results remaining competitive with the other methods. Further, let us remark that the pressure Poisson solvers are the most computationally intensive, and ISS methods involve $Q_1$ pressure spaces for $Q_2$ ones for stabilized methods.
+
+\subsubsection{Influence of the pressure subscale term}
+As said above and also stated in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale $\tau_c(\nabla\cdot\u_h,\nabla\cdot\v_h)$ term has an important role when using ISS elements. In this subsection we are going to analyse the effect of this term on the results when simulating the TGV problem. Hence, we redefine the $\tau_c$ definition in \Eq{C5_tau_c} by
+\begin{equation}
+\label{eq-C5_tau_c_2}
+\tau_c=c_c\left(\nu+\frac{c_2}{c_1}h|\u_h|\right),
+\end{equation}
+which is equivalent to \Eq{C5_tau_c} when $c_c=1.0$. We keep the algorithmic parameters $c1=12.0$ and $c2=2.0$ constant, so considering different values of $c_c$ we can evaluate the influence of the pressure subscale term on the solution. In this case we choose six different configurations $c_c=\{0.0,0.25,0.5,1.0,2.0,4.0\}$ and solve the problem with the $16^3$ $Q_2/Q_1$ elements mesh. We compare the solution against the one obtained with the OSS method with $16^3$ $Q_2/Q_2$ elements discretization. 
+%In this test, a second order SRK scheme with explicit time integration of the convective term has been used to solve the problem, with a time step size of $\delta t=5.0\cdot10^{-2}$. The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers.
+
+In Fig. \ref{fig-TGV_OSS_tauc_vis} the energy dissipation rate of the FE counterpart is shown. That is the viscous term $\nu\|\nabla\u_h\|^2$ that appears in equation \Eq{C5_ene_total}. We see that when we reduce $c_c$ the method becomes more dissipative and it may seem a good idea to keep this term as small as possible in order to get closer to the DNS curve. But if we look at the energy spectra shown in Fig. \ref{fig-TGV_OSS_tauc_spe}, we see that this is not a good choice. What is actually happening when $c_c$ goes to zero is that the dissipation is taking place in the largest scales of the problem, while the smallest ones keep the energy, resulting in an energy pileup at the tail of the spectra. This means that the energy is not dissipating in the correct way and the small scales, which are the ones that have more influence on the viscous dissipation term, have more energy than the desired one. Therefore, a good selection is to choose $c_c=4.0$, which results are closer to the OSS method and has a better energy spectra shape. A higher value of $c_c$ eventually lead to unstable solutions, for instance, with $c_c=8.0$ and $\delta t=5.0\cdot10^{-2}$ the solution fails to converge at $t=0.4$.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Viscous energy dissipation rate]{\label{fig-TGV_OSS_tauc_vis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_ktc_vis}}
+  \subfigure[Energy spectra]{\label{fig-TGV_OSS_tauc_spe}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/oss_ktc_spe}}
+  \caption{Comparison for different $c_c$ choices for OSS-ISS with $32^3$ velocity DOFs}
+  \label{fig-TGV_OSS_tauc}
+\end{figure}
+
+As stated in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale term is essential to enforce the incompressibility constrain at the discrete level. In Fig. \ref{fig-TGV_OSS_tauc_divvel} the total energy dissipation rate (Fig. \ref{fig-TGV_OSS_tauc_dis}) is depicted together with the velocity divergence $L2$-norm $\|\nabla\cdot\u_h\|$ (Fig. \ref{fig-TGV_OSS_tauc_div}). We see that, effectively, $\|\nabla\cdot\u_h\|$ is reduced when $\tau_c$ is increased. The case of $c_c=0.0$ give especially bad results in terms of mass conservation, affecting also to the energy dissipation rate. In this case, as seen in Fig. \ref{fig-TGV_OSS_tauc_spe}, the over-dissipation on the large scales and the under-dissipation on the smallest ones makes the spatial derivatives too relevant on the fluid flow, increasing the $\|\nabla\cdot\u_h\|$ term. The introduction of $\tau_c\|\nabla\cdot\u_h\|$ into the energy dissipation equation \Eq{C5_ene_total} changes the way in which the flow dissipates its energy among the different scales, decreasing the energy of the small scales and, then, reducing the importance of the spatial derivatives, which is reflected in a lower value of $\|\nabla\cdot\u_h\|$ but also in a lower dissipation rate, as seen in Fig. \ref{fig-TGV_OSS_tauc_dis}, even if a positive term has been added to \Eq{C5_ene_total}.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_tauc_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_32_dis}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_tauc_div}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_32_divvel}}
+  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $32^3$ velocity DOFs}
+  \label{fig-TGV_OSS_tauc_divvel}
+\end{figure}
+
+\subsubsection{Refinement analysis for the OSS-ISS method}
+In the computational cost analysis shown above we have seen that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. This subsection aims to check the performance of this method when we refine the mesh both reducing the element size and increasing the interpolation order. 
+%As done in previous subsection the time integration technique used in these tests is the Segregated Runge-Kutta method.
+
+Once determined that the best algorithmic constant for the pressure subscale term is $c_c=4.0$ when ISS FEs are used, we keep this value constant and change the discretization. A refinement analysis can be done to determine if the LES approach presented in this work effectively converge to the DNS solution when we refine the mesh. In section \ref{subsec-C5_TGV-VMS} the TGV problem has been solved using different discretizations with $32^3$ and $64^3$ velocity DOFs. Now we go further and also solve the problem with $96^3$ velocity DOFs, that is a $48^3$ $Q_2/Q_1$ elements mesh. Furthermore, here we also use $Q_3/Q_2$ FEs. In particular, a $21^3$ and $32^3$ $Q_3/Q_2$ elements meshes are used, corresponding to the group of $64^3$ and $96^3$ velocity DOFs, respectively. We also decrease the time step to $\delta t=2.5\cdot10^{-2}$ for the discretizations with $64^3$ velocity DOFs and $\delta t=1.5\cdot10^{-2}$ for the discretizations with $96^3$ velocity DOFs.
+
+In Fig. \ref{fig-TGV_OSS_tauc_refinement} we depict the kinetic energy and the total energy dissipation rate evolution for the different discretizations considered in this refinement analysis. Looking at the energy evolution in Fig. \ref{fig-TGV_OSS_tauc_refinement_ene} it is clearly seen that the solution converge to the DNS results, giving the $32^3$ $Q_3/Q_2$ elements mesh a very accurate solution, which is also evident in Fig. \ref{fig-TGV_OSS_tauc_refinement_dis} where the total energy dissipation rate of this discretization is on top of the DNS solution. We also see in Fig. \ref{fig-TGV_OSS_tauc_refinement} the relevance of the degree of interpolation, giving much better results the discretization of higher order for a given number of DOFs.
+\begin{figure}[h]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-TGV_OSS_tauc_refinement_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_ene}}
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_tauc_refinement_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_dis}}
+  \caption{Energy and Total energy dissipation rate evolution refining the mesh with $c_c=4.0$.}
+  \label{fig-TGV_OSS_tauc_refinement}
+\end{figure}
+
+Now, we ask ourselves how the tuning of the parameter $\tau_c$ affects when finer meshes are used. In particular, we want to know how important the $c_c$ parameter becomes when higher order FEs are used. To answer this question we solve the TGV problem for two different discretizations: $32^3$ $Q_2/Q_1$ and $21^3$ $Q_3/Q_2$ elements meshes, and three different values of $c_c$: $0.0$, $1.0$ and $4.0$.
+
+\begin{figure}[h!]
+  \centering
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_refinement_tauc_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_64_dis}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_refinement_tauc_div}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_64_divvel}}
+  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $64^3$ velocity DOFs}
+  \label{fig-TGV_OSS_refinement_tauc_divvel}
+\end{figure}
+Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel} depicts the total energy dissipation rate (Fig. \ref{fig-TGV_OSS_refinement_tauc_dis})  and the velocity divergence $L2$-norm (Fig. \ref{fig-TGV_OSS_refinement_tauc_div}) for the two discretizations considered and for different choices of $c_c$. We still see a dependence on $c_c$, but differences reduce when higher order of interpolation is used, as expected. It is also seen that when increasing $c_c$, the differences between the two discretizations are reduced (for a fixed $c_c$). This behaviour is particularly significant when we look at the velocity divergence norm in Fig. \ref{fig-TGV_OSS_refinement_tauc_div}, where we see that for $c_c=0$ the two discretizations give a completely different evolution of $\|\nabla\cdot\u_h\|$, while for $c_c=4.0$ the results are almost the same. In the same figure, we can see that the largest value of $\|\nabla\cdot\u_h\|$ for $c_c$ is larger than the largest one depicted in Fig. \ref{fig-TGV_OSS_tauc_div}, which is a result of a $16^3$ $Q_2/Q_1$ elements mesh. 
+
+Going further we also do the same test for the $48^3$ $Q_2/Q_1$ and $32^3$ $Q_3/Q_2$ elements mesh (Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel_96}). In this figure we see that the differences between the three $c_c$ cases are reduced. Looking at Fig. \ref{fig-TGV_OSS_refinement_tauc_dis_96} it is seen that for $c_c=0$ and $Q_2/Q_1$ elements, although the result is far from the DNS, the maximum value of the dissipation rate is much lower than the given in Fig. \ref{fig-TGV_OSS_refinement_tauc_dis}. When using $Q_3/Q_2$ elements, the changes on $c_c$ produce lower differences compared against the $Q_2/Q_1$ approximation. The divergence norm depicted in Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel_96} also show improvements with respect to Fig. \ref{fig-TGV_OSS_refinement_tauc_divvel}. In this case, the maximum value of the divergence for $c_c$ for $Q_2/Q_1$ elements is lower than the case of $64^3$ velocity DOFs and also for the case of $32^3$ velocity DOFs.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_OSS_refinement_tauc_dis_96}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_96_dis}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-TGV_OSS_refinement_tauc_div_96}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TGV/srk_ktc_96_divvel}}
+  \caption{Total energy dissipation and velocity divergence $L2$-norm for different $c_c$ choices for OSS-ISS with $96^3$ velocity DOFs}
+  \label{fig-TGV_OSS_refinement_tauc_divvel_96}
+\end{figure}
+
+To summarize, we have checked that refining the mesh we converge to the DNS results and, for a given number of DOFs, the results improve when higher order interpolation is used. On the hand, we have seen that increasing $c_c$ we reduce $\|\nabla\cdot\u\|$, and consequently the accuracy of the solution. %Furthermore, the difference on the results changing $c_c$ is smaller when we refine the mesh, and for a given amount of DOFs, this difference is still lower when higher order interpolations are used.
+
+\subsection{Turbulent channel flow at $Re_\tau=395$}
+\label{subsec-C5_turb_channel}
+In Section \ref{subsec-C5_TGV-VMS} we have tested an homogeneous turbulent flow. Now, we want to check the behaviour of the proposed OSS-ISS stabilization method for a wall bounded turbulent test. To do so, we use the Turbulent Channel Flow test with a Reynolds number based on the wall friction ($Re_\tau$) equal to 395. This test was exhaustively tested using a VMS method with OSS in previous chapter \ref{chap-RB_VMS}.
+
+\subsubsection{Setting}
+Recalling the problem description exposed in Section XXX, the domain of the TCF problem for $Re_\tau=395$ is given by a box of length $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. Homogeneous Dirichlet boundary conditions for the velocity DOFs are imposed on wall-normal direction boundaries ($y=-\delta$ and $y=\delta$), while periodic boundary conditions are defined on the stream-wise and span-wise directions.
+
+The problem is solved using two different meshes, with $32^3$ $Q_2-Q_1$ and $21^3$ $Q_3/Q_2$ elements mesh. Both meshes have refined elements near the wall in the wall-normal direction, like the one used in \cite{colomes_assessment_2015}. The algorithmic constants that appear in the OSS-ISS method will be discussed in the following subsections.
+
+The obtained results are compared against a DNS computed in \cite{moser_direct_1999,kim_turbulence_1987} (MKM-DNS), then, the parameter election will be according to the ones defined in the cited paper. The bulk mean velocity and the half channel height are taken equal to one, $\bar{U}=1$ and $\delta=1$. Knowing the estimated Reynolds number based on the bulk mean velocity, $Re=\bar{U}2\delta/\nu\approx 13,750$ (see \cite{pope_turbulent_2000}), one can obtain the value of the viscosity, $\nu=1.4545\cdot10^{-4}$. From the Reynolds number based on the friction velocity, we can determine the friction velocity magnitude: $u_\tau=Re_\tau\nu/\delta=5.745\cdot10^{-2}$. Thus, the wall shear stress reads $\tau_w=u_\tau^2=3.3010\cdot10^{-3}$. A force equivalent to a pressure gradient is imposed to drive the movement of the flow in the stream-wise direction, $f_x=\tau_w/\delta$.
+
+In order to achieve the statistically steady state solution, an initial solution is provided following \cite{moin_numerical_1980}. This initial solution consists in a unidirectional velocity profile over which is added a fluctuation:
+\begin{align}
+\label{eq-C5_TCF_initial_sol}
+&u_x = C\left(1-y^8\right)+\epsilon\frac{L_x}{2}\sin(\pi y)\cos\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\\nonumber
+&u_y = -\epsilon(1+\cos(\pi y))\sin(\pi y)\sin\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\
+&u_z = -\epsilon\frac{L_z}{2}\sin\left(\frac{4\pi x}{L_x}\right)\sin(\pi y)\cos\left(\frac{2\pi z}{L_z}\right).\nonumber
+\end{align}
+The constant $C$ is chosen in a such way that the field without fluctuations would have a bulk mean velocity $\bar{U}=1.0$. The fluctuation constant $\epsilon$ is $10\%$ of the bulk mean velocity.
+
+\subsubsection{Effect of the pressure subscale term on the conservation of mass}
+As it has been said in Section \ref{subsec-C5_pressure_subscale}, the pressure subscale term has a noticeable effect on the solution when ISS elements are used. The effect of this term has also been analysed in a previous test, see Section \ref{subsec-C5_TGV-VMS}. Here we will also assess the effect of this term on a wall-bounded flow.
+
+First we will focus on the effect of the second term in \Eq{C5_tau_c_2}, looking how the $c_2/c_1$ ratio affects the solution keeping $c_c=1.0$. As we are in a turbulent regime, we do not expect that the viscous counterpart in \ref{eq-C5_tau_m} will have relevance on the solution, but we do expect it for the convective counterpart. Then, we will keep $c_1=12.0$ and we will increase $c_2$ from $1.0$ to $16.0$. The variations on $c_2$ not only have an effect on $\tau_c$ but also on $\tau_m$. We solve the problem from $t=0$ to $t=20\pi$ (time needed to cross the channel 10 times, based on the initial mean bulk velocity $\bar{U}$) starting from the initial solution \Eq{C5_TCF_initial_sol} using the implicit version of \textit{(3-3)} SRK scheme. The energy and $\|\nabla\cdot\u_h\|$ evolution are plotted in Fig. \ref{fig-cha_c2}.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-cha_c2_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktau2/ene}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_c2_div}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktau2/divel}}
+  \caption{Energy evolution and velocity divergence norm for different values of $c_2$, keeping $c_1=12.0$ and $c_c=1.0$}
+  \label{fig-cha_c2}
+\end{figure}
+It is clearly seen in Fig. \ref{fig-cha_c2} that the modification of $c_2$ has an effect on the solution. We see in Fig. \ref{fig-cha_c2_ene} that the energy drops faster when lower values of $c_2$ are used. Looking at Fig. \ref{fig-cha_c2_div} we see that the velocity divergence $L_2$-norm is higher when lower values of $c_2$ are taken. The evolution of $\|\nabla\cdot\u_h\|$ gives us information about how the flow is evolving. From an initial and structured condition, the flow starts becoming chaotic around $t=10$, depending on the case, when the turbulent structures increase the rotation of the flow particles, growing the spatial derivatives. At this stage, the energy dissipates until the equilibrium between the internal energy and the external forces is reached. These stages can be seen in Fig. \ref{fig-cha_c2_1.0_vel}, where we depict the vorticity isosurfaces for $|\omega|=5.0$ coloured with the velocity field module at $t=0.15$ (Fig. \ref{fig-cha_c2_1.0_vel_1.0}),  at $t=12.0$ (Fig. \ref{fig-cha_c2_1.0_vel_12.0}) and at $t=70.0$ (Fig. \ref{fig-cha_c2_1.0_vel_60.0}) setting $c2=1.0$ and $c_c=32.0$, and using a $32^3$ $Q_2/Q_1$ elements mesh.
+\begin{figure}[h!]
+  \centering
+  \subfigure[$t=0.15$]{\label{fig-cha_c2_1.0_vel_1.0}\includegraphics[width=0.49\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/Chapter5/TCF/divergence/ktauc/cha395_32el_0dot15}}
+  \subfigure[$t=12.0$]{\label{fig-cha_c2_1.0_vel_12.0}\includegraphics[width=0.49\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/Chapter5/TCF/divergence/ktauc/cha395_32el_12}}\\
+  \subfigure[$t=70.0$]{\label{fig-cha_c2_1.0_vel_60.0}\includegraphics[width=0.49\textwidth,clip=true,trim=0.0cm 4.0cm 9.0cm 6.0cm]{Figures/Chapter5/TCF/divergence/ktauc/cha395_32el_70}}
+  \subfigure{\label{fig-cha_c2_1.0_vel_60.0}\hspace{2.8cm}\includegraphics[width=0.1\textwidth,clip=true,trim=35.0cm 7.0cm 3.0cm 8.0cm]{Figures/Chapter5/TCF/divergence/ktauc/cha395_32el_70}\hspace{2.8cm}}
+  \caption{Velocity module at different times with $c_1=12.0$, $c_2=1.0$ and $c_c=32.0$ using a $32^3$ $Q_2/Q_1$ elements mesh.}
+  \label{fig-cha_c2_1.0_vel}
+\end{figure}
+
+When increasing $c_2$ we are decreasing the value of $\tau_m$, but increasing $\tau_c$. This means that in the energy dissipation equation \Eq{C5_ene_total}, the dissipation through the convective term $\|\tau_m^{1/2}(\u_h\cdot\nabla\u_h-\etaa_h)\|^2$ becomes less relevant in front of the $\|\tau_c^{1/2}\nabla\cdot\u_h\|^2$.
+
+Now, knowing the influence of $c_2$, and with the aim to distinguish the effect of modifying $\tau_m$ or $\tau_c$, we keep this constant fixed with a value $c_2=8.0$ and we analyse the influence of $\tau_c$ on the solution, by changing $c_c$. In this situation, $\tau_m$ will remain constant for all cases and we will see the effect of the pressure subscale term. For this test, we solve the problem until $t=300$, where the energy evolution stabilizes for all $c_c$ choices.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-cha_cc_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/ene}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_cc_div}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/divel}}
+  \caption{Energy evolution and velocity divergence norm for different values of $c_c$, keeping $c_1=12.0$ and $c_2=8.0$}
+  \label{fig-cha_cc}
+\end{figure}
+In Fig. \ref{fig-cha_cc} we see that the energy evolution (Fig. \ref{fig-cha_cc_ene}) and the divergence norm evolution (Fig. \ref{fig-cha_cc_div}) follow the same pattern observed in Fig. \ref{fig-cha_c2}. In this case we see that the improvement on the mass conservation is more pronounced when increasing $c_c$ than when increasing $c_2$. We also see in Fig. \ref{fig-cha_cc_ene} that there is a certain threshold after which the result is improving very little. In this case, the results for $c_c=32.0$ and $c_c=64.0$ are almost the same.
+
+We can compare our results with the MKM-DNS, contrasting the mean velocity and its fluctuations in Fig. \ref{fig-cha_cc_16}. To obtain these results we have solved the problem from $t=300$ to $t=330$ with a time step size of $\delta t=0.03$, collecting $1000$ samples to obtain the mean quantities. The mean quantities are computed integrating the desired quantity within each element and adding up all elemental results belonging to the same $y$-orthogonal plane. Thus, since we are using high-order elements, the number of points that will appear in the graphics will be smaller than the number of DOFs. This procedure was also followed in \cite{gamnitzer_time-dependent_2010} noting that the integral averaging procedure takes into account information from the secondary nodes that the widely used point-wise averaging does not contemplate.
+
+Fig. \ref{fig-cha_cc_16_umean} depicts the mean stream-wise velocity normalized by the prescribed wall-shear velocity, $u_\tau$. In this picture we see the difference when changing $c_c$, where the dissipation of energy shown in Fig. \ref{fig-cha_cc_ene} becomes clear looking at the velocity magnitude. The increase of $\|\nabla\cdot\u_h\|$, and its consequent loose of mass conservation, results in a mean velocity profile much lower than the DNS. We see that for $c_c=32.0$ and $c_c=64.0$ the mean velocity profile is on top the DNS result, even for the coarse mesh in which we are solving the problem. 
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Mean streamwise velocity]{\label{fig-cha_cc_16_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/umean}}
+	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_cc_16_ufluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/ufluc}}\\   
+  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_cc_16_vfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/vfluc}}
+  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_cc_16_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/divergence/ktauc/wfluc}}
+	\caption{Mean stream-wise velocity and rms velocity fluctuations using a $16^3$ $Q_2/Q_1$ mesh for different choices of $c_c$.}
+	\label{fig-cha_cc_16}
+\end{figure}
+Looking at the stream-wise velocity fluctuation (Fig. \ref{fig-cha_cc_16_ufluc}) we see that it increases as we increase $c_c$. This behaviour is justified by the fact that for low $c_c$ values we have less energy in the system, and then, the fluctuating magnitude is also lower. The wall-normal and span-wise velocity fluctuations also give the smallest fluctuation magnitude for the smallest $c_c$ value, but increasing $c_c$ the fluctuation grows until certain point and then it decreases, becoming closer to the DNS curve.
+
+From Fig. \ref{fig-cha_cc_16} we clearly see that increasing $c_c$ the results improve, but this procedure may have some drawbacks. On of them is the ill-conditioning of the system of equations when $c_c\rightarrow\infty$. Table \ref{tab-cha_cc_16} summarizes the total accumulated solver iterations as well as the elapsed time needed to solve the problem for the different choices of $c_c$.
+\begin{table}[h]
+\caption{Solver iterations and elapsed time to solve the TCF problem from $t=300$ to $t=330$ for different $c_c$ values.}
+\label{tab-cha_cc_16}
+\centering
+\begin{tabular}{cccc}
+\toprule
+$c_c$&Solver iterations&Elapsed time (s)&Increment in time ($\%$)\\
+\midrule
+$1.0$&$397899$&$19238$&$0.0$\\
+$4.0$&$402490$&$19674$&$2.27$\\
+$8.0$&$422217$&$19987$&$3.89$\\
+$16.0$&$466687$&$20803$&$8.13$\\
+$32.0$&$539879$&$22794$&$18.48$\\
+$64.0$&$626487$&$24817$&$29.00$\\
+\bottomrule
+\end{tabular}
+\end{table}
+As we see in Table \ref{tab-cha_cc_16}, to solve the TCF problem with $c_c=64.0$ is a $29.0\%$ more expensive than solving it with $c_c=1.0$. Thus, it is clear that at some point it could be preferable to refine the mesh rather than increase the $c_c$ value if we want more accurate results. 
+
+Provided that in all results shown until now, the case $c_c=32.0$ gives almost the same solution than the $c_c=64.0$ case, hereinafter we will only consider the case in which the parametric constants are $c_1=12.0$, $c_2=8.0$ and $c_c=32.0$.
+
+\subsubsection{Refinement for a given $c_c$}
+Let us now explore what happens when the mesh is refined in the TCF test. Here we consider four different discretizations changing both the element size and the order of interpolation: $16^3$ $Q_2/Q_1$, $24^3$ $Q_2/Q_1$, $16^3$ $Q_3/Q_2$ and $32^3$ $Q_2/Q_1$. These discretizations have $32^3$, $48^3$, $48^3$ and $64^3$ velocity DOFs, respectively.
+
+Looking at the energy evolution (Fig. \ref{fig-cha_refinement_ene}) and the velocity divergence $L_2$-norm (Fig. \ref{fig-cha_refinement_div}) depicted in Fig. \ref{fig-cha_refinement} we see that there are very little differences between the cases considered in this section. This means that given the appropriate parametric constants, the energy evolves in a similar way for all discretizations, with a similar evolution of the mass conservation. 
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-cha_refinement_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/ene}}
+  \subfigure[$\|\nabla\cdot\u_h\|$]{\label{fig-cha_refinement_div}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/divel}}
+  \caption{Energy evolution and velocity divergence norm refining the mesh, keeping $c_1=12.0$, $c_2=8.0$ and $c_c=32.0$}
+  \label{fig-cha_refinement}
+\end{figure}
+
+If we focus on the averaged turbulent quantities shown in Fig. \ref{fig-cha_refinement_vel}, we also see similar results between the different cases. In Fig. \ref{fig-cha_refinement_umean} the mean stream-wise velocity is plotted, and it is seen that all methods are almost on top of the DNS curve. The $16^3$ $Q_3/Q_2$ discretization gives  a mean velocity profile slightly lower than the other discretizations, which is also reflected on the energy evolution shown in Fig. \ref{fig-cha_refinement_ene}. If we look at the velocity fluctuations in span-wise, wall-normal, and span-wise directions depicted in Fig. \ref{fig-cha_refinement_ufluc}, Fig. \ref{fig-cha_refinement_vfluc} and Fig. \ref{fig-cha_refinement_wfluc}, respectively, the convergence to the DNS solution is clear.
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Mean streamwise velocity]{\label{fig-cha_refinement_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/umean}}
+	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_refinement_ufluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/ufluc}}\\   
+  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_refinement_vfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/vfluc}}
+  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_refinement_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter5/TCF/refinement/wfluc}}
+	\caption{Mean stream-wise velocity and rms velocity fluctuations for using different discretizations.}
+	\label{fig-cha_refinement_vel}
+\end{figure}
+
+\section{Conclusions}
+\label{sec-conclusions}
+In this chapter we have considered the numerical simulation of turbulent incompressible flows using the term-by-term OSS method for convection-stabilization applied to ISS elements. We have considered an implicit treatment of the projection. For the solution of the monolithic linear systems a  block preconditioning strategy that makes use of recursive block factorizations has been proposed. Among the three variants we proposed, namely diagonal, lower and upper triangular, the last two are much faster than the first one, as expected, the upper triangular being slightly faster for the problems considered. 
+
+Using this strategy, the comparison of the three methods, ASGS, term-by-term OSS, and convection-only OSS with ISS elements reveals that the accuracy is similar for the same order of interpolation of the velocity, the OSS-ISS being slightly inferior in this respect. But on the other hand, when computational cost is analysed the OSS-ISS is clearly the cheapest one so a finer discretization can be used. Another advantage of the OSS-ISS method is that it does not change the nature in time of the problem, i.e., the discrete system is an index-2 differential-algebraic equation. Thus, it allow us, e.g., to use Segregated Runge-Kutta (SRK) time integration schemes that cannot be applied to the ASGS or OSS methods. This issue will be discussed in further works, but we can say that SRK schemes are well suited to perform high-order time integration as well as the use of an adaptive time-stepping technique. This method was firstly introduced and tested for laminar incompressible flows in \cite{colomes_segregated_2015} and will be discussed in forthcoming chapters.
+
+Finally, we have also analysed the influence of the grad-div stabilization on the results when ISS discretizations are considered. It has been clearly shown that this term affects the solution. Increasing the value of $c_c$ results in a better mass conservation and better results but this saturates at some point. Moreover, this effect is smaller when the mesh is refined and also when higher order interpolations are used.
