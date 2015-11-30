@@ -459,17 +459,18 @@ We test the ASGS method and the OSS method reported in Section \ref{sec-C4_discr
 \begin{table}[h]
 \centering
 \begin{tabular}{ccccc}
-\hline
+\toprule
 Case Id.&Label&Method&Advection velocity ($\a$)&Subscales tracking\\
-\hline
+\midrule
+\midrule
 1&Sta-Lin-ASGS&ASGS&Linear ($\a=\u_h$)&Static ($\partial_t\tilde{\u} = {\bf 0}$)\\
 2&Dyn-Lin-ASGS&ASGS&Linear ($\a=\u_h$)&Dynamic ($\partial_t\tilde{\u} \not = {\bf 0}$)\\
 3&Dyn-Nl-ASGS&ASGS&Nonlinear ($\a=\u_h+\tilde{\u}$)&Dynamic ($\partial_t\tilde{\u} \not = {\bf 0}$)\\
-\hline
+\midrule
 4&Sta-Lin-OSS&OSS&Linear ($\a=\u_h$)&Static ($\partial_t\tilde{\u} = {\bf 0}$)\\
 5&Dyn-Lin-OSS&OSS&Linear ($\a=\u_h$)&Dynamic ($\partial_t\tilde{\u} \not = {\bf 0}$)\\
 6&Dyn-Nl-OSS&OSS&Nonlinear ($\a=\u_h+\tilde{\u}$)&Dynamic ($\partial_t\tilde{\u} \not = {\bf 0}$)\\
-\hline
+\bottomrule
 \end{tabular}
 \caption{DHIT test cases.}
 \label{table:DHIT_cases}
@@ -658,16 +659,17 @@ We choose the Dynamic and Nonlinear OSS method (Dyn-Nl-OSS), which is the one th
 \begin{table}[h]
 \centering
 \begin{tabular}{ccc}
-\hline
+\toprule
 Label&Mesh elements&Element type\\
-\hline
+\midrule
+\midrule
 32 ($Q$1)&$32^3$&hexahedral linear ($Q_1$)\\
 64 ($Q$1)&$64^3$&hexahedral linear ($Q_1$)\\
 128 ($Q$1)&$128^3$&hexahedral linear ($Q_1$)\\
 32 ($Q$2)&$32^3$&hexahedral quadratic ($Q_2$)\\
 64 ($Q$2)&$64^3$&hexahedral quadratic ($Q_2$)\\
 32 ($Q$3)&$32^3$&hexahedral cubic ($Q3$)\\
-\hline
+\bottomrule
 \end{tabular}
 \caption{$h$-$p$ refinement cases.}
 \label{table:refinement}
@@ -879,15 +881,16 @@ In Table~\ref{table:Channel_parameters} we present the value of the different pa
 \begin{table}[h!]
 \centering
 \begin{tabular}{ccc}
-\hline
+\toprule
 ${\rm Re}_\tau$&$180$&$395$\\
-\hline
+\midrule
+\midrule
 $\nu$&$3.5714\cdot10^{-4}$&$1.4545\cdot10^{-4}$\\
 $u_\tau$&$6.4286\cdot10^{-2}$&$5.7455\cdot10^{-2}$\\
 $\tau_w$&$4.1327\cdot10^{-3}$&$3.3010\cdot10^{-3}$\\
 $f_x$&$4.1327\cdot10^{-3}$&$3.3010\cdot10^{-3}$\\
 $\delta t$&$0.06$&$0.03$\\
-\hline
+\bottomrule
 \end{tabular}
 \caption{Test parameters for the different friction Reynolds number.}
 \label{table:Channel_parameters}
@@ -1060,11 +1063,15 @@ Similar results have been reported in the finite difference context in \cite{ver
 %\footnotesize
 \centering
 \begin{tabular}{ccccccccc}
-\hline
-Method&\multicolumn{4}{c}{ASGS}&\multicolumn{4}{c}{OSS}\\\hline
-Tracking&\multicolumn{2}{c}{Static}&\multicolumn{2}{c}{Dynamic}&\multicolumn{2}{c}{Static}&\multicolumn{2}{c}{Dynamic}\\\hline
-Advection&Linear&Nonlinear&Linear&Nonlinear&Linear&Nonlinear&Linear&Nonlinear\\\hline
-Converged&Yes&No&Yes&Yes&$\delta t\downarrow$&$\delta t\downarrow$&Yes&Yes\\\hline
+\toprule
+Method&\multicolumn{4}{c}{ASGS}&\multicolumn{4}{c}{OSS}\\
+\midrule
+Tracking&\multicolumn{2}{c}{Static}&\multicolumn{2}{c}{Dynamic}&\multicolumn{2}{c}{Static}&\multicolumn{2}{c}{Dynamic}\\
+\midrule
+Advection&Linear&Nonlinear&Linear&Nonlinear&Linear&Nonlinear&Linear&Nonlinear\\
+\midrule
+Converged&Yes&No&Yes&Yes&$\delta t\downarrow$&$\delta t\downarrow$&Yes&Yes\\
+\bottomrule
 \end{tabular}
 \caption{Small time step convergence analysis.}
 \label{table:small_time_step_T}
