@@ -770,8 +770,7 @@ Initially we consider a mesh of $32^3$ hexahedral linear elements $(Q_1)$, but w
 The TGV test is characterized by its laminar evolution at the initial time steps, when the flow is strongly anisotropic due to the structured large-scale vortices directly related to the initial condition. If the Reynolds number is large enough, the vortex-stretching process, which activates the energy cascade effect, transfers energy from large to small-scales and the flow becomes unstable and turbulent. According to Brachet \emph{et al.} \cite{brachet_small-scale_1983}, the flow becomes nearly isotropic for ${\rm Re}\geq1000$.
 
 In Fig. \ref{fig:isovor_vel_TG} we present some vorticity isosurface images showing this process for  a $128^3$ linear hexahedral elements mesh, for the dynamic and nonlinear OSS method. Note that the initial condition (Fig. \ref{fig:isvor_vel_1}) consists in eight vortices with the same scale corresponding to the eight Fourier modes located at $\mathbf{k}=(\pm1,\pm1,\pm1)$, as it has been pointed out previously.
-
-\begin{figure}[h!]
+\begin{figure}[p]
   \centering
   \subfigure[Isosurface for $|\omega|=1.0$ at $t=0.0$]{\label{fig:isvor_vel_1}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_1}}    
   \subfigure[Isosurface for $|\omega|=1.0$ at $t=2.0$]{\label{fig:isvor_vel_2}\includegraphics[clip=true, trim=13.5cm 0cm 13.5cm 0cm, width=0.49\textwidth]{Figures/Chapter4/TG/isovorti_veloc_2}}\\
@@ -792,8 +791,7 @@ In order to compare the different VMS methods defined previously and to test the
 we solve the TGV test on a $32^3$ and $64^3$ linear elements mesh with a Reynolds number ${\rm Re}=1600$. 
 
 We want to show the amount of numerical dissipation, the energy cascade in the spectra and the enstrophy evolution (compared to DNS) in all cases. We compare first the kinetic energy evolution  with the kinetic energy evolution obtained by Brachet \emph{et al.} \cite{brachet_small-scale_1983}, (Fig. \ref{fig:ene_32_TG}). We also present the energy spectra at $t=9$, when the flow is supposed to be nearly isotropic at large wave numbers, (Fig. \ref{fig:spec_32_TG}).
-
-  \begin{figure}[h!]
+\begin{figure}[h!]
  	\centering	
  	\subfigure[Total kinetic energy evolution]{\label{fig:ene_32_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ene_32_new}}
  	\subfigure[Energy spectra at $t=9.0$]{\label{fig:spec_32_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/spec_32_x2_new}}
@@ -811,7 +809,6 @@ As for the DHIT test, the results obtained using the different methods listed in
 
 As in the DHIT problem, we perform a refinement study reducing $h$ and/or increasing $p$ using  Dyn-Nl-OSS. 
 The global energy evolution and the energy spectra are shown in Fig. \ref{fig:ene_spec_hp_TG}. Fig. \ref{fig:ene_hp_TG} displays the total kinetic energy evolution compared with the DNS \cite{brachet_small-scale_1983}. The results show that all cases, excluding the $32^3$ and $64^3$ linear hexahedral mesh, follow almost perfectly the line defined by the DNS result points. On the other hand, Fig. \ref{fig:spec_hp_TG} displays the energy spectra at $t=9$, when the dissipation is maximum and the flow is evolving to turbulence. We compare the energy spectra obtained solving all the cases considered before with the DNS computed by \cite{gassner_accuracy_????}, using the same Reynolds number (${\rm Re}=1600$) at the same time. 
-
 \begin{figure}[h!]
 	\centering
 	\subfigure[Total kinetic energy evolution]{\label{fig:ene_hp_TG}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ene_hp_10_new}}
@@ -824,9 +821,7 @@ The global energy evolution and the energy spectra are shown in Fig. \ref{fig:en
 % %Anyway, we must emphasize that the flow is supposed to be isotropic after $t=9$, so we expect that this slope becomes closer to the predicted by Kolmogorov.
 
 In Fig. \ref{fig:enediss_hp_TG} we show the dissipation rate of the problem, compared to the DNS results. The dissipation rate is directly related to the enstrophy of the problem, $\epsilon = 2\nu\left(\frac{1}{2}\left\langle|\omega|^2\right\rangle\right)$, where $|\omega|$ is the modulus of the vorticity. At the continuous level, it determines the kinetic energy decay which, at the discrete level, is also influenced by the numerical dissipation (see equation (\ref{eq-C4_FE_balance2})). When an explicit model is used, the dissipation introduced by the subgrid model also needs to be included. The FE viscous dissipation $\nu\|\nabla\u_h\|^2$, is shown in Fig. \ref{fig:enediss_hp_TG_resolved} whereas the total dissipation rate $ \nu\|\nabla\u_h\|^2 + \varepsilon_{h}$ defined by equation (\ref{eq-C4_FE_balance2}) is shown in Fig. \ref{fig:enediss_hp_TG_total}. 
-
 %Fig. \ref{fig:ene_hp_TG} displays the total kinetic energy dissipation rate evolution for all the cases defined in Table \ref{table:refinement}, compared with the DNS \cite{brachet_small-scale_1983}. The results show that all cases, excluding the $32^3$ linear hexahedral mesh, follow almost perfectly the line defined by the DNS result points.
-
 \begin{figure}[h!]
 	\centering	
 	\subfigure[Resolved]{\label{fig:enediss_hp_TG_resolved}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_hp_10_new_resolved}}
@@ -842,7 +837,6 @@ As in the DHIT problem, the results obtained using the coarser $32^3 (Q_1)$ and 
 All the results presented up to this point have been computed using a VMS method, either ASGS or OSS. But, what would be the result using other methods? Are the methods presented here, comparable to classical LES methods? Which methods perform better? To answer all these questions, we compare the results obtained here against those obtained using the dynamic Smagorinsky model \cite{fauconnier_construction_2009} and the adaptive local deconvolution method \cite{hickel_adaptive_2006} specifically designed as an implicit LES model. The former has been obtained with a filter of size $2 \pi / 64$ and spectral resolution up to $2 \pi / 256$, thus not having numerical but only modeling error. In turn, the latter has been obtained using a $64^3$ grid without explicit subgrid model, an explicit third-order Runge-Kutta scheme for the time discretization, a fourth order spatial approximation of the symmetric terms and its particular approximation of the convective term which is based on the (forth order) five-point central stencils approximation of the convective term \cite{hickel_adaptive_2006}. To make the comparison as fair as possible we select those combinations of $h$ and $p$ that result in a similar number of degrees of freedom, which are $64^3 (Q_1)$ (second order), $32^3 (Q_2)$ (third order) and $20 (Q3)$ (fourth order) meshes (the last one having actually a bit less degrees of freedom).
 
 The FE viscous dissipation is shown in Fig. \ref{fig:enediss_dynsmag_resolved} compared to the resolved dissipation obtained using the dynamic Smagorinsky model \cite{fauconnier_construction_2009} and the ``molecular dissipation'' of \cite{hickel_adaptive_2006} (the one computed using the molecular viscosity and the approximated solution, equivalent to our FE viscous dissipation but in the finite volume context). The total dissipations of the three methods are compared in Fig. \ref{fig:enediss_dynsmag_total}. 
-
 \begin{figure}[h!]
 	\centering	
 	\subfigure[Resolved]{\label{fig:enediss_dynsmag_resolved}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/TG/ens_64dofs_dynsmag_resolved}}
@@ -903,7 +897,6 @@ Our purpose is to check the VMS methods defined in Subsection \ref{subsec-C4_VMS
 We first present the mean streamwise velocity profile scaled by the wall shear stress velocity, $\langle u\rangle^+=\frac{\langle u\rangle}{u_\tau}$ for all cases defined in Table \ref{table:DHIT_cases}, where $\langle\cdot\rangle$  denotes the mean value in streamwise and spanwise direction and in time, as a function of $y^+ = \frac{y u_\tau}{\nu}$.
 
 In Fig. \ref{fig:Channel_umean_32} we show the mean streamwise velocity normalized by the wall-shear velocity, $u_\tau$, obtained for all cases considered in Table \ref{table:DHIT_cases} in a $32^3$ linear elements mesh for the ${\rm Re}_\tau=395$ case. We compare the results with the DNS one obtained in  \cite{moser_direct_1999}. We can observe in Fig. \ref{fig:Channel_umean_32} that all methods perform quite similar and are very close to the DNS result. Fig. \ref{fig:Channel_re395_32} also depicts the streamwise, spanwise and wall-normal root mean square (rms) velocity fluctuation components normalized by the wall-shear stress velocity. 
-
 \begin{figure}[h!]
 	\centering	
 	\subfigure[Mean streamwise velocity]{\label{fig:Channel_umean_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean}}
@@ -1019,7 +1012,6 @@ This analysis led us to choose $c_1=12$ and $c_2=2$ for $\tau_m$ and set $\tau_c
 In order to go in depth on the effect of the algorithmic constants $c_1$ and $c_2$ and the stabilization parameter $\tau_c$ of the incompressibility equation, we compare the results for the TCF problem with a friction Reynolds number ${\rm Re}_\tau=180$ using the same choice made for homogeneous turbulence 
 %the setting used until now 
 ($c_1=12$, $c_2=2$ and $\tau_c=0$) against the setting of the incompressible case in \cite{Avila2014} ($c_1=12$, $c_2=2$ and $\tau_c$ as in (\ref{eq-C4_tau_c})) and a less dissipative setting with $c_1=12$, $c_2=8$ and $\tau_c=0$. These tests have been done using the Dyn-Nl-OSS case in a $32^3$ $Q_1$ mesh.
-
 \begin{figure}[h!]
 	\centering	
 	\subfigure[Mean streamwise velocity]{\label{fig:OSS_taus_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean_taus_DOSS}}
@@ -1082,7 +1074,6 @@ To the best of our knowledge, the stability (or instability) of dynamic ASGS met
 %the time step size also has an effect on the computational cost. 
 %In particular, the number of solver iterations for ASGS methods increase when the time step is reduced. 
 This behavior is explained in Fig. \ref{fig:1st_step_comp_cost}, where the number of solver iterations at the first time step is plotted against the time step size for the dynamic and nonlinear cases of ASGS and OSS methods, with $32^3$ and $64^3$ $Q_1$ mesh, for the DHIT test case. \emph{The number of required solver iterations (and as a result the condition number of the system matrix) blows up exponentially for the ASGS method as we reduce the time step size, whereas it remains constant for the OSS method.} This important observation explains the computational cost trends observed in the previous section.
-
 \begin{figure}[h!]
 	\centering	
 	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/1st_step_comp_cost}

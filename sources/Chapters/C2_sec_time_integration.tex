@@ -2,8 +2,110 @@ In this section, our aim is to state some basic concepts about the time discreti
 
 In the current work we only will consider the called \textit{direct integration} methods. The \textit{direct integration} of the transient equations rely on a numerical step-by-step procedure, where the word \textit{direct} means that no transformation of the ODE problem is carried out a priori. Looking at the litarature, many techniques can be found based in this kind of procedure. For instance in \cite{Per Klaus-Jürgen Bathe} the description of the following methods can be found: the central difference method, the Houbold method, the Newmark method or the $ \theta $-method. An exhaustive analysis of such methods can be found in \cite{belytscho_hughes}.
 
-Other ... BDF, generalized-alpha, runge-kutta.
+Other commonly used time integration methods in the computational fluid dynamics field are the Backward Differentiation Formulas (BDF), the generalized-$ \alpha $ method or the Runge-Kutta time integration schemes, see \cite{brayton_gustavson_1972, jansen_2000, dettmer_peric_2003,hairer} for instance.
+
+Within the forthcoming chapters, only the $ \theta $-methods and Runge-kutta schemes are used to integrate in time the incompressible Navier-Stokes equations. Consequently, in the following subsections only these two methods are described. 
+
+\subsection{$ \theta $-method}
+Let suppose that we have an initial-value problem with first order ODE of the form
+\begin{align}
+\label{eq-C2_time_ODE}
+&\frac{\partial u}{\partial t}=f(t,u),\quad\in(0,T)\\
+\label{eq-C2_time_ODE_0}
+&u(0)=u_0.
+\end{align}
+One of the most popular, widely used and simplest method to solve problem \Eq{eq-C2_time_ODE}-\Eq{eq-C2_time_ODE_0} are the so-called single step (one-step) schemes, particularly, the theta-method, which is usually denoted as $ \theta $-method. Using the notation $u(t_n) = u_n$, the $ \theta $-method is defined as
+\begin{align*}
+\label{eq-C2_time_theta_method}
+&u_{n+1} = u_n + h (\theta f(t_{n+1}, u_{n+1}) + (1-\theta )f(t_n,u_n)),\\
+&u(0) = u_0,
+\end{align*}
+being $ h $ the time step size and $ t_n = nh $ for $ n=0,...,N $, with $ N=T/h $. Here $ \theta \in [0, 1] $ is a fixed parameter. The $ \theta $-method is considered here as basic method since it represents the most simple Runge-Kutta method (and also linear multistep method). The case of $ \theta=0.5 $ is of second order and is called Crank-Nicolson method. For $ \theta=0 $ we have the so called (explicit) Forward Euler method and for $ \theta=1 $ the (implicit) Backward Euler (BE) method.
+
+\subsection{Implicit-explicit Runge-Kutta schemes}
+One of the main goals of this thesis is the construction of efficient solvers for the resolution of the incompressible turbulent Navier-Stokes equations. The solver efficiency can be addressed not only by the use of efficient time integrators, but also by the application of efficient algebraic solvers for the final discrete system of equations. In this direction, the time integration scheme can help to construct smaller systems of equation segregating the different variables that appear on the problem and allowing to solve efficiently each uncoupled variable separately.
+
+In Chapters \ref{chap-SRK} and \ref{chap-XXXX} we will consider the application of Implicit-Explicit (IMEX) Runge-Kutta methods for the time integration of the Navier-Stokes equations. The aim is to take advantage of the IMEX schemes for Runge-Kutta methods to uncouple the pressure and velocity degrees of freedom when solving these equations. We also want to use the Runge-Kutta background to implement an adaptive time stepping technique to solve efficiently transient incompressible flow problems.
+
+Given an ODE problem of the type
+\begin{equation}
+\label{eq-C2_time_ODE}
+\frac{\partial u}{\partial t}=f(u)+g(u), 
+\end{equation}
+being $f$ and $g$ different operators which definition depends on the specific problem, an IMEX scheme consists of applying an explicit discretization for the operator $f$ and an implicit discretization for $g$. This approach comes from the fact that ODEs usually are composed by operators of different nature. For instance, thinking in the convection-diffusion problem we have two different operators, which represent the convection term (let us denote it by $f$) and the diffusion term (which we will denote as $g$). As it is well known, the convection term is often nonlinear (i.e. burgers equation) while the diffusion term is generally linear and stiff. When $f\equiv0$, problem (\ref{eq-C2_time_ODE}) results in a stiff and linear system, which is natural to be solved using an implicit scheme. Otherwise, if $g\equiv0$ the problem becomes nonlinear and it could be convenient to be solved using an explicit time integration scheme. Ascher et al. in \cite{ascher_implicit-explicit_1995} study some multistep IMEX methods for convection-diffusion problem type. Often these type of methods are used in conjunction with spectral methods, see \cite{canuto_spectral_1988, kim_application_1985}.
+
+The IMEX approach can be used not only for multistep schemes, but also for Runge-Kutta time integration techniques. The multistage nature of the Runge-Kutta methods also make feasible IMEX schemes with even better properties than multistep methods, see \cite{ascher_implicit-explicit_1997} where some Runge-Kutta IMEX schemes are developed for the convection-diffusion problem.
+
+The idea of the Runge-Kutta methods is to approximate the integral $u(t_{n+1})=u(t_n)+\int_{t_n}^{t_{n+1}}\left[f(u)+g(u)\right]\ dt$ using a numerical quadrature with the points $c_1,...,c_s$ and their weights $b_1,...b_s$, which leads to
+\begin{equation}
+\label{eq-C2_time_ODE_int}
+u(t_{n+1})=u(t_n)+h\sum_{i=1}^sb_i\left(f(u(t_n+c_ih))+g(u(t_n+c_ih))\right)+\mbox{Error}.
+\end{equation}
+
+Hereafter we will write $t_i$ instead of $t_n+c_ih$. Suppose we have an approximation $u_n$ to $u(t_n)$); to use (\ref{eq-C2_time_ODE_int}) we also need values $u_i$ to put in for $u(t_i)$. We compute them also by numerical quadratures on the same nodes:
+\begin{equation}
+\label{eq-C2_time_RK_i}
+u_i=u_n+h\sum_{j=1}^sa_{ij}\left(f(u_j)+g(u_j)\right).
+\end{equation}
+In general this is a set of implicit equations, which we solve and use in (\ref{eq-C2_time_ODE_int}) for our next value
+\begin{equation}
+\label{eq-C2_time_RK_n+1}
+u_{n+1}=u_n+h\sum_{i=1}^sb_i\left(f(u_i)+g(u_i)\right).
+\end{equation}
+
+The formulation (\ref{eq-C2_time_RK_i})-(\ref{eq-C2_time_RK_n+1}) define a Runge-Kutta method, which we designate by displaying its coefficient in the called Butcher tableau:
+\begin{equation}
+\label{eq-C2_time_Butcher_tab}
+\begin{array}{c|cccc}
+c_1&a_{11}&a_{12}&...&a_{1s}\\
+c_2&a_{21}&a_{22}&...&a_{2s}\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+c_s&a_{s1}&a_{s2}&...&a_{ss}\\
+\hline
+ &b_1&b_2&...&b_s
+\end{array}
+\end{equation}
+
+% Runge-Kutta for NSI
+Runge-Kutta techniques have been widely used for a lot of ODE problem types. The Navier-Stokes semidiscrete problem is not an exception and the use of Runge-Kutta methods for its time integration can be easily found in the literature, e. g. \cite{benjamin_sanderse_energy-conserving_2013,nikitin_third-order-accurate_2006,sanderse_energy-conserving_2013,sanderse_accuracy_2012,sterner_semi-implicit_1997}. However, like the multistep methods, the Runge-Kutta schemes need to solve several systems of equations at each time step. Further, when we use an implicit scheme all stages could be coupled, resulting a large system of equations to be solved. This drawback can be bypassed using an explicit scheme which only needs to evaluate the operators that arise from the Navier-Stokes problem. But the use of an explicit scheme, as it is well known, involve a restriction in the time-step size in order to ensure stability, see for instance the chapter IV.2 in \cite{hairer_solving_1993}. 
+
+Diagonally Implicit Runge-Kutta methods (DIRK) can be used to avoid stability problems and solving implicitly each Runge-Kutta stage uncoupledly, see \cite{alexander_diagonally_1977}. This technique consists on setting all the Butcher tableau values $a_{ij}$ in (\ref{eq-C2_time_Butcher_tab}) that are above the diagonal to zero. That is, $a_{ij} = 0$ for all $j>i$. In fact, in \cite{alexander_diagonally_1977} the use of the DIRK term is what in \cite{hairer_solving_1993} is referred by Singly Diagonally Implicit Runge-Kutta methods (SDIRK) which means that all the diagonal terms are equal, $a_{ii}=\gamma$. As pointed out by Alexander in \cite{alexander_diagonally_1977}, the use of SDIRK methods allow to use the same LU-factorization when solving repeatedly the multistage system of equations.
+
+% Pressure segregation
+An interesting issue when solving the transient Navier-Stokes problem is the decoupling of the velocity and pressure. There are several techniques to deal with this approach that consists on solving separately the velocity degrees of freedom and the pressure by approximating the coupling terms. One of them, for example, is the widely used Fractional step method, \cite{donea_finite_1982}. There also are some works done in this direction for multistep methods, see for instance \cite{kim_application_1985}. Nikitin in \cite{nikitin_third-order-accurate_2006} suggested a Runge-Kutta method which decouples pressure and velocity by using a pressure splitting technique on the last step of the scheme.
+
+% Adaptivee time stepping
+Also related with the time integration procedures, there appears the idea of using an adaptive time stepping technique. Adaptive time stepping is an interesting tool that allows to control the accuracy of the time integration, but also improves the simulation efficiency. In this direction, the Runge-Kutta method provides an excellent background to implement this computational tool since we can use the different stages to compute an error estimate at each time step. John et al. in \cite{john_adaptive_2010} studied some time stepping control methods applied to different types of integration schemes, including the DIRK scheme. A more specific step-control analysis for explicit and implicit Runge-Kutta methods is done in \cite{hairer_solving_1993}, where a predictive controller is also proposed. More adaptive time step techniques are proposed in \cite{gresho_adaptive_2008} for convection-diffusion equation and in \cite{kay_adaptive_2010} for the Navier-Stokes equations. Nikitin in \cite{nikitin_third-order-accurate_2006} also includes a section dedicated to the adaptive time step.
 
 
-\subsection{$ \theta $-metohd}
-\subsection{Runge-Kutta schemes}
+\subsection{Stability and order of convergence}
+Some definitions of stability and order of convergence need to be introduced since it will be used to charachterize some of the methods used in forthcoming chapters. Deeper explanations on stability and order conditions can be found in \cite{hairer_I,hairer_II}.
+
+When analysing stability of ODEs, the solution of the Dahlquist's equation $ u'=\lambda u $ is studied. After applying the implicit Euler method it reads
+\begin{equation}
+\label{eq-C2_Dahlquist}
+u_1=u_0+h\lambda u_1,
+\end{equation}
+being $ h $ the step size. The solution to \Eq{C2_Dahlquist} is
+\begin{equation}
+\label{eq-C2_Dahlquist_sol}
+u_1=R(h\lambda)u_0,
+\end{equation}
+where $ R(z) $ is called the stability function for $ z\in\mathbb{C} $. For $ \theta $-methods, the stability function reads $ R(z)=\frac{1+z(1-\theta)}{1-z\theta} $.
+
+Under these definitions we say that a method is \textit{A-stable} if 
+\begin{equation}
+\label{eq-C2_A_stable}
+z\in\mathbb{C}^-,\quad\mbox{with $\quad\mathbb{C^-}:=\{z\in\mathbb{C}|\ Re\ z\le0\} $}.
+\end{equation}
+It can be shown that a $ \theta $-method is A-stable for all $ \theta\ge\dfrac{1}{2} $, see \cite{lambert_1991}. Furthermore, we say that a method is \textit{L-stable} when it is A-stable and additionaly it satisfies
+\begin{equation}
+\label{eq-C2_L_stable}
+\lim_{z\rightarrow\infty}R(z)=0.
+\end{equation}
+
+Let us consider a Runge-Kutta method given by equations \Eq{C2_time_RK_i}-\Eq{C2_time_RK_n+1}. We say that a Runge-Kutta method has \textit{order p} if 
+\begin{equation}
+\label{eq-C2_time_RK_order}
+\|u(t_{n+1})-u_{n+1}\|\le Ch^{p+1}.
+\end{equation}
