@@ -142,7 +142,7 @@ Even if this is not exactly what we get using the non-conservative or skew-symme
 
 \subsection{The space for the subscales}
 \label{subsec-C2_oss}
-The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{velo_sgs} and \Eq{press_sgs}. The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
+The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{C2_velo_sgs} and \Eq{C2_press_sgs}. The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
 %method is characterized by the following projection definition:
 \begin{equation}
 \label{eq-C2_P_ASGS}
@@ -155,13 +155,13 @@ Another possibility introduced in \cite{codina_stabilization_2000} is to conside
 \end{equation}
 where $\Pi_h$ is the projection onto the FE space. With this choice, the residual of the momentum equation does not depend on $\partial_t\u_h$. Likewise, $\mathcal{P}(\f)$ in this case is only well defined for $\f\in L^2(\Omega)^d$. In the case of minimum regularity, $\f\in H^{-1}(\Omega)^d$, this term can be simply neglected without upsetting the accuracy of the method.
 
-In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec:energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in \Eq{velo_sgs} and another for the pressure subscales ($\Pi_c$) in \Eq{press_sgs}. We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
+In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see below and Section \ref{sec:energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in \Eq{C2_velo_sgs} and another for the pressure subscales ($\Pi_c$) in \Eq{C2_press_sgs}. We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
 \begin{align}
 \label{eq-C2_Pi_tau_m}
 &(\tau_m\Pi_m(\w),\v_h)=(\tau_m\w,\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
 \label{eq-C2_Pi_tau_c}
 &(\tau_c\Pi_c(r),q_h)=(\tau_cr,q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
 \end{align}
-These definitions guarantee the orthogonality between the FE and subscale spaces in the case of static subscales, that is, neglecting temporal derivatives in \Eq{velo_sgs}. It then follows that the term containing the temporal derivative of the subscale in the FE equation \Eq{NS_discrete} also vanishes.
+These definitions guarantee the orthogonality between the FE and subscale spaces in the case of static subscales, that is, neglecting temporal derivatives in \Eq{C2_velo_sgs}. It then follows that the term containing the temporal derivative of the subscale in the FE equation \Eq{C2_NS_discrete} also vanishes.
 
-However, if the dynamic version of the method is used, the weight of the projection \Eq{Pi_tau_m} must be conveniently modified to ensure the mentioned orthogonality. As it can be seen in XXXXX(\ref{eq:exact_sgs}), the definition of the weight depends on the time integration strategy, as explicitly stated in Section XXXX\ref{sec:discrete}.
+However, if the dynamic version of the method is used, the weight of the projection \Eq{C2_Pi_tau_m} must be conveniently modified to ensure the mentioned orthogonality. As it can be seen in XXXXX(\ref{eq:exact_sgs}), the definition of the weight depends on the time integration strategy, as explicitly stated in Section XXXX\ref{sec:discrete}.

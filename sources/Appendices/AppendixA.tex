@@ -101,16 +101,19 @@ where $\hat{u}_i$ is the transformed $i$-direction velocity field and $\hat{u}_i
 
 \end{itemize}
 
-\section{Algorithm}
-\begin{center}
-\fbox{
-\begin{tabular}{l}
-Transform the velocity vector into a matrix corresponding to the mesh points:\\
+\section*{Algorithm}
+In the following table the algorithm described above to compute the energy spectrum of a turbulent sample in a two-dimensional structured mesh is resumed.
+\begin{algorithm}
+\label{alg-SRK_solvers}
+\caption{Algorithm to compute the energy spectrum.}
+\begin{itemize}
+\item[1.] Transform the velocity vector into a matrix corresponding to the mesh points:\\
 $\quad\quad\quad\quad u_x=u_x(1:N_x,1:N_y)$,  $u_y=u_y(1:N_x,1:N_y)$.\\
-Compute the FFT of the velocity fields: $\hat{u}_x=fft(u_x)$, $\hat{u}_y=fft(u_y)$.\\
-Define the wave number vectors:\\
+\item[2.] Compute the FFT of the velocity fields: $\hat{u}_x=fft(u_x)$, $\hat{u}_y=fft(u_y)$.\\
+\item[3.] Define the wave number vectors:\\
 $\quad\quad\quad\vec{k}_x=\left[0,1,...,\frac{N_x}{2},-\frac{N_x}{2}+1,-\frac{N_x}{2}+2,...,-1\right]$, $\vec{k}_y=\left[0,1,...,\frac{N_y}{2}\right]$.\\
-Calculate the maximum one-dimensional wave number $k_{max}$.\\
-Compute the one-dimensional wave number vector $k$ and the energy spectra $E(k)$.\\
-\end{tabular}}
-\end{center}
+\item[4.] Calculate the maximum one-dimensional wave number $k_{max}$.\\
+\item[5.] Compute the one-dimensional wave number vector $k$ and the energy spectra $E(k)$.\\
+\end{itemize}
+\end{algorithm}
+%\end{center}
