@@ -8,15 +8,70 @@
 %Physical phenomena of turbulence
 The turbulent phenomena that takes place in fluid flows is one of the most fascinating and, at the same time, challenging problems of classical physics. We can find examples of turbulent flows in many situations of our daily life, from the most known and noticeable like the jets leftover by airplanes in the sky or the flow of a river in the mountains, to the most inconspicuous like the turbulent flow that we generate in the morning cup of coffe. Another peculiarity that makes turbulent flows captivating is the wide range of scales in which it appears, starting from the astrophysics with the turbulent flows developed within the stars, to the turbulence that is observed in the biological cells flow.
 
-Despite all the effords to understand the turbulent phenomena, this is a classical mathematical physics problem that still remains unsolved to this day. Many physists, mathematicians and engineers have been studying this problem during the 19th and 20th Centuries, and the prediction of turbulent behaviour with a certain degree of reliability is not completely understood yet. Then, apart from the practical utility of a deep understanding of its nature, the study of turbulence is also motivated by its inherent intellectual challenge.
+Despite all the effords dedicated to understand the turbulent phenomena, this is a classical mathematical physics problem that still remains unsolved to this day. Many physists, mathematicians and engineers have been studying this problem during the 19th and 20th Centuries, and the prediction of turbulent behaviour with a certain degree of reliability is not completely understood yet. Then, apart from the practical utility of a deep understanding of its nature, the study of turbulence is also motivated by its inherent intellectual challenge.
 
-It is said that there are two main motivations to study turbulence, physics and engineering. From the physics point of view, the nature of turbulence must be explored to understand the behaviour of such flows at al levels. On the other hand, from the engineering point of view, there are some problems that have to be solved and a solution to them must be given with the knowledge we have now, although it might be incomplete.
+It is said that there are two main motivations to study turbulence, physics and engineering. From the physics point of view, the nature of turbulence must be explored to understand the behaviour of such flows at al levels. On the other hand, from the engineering point of view, there are some problems that have to be solved and a solution to them must be given with the knowledge we have now, although it might be incomplete. As an engineering thesis, the motivation of this work relies on the engineering point of view. The approach will be to contribute in developing novel techniques for the simulation of incompressible turbulent flows, making use of the current knowlege of turbulent flow phenomena.
 
-As an engineering thesis, the motivation of this thesis relies on the engineering point of view.
+%CFD as a solution
+Analytical solutions of fluid flows can only be obtained under certain restrictions and usually this restrictions can not be satisfied in real applications. Thus, we need other approaches to obtain the solution of a fluid flow different from the analytical description. The numerical solution is an alternative to determine the behaviour of fluid flows, which basically consists on approximate the solution defined over a continuous domain by a discrete solution defined in a finite set of points. This technique is known as Computational Fluid Dynamics (CFD) and it is widely used, both in the engineering and the physics worlds.
 
-Industrial problems
+As it is depicted in the schematic diagram shown in \Fig{fig-CFD}, we can think that CFD leans on the intersection of three different topics: fluid mechanics, software engineering and physical applications. The fluid mechanics field give the basic knowledge of the physical phenomena that describes the fluid flow motion. The software engineering is needed to build codes able to simulate the fluid flow. Finally, we need the applications that give us the problem to be solved.
 
-CFD as a solution
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[trim=2cm 9cm 11cm 1cm,clip=true,width=0.7\textwidth]{Figures/Chapter1/CFD_scheme}
+	\caption{Topics that conform CFD.}
+	\label{fig-CFD}
+\end{figure}
+
+%Industrial problems
+The CFD is widely used in many disciplines and industries like in the aerospace, automotive, chemical manufacturing, power generation, petroleum exploration, medical research, meteorology or astrophysics. It is a very valuable tool since it let to reductions in the cost of production by reducing the need of physical experimentation, improving the products or optimizing the production processes. In Table \ref{table-CFD_applications} we enumerate some more specific applications of CFD simulations that are very usefull for different disciplines.
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\toprule
+Field&Application\\
+\midrule
+\midrule
+\multirow{8}{*}{Biomedical}&Heart pumping\\
+&Blood flow\\
+&Air flow in lungs\\
+&Nose and sinus flows\\
+&Cell-fluid interface\\
+&Artificial organ design\\
+&Cardiac valve design\\
+&Life support systems\\
+\midrule
+\multirow{1}{*}{Electronics}&Cooling flow in electronic devices\\
+\midrule
+\multirow{6}{*}{Aerospace and automotive}&Aerodynamic shape optimization\\
+&Aerodynamic loads computation\\
+&Turbines\\
+&Propulsion systems\\
+&Airbag Deployment\\
+&In-Cylinder Engine Flow\\
+\midrule
+\multirow{4}{*}{Energy and power industry}&Heat exchange modeling\\
+&Wind turbines blade design\\
+&Pulverized coal combustion\\
+&Emission of NOx particles\\
+\midrule
+\multirow{4}{*}{Environmental}&Impact of industrial exhausts\\
+&Fire and smoke in buildings and tunnels\\
+&Natural ventilation systems design\\
+&Meteorology prediction\\
+\midrule
+\multirow{4}{*}{Civil}&Effect of wind on structures\\
+&Water flow in rivers\\
+&Water management\\
+\bottomrule
+\end{tabular}
+\caption{CFD applications.}
+\label{table-CFD_applications}
+\end{table}
+
+There already are CFD codes, both commercial and open source, that have the potential to solve a very broad spectrum of flow problems. However, the developement of computational algorithms for the simulation of turbulent flows is still an open topic. Moreover, the improvement of accuracy, the reduction of computational time and the increase of accessibility are also ongoing objectives in CFD. It is true that the CFD has some limitations, but the economic value of industrial applications has been demonstrated in a variety of industries.
+
 
 FE methods as CFD
 
