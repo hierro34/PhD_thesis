@@ -72,14 +72,24 @@ Field&Application\\
 
 There already are CFD codes, both commercial and open source, that have the potential to solve a very broad spectrum of flow problems. However, the developement of computational algorithms for the simulation of turbulent flows is still an open topic. Moreover, the improvement of accuracy, the reduction of computational time and the increase of accessibility are also ongoing objectives in CFD. It is true that the CFD has some limitations, but the economic value of industrial applications has been demonstrated in a variety of industries.
 
+%FE methods as CFD
+The simulation of fluid flows relies on the fact that we can define a mathematical model that describes the fluid motion. The governing equations of the fluid dynamics are the Navier-Stokes equations. Then, the CFD basically consists on approximate the solution of these equations. Many approximation techniques can be used to simulate fluid flows, the most common are the Finite Element (FE) method, the Finite Differences (FD) method or the Finite Volume (FV) method. All of them are methods that can approximate the solution of a fluid flow and vary in the way in which the spatial domain is dicretized. 
 
-FE methods as CFD
+The FD method is based on the application of a local Taylor expansion to approximate the governing equations, but it can only be applied on a discretization constructed by a network of topological squares or hexahedras, depending on the spatial dimensions. On the other hand, FE and FV methods are not restricted by this condition and are more extended in the CFD world. The FV method is based on the approximation of the average integral value on a reference volume being one of the main strengths the ability to handle discontinuous solutions. Rather than an integral average, the FE method is based on pointwise approximations on a grid. In contraposition to FV, it allows the use of high-order approximations and has a strong mathematical foundation behind.
 
-Exascale computing
+In this thesis the FE method will be considered to discretize in space the Navier-Stokes equations. In any case, it has to be highlighted that the FV method can be recovered with a particular definition of the FE method.
 
-Large scale solvers
+%Exascale computing
+The increasing computing power is one of the points that make not only the CFD, but also the computational mechanics in general, more appealing to solve engineering problems with more and more complexity. In order to take advantage of the continuously growing computational power acquired with the new improvements on super-computers, an advance in software design is imperative. New algorithms need to be designed to be used in the exascale computing environment. 
 
-Other applications 
+We understand by exascale computing the capacity of a computing system to perform at least one exaFLOPS ($ 10^{18} $ floating point operations per second). This computing capacity is still far from the current computer power, but many effords are dedicated to achieve this objective, which is expected to be acomplished before 2020. There are many issues in the High Performance Computing (HPC) community to be addressed in order to achieve the exascale goal. Some of them are related to the hardware development, including improvements on processors, memory size, memory bandwidth and energy consumtion. Furthermore, there is the need of software improvement in such a way that exascale computing systems can be fully exploited.
+
+Exascale computing is the key with wich we will be able to perform high-fidelity simulations of real world problems. Such simulations are a great challenge of computational physics and engineering, and can transform the computational science into a fully predictive science.
+
+%Large scale solvers
+We still do not know much details about how exascale computing systems will be, but there is a clear priority in what software development refers. This is the definition and implementation of algorithms able to scale in extremely large computing environments (machines of the order of some million-cores). We recall here that an scalable algorithm has the property to have a computational cost proportional to the size of the problem that is being solved. Other numerical issues that are thought to be needed to achieve exascale computations are the use of high-order methods which give more accurate results for a given problem size and the development of adaptive methods, which can improve the efficiency of the simulation.
+
+The development of large scale FE solvers .... (Domain decomposition, multigrid,...)
 
 COMFUS group
 
@@ -91,6 +101,24 @@ COMFUS group
 %The objective of the COMFUS group is to develop significant advances on the simulation of the technology needed for the nuclear fusion. In this direction, the thesis is planed over the line of the development of numerical algorithms and computational tools able to simulate unsolved technological problems such as: 1) the plasma disruptions and magnetic confinement for large tokamaks and 2) the neutron shielding and the Tritium extraction inside the Test Blanket Modules (TBM). 
 
 \section{Thesis objectives}
+
+Residual-based VMS as LES
+
+Mixed VMS formulations for LES
+
+High-order FE methods
+
+High-order time integration methods
+
+Segregation of velocity-pressure
+
+Adaptive time integration schemes
+
+Large scale FE solvers
+
+Scalable solvers
+
+Application
 
 The TBMs that wrap the fusion reactor core are a fundamental part of it. These modules not only are the responsible of the shielding that absorb the neutrons that emerge from the plasma, but also are the place where the Tritium is extracted. Tritium is needed to keep the plasma and it can not be found in nature, so its extraction is a key step. One of its design consists on a micro-channel system full of  liquid metal. Because of the magnetic forces that confine the plasma inside the reactor core, this liquid is subjected to the magnetohydrodynamics (MHD) equations.
 
