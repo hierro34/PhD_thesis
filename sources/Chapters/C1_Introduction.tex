@@ -89,9 +89,14 @@ Exascale computing is the key with wich we will be able to perform high-fidelity
 %Large scale solvers
 We still do not know much details about how exascale computing systems will be, but there is a clear priority in what software development refers. This is the definition and implementation of algorithms able to scale in extremely large computing environments (machines of the order of some million-cores). We recall here that an scalable algorithm has the property to have a computational cost proportional to the size of the problem that is being solved. Other numerical issues that are thought to be needed to achieve exascale computations are the use of high-order methods which give more accurate results for a given problem size and the development of adaptive methods, which can improve the efficiency of the simulation.
 
-The development of large scale FE solvers .... (Domain decomposition, multigrid,...)
+The application of a FE method to a Partial Differential Equation (PDE) leads to a matricial system of equations that has to be solved using linear algebra tools. The development of large scale FE solvers is accomplished by the use of preconditioners that improve the resolution of such matricial system. The most known algorithmically scalable preconditioners are the MultiGrid (MG) preconditioner and the Domain Decomposition (DD) based preconditioners. Nevertheless, in order to reach extreme scalabilty, the algorithmical scalability of a preconditioner is not a sufficient condition, since an efficient implementation is needed. 
 
-COMFUS group
+%COMFUS group
+The development of algorithms and implementations of scalable preconditioners is a hot topic in the FE field, and one of the main topics of the COMFUS team. The COMFUS group is the group where this thesis has been developed, and its name is the acronym of 
+
+% (COMFUS group) in different lines of research, all of them related with the Starting Grant project of the European Research Council (ERC) headed by professor Santiago Badia.The objective of the COMFUS group is to develop significant advances on the simulation of the technology needed for the nuclear fusion. 
+
+
 
 
 %From a technological point of view, nuclear fusion is considered as a safe and clean source of energy. In order to satisfy the future and increasing energetic needs of the society, there is the necessity  of efficient energy sources with a low $CO_2$ discharge. The increasing demand of energy sources that satisfy these conditions make nuclear fusion a strategic commitment for the EU energetic future.
