@@ -16,13 +16,13 @@ Given sufficiently smooth functions $ \v\in\mathcal{V}_0 $ and $ q\in\mathcal{Q}
 \label{eq-C2_varia_NS_weak_continuity}
 (\nabla\cdot\u,q)=&\ 0&\forall q\in\mathcal{Q}.
 \end{align}
-Adding up equations \Eq{C2_varia_NS_weak_momentum}-\Eq{C2_varia_NS_weak_continuity} we obtain an alternative weak form of the incompressible Navier-Stokes problem \Eq{NS_strong_mome}-\Eq{NS_strong_Ini} consists, e.g., in finding $[\u,p]\in {L}^2(0,T;\mathcal{V}_0)\times {\cal D}'(0,T;\mathcal{Q}_0)$ (distributions in time with values in $\mathcal{Q}_0$) such that
+Adding up equations \Eq{C2_varia_NS_weak_momentum}-\Eq{C2_varia_NS_weak_continuity} we obtain an alternative weak form of the incompressible Navier-Stokes problem \Eq{NS_strong_mome}-\Eq{NS_strong_Ini} consists, e.g., in finding $[\u,p]\in {L}^2(0,T;\mathcal{V}_g)\times {\cal D}'(0,T;\mathcal{Q})$ (distributions in time with values in $\mathcal{Q}_0$) such that
 \begin{equation}
 \label{eq-C2_NS_weak}
 (\partial_t\u,\v) + B(\u;[\u,p],[\v,q]) = \left<\f,\v\right> 
-\quad\quad\forall\v\in\mathcal{V}_0,\quad\forall q\in\mathcal{Q}_0,
+\quad\quad\forall\v\in\mathcal{V}_0,\quad\forall q\in\mathcal{Q},
 \end{equation}
-satisfying the initial condition \Eq{NS_strong_Ini} in a weak sense. Here $\mathcal{V}_0:={H}_0^1(\Omega)^d$, $\mathcal{Q}_0:=L^2(\Omega)/\mathbb{R}$ and the form $B({\a};[\u,p],(\v,q))$ is defined as 
+satisfying the initial condition \Eq{NS_strong_Ini} in a weak sense. Here the form $B({\a};[\u,p],(\v,q))$ is defined as 
 \begin{equation}
 \label{eq-C2_bilinear}
 B(\a;[\u,p],[\v,q]):=\nu(\nabla\u,\nabla\v)+b(\a,\u,\v)-(p,\nabla\cdot\v)+(q,\nabla\cdot\u)
@@ -37,6 +37,17 @@ where the trilinear weak form of the convective term $b(\u,\v,\w)$ can be writte
 &b(\u,\v,\mathbf{w})=(\u\cdot\nabla\v,\mathbf{w})+\frac{1}{2}(\v\cdot\mathbf{w},\nabla\cdot\u)&&\mbox{Skew-symmetric (type 2)}.
 \end{align}
 Note that in the trilinear weak forms \Eq{C2_b_noskew}-\Eq{C2_b_skew2} the boundary integral terms that arise from the integration by parts have been neglected. This assumtion is valid when strong Dirichlet boundary conditions are considered over all the boundary. Despite of that, this equivalence is lost at the discrete level. The skew-symmetric form (type 2) (\ref{eq-C4_b_skew2}) is very common when numerical analysis are presented \cite{Badia2013Convergence,Burman2009,guermond_faedogalerkin_2007} but the skew-symmetric form (type 2) (\ref{eq-C4_b_skew1}) has important advantages when the first argument is a discontinuous function, as will be shown in forthcomming chapters.
+
+The well-posedness of problem \Eq{C2_NS_weak} relies on the called LBB condition, which stands for the name of the authors that developed works related to that condition. See the works by Ladyzhenskaya \cite{Ladyzhenskaya}, Babu\^{s}ka \cite{babuska} and brezzi \cite{brezzi}. The LBB condition is also called \textit{inf-sup} condition and reads as follows: there exist a positive constant $ \beta $ such that,
+\begin{equation}
+\label{eq-C2_lbb}
+\inf_{q\in\mathcal{Q}}\sup_{\v\in\mathcal{V}_0}\frac{(\nabla\cdot\v,q)}{\|\v\|_\mathcal{V}\|q\|_{\mathcal{Q}/\ker A^t}}\ge\beta>0,
+\end{equation}
+being $ A^t $ the adjoint of the operator defined as 
+\begin{equation}
+\label{eq-C2_lbb_operator}
+A: \mathcal{V}_0\rightarrow\mathcal{Q'} \quad| \quad\langle A(\v),a\rangle_{\mathcal{Q'}\times\mathcal{Q}}=(\nabla\cdot\v,q)\quad\quad\forall\v\in\mathcal{V}_0,\quad\forall q\in\mathcal{Q}
+\end{equation}
 
 \subsection{The Finite Element method}
 \label{subsec-variational_finite_element}
@@ -61,12 +72,25 @@ Then the finite element spaces for the velocity and pressure fields equivalent t
 \label{eq-C2_varia_NS_v0h_space}
 &\mathcal{V}_{0,h}:=\left\{\v_h\in\mathcal{V}_h:\left.\v_h\right|_{\partial K}=0\right\},\\
 \label{eq-C2_varia_NS_qh_space}
-&\mathcal{Q}:=\left\{\mathcal{C}^0(\Omega)\cap\Lbf^2(\Omega)/\mathbb{R}:\left.q_h\right|_K=\tilde{q}\circ F_K^{-1},\ \tilde{q}\in Q_{kq},\ K\in\mathcal{T}_h \right\}.
+&\mathcal{Q}_h:=\left\{\mathcal{C}^0(\Omega)\cap\Lbf^2(\Omega)/\mathbb{R}:\left.q_h\right|_K=\tilde{q}\circ F_K^{-1},\ \tilde{q}\in Q_{kq},\ K\in\mathcal{T}_h \right\}.
 \end{align}
 Where $ k_v $ and $ k_q $, not necessarily equal, are the degree of the polynomials used to define the interpolation space for the velocity and pressure fields, respectively. In what follows, the subindex $ h $ will denote functions related to the FE space. Note that in this work both velocity and pressure field spaces, $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, are considered to be made by continuous funcitons in the same partition of the domain, $ \mathcal{T}_h $.
 
-... regularity ...
-
 \subsection{Semi-discrete formulation}
 \label{subsec-variational_semidiscrete}
+Let us consider a FE partition $ \mathcal{T}_h $ of the domain $ \Omega $ from which we can construct conforming finite dimensional spaces for the velocity $\mathcal{V}_{g,h}\subset\mathcal{V}_g$, and for the pressure $ \mathcal{Q}_{0,h}\subset\mathcal{Q}_0 $. The spaces $\mathcal{V}_{g,h}$ and $ \mathcal{Q}_{0,h} $ are the ones defined in the previous section, equations \Eq{C2_varia_NS_vgh_space} and \Eq{C2_varia_NS_qh_space} respectively.
+
+The Galerkin FE approximation of \Eq{C2_NS_weak} consists in finding $[\u_h,p_h]\in {L}^2(0,T;\mathcal{V}_{g,h})\times {\cal D}'(0,T;\mathcal{Q}_h)$ such that
+\begin{equation}
+\label{eq-C2_NS_weak_discrete}
+(\partial_t\u_h,\v_h) + B(\u_h;[\u_h,p_h],[\v_h,q_h]) = \left<\f,\v_h\right> 
+\quad\quad\forall\v_h\in\mathcal{V}_{0,h},\quad\forall q_h\in\mathcal{Q}_h,
+\end{equation}
+
+Problem \Eq{C2_NS_weak_discrete} is well posed if the discrete \textit{inf-sup} condition equivalent to \Eq{C2_lbb} is satisfied. The discrete version reads: there exist a positive constant $ \beta_d $, independent of $ h $, such that,
+\begin{equation}
+\label{eq-C2_lbb_discrete}
+\inf_{q_h\in\mathcal{Q}_h}\sup_{\v_h\in\mathcal{V}_{0,h}} \frac{(\nabla\cdot\v_h,q_h)}{\|\v_h\|_{\mathcal{V}_h}\|q\|_{\mathcal{Q}_h/\ker A_h^t}}\ge\beta_d>0,
+\end{equation}
+with $ A_h $ the equivalent operator to the one defined in \Eq{C2_lbb_operator}.
 

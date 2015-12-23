@@ -1,6 +1,7 @@
-\chapter{Residual-based Variational Multiscale Methods for Large Eddy Simulations}
+\chapter{Residual-based VMS methods}
 \label{chap-Rb_VMS}
 \section{Introduction}
+\label{sec-C4_introduction}
 
 LES techniques for the numerical simulation of turbulent flows \cite{Sagaut2006} are based on a scale separation that permits to reduce the computational cost with respect to direct numerical simulation (DNS). Such scale separation is traditionally achieved by filtering the original Navier-Stokes equations, which leads to an extra forcing term defined by a physical (functional or structural) model. This widely used approach is usually referred to as explicit LES \cite{Sagaut2006}.
 
@@ -40,8 +41,8 @@ The chapter is organized as follows. In Section \ref{sec-C4_formulation} we pres
 
 %Other remarks will be made in the present paper concerning on the importance of a correct formulation of the VMS methods. That will include some analysis on the definition of the nonlinear convective term, the nonlinearity of the advection velocity, the correct definition of the projection when using orthogonal subscales or the importance of the algorithmic constants in the stabilization parameters.
 
-\section{Formulation}
-\label{sec-C4_formulation}
+\section{Problem statement}
+\label{sec-C4_prob_statement}
 \subsection{The Galerkin semi-discrete problem}
 %\subsection{Navier-Stokes problem}
 \label{subsec-C4_NS_formulation}
@@ -438,6 +439,7 @@ where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using (\ref{eq-C4
  Note that when convergence of the nonlinear iteration is achieved, (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) and (\ref{eq-C4_dyn_proj}) guarantee that $(\v_h,\tilde{\mathbf{u}}^{n}) = 0$ for any $\v_h\in\mathcal{V}_{0,h}$.
 
 \section{Numerical experiments}
+\label{sec-C4_experiments}
 \subsection{Decay of homogeneous isotropic turbulence}
 \label{subsec-C4_DHIT}
 This problem, one of the most used benchmarks to test LES models, consists of analyzing the statistics of the turbulent flow in a 3D box of size $\Omega=(0,2\pi)\times(0,2\pi)\times(0,2\pi)$ with periodic boundary conditions in all directions, which is started with a field having a predetermined energy spectrum. A detailed description of the computational domain, initial conditions, and problem setting is given in \cite{mansour_decay_1994}. Furthermore, the main characteristics of this test are stated in Section \ref{subsec-DHIT}.,
@@ -560,7 +562,7 @@ This fact implies that the method is less dissipative and the energy decays at a
 \label{subsubsec-C4_comp_cost_DHIT}
 The actual implementation in the parallel FE multiphysics code FEMPAR \cite{Badia2013a} is based on a classical domain decomposition strategy. At each nonlinear iteration the monolithic linear system is solved using a classical GMRES method applied to the Schur complement over the interfaces of the subdomains. This iterative procedure is preconditioned using a balancing Neumann-Neumann method applied to the monolithic system. The cost of each iteration is that of local Dirichlet solves for the Schur complement application and a local Neumann solve and a global solve for the preconditioner application (see \cite{mandel_balancing_1993,dohrmann_preconditioner_2003,Badia2013}). All local systems are solved using the sparse direct solvers in PARDISO library \cite{Schenk2004,Schenk2006}.
 
-An important issue when comparing different computational methods is their corresponding computational cost. In order to characterize the performance of the different VMS methods introduced in Section \ref{sec-C4_formulation},  we analyze  some quantities that define the computational cost of each method, viz. nonlinear iterations, iterative solver iterations, and the adaptive time step evolution.
+An important issue when comparing different computational methods is their corresponding computational cost. In order to characterize the performance of the different VMS methods introduced in Section \ref{sec-C4_prob_statement},  we analyze  some quantities that define the computational cost of each method, viz. nonlinear iterations, iterative solver iterations, and the adaptive time step evolution.
 
 %All cases compared here have been solved using a $32^3$ linear hexahedral element mesh. This discretization is very coarse and it allows us to stress the differences between the proposed methods. In fact, due to this discretization, the linear and static ASGS case (Sta-Lin-ASGS) and the dynamic and linear ASGS case (Dyn-Lin-ASGS) do not converge at $t=0.0$ and  $t=0.123$, respectively; the nonlinear iterations diverge even reducing the time step size. Anyway, all the methods converge as $h\rightarrow0$.
 
@@ -1042,7 +1044,7 @@ scales with $\delta t$, as discussed in Section (\ref{sec-C4_discrete}). {\it Ho
 \end{itemize}
 %The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-C4_TCF}.
 
-Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-C4_formulation}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{sec-C4_small_time_step}. 
+Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-C4_prob_statement}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{sec-C4_small_time_step}. 
 The behavior of all the methods for the TCF test with $\delta t=0.002$ is summarized in Table \ref{table:small_time_step_T}, where YES means that the simulation was successful, NO means that the simulation diverged and $\delta t\downarrow$ means that the simulation was successful only when the adaptive time step strategy described in Section \ref{subsubsec-C4_DHIT_setting} was used.
 
 %It is worth to point out that all these results have been obtained using the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy. %Either a conservative or non conservative form is usually employed mentioned references and none of this forms conserve energy. As we have shown in Section \ref{subsubsec-C4_ene_cons_DHIT} for the skew-symmetric \textit{type 2}, they could be productive. 

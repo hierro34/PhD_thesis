@@ -2,7 +2,7 @@
 \label{chap-SRK}
 
 \section{Introduction}
-\label{sec-C6_Intro}
+\label{sec-C6_introduction}
 
 Many problems in science and engineering can be simulated by incompressible flow solvers, e.g., flows around aircrafts during take-off and landing, cars, bridges, wind turbines, etc. Incompressible flows are also encountered when simulating liquid metal blankets in fusion reactors or blood flow in bio-mechanics. The increasing computer power of super-computers has motivated the interest in high-fidelity massively parallel predictive tools on unstructured meshes for this type of applications. Higher levels of accuracy in space can be based on refined meshes or higher-order approximations, being the use of hp-adaptive simulations the most refined approach so far.
 
@@ -22,13 +22,13 @@ A very accurate pressure is required in many applications, especially those invo
 In order to ease an effective preconditioning, we will favour SRK schemes that treat implicitly the viscous term, explicitly the convective terms, and segregated the pressure. The use of IMEX-SRK methods is very appealing for large-scale computations. At every stage, it only involves a vector-Laplacian (or elasticity-type) plus a mass matrix solver for the velocity and a discrete pressure Poisson solver. For this type of coercive and symmetric problems, we can make use of efficient and highly scalable domain decomposition or multigrid algorithms (see, e.g., \cite{art003}). Further, the set-up of these preconditioners can be kept on fixed meshes, reducing computational cost. 
 
 %Outline
-The statement of the incompressible Navier-Stokes equations is developed in Section \ref{sec-C6_NS}. In Section \ref{sec-C6_Half-IMEX-RK_NSI} the time integration through RK schemes is introduced, giving an overview of the HERK methods and developing the proposed SRK schemes. Four different tests are exposed in Section \ref{sec-C6_results}, where the application of SRK schemes is assessed for two different manufactured analytical solutions and laminar and turbulent flow tests. Finally, some conclusions are stated in Section \ref{sec-C6_conclusions}.
+The statement of the incompressible Navier-Stokes equations is developed in Section \ref{sec-C6_prob_statement}. In Section \ref{sec-C6_SRK_developement} the time integration through RK schemes is introduced, giving an overview of the HERK methods and developing the proposed SRK schemes. Four different tests are exposed in Section \ref{sec-C6_experiments}, where the application of SRK schemes is assessed for two different manufactured analytical solutions and laminar and turbulent flow tests. Finally, some conclusions are stated in Section \ref{sec-C6_conclusions}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Navier-Stokes equations}
-\label{sec-C6_NS}
+\section{Problem statement}
+\label{sec-C6_prob_statement}
 We start this section by briefly describing the Navier-Stokes problem, referring to Section XXX for a deep description of the problem statement.
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $(0,T]$ the time interval. The strong form of the incompressible Navier-Stokes problem consists of finding a velocity field $\u$ and a pressure $p$ such that 
 \begin{align}
@@ -88,10 +88,10 @@ Replacing this expression in (\ref{eq-C6_NS_galerkin_mat1}), we obtain an equati
 $\I$ being the identity matrix. This system matrix stands for the projected Navier-Stokes system onto the discrete divergence-free space; we can easily chech that $\D\M^{-1}\Pi = 0$, readily leading to $\D \dot{\U} = \dot{\H}$. It is a system of ordinary differential equations (ODEs) and the use of RK methods is now straightforward. 
 
 \section{Runge-Kutta time integration}
-\label{sec-C6_Half-IMEX-RK_NSI}
+\label{sec-C6_SRK_developement}
 Let us consider now the Navier-Stokes semi-discrete problem given by equations (\ref{eq-C6_NS_galerkin_mat1})-(\ref{eq-C6_NS_galerkin_mat2}) or  (\ref{eq-C6_NS_galerkin_mat1})        and  (\ref{eq-C6_NS_galerkin_DM-1}). We consider a space discretization using mixed finite element spaces satisfying the inf-sup condition. This way, we avoid the use of stabilized formulations that involve extra terms that may couple pressure and velocity fields or fill the diagonal block related to the pressure, and change the mathematical structure of the system.
 
-Following the motivation in Section \ref{sec-C6_Intro}, we aim to develop RK schemes for the incompressible Navier-Stokes equations that will \emph{segregate the velocity and pressure computation while keeping high order of accuracy}. This splitting leads to the use of optimal solvers for the velocity block and the pressure block, respectively, without the need to develop efficient and scalable algorithms for indefinite systems. Further, when considering explicitly the convective term, we can maintain the same preconditioner at all stages (while the mesh does not change) and avoid the need to deal with non-symmetric (and possibly convection-dominant) systems. 
+Following the motivation in Section \ref{sec-C6_introduction}, we aim to develop RK schemes for the incompressible Navier-Stokes equations that will \emph{segregate the velocity and pressure computation while keeping high order of accuracy}. This splitting leads to the use of optimal solvers for the velocity block and the pressure block, respectively, without the need to develop efficient and scalable algorithms for indefinite systems. Further, when considering explicitly the convective term, we can maintain the same preconditioner at all stages (while the mesh does not change) and avoid the need to deal with non-symmetric (and possibly convection-dominant) systems. 
 
 A RK scheme consists of a multistage integration in which each stage is computed as a combination of the unknowns evaluated in other stages. This combination can give an implicit scheme or an explicit scheme, depending on the definition of the Butcher tableau. Implicit and explicit schemes can be combined, leading to IMEX schemes, i.e., different Butcher tableaus are used for the implicit and explicit terms (see \ref{appendix:Butcher_tab}). System (\ref{eq-C6_NS_galerkin_mat1})-(\ref{eq-C6_NS_galerkin_mat2}) can be compactly written as
 \begin{equation}
@@ -233,7 +233,7 @@ When $\H(t)$ is not a $p$-th polynomial, the method still shows the right conver
 {
 \begin{remark}
 \label{remark3}
-The previous results are obtained assuming that the linear systems are being solved with exact arithmetic. Since the divergence-free condition is enforced in an incremental way, there is a potential loss of accuracy in the constraint equation due to the accumulated error of the linear system for long-term simulations (see Section \ref{sec-C6_results}). In any case, it is easy to correct it by projecting the velocity field when the divergence residual is larger than some threshold. Given a velocity field $\U$, the projected discrete divergence-free velocity field $\tilde \U$ is computed as follows:
+The previous results are obtained assuming that the linear systems are being solved with exact arithmetic. Since the divergence-free condition is enforced in an incremental way, there is a potential loss of accuracy in the constraint equation due to the accumulated error of the linear system for long-term simulations (see Section \ref{sec-C6_experiments}). In any case, it is easy to correct it by projecting the velocity field when the divergence residual is larger than some threshold. Given a velocity field $\U$, the projected discrete divergence-free velocity field $\tilde \U$ is computed as follows:
 $$
 F \tilde \U + G \phi = F \U, \qquad \D \tilde \U = 0,
 $$
@@ -282,7 +282,7 @@ where the constant $c$ certainly depends on the spatial mesh and the modulus of 
 \label{subsec-C6_order_reduction}
 It is known that RK approximation for PDEs suffer from order reduction phenomena for schemes of order greater than two. Many works have been devoted to this issue, e.g., \cite{sanz-serna_convergence_1986,verwer_j._g._convergence_1986}, where they prove that only under certain conditions the order in time of the fully discrete scheme equals the conventional order of the RK formula. However, the authors of \cite{sanz-serna_convergence_1986,verwer_j._g._convergence_1986} say that these conditions are not natural and, in general, the order in time for schemes of conventional order greater than two will be strictly smaller. In particular, \cite{verwer_j._g._convergence_1986} stated that for DIRK schemes of third and fourth-order, in case of inhomogeneous and time dependent boundary conditions, the actual order of these methods is 2.
 
-Boscarino in \cite{boscarino_accurate_2009} derives a third-order IMEX RK method for stiff problems that \emph{does not suffer from the order reduction phenomena}. It is stated in this work that most of IMEX RK schemes of order greater than two suffer from order reduction in the stiff regime. The important point here is that for convection-diffusion problems the semi-discrete system becomes stiffer when the spatial mesh is refined. Then, the order reduction phenomena becomes relevant when we use high-order time integrators in fine spatial meshes. This scheme is included in \ref{appendix:Butcher_tab}, denoted by \textit{(5-3)}, and tested in section \ref{sec-C6_results}.
+Boscarino in \cite{boscarino_accurate_2009} derives a third-order IMEX RK method for stiff problems that \emph{does not suffer from the order reduction phenomena}. It is stated in this work that most of IMEX RK schemes of order greater than two suffer from order reduction in the stiff regime. The important point here is that for convection-diffusion problems the semi-discrete system becomes stiffer when the spatial mesh is refined. Then, the order reduction phenomena becomes relevant when we use high-order time integrators in fine spatial meshes. This scheme is included in \ref{appendix:Butcher_tab}, denoted by \textit{(5-3)}, and tested in section \ref{sec-C6_experiments}.
 
 %\subsection{Analogies with other time integration schemes}
 %\subsubsection{Backward-Euler with pressure correction}
@@ -290,7 +290,7 @@ Boscarino in \cite{boscarino_accurate_2009} derives a third-order IMEX RK method
 
 
 \section{Numerical experiments}
-\label{sec-C6_results}
+\label{sec-C6_experiments}
 In this section we aim to see the performance of the SRK methods proposed previously with different test cases. We start with an analytical manufactured solution that belongs to the finite element space, so we do not have any spatial error. The next test case is the laminar flow around a cylinder, a widely used benchmark for laminar flows. Finally, we test a turbulent case, the also widely used Taylor-Green vortex flow.
 
 All the different schemes have been implemented in the FEMPAR (Finite Element Multiphysics and massively PARallel)  numerical software. FEMPAR is an open source in-house developed, parallel hybrid OpenMP/MPI, object-oriented (OO) framework which, among other features, provides the basic tools for the efficient  parallel distributed-memory implementation  of substructuring domain decomposition solvers~\cite{badia_implementation_2013,art003}.
@@ -478,7 +478,7 @@ When we select a smaller ratio of $\delta t/h$, see Fig. \ref{fig:beltrami_0.002
 
 \subsection{2D Laminar flow around a cylinder}
 \label{subsec-C6_cylinder}
-Once studied the behaviour of the different methods proposed in Section \ref{sec-C6_Half-IMEX-RK_NSI} for a manufactured analytical solution, we study a widely used laminar flow benchmark which is the flow around a cylinder for a low Reynolds number $Re=100$. A detailed overview of benchmark computations of laminar flow around a cylinder are given in \cite{schafer_benchmark_1996}. The test performed in the current work is called \textit{2D-2} in that paper and is defined as shown in Fig. \ref{fig:Cyl_geom}. It basically consists in a rectangular channel with a cylinder located near the inflow boundary. A non-slip condition is imposed in the cylinder wall and the channel walls that are perpendicular to the flow direction ($x$).
+Once studied the behaviour of the different methods proposed in Section \ref{sec-C6_SRK_developement} for a manufactured analytical solution, we study a widely used laminar flow benchmark which is the flow around a cylinder for a low Reynolds number $Re=100$. A detailed overview of benchmark computations of laminar flow around a cylinder are given in \cite{schafer_benchmark_1996}. The test performed in the current work is called \textit{2D-2} in that paper and is defined as shown in Fig. \ref{fig:Cyl_geom}. It basically consists in a rectangular channel with a cylinder located near the inflow boundary. A non-slip condition is imposed in the cylinder wall and the channel walls that are perpendicular to the flow direction ($x$).
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{Figures/Chapter6/geom_2D} 

@@ -129,49 +129,56 @@ There are many hig-order time integration schemes that can be used to solve the 
 The definition of algorithms \textit{order-agnostic} in time is also an objective. In this direction, the usage of Runge-Kutta schemes is appropriate since a parametrizable algorithm can be defined. Then, the order of the time integration scheme is given by the values of such parameters.
 
 \item {\bf Adaptive time integration schemes}\\
+The fluid flow characteristics vary in space, but also in time. That means that a fluid flow can be transformed from laminar to turbulent under ceritain circumstances. Then, for a continuously evolving fluid flow, it is natural to consider continuously evolving algorithms that can accomodate the flow characteristics evolution. 
 
-\item {\bf Segregation of velocity-pressure}\\
+When talking about the time integration, adaptive time integration schemes may be considered if one wants to adapt the time integration algorithm to the flow evolution. The use of Runge-Kutta based time integration schemes allow an easy implementation of adaptive time stepping techniques, and it is one of the reasons why this kind of methods will be considered in this thesis.
 
-\item {\bf Large scale FE solvers}\\
+\item {\bf Segregation of velocity and pressure fields}\\
+The block-segregation of velocity and pressure fields can be achieved by the use of the popular pressure-correction or fractional-step methods. These methods, as they are understood as a solver instead of preconditioner, introduce an additional splitting error.
 
-\item {\bf Scalable solvers}\\
+One of the goals of this thesis is to define a method that segregates velocity and pressure fields at the time discretization level, without introducing splitting errors.
+
+\item {\bf Large scale and scalable FE solvers}\\
+As stated in the motivation, the definition and implementation of algorithms able to scale in extremely large computing environments is one of the requeriments needed to have an exascale computing system. That means to build scalable solvers that guarantee that the computational cost will not increase when more computational resources are used.
+
+In this thesis, the application of FE solvers able to reach extreme scalability is one of the main interests. In particular, the code that will be used by the thesis development is designed to be used in distributed computers and it incorporates DD methods optimal for large scale problems that can be combined in a natural way with block preconditioners.
+
+The solvers used by the team in which this thesis has been developed combine robust and scalable solvers for symmetric positive definite problems and block-preconditioning. This approach allows to deal with indefinite problems like the Stokes system and fluids at low Reynolds numbers. However, there is still the challenge to scale up nonsymmetric and indefinite problems. This issue will be treated by the use of segregated velocity-pressure methods that lead to symmetric positive definite systems to be solved.
+
+When constructing block preconditioners we rely on the fact that the multifield problem (in the sense of having velocities and pressures) can be rewritten as a block system, i. e., one block for each unknown of the global problem. The non-diagonal blocks are those which couples the different subproblems. Here, the key decision is how to reorganize the system and subsequently how to define a good approximation to the original matrix, which will be used as a preconditioner. These preconditioners must be spectrally equivalent to the original matrix of the system of equations.
 
 \item {\bf Application}\\
+During the development of this thesis, the real life applications have been considered as a motivation of all the improvements that this work provides. All the previous goals are thought to be necessary to build algorithms able to solve problems faster and more accurately.
+
+Although some of the benchmarks used in this thesis can represent a real-life problem, we aim to apply all the techniques developed in this disertation to a problem with interest on the industry. The turbulent flow around an airfoil could be a clear example of a problem that is being used in the areospatial industry.
+
+Moreover, all the advances induced by this work have been implemented in the FEMPAR code, and they will remain there. As FEMPAR is an open source code, all the code developed to achive the thesis goals will be available for the society in general.
+
+
 \end{itemize}
 
-
-
-
-
-The TBMs that wrap the fusion reactor core are a fundamental part of it. These modules not only are the responsible of the shielding that absorb the neutrons that emerge from the plasma, but also are the place where the Tritium is extracted. Tritium is needed to keep the plasma and it can not be found in nature, so its extraction is a key step. One of its design consists on a micro-channel system full of  liquid metal. Because of the magnetic forces that confine the plasma inside the reactor core, this liquid is subjected to the magnetohydrodynamics (MHD) equations.
-
-As said before, these components can not be tested in ITER before 2027. When this occurs, its configuration will not be the same that the needed for the DEMO reactor. Then, the tests done in ITER reactor will mainly be used as a validation of the numerical simulation codes that will be used in the final design of the TBMs for the DEMO reactor.
-
-These conditioning aspects imply that the research on numerical simulations able to reproduce such processes are a key step in the development of the nuclear fusion energy. In this thesis project we will continue the work of the COMFUS group in this line.
-
-The liquid metals are electrical conductors that are subjected to the MHD physical laws, which couple the Navier-Stokes equations with Maxwell equations. These flows have a particular behaviour due to the magnetic effects. For a low magnetic Reynolds, the energy spectra is different of the defined by the classical flow theory. For this reason, it is necessary to \emph{develop numerical models able to simulate the quasi2D turbulence} that appears in these processes.
-
-The stabilized finite element formulation for incompressible MHD, tested in laminar regime, that will be used in this thesis has been proposed recently by the group where this thesis is developed. The main novelty with respect to existent formulations is the use of the same interpolation for the fluid-dynamic and magnetic problems, keeping the optimal convergence. At this point, we want to explore its extension to turbulent cases by the use of Variational MultiScale (VMS) methods. These methods arise as a numerical stabilization techniques, but also model successfully the classical flow turbulence since they introduce numerical dissipation efficiently. Therefore, we firstly will \emph{test these methods in classical turbulent flows} to verify their applicability to a more complex turbulent flows. From this point, we want to apply the same methods to simulate the liquid metal problem, which is influenced by the magnetic field, and reproduce accurately the quasi2D turbulence.
-
-The applications we have in mind are extremely complex and require large computational resources. The largest supercomputers are distributed-memory machines with thousands of cores. It is a very hard task to efficiently run simulation codes on these platforms. It requires excellent implementations and robust solvers, based on efficient preconditioners and Krylov solvers. The COMFUS team is actively working in this area, and the FEMPAR code developed by the team has already proved excellent scalability results up to 30,000 cores. The solvers used by the team combine robust and scalable solvers for symmetric positive definite problems and block-preconditioning. This approach allows to deal with indefinite problems like the Stokes system and fluids at low Reynolds numbers. However, there is still the challenge to scale up nonsymmetric and indefinite problems. In order to do so, we are forced to implement and \emph{develop novel techniques for nonsymmetric problems}.
-
-The team has been actively working on new block preconditioners for inductionless and resistive MHD systems. These preconditioners, based on inexact-block LU factorizations, are used in combination with Krylov methods. Since these preconditioners are computationally intensive, it would be very appealing to use them as solvers instead of preconditioners. This approach, in the frame of resistive MHD has been exploited in \cite{badia_unconditionally_2012}, where the $\theta$ scheme was used for time integration. We plan to develop novel operator splitting methods based on implicit-explicit Runge-Kutta schemes. In particular, we want to \emph{design schemes that split velocity-pressure computations}.
-
-Finally and related to the use of VMS methods, we want to \emph{test the advantages of the symmetric projection stabilization methods} with respect to classical VMS formulations.
-%Besides to use these block preconditioners to solve the multiphysic problems, this thesis proposal also expect to use the block preconditioners structure to develop new time integrators which decouples the different physical problem variables. The idea is to take advantage of the Implicit-Explicit (IMEX) time integration technique using a Runge-Kutta scheme and operate with the different blocks to decouple the different physical fields that appears into the problem.
-%
-%\subsection{Large scale computation}
-%As it has been said before, the physical processes that takes place in a nuclear fusion reactor lead to complex systems of equations. Besides the coupling between different physical problems, there also appear several length and time scales, resulting in a multi-scale problems. The way to solve accurately problems with large time scales without having numerical inestabilities and without using a small really time step, is by implicit methods. However, these methods require to solve nonlinear systems at each time-step. Then, there arise the need to use scalable solvers for massivelly parallel computers.
-%
-%It has to be said that the COMFUS group has an extensive experience in this topic. The code that will be used by the thesis development is designed to be used in distributed computers and it incorporates domain decomposition (DD) methods optimal for large scale problems that can be combined in a natural way with block preconditioners. The scalability of these methods has been proved to be excellent until 4096 CPUs {\color{red}(o mes??)}.
-%
-%To this end, this thesis project considers:
-%\begin{itemize}
-%\item {\bf Block preconditioners implementation and computational aspects}. As was said before, the multiphysical problem can be rewritten as a block system, i. e., one block for each unknown of the global problem. The non-diagonal blocks are those which couples the different subproblems. Here, the key decision is how to reorganize the system and subsequently how to define a good approximation to the original matrix, which will be used as a preconditioner. These preconditioners must be spectrally equivalent to the original matrix of the system of equations.
-%
-%{\color{red}... (Santi, queda alguna cosa a fer en aquest apartat? Em sembla que tot el que vam posar a la proposta de la FPU es lo que ja heu fet amb l'Alberto i el Ramon)}
-%
-%\item {\bf Domain Decomposition solvers for convection dominated flows}. {\color{red} ... (Aquest apartat no hi era a la proposta FPU, perÃ² l'he posat per mencionar lo del BDDC. Alguna idea per posar aqui?)}
-%\end{itemize}
-
 \section{Document structure}
+
+This thesis is organized as follows:
+
+In this first chapter (\Chap{Introduction}) we have described the main motivations in which this work has been based, as well as the main specific objectives that have been followed.
+
+In \Chap{Preliminaries}, a general introduction to the FE framework is done. We begin with the description of the governing equations of the fluid flows in \Sec{C2_gov_eq}, where some details on the mathematical description of the physical phenomena of the fluid motion is given. In \Sec{C2_functional_spaces} we introduce some notation about functional spaces that will be used along all the thesis. The variational formulation of the problem is given in \Sec{C2_variational}, where we define the variational form of the problem at the continuous and discrete level and we define the concept of FE. After that, in \Sec{C2_vms} we describe the VMS method, which will be referenced by the core chapters of this thesis. In \Sec{C2_time_integration} a definition of the time integration schemes that are used in the forthcoming chapters is given. To finalize \Chap{Preliminaries}, a short summary of what is contained in that chapter is given in \Sec{C2_conclusions}.
+
+An introduction to the turbulent phenomena is given in \Chap{Turbulence}. A very basic introduction to the physical phenomena that lie behind turbulent flows is given in \Sec{C3_introduction}. More details about isotropic turbulence are given in \Sec{C3_isotropic_turbulence}, including some benchmarks that are used in the core chapters of this thesis. The specific details about wall-bounded turbulent flows are defined in \Sec{C3_wall_bounded}. Finally, a summary of this chapter is given in \Sec{C3_conclusions}.
+
+The assessment of some RB-VMS methods for incompressible turbulent flows is done in \Chap{Rb_VMS}. First, an introduction to the chapter is given in \Sec{C4_introduction}, where a description of the state of the art is presented. The mathematical formulation of the problem is defined in \Sec{C4_prob_statement}. Then, some energy balance statements are analysed in \Sec{C4_energy}, and the final discrete problem to be solved is described in \Sec{C4_discrete}. The results of the numerical experiments for different turbulent benchmarks are given in \Sec{C4_experiments}. Finally, the main contributions of this chapter are summarized in \Sec{C4_conclusions}.
+
+In \Chap{TBT_OSS} we propose a mixed FE formulation with convection stabilization for the simulation of turbulent incompressible flows. An introduction to the state of the art is done in \Sec{C5_introduction}. The problem statement is defined in \Sec{C5_prob_statement}, with a brief description of the Navier-Stokes equations and its weak formulation. After that, description of the VMS framework is introduced in \Sec{C5_VMS_framework}, where apart what we have defined in \Sec{C2_vms}, the formulation of this method for mixed FE methods is analysed. A block-preconditioning technique for the monolithic problem is defined in \Sec{C5_block_precond}. The numerical experiments for different turbulent benchmarks are presented in \Sec{C5_experiments}. To sum up the chapter, some conclusions are stated in \Sec{C5_conclusions}.
+
+The development of novel Runge-Kutta based algorithms with velocity and presure segregation is described in \Chap{SRK}. We first introduce the state of the art for this chapter in \Sec{C6_introduction}. The problem is briefly stated in \Sec{C6_prob_statement}. After that, a detailed description of the segregated Runge-Kutta time integration schemes is given in \Sec{C6_SRK_developement}. Some numerical experiments are carried out in \Sec{C6_experiments} and the conclusions are stated in \Sec{C6_conclusions}.
+
+Chapter 7
+
+Chapter 8
+
+Chapter 9, conclusions
+
+Apendices
+
+In order to improve the readability of this document, most of the chapters are self-contained. That means that some notation and definitions can be repeated in several parts of the thesis.
