@@ -105,10 +105,10 @@ From \Eq{momentum_x} we see that the turbulent flow have additional stresses tha
 Then, we can rewrite \Eq{momentum_x} in a more compact way:
 \begin{equation}
 \label{eq-momentum_x_reynolds}
-\frac{\partial \bar{u}_x}{\partial t}+(\bar{\mathbf{u}}\cdot\nabla)\bar{u}_x=-\frac{\partial\bar{p}}{\partial x}+\nu\nabla^2\bar{u}_x+(\nabla\cdot\T)_x,
+\frac{\partial \bar{u}_x}{\partial t}+(\bar{\mathbf{u}}\cdot\nabla)\bar{u}_x=-\frac{\partial\bar{p}}{\partial x}+\nu\nabla^2\bar{u}_x+(\nabla\cdot\Tbf)_x,
 \end{equation}
 being
-$$\T=\left[\begin{array}{ccc}
+$$\Tbf=\left[\begin{array}{ccc}
 \sigma_x^R&\tau_{xy}^R&\tau_{xz}^R\\
 \tau_{yx}^R&\sigma_y^R&\tau_{yz}^R\\
 \tau_{zx}^R&\tau_{zy}^R&\sigma_z^R
@@ -126,7 +126,7 @@ It can be shown that this system of equations is not closed, in the sense that, 
 Leonard (1974) introduced a decomposition of $\tau_{ij}^R$ into three component stresses.
 $$\tau_{ij}^R=L_{ij}+C_{ij}+R_{ij},$$
 where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}_j$ are the Leonard stresses. The cross stresses are $C_{ij}=\overline{\overline{u}_iu_j'}+\overline{u_i'\overline{u}_j}$ and finally, $R_{ij}=\overline{u_i'u_j'}$ are the subgrid scale (SGS) Reynolds stresses. Decomposing Reynolds stresses into Leonard, cross and SGS Reynolds stresses we can reformulate \Eq{momentum} as
-$$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\L+\nabla\cdot\C+\nabla\cdot\Rbb$$
+$$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\Lbf+\nabla\cdot\Cbf+\nabla\cdot\Rbf$$
 
 \subsection{Definition of some turbulent quantities}
 Turbulent flows are considered to be cahotic since, superimposed on the mean flow patern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremly fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow patern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
@@ -247,6 +247,17 @@ which means that the nonlinear interactions transfer energy between different wa
 
 \subsubsection{Kolmogorov spectrum}
 \label{subsubsec-Kolmogorov_spectrum}
+In order to answer some key questions about turbulent flows, like \textit{what is the size of the smallest eddies that are responsible for dissipating the energy?}, Kolmogorov stated three hypotheses in \cite{kolmogorov_1941}. Let us remind these hypoteses:
+\begin{itemize}
+\item\keyword{Local isotropy.} At sufficiently high Reynolds number, the small-scale turbulent motions are statistically isotropic.
+\item\keyword{First similarity hypothesis.} For the locally isotropic turbulence the statistics of the small-scale motions are uniquely determined by the quantities $ \nu $ and $ \varepsilon $.
+\item\keyword{Second similarity hypothesis.} In every turbulent flow at sufficiently high Reynolds number, the statistics of the motions of scale $ k $ in the range $ k_\eta\ge k\ge k_l $ have a universal form that is uniquely determined by $ \varepsilon $, independent of $ \nu $.
+\end{itemize}
+
+It can be seen that the contribution to the dissipation rate from eddies in the range $ (k_a,k_b) $ is
+$$ \varepsilon_{(k_a,k_b)} = \int_{k_a}^{k_b}2\nu k^2E(k)dk.$$
+The energy spectrum $ E(k) $ can be non-dimensionalized using $ \varepsilon $ and $ k $, leading to the following relation
+$$ E(k) = \varepsilon^{2/3}k^{-5/3}\Phi(k\eta), $$ where $ \Phi(k\eta) $ is the compensated Kolmogorov spectrum function. According to the second similarity hypothesis, at the inertial subrange ($ k_\eta\ge k\ge k_l $), the function $ \Phi $ becomes independent of $ k $ and $ \eta $, tending to a constant $ C $. Then, in the inertial subrange, the energy spectrum function is
 \begin{equation}
 \label{eq-kolmogorov_spectrum}
 E(k)\sim C\varepsilon^{2/3}k^{-5/3}.
@@ -468,7 +479,27 @@ whith $ \kappa=0.41 $ and $ B=5.2 $.
 
 \subsection{Benchmark tests}
 \subsubsection{Turbulent Channel Flow}
-\subsubsection{Turbulent Flow around an airfoil}
+According to \cite{pope_turbulent_2000}, most turbulent flows are bounded by one or more solid surfaces, giving wall-bounded flows. There are several turbulent wall-bounded tests, e.g. fully developed channel flow, fully developed pipe flow and the flat-plate boundary layer. We will test just one of them, in particular the fully developed Turbulent Channel Flow (TCF), which is a widely used wall-bounded turbulent benchmark. 
+
+An evidence of the popularity of this test is the large amount of experimental and computational works done about it. This test consists of a flux that flows between two parallel walls driven by an imposed pressure gradient, where the mean velocity vector is parallel to the wall. The most important issues to consider when characterising the flow are the mean velocity profiles, velocity fluctuations and the shear stress carried by the fluid on the wall. It has to be noticed that we will concern only on the fully developed flow, which means that the turbulent regime has been reached at the time when we start our flow characterization.
+
+In this test, like in most of turbulent flow tests, the Reynolds number has an important role when defining the test parameters. In particular, in the turbulent channel flow test, the most characteristic parameter is the Reynolds number based on the wall shear velocity, $Re_\tau$. In the literature, there appear mostly three different values of this parameters: $Re_\tau=590$, $Re_\tau=395$  and $Re_\tau=180$, see \cite{bazilevs_variational_2007, Calderer2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}. We will restrict our work to $Re_\tau=180$ and $Re_\tau=395$ cases.
+
+We consider a computational domain defined by a box of length $(L_x\times L_y\times L_z)$, which depends on the Reynolds number. For ${\rm Re}_\tau=180$ the domain size is $(4\pi\delta\times 2\delta\times 4/3\pi\delta)$ while for  ${\rm Re}_\tau=395$ the size of the channel is $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called streamwise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the spanwise direction. In Fig. \ref{fig:Channel_geo} we show schematically the geometry of the computational domain for this test.
+
+\begin{figure}[h!]
+	\centering	
+	\includegraphics[width=0.5\textwidth]{Figures/Chapter3/channel_geom}
+	\caption{Channel computational domain.}
+	\label{fig:Channel_geo}
+\end{figure}
+
+In the wall-normal direction boundaries ($y=-\delta$ and $y=\delta$) we impose a non-slip condition. The streamwise and spanwise directions are assumed to be homogeneous, so we use periodic boundary conditions in these directions. According to Kim  \emph{et al.} \cite{kim_turbulence_1987}, the use of periodic boundary conditions in the homogeneous directions can be justified when the computational box is such that the largest eddies in the flow fit in the computational domain. This is the case considered here.
+%In \cite{kim_turbulence_1987} is shown the adequacy of this computational domain for a Reynolds number based on the wall shear velocity $Re_\tau=180$.
+
+We solve the problem using different mesh discretizations, all of them uniform in the homogeneous directions and refined near the walls in the wall-normal direction. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{Calderer2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
+$$y_i=\frac{\tanh\left(\gamma\left(\frac{2i}{np_y}-1\right)\right)}{\tanh(\gamma)},$$
+where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal direction. Here, $\gamma$ is  chosen to be equal to $2.75$ for both  ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$.  We refer the reader to \cite{Avila2014} for a complete study of the influence of the discretization in the results of the TCF.
 
 \section{Conclusions}
 \label{sec-C3_conclusions}
