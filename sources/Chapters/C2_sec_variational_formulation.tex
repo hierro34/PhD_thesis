@@ -38,7 +38,7 @@ where the trilinear weak form of the convective term $b(\u,\v,\w)$ can be writte
 \end{align}
 Note that in the trilinear weak forms \Eq{C2_b_noskew}-\Eq{C2_b_skew2} the boundary integral terms that arise from the integration by parts have been neglected. This assumtion is valid when strong Dirichlet boundary conditions are considered over all the boundary. Despite of that, this equivalence is lost at the discrete level. The skew-symmetric form (type 2) (\ref{eq-C4_b_skew2}) is very common when numerical analysis are presented \cite{Badia2013Convergence,Burman2009,guermond_faedogalerkin_2007} but the skew-symmetric form (type 2) (\ref{eq-C4_b_skew1}) has important advantages when the first argument is a discontinuous function, as will be shown in forthcomming chapters.
 
-The well-posedness of problem \Eq{C2_NS_weak} relies on the called LBB condition, which stands for the name of the authors that developed works related to that condition. See the works by Ladyzhenskaya \cite{Ladyzhenskaya}, Babu\^{s}ka \cite{babuska} and brezzi \cite{brezzi}. The LBB condition is also called \textit{inf-sup} condition and reads as follows: there exist a positive constant $ \beta $ such that,
+The well-posedness of problem \Eq{C2_NS_weak} relies on the called LBB condition, which stands for the name of the authors that developed works related to that condition. See the works by Ladyzhenskaya \cite{Ladyzhenskaya}, Babu\^{s}ka \cite{babuska} and Brezzi \cite{brezzi}. The LBB condition is also called \textit{inf-sup} condition and reads as follows: there exist a positive constant $ \beta $ such that,
 \begin{equation}
 \label{eq-C2_lbb}
 \inf_{q\in\mathcal{Q}}\sup_{\v\in\mathcal{V}_0}\frac{(\nabla\cdot\v,q)}{\|\v\|_\mathcal{V}\|q\|_{\mathcal{Q}/\ker A^t}}\ge\beta>0,
