@@ -35,7 +35,7 @@ Finally, we compare the results obtained using VMS models against those obtained
 %We do so comparing against other author results for the TGV test, using dynamic Smagorinsky and adaptive local deconvolution methods \cite{fauconnier_construction_2009,hickel_adaptive_2006}.
 %We do so using the Galerkin approximation of the Navier Stokes equations with a Taylor-Hood $Q$2/$Q$1 interpolation which satisfies the inf-sup condition, relying on the Smagorinsky term to stabilize convection as it is usually done in the LES community. 
 
-The chapter is organized as follows. In Section \ref{sec-C4_formulation} we present the VMS formulation, how to compute truly orthogonal subscales and the different models we aim at analyzing, whereas in Section \ref{sec-C4_energy} we discuss energy conservation statements and how they are influenced by the choice of the VMS method and the definition of the convective term. Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV},  \ref{sec-C4_TCF} are devoted to the numerical approximation of the DHIT, the TGV, and the TCF problems, respectively. Sections \ref{sec-C4_effect_const} and \ref{sec-C4_small_time_step} discuss the effect of the algorithmic constants on the results and the behavior of the different schemes in the small time step limit. Some remarks close the article in Section \ref{sec-C4_conclusions}.
+The chapter is organized as follows. In Section \ref{sec-C4_prob_statement} we present the VMS formulation, how to compute truly orthogonal subscales and the different models we aim at analyzing, whereas in Section \ref{sec-C4_energy} we discuss energy conservation statements and how they are influenced by the choice of the VMS method and the definition of the convective term. Sections \ref{subsec-C4_DHIT},  \ref{subsec-C4_TGV},  \ref{subsec-C4_TCF} are devoted to the numerical approximation of the DHIT, the TGV, and the TCF problems, respectively. Sections \ref{subsec-C4_effect_const} and \ref{subsec-C4_small_time_step} discuss the effect of the algorithmic constants on the results and the behavior of the different schemes in the small time step limit. Some remarks close the article in Section \ref{sec-C4_conclusions}.
 
 %We will not restrict our atention only in the physical point of view, but we also are interested in the numerical conclusions. For instance, we will evaluate the computational cost of the different methods. Another interesting analysis that has been carried out in this article is the stability for the small time-step limit. Gammitzer et al. \cite{gamnitzer_time-dependent_2010} studied the influence of introducing the dependency of the stabiliztion parameters on the time step, proposed by Bazilevs et al. \cite{bazilevs_variational_2007}, in order to avoid convergence problems at small time-steps.
 
@@ -46,7 +46,7 @@ The chapter is organized as follows. In Section \ref{sec-C4_formulation} we pres
 \subsection{The Galerkin semi-discrete problem}
 %\subsection{Navier-Stokes problem}
 \label{subsec-C4_NS_formulation}
-In order to improve the readability of this chapter we refresh the Navier-Stokes formulation that was already stated in Chapter \ref{chap-Preliminars}. 
+In order to improve the readability of this chapter we refresh the Navier-Stokes formulation that was already stated in \Chap{Preliminaries}. 
 
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $[0,T]$ the time interval. The strong form of the incompressible Navier-Stokes problem consists of finding the velocity field $\u$ and the pressure field $p$ such that 
 \begin{align}
@@ -101,21 +101,21 @@ The Galerkin FE approximation of (\ref{eq-C4_NS_weak}) consists in finding $[\u_
 
 \subsection{VMS framework}
 \label{subsec-C4_VMS_framework}
-As it was pointed out in Section \ref{sec-VMS_framework}, the Galerkin FE formulation \Eq{C4_NS_galerkin} suffers from numerical instabilities for high mesh Reynolds number problems, i.e., convection dominated flows. The discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure is also a problem that arise in the Galerkin FE formulation. The VMS method described in Section XXX overcomes these two inestabilities.
+As it was pointed out in \Sec{C2_vms}, the Galerkin FE formulation \Eq{C4_NS_galerkin} suffers from numerical instabilities for high mesh Reynolds number problems, i.e., convection dominated flows. The discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure is also a problem that arise in the Galerkin FE formulation. The VMS method described in \Sec{C2_vms} overcomes these two inestabilities.
 
 After the space splitting into the FE space and the supscale space $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. The VMS semi-discrete problem reads: find $[\u_h,p_h]\in {L}^2(0,T;\mathcal{V}_{0,h})\times {\cal D}'(0,T;\mathcal{Q}_{0,h})$ such that
 \begin{equation}
 \label{eq-C4_NS_discrete}
 (\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)+B(\a;[\u_h,p_h],[\v_h,q_h])+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>.
 \end{equation}
-Where $ \mathcal{L}_{\a}^*(\v_h,q_h) $ is the adjoint operator defined in \Eq{C2_vms_adjoint}. The fine scale problem is approximated by
+Where $ \mathcal{L}_{\a}^*(\v_h,q_h) $ is the adjoint operator defined in \Eq{C2_adjoint}. The fine scale problem is approximated by
 \begin{align}
 \label{eq-C4_velo_sgs}
 \partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u),\\
 \label{eq-C4_press_sgs}
 \tau_c^{-1}\tilde{p}=\mathcal{P}(R_p).
 \end{align}
-With $ \R_u $ the momentum equation residual \Eq{C2_vms_Ru}, $ R_p $ the continuity equation residual \Eq{C2_vms_Rp}. $ \tau_m $ and $ \tau_c $ are the momentum and continuity equations stabilization parameters, respectively, which definition is given by 
+With $ \R_u $ the momentum equation residual \Eq{C2_Ru}, $ R_p $ the continuity equation residual \Eq{C2_Rp}. $ \tau_m $ and $ \tau_c $ are the momentum and continuity equations stabilization parameters, respectively, which definition is given by 
 \begin{align}
 \label{eq-C4_tau_m}
 &\tau_m=\left(\frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}\right)^{-1},\\
@@ -123,7 +123,7 @@ With $ \R_u $ the momentum equation residual \Eq{C2_vms_Ru}, $ R_p $ the continu
 &\tau_c=\frac{h^2}{c_1\tau_m}.
 \end{align}
 
-The particular VMS method will result from the combination of the three particular ingredients discussed in Sections \ref{subsec-C2_vms_dyn}-\ref{subsec-C2_vms_oss}, the dynamics of the subscale velocity, the nonlinearity of the advection velocity and the definition of the projection.
+The particular VMS method will result from the combination of the three particular ingredients discussed in Sections \ref{subsec-C2_dyn}-\ref{subsec-C2_oss}, the dynamics of the subscale velocity, the nonlinearity of the advection velocity and the definition of the projection.
 
 \section{Energy balance statements}
 \label{sec-C4_energy}
@@ -212,7 +212,7 @@ Let us note the presence of $b(\a,\u_h,\u_h)$, which is zero only when the skew-
 
 \subsection{Static subscales} 
 
-In this case the energy balance for the subscale is meaningless because there are explicit expressions for the subscales (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}). When (\ref{eq-C4_static_sgs}) and (\ref{eq-C4_press_sgs}) are used in (\ref{eq-C4_FE_balance2}), we obtain
+In this case the energy balance for the subscale is meaningless because there are explicit expressions for the subscales (\ref{eq-C2_static_sgs}) and (\ref{eq-C4_press_sgs}). When (\ref{eq-C2_static_sgs}) and (\ref{eq-C4_press_sgs}) are used in (\ref{eq-C4_FE_balance2}), we obtain
 \begin{align}
 \label{eq-C4_static_energy}
 \frac{1}{2}d_t\|\u_h\|^2
@@ -314,11 +314,11 @@ which is exactly (\ref{eq-C4_total_balance_ASGS2}) except for the projection of 
 
 \section{Final discrete problem}
 \label{sec-C4_discrete}
-Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{sec-C4_DHIT},  \ref{sec-C4_TGV} and \ref{sec-C4_TCF}.
+Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{subsec-C4_DHIT},  \ref{subsec-C4_TGV} and \ref{subsec-C4_TCF}.
 
 \subsection{Algebraic Subgrid Scales (ASGS)}
 
-Taking the nonlinear advection velocity definition (\ref{eq-C4_a_nl}) and considering the time derivative in the fine scales, we have the Dynamic and Nonlinear ASGS method, hereinafter Dyn-Nl-ASGS. 
+Taking the nonlinear advection velocity definition \Eq{C2_a_nl} and considering the time derivative in the fine scales, we have the Dynamic and Nonlinear ASGS method, hereinafter Dyn-Nl-ASGS. 
 %For this method, using linear FEs, the Backward Euler (BE) scheme for the time discretization and the Picard method for the nonlinear term, 
 At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ such that
 % \begin{align}
@@ -371,7 +371,7 @@ where $\a^{n,i,k-1}=\u_h^{n,i}+\tilde{\u}^{n,i,k-1}$  is used in (\ref{eq-C4_tau
 \end{align}
 This is a simple fixed-point iterative scheme that we have found efficient and robust for the numerical simulations presented in this paper, although in other situations we have found more convenient to use a conventional Newton-Raphson scheme to solve the nonlinear subscale equation \cite{Avila2011}.
 
-For the simplest ASGS scheme we do not consider the time derivative of the fine scale, we consider them quasi-static, i.e., $(\partial_t\tilde{\u},\v_h)=0$. Note that in any case the subscales will depend on time through the FE residual and the stabilization parameter. On the other hand, the advection velocity is considered to be linear as indicated in (\ref{eq-C4_a_lin}). We label this method as Static Linear ASGS (Sta-Lin-ASGS). Note that the Sta-Lin-ASGS method does not need to explicitly compute $\tilde{\u}$; invoking (\ref{eq-C4_tau_m}) and (\ref{eq-C4_tau_c}) in (\ref{eq-C4_NS_discrete}) we get a discrete equation only in terms of the FE component.%, avoiding to solve (\ref{eq-C4_velo_sgs_discrete_impl}).
+For the simplest ASGS scheme we do not consider the time derivative of the fine scale, we consider them quasi-static, i.e., $(\partial_t\tilde{\u},\v_h)=0$. Note that in any case the subscales will depend on time through the FE residual and the stabilization parameter. On the other hand, the advection velocity is considered to be linear as indicated in \Eq{C2_a_lin}. We label this method as Static Linear ASGS (Sta-Lin-ASGS). Note that the Sta-Lin-ASGS method does not need to explicitly compute $\tilde{\u}$; invoking (\ref{eq-C4_tau_m}) and (\ref{eq-C4_tau_c}) in (\ref{eq-C4_NS_discrete}) we get a discrete equation only in terms of the FE component.%, avoiding to solve (\ref{eq-C4_velo_sgs_discrete_impl}).
 
 We can readily define the rest of possible combinations of time and nonlinear treatment considering the linear advection velocity definition and the time-dependence in the subscales (Dyn-Lin-ASGS method) or keeping the static definition of the subscales with the nonlinear choice for the advection velocity (Sta-Nl-ASGS method).
 
@@ -435,14 +435,14 @@ For the dynamic OSS case we should introduce some modifications in the computati
 %&(\tau_{m,t}\boldsymbol{\xi}_m^{n,i},\v_h)=(\tau_{m,t} \R_u^{n,i},\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\
 %&(\tau_c\xi_c^{n,i},q_h)=(\tau_c R_p^{n,i},q_h)&&\forall q_h\in\mathcal{Q}_{0,h}.
 %\end{align}
-where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using (\ref{eq-C4_Ru}) and (\ref{eq-C4_Rp}) with $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$, $\u_h^{n,i}$, $\u_h^{n-1}$ and $p_h^{n,i}$. %It is also possible to compute projections explicitly, using the residuals evaluated with $\a^{n-1}=\u_h^{n-1}+\tilde{\u}^{n-1}$, $\u_h^{n-1}$, $\u_h^{n-2}$ and $p_h^{n-1}$ but we do not use this option here.  
+where the residuals $\R_u^{n,i}$ and $R_p^{n,i}$ are evaluated using \Eq{C2_Ru} and \Eq{C2_Rp} with $\a^{n,i}=\u_h^{n,i}+\tilde{\u}^{n,i}$, $\u_h^{n,i}$, $\u_h^{n-1}$ and $p_h^{n,i}$. %It is also possible to compute projections explicitly, using the residuals evaluated with $\a^{n-1}=\u_h^{n-1}+\tilde{\u}^{n-1}$, $\u_h^{n-1}$, $\u_h^{n-2}$ and $p_h^{n-1}$ but we do not use this option here.  
  Note that when convergence of the nonlinear iteration is achieved, (\ref{eq-C4_velo_sgs_discrete_impl_OSS}) and (\ref{eq-C4_dyn_proj}) guarantee that $(\v_h,\tilde{\mathbf{u}}^{n}) = 0$ for any $\v_h\in\mathcal{V}_{0,h}$.
 
 \section{Numerical experiments}
 \label{sec-C4_experiments}
 \subsection{Decay of homogeneous isotropic turbulence}
 \label{subsec-C4_DHIT}
-This problem, one of the most used benchmarks to test LES models, consists of analyzing the statistics of the turbulent flow in a 3D box of size $\Omega=(0,2\pi)\times(0,2\pi)\times(0,2\pi)$ with periodic boundary conditions in all directions, which is started with a field having a predetermined energy spectrum. A detailed description of the computational domain, initial conditions, and problem setting is given in \cite{mansour_decay_1994}. Furthermore, the main characteristics of this test are stated in Section \ref{subsec-DHIT}.,
+This problem, one of the most used benchmarks to test LES models, consists of analyzing the statistics of the turbulent flow in a 3D box of size $\Omega=(0,2\pi)\times(0,2\pi)\times(0,2\pi)$ with periodic boundary conditions in all directions, which is started with a field having a predetermined energy spectrum. A detailed description of the computational domain, initial conditions, and problem setting is given in \cite{mansour_decay_1994}. Furthermore, the main characteristics of this test are stated in Section \ref{subsubsec-C3_DHIT}.
 
 We recall that the initial energy spectra is:
 \begin{equation}
@@ -479,7 +479,7 @@ Case Id.&Label&Method&Advection velocity ($\a$)&Subscales tracking\\
 \end{table}
 
 In terms of the numerical parameters of the methods, we use the skew-symmetric convective term \textit{type 1} defined in Subsection \ref{subsec-C4_NS_formulation}. 
-The stabilization parameter $\tau_c$ is set equal to zero and the algorithmic constants in $\tau_m$ are $c_1=12$ and $c_2=2$ (see Section \ref{sec-C4_effect_const}).
+The stabilization parameter $\tau_c$ is set equal to zero and the algorithmic constants in $\tau_m$ are $c_1=12$ and $c_2=2$ (see Section \ref{subsec-C4_effect_const}).
 %according what we have exposed in Subsection \ref{subsec-C4_sensivity_tau}. 
 Further, we use linear, quadratic, and cubic FEs.
 
@@ -547,7 +547,7 @@ The only important difference between both methods is that \emph{no oscillations
 \end{figure}
 
 The global energy balance terms obtained solving the problem with the skew-symmetric convective term \textit{type 2} for the Dyn-Nl-ASGS and Dyn-Nl-OSS cases are shown in Fig. \ref{fig:ene_balance_sk2}. We note that the loss of skew-symmetry in the convective term has a non-negligible effect (see Figs.~\ref{fig:ASGS_ene_balance2} and \ref{fig:OSS_ene_balance2}). In particular, this term introduces negative dissipation (production of energy) into the problem. %As we will show in Section \ref{subsubsec-C4_Total_ene_DHIT}, 
-This fact implies that the method is less dissipative and the energy decays at a slower rate than using the convective term \textit{type 1} and the method seems to be less diffusive. This negative contribution, however, is not predictable and could result in a blow up of the calculation. We refer to Section \ref{sec-C4_effect_const} for further comments about numerical instabilities associated to the \textit{type 2} convective term.%Although no theoretical energy estimates are available we have not observed instabilities in practice.
+This fact implies that the method is less dissipative and the energy decays at a slower rate than using the convective term \textit{type 1} and the method seems to be less diffusive. This negative contribution, however, is not predictable and could result in a blow up of the calculation. We refer to Section \ref{subsec-C4_effect_const} for further comments about numerical instabilities associated to the \textit{type 2} convective term.%Although no theoretical energy estimates are available we have not observed instabilities in practice.
 
 \begin{figure}[h!]
 	\centering	
@@ -576,7 +576,7 @@ However, the number of nonlinear iterations is not the most relevant measure of 
 %The amount of nonlinear iterations required at each time step is a good computational cost measure, but we do not know if the iterations between methods are equivalent. In order to have an idea of the global computational cost, we must have also into account the solver iterations. In Fig. \ref{fig:Soliter} we display the maximum number of solver iterations for each time step for the converged cases. 
 %Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is highly variable, with values from around 50 to around 270. Meanwhile, all cases of the OSS method seem to remain almost constant around 70.  
 %{\color{blue}
-Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is variable, starting from near 600, dropping to 200 and rising to around 300 iterations at the end of the computation. Meanwhile, all cases of the OSS method remain almost constant, around 60 iterations in the dynamic cases and around 40 iterations in the static one. The relation between time step size and solver iterations for each method is analyzed in Section \ref{sec-C4_small_time_step}. %}
+Unlike the nonlinear iterations, here we see that the ASGS method requires more solver iterations than OSS. The maximum solver iterations at each time step for the dynamic and nonlinear ASGS case is variable, starting from near 600, dropping to 200 and rising to around 300 iterations at the end of the computation. Meanwhile, all cases of the OSS method remain almost constant, around 60 iterations in the dynamic cases and around 40 iterations in the static one. The relation between time step size and solver iterations for each method is analyzed in Section \ref{subsec-C4_small_time_step}. %}
 
 \begin{figure}[h!]
 	\centering	
@@ -620,7 +620,7 @@ The results shown in Figure \ref{fig:total_ene} have been obtained using the ske
 	\label{fig:ene_skew}
 \end{figure}
 
-We can clearly see in Figure \ref{fig:ene_skew} that the solution using the \textit{type 2} term is above the obtained with term \textit{type 1}. Then, we can say that the solution is less dissipative when we use this convective term. It has to be said that in Figure \ref{fig:ene_skew} we only represent the cases which exhibit more differences. In other words, in order to see the effect of the convective term definition, we only show the dynamic and nonlinear cases for ASGS and OSS methods. On the other hand, here we also have to take into account what we said on Remark XXX \ref{rem-C2_...}. Introducing the nonlinearity on $\a$ we are increasing its weight on the convective term and changing its correct definition, therefore, it is normal that the differences between each definition increase.
+We can clearly see in Figure \ref{fig:ene_skew} that the solution using the \textit{type 2} term is above the obtained with term \textit{type 1}. Then, we can say that the solution is less dissipative when we use this convective term. It has to be said that in Figure \ref{fig:ene_skew} we only represent the cases which exhibit more differences. In other words, in order to see the effect of the convective term definition, we only show the dynamic and nonlinear cases for ASGS and OSS methods. On the other hand, here we also have to take into account what we said on Remark \ref{rem-skewsym}. Introducing the nonlinearity on $\a$ we are increasing its weight on the convective term and changing its correct definition, therefore, it is normal that the differences between each definition increase.
 \end{remark}
 
 \subsubsection{Energy spectra}
@@ -745,7 +745,7 @@ Note that the DNS spectra is not present in Fig. \ref{fig:spec_hp_08} because it
 
 \subsection{Taylor-Green Vortex}
 \label{subsec-C4_TGV}
-This problem aims to show, in a relatively simple flow, the basic turbulence decay mechanisms like the turbulent energy cascade, the production of small eddies and the enhancement of dissipation by the stretching of vortex lines. We refer to Section \ref{sec-C3_TGV} for a deeper description of this problem.
+This problem aims to show, in a relatively simple flow, the basic turbulence decay mechanisms like the turbulent energy cascade, the production of small eddies and the enhancement of dissipation by the stretching of vortex lines. We refer to Section \ref{subsubsec-C3_TGV} for a deeper description of this problem.
 
 The computational domain is the unit cube with periodical boundary conditions. The initial analytical condition is defined in the physical space (see, e.g., \cite{gassner_accuracy_????}), and given by
 \begin{align}
@@ -764,7 +764,7 @@ We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The pressu
 We solve the TGV problem using a Reynolds number ${\rm Re}=1600$. 
 The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
 We use the same VMS methods as for the DHIT problem defined in Section \ref{sec-C4_DHIT} to solve this test, namely the ASGS and OSS methods, both with linear and nonlinear definitions of the convective term and static or dynamic tracking in time of the subscales, as it is summarized in Table \ref{table:DHIT_cases}.
-The stabilization parameters for each method are the same as those chosen for the DHIT test, see Subsection~\ref{subsubsec-C4_DHIT_setting}, and discussed in Section \ref{sec-C4_effect_const}.
+The stabilization parameters for each method are the same as those chosen for the DHIT test, see Subsection~\ref{subsubsec-C4_DHIT_setting}, and discussed in Section \ref{subsec-C4_effect_const}.
 
 Initially we consider a mesh of $32^3$ hexahedral linear elements $(Q_1)$, but we will redefine this discretization to analyze the method performance when we refine the mesh, decreasing the element size $h$ or increasing the degree of the interpolation polynomial $p$. It implies to solve the problem on meshes with $64^3$ and $128^3$ linear $(Q_1)$, quadratic $(Q_2)$ or cubic $(Q_3)$ hexahedral elements. We also use a $20^3(Q_3)$ discretization to compare against other authors results.
 
@@ -853,7 +853,7 @@ The dynamic Smagorinsky is more accurate in predicting the resolved dissipation 
 We plot the total dissipation in Fig. \ref{fig:enediss_dynsmag_total}. We can see that the excellent job our implicit LES model does when the $20 (Q3)$ mesh is used, which would result in an excellent prediction of the resolved kinetic energy decay (which is not available in \cite{hickel_adaptive_2006}). 
 
 \subsection{Turbulent channel flow}
-\label{sec-C4_TCF}
+\label{subsec-C4_TCF}
 After studying the performance of VMS in the LES of homogeneous flows we turn our attention to wall-bounded turbulent flow and present results of fully developed turbulent flow in a channel.
 
 This test consists of a fluid that flows between two parallel walls driven by an imposed pressure gradient which is defined by the Reynolds number based on the wall shear velocity, ${\rm Re}_\tau$. In the important amount of literature devoted to this problem, the usual Reynolds numbers are: ${\rm Re}_\tau=590$, ${\rm Re}_\tau=395$  and ${\rm Re}_\tau=180$ (see \cite{bazilevs_variational_2007, Calderer2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}). We will restrict our attention to ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$. See Section \ref{sec-C3_TCF} for an extended description of this test.
@@ -892,7 +892,7 @@ $\delta t$&$0.06$&$0.03$\\
 \label{table:Channel_parameters}
 \end{table}
 
-Our purpose is to check the VMS methods defined in Subsection \ref{subsec-C4_VMS_framework} for a wall-bounded flow. Following the computations performed for the previous tests, we solve the problem using the same cases defined in Table \ref{table:DHIT_cases} and the numerical parameters $\tau_c=0$ and $\tau_m$ are defined in the same way, now with the algorithmic constants  $c_1=12$ and $c_2=8$ (see Subsection \ref{sec-C4_effect_const}) and the characteristic length, $h$, is chosen to be the minimum element length. 
+Our purpose is to check the VMS methods defined in Subsection \ref{subsec-C4_VMS_framework} for a wall-bounded flow. Following the computations performed for the previous tests, we solve the problem using the same cases defined in Table \ref{table:DHIT_cases} and the numerical parameters $\tau_c=0$ and $\tau_m$ are defined in the same way, now with the algorithmic constants  $c_1=12$ and $c_2=8$ (see Subsection \ref{subsec-C4_effect_const}) and the characteristic length, $h$, is chosen to be the minimum element length. 
 %However, in the definition of the stabilization parameters (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), the characteristic length, $h$, is choosen to be the minumum element length.
 
 \subsubsection{Velocity profiles}
@@ -924,7 +924,7 @@ It can be seen that for the discrete equation (\ref{eq-C4_NS_discrete}), one can
 \label{eq-C4_Rey_shear_disc}
 R_{xy}=-\left\langle a_x'a_y'\right\rangle+\nu\frac{\partial\left\langle u_h\right\rangle}{\partial y}=-\underbrace{\left\langle u_h'v_h'\right\rangle}_I-\underbrace{\left\langle u_h'\tilde{v}'\right\rangle-\left\langle \tilde{u}'v_h'\right\rangle-\left\langle \tilde{u}'\tilde{v}'\right\rangle}_{II}+\underbrace{\nu\frac{\partial\left\langle u_h\right\rangle}{\partial y}}_{III}.
 \end{equation}
-being $a_i$ the $i$-th component of the advection velocity. In (\ref{eq-C4_Rey_shear_disc}) we have used the nonlinear definition of the advection velocity defined in (\ref{eq-C4_a_nl}).
+being $a_i$ the $i$-th component of the advection velocity. In (\ref{eq-C4_Rey_shear_disc}) we have used the nonlinear definition of the advection velocity defined in \Eq{C2_a_nl}.
 
 The first term on the second part of  (\ref{eq-C4_Rey_shear_disc}) (term $I$) is the contribution of the resolved scales (FE component) to the cross term $\left\langle a_x'a_y'\right\rangle$. Term $II$ denotes the contribution of the subgrid scales and their interaction with the FE components, that is, the unresolved part of the equation. Finally, term $III$ accounts for the viscous portion of the Reynolds shear stress. Note that the derivatives of the approximated subscales are not computable, since these approximated subscales are discontinuous and have been designed to approximate the effect of the exact subscales on the FE scales elementwise. 
 
@@ -939,7 +939,7 @@ For a fully developed and statistically stable turbulent flow, the Reynolds shea
 %{\color{blue} Esta seccion está perfecta, no tengo que tocar nada. However, si en la turbulencia homogenea calculamos los resultados usando $\u_h$ solamente...porque aca incluimos tambien $\tilde{\u}$?}
 
 \subsection{Sensitivity with respect to the stabilization parameters}
-\label{sec-C4_effect_const}
+\label{subsec-C4_effect_const}
 
 All the VMS models considered herein depend on the stabilization parameters $\tau_m$ and $\tau_c$, which contain constants $c_1$ and $c_2$ whose value is chosen from numerical experiments. However, we can infer from (\ref{eq-C4_static_energy}) or (\ref{eq-C4_transfer}) how this dependency will be. As mentioned before, the last two terms in (\ref{eq-C4_transfer}) are dissipative and therefore, increasing $\tau_m$ and/or $\tau_c$ we obtain a more dissipative method. From (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), increasing $\tau_m$ results in a reduction of $\tau_c$. More precisely 
 \begin{equation}
@@ -1024,12 +1024,12 @@ In order to go in depth on the effect of the algorithmic constants $c_1$ and $c_
     \label{fig:OSS_taus_fluc}
 \end{figure}
 
-In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{sec-C4_TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
+In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{subsec-C4_TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
 %Not only  $\tau_c=0$ but also setting $c_2=8$ (instead of $c_2=2$) give less dissipative results.
 Figs. \ref{fig:OSS_Matias_ufluc}, \ref{fig:OSS_Matias_vfluc} and \ref{fig:OSS_Matias_wfluc} depict the rms velocity fluctuations in all directions. The fluctuations in the streamwise direction are better predicted using ($c_1=12$, $c_2=8$ and $\tau_c=0$) but the spanwise and wall-normal directions are not.
 
 \subsection{Behavior in the small time step limit}
-\label{sec-C4_small_time_step}
+\label{subsec-C4_small_time_step}
 
 Small time step instabilities for VMS LES simulations of turbulent flows have been reported in \cite{Hsu2010,gamnitzer_time-dependent_2010}. In these references, the VMS models differ from the ones in this work. Instead of the definition of  $\tau_m$ in (\ref{eq-C4_tau_m}), a time step dependent stabilization parameter $\tau_m$
 $$
@@ -1044,7 +1044,7 @@ scales with $\delta t$, as discussed in Section (\ref{sec-C4_discrete}). {\it Ho
 \end{itemize}
 %The behavior of the VMS models considered herein in the small time step limit is evaluated numerically in Section \ref{sec-C4_TCF}.
 
-Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-C4_prob_statement}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{sec-C4_small_time_step}. 
+Let us perform a test to study the small time step behavior of the VMS methods presented in Section \ref{sec-C4_prob_statement}, using the skew-symmetric \textit{type 1} form of the convective term, as in previous numerical experiments. We also include a combination we do not advocate here, static subscales and nonlinear splitting, an approach followed in \cite{Calo_2004,bazilevs_variational_2007,Hsu2010,gamnitzer_time-dependent_2010,gravemeier_algebraic_2010}. %The properties of the different methods in this respect have been discussed in Section \ref{subsec-C4_small_time_step}. 
 The behavior of all the methods for the TCF test with $\delta t=0.002$ is summarized in Table \ref{table:small_time_step_T}, where YES means that the simulation was successful, NO means that the simulation diverged and $\delta t\downarrow$ means that the simulation was successful only when the adaptive time step strategy described in Section \ref{subsubsec-C4_DHIT_setting} was used.
 
 %It is worth to point out that all these results have been obtained using the skew-symmetric \textit{type 1} form of the convective term, which exactly conserves energy. %Either a conservative or non conservative form is usually employed mentioned references and none of this forms conserve energy. As we have shown in Section \ref{subsubsec-C4_ene_cons_DHIT} for the skew-symmetric \textit{type 2}, they could be productive. 
@@ -1099,7 +1099,7 @@ This behavior is explained in Fig. \ref{fig:1st_step_comp_cost}, where the numbe
 
 In this paper we have assessed the performance of the numerical formulations previously developed in our group \cite{codina_stabilized_2002,codina_time_2007,Codina-chap-2011,Principe2009} for turbulent incompressible flow problems. 
 
-The methods proposed are different to those whose testing in turbulent regimes has been published before, the closest ones being those reported in \cite{bazilevs_variational_2007,gamnitzer_time-dependent_2010}. First, we consider orthogonal subscales formulations. Further, in \cite{bazilevs_variational_2007} the ASGS method with quasi-static subscales is used (in the isogeometrical analysis context) but the time step dependency is included in the stabilization parameter (with the inconsistencies and problems discussed in section \ref{sec-C4_small_time_step}) and the nonlinear scale splitting is applied in the FE equation only (not in the subscale equation). Time dependent subscales are used in \cite{gamnitzer_time-dependent_2010}, but the authors consider a linear scale splitting. Furthermore, in both works $\tau_c \neq 0$. 
+The methods proposed are different to those whose testing in turbulent regimes has been published before, the closest ones being those reported in \cite{bazilevs_variational_2007,gamnitzer_time-dependent_2010}. First, we consider orthogonal subscales formulations. Further, in \cite{bazilevs_variational_2007} the ASGS method with quasi-static subscales is used (in the isogeometrical analysis context) but the time step dependency is included in the stabilization parameter (with the inconsistencies and problems discussed in section \ref{subsec-C4_small_time_step}) and the nonlinear scale splitting is applied in the FE equation only (not in the subscale equation). Time dependent subscales are used in \cite{gamnitzer_time-dependent_2010}, but the authors consider a linear scale splitting. Furthermore, in both works $\tau_c \neq 0$. 
 
 First, we have discussed some theoretical aspects, such as the dissipative structure of the methods and the way energy is conserved, which we have numerically verified. Related to this point, we analyze the effect of using different skew-symmetric forms of the convective term, and its impact on energy conservation; if a skew symmetric form is not used, negative energy dissipation can be introduced to the scheme, which may be a source of instability. 
 

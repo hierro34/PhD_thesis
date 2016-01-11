@@ -1,6 +1,6 @@
 Let us consider a FE partition $\mathcal{T}_h$ of the domain $\Omega$ from which we can construct conforming finite dimensional spaces for the velocity $\mathcal{V}_{0,h} \subset \mathcal{V}_0$, and for the pressure $\mathcal{Q}_{0,h}\subset \mathcal{Q}_0$. 
 
-It is well known that the Galerkin FE approximation \Eq{C2_NS_weak_discrete} has numerical instabilities for high mesh Reynolds number problems, i.e., when the nonlinear convective term dominates the viscous term. Another drawback of that formulation is the discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure. These difficulties are overcome by using the VMS approach, introduced by Hughes in \cite{hughes,hughes}, and that is stated as follows.
+It is well known that the Galerkin FE approximation \Eq{C2_NS_weak_discrete} has numerical instabilities for high mesh Reynolds number problems, i.e., when the nonlinear convective term dominates the viscous term. Another drawback of that formulation is the discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure. These difficulties are overcome by using the VMS approach, introduced by Hughes in \cite{hughes_multiscale_1995,hughes_variational_1998}, and that is stated as follows.
 
 Let us consider a two-scale decomposition of spaces $\mathcal{V}_0$ and $\mathcal{Q}_0$ such that $$\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$$ and $$\mathcal{Q}_0=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0,$$ where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subgrid component. Applying the two-scale decomposition to \Eq{C2_NS_weak} we obtain a discrete problem
 \begin{align}
@@ -58,22 +58,22 @@ whereas we consider two possible definitions of $\tau_c$, viz. $\tau_c = 0$ (whi
 where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression \Eq{C2_tau_m}:
 \begin{itemize}
 \item The influence of the constants $c_1$ and $c_2$ is discussed in \Sec{C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
-\item The definition of $\tau_m$ in \Eq{C2_tau_m} is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of \Eq{C2_tau_m}, $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{Hsu2010,gamnitzer_time-dependent_2010}). We refer to \Sec{C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
-\item Expression \Eq{C2_tau_m} corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{Principe2010}.
+\item The definition of $\tau_m$ in \Eq{C2_tau_m} is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of \Eq{C2_tau_m}, $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{hsu_improving_2010,gamnitzer_time-dependent_2010}). We refer to \Sec{C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
+\item Expression \Eq{C2_tau_m} corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{principe_dissipative_2010}.
 \end{itemize}
 
-In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{Codina-chap-2011}, together with some numerical experiments. 
+In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{codina_dissipative_2010}, together with some numerical experiments. 
 
 \subsection{The dynamics of the subscales}
 \label{subsec-C2_dyn}
-Stabilized formulations were originally developed for steady convection-diffusion \cite{Brooks_1982} and Stokes \cite{Douglas_1989,Hughes_1986_5} problems. As the numerical instabilities have a spatial nature, the time dependency of the subscales was not considered, and the standard choice \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} was to take 
+Stabilized formulations were originally developed for steady convection-diffusion \cite{brooks_streamline_1982} and Stokes \cite{douglas_absolutely_1989,hughes_new_1986} problems. As the numerical instabilities have a spatial nature, the time dependency of the subscales was not considered, and the standard choice \cite{hughes_large_2000,hughes_large_2001,bazilevs_variational_2007} was to take 
 \begin{equation}
 \label{eq-C2_static_sgs}
 \tilde{\u}=\tau_m \mathcal{P}(\R_u),
 \end{equation}
 that is, to neglect the temporal derivative of the subscales in \Eq{C2_velo_sgs}. In this case, the subscales are called quasi-static in what follows.
 
-The subscale as a time dependent variable of the problem was introduced in \cite{codina_stabilized_2002,codina_time_2007}. It gives rise to important properties like commutativity of space and time discretization, stability without restrictions on the time step size \cite{codina_time_2007,Badia2009a} and, combined with orthogonal subscales, to convergence towards weak solutions of the Navier-Stokes equations \cite{Badia2013Convergence} and the possibility of predicting backscatter \cite{Codina-chap-2011,Principe2009}. 
+The subscale as a time dependent variable of the problem was introduced in \cite{codina_stabilized_2002,codina_time_2007}. It gives rise to important properties like commutativity of space and time discretization, stability without restrictions on the time step size \cite{codina_time_2007,badia_multiscale_2009} and, combined with orthogonal subscales, to convergence towards weak solutions of the Navier-Stokes equations \cite{badia_convergence_2014} and the possibility of predicting backscatter \cite{codina_dissipative_2010,principe_dissipative_2010}. 
 
 Equation \Eq{C2_velo_sgs} can be analytically integrated to give
 \begin{equation}
@@ -84,7 +84,7 @@ where it is explicitly seen that the subscale is a function of the residual but 
 
 \subsection{(Non)linear scale splitting}
 \label{subsec-C2_nl}
-The original VMS formulation \cite{hughes_multiscale_1995,hughes_variational_1998} was developed having linear problems in mind and its extension to the Navier-Stokes equations was implicitly based on a ``linearization'', fixing the advection velocity and applying the multiscale splitting to the rest of the terms. A nonlinear scale splitting was used in \cite{Hughes2000,hughes_large_2001} together with an explicit resolution of the small scales in which a Smagorinsky damping was introduced. A nonlinear scale splitting with modeled subscales was used in \cite{codina_stabilized_2002, bazilevs_variational_2007} and in \cite{codina_time_2007}, where it was shown that it leads to global conservation of momentum. We therefore consider both options
+The original VMS formulation \cite{hughes_multiscale_1995,hughes_variational_1998} was developed having linear problems in mind and its extension to the Navier-Stokes equations was implicitly based on a ``linearization'', fixing the advection velocity and applying the multiscale splitting to the rest of the terms. A nonlinear scale splitting was used in \cite{hughes_large_2000,hughes_large_2001} together with an explicit resolution of the small scales in which a Smagorinsky damping was introduced. A nonlinear scale splitting with modeled subscales was used in \cite{codina_stabilized_2002, bazilevs_variational_2007} and in \cite{codina_time_2007}, where it was shown that it leads to global conservation of momentum. We therefore consider both options
 %The vector $\a$ appearing in (\ref{eq:bilinear}) and (\ref{eq:adjoint}) is the advection velocity of the convective term. It can be defined in two different ways depending if we use a linear or a nonlinear scheme for the subscales definition. That is, 
 \begin{align}
 \label{eq-C2_a_lin}
@@ -136,12 +136,12 @@ b(\a,\u_h +\tilde\u,\v_h)= - (\u_h\otimes\u_h, \nabla\v_h)
 - (\u_h\otimes\tilde\u, \nabla\v_h)- (\tilde\u\otimes\u_h, \nabla\v_h)
 - (\tilde\u\otimes\tilde\u, \nabla\v_h).\label{eq:nonconconv}
 \end{align}
-Even if this is not exactly what we get using the non-conservative or skew-symmetric forms because of the approximation error, this allows us to interpret the different contributions arising from the nonlinear scale splitting. As it is explained in \cite{Codina-chap-2011}, from (\ref{eq:nonconconv}) we can identify the contributions from the cross stresses, the Reynolds stresses and the subgrid scale tensor. 
+Even if this is not exactly what we get using the non-conservative or skew-symmetric forms because of the approximation error, this allows us to interpret the different contributions arising from the nonlinear scale splitting. As it is explained in \cite{codina_dissipative_2010}, from (\ref{eq:nonconconv}) we can identify the contributions from the cross stresses, the Reynolds stresses and the subgrid scale tensor. 
 \end{remark}
 
 \subsection{The space for the subscales}
 \label{subsec-C2_oss}
-The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{C2_velo_sgs} and \Eq{C2_press_sgs}. The first option, already considered in \cite{Hughes2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
+The selection of the space for the approximation of the subscales determines the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{C2_velo_sgs} and \Eq{C2_press_sgs}. The first option, already considered in \cite{hughes_large_2000,hughes_large_2001,bazilevs_variational_2007} and named Algebraic Subgrid Scale (ASGS) in \cite{codina_stabilization_2000} is to take the subscales in the space of the residuals, that is,
 %method is characterized by the following projection definition:
 \begin{equation}
 \label{eq-C2_P_ASGS}
@@ -154,7 +154,7 @@ Another possibility introduced in \cite{codina_stabilization_2000} is to conside
 \end{equation}
 where $\Pi_h$ is the projection onto the FE space. With this choice, the residual of the momentum equation does not depend on $\partial_t\u_h$. Likewise, $\mathcal{P}(\f)$ in this case is only well defined for $\f\in L^2(\Omega)^d$. In the case of minimum regularity, $\f\in H^{-1}(\Omega)^d$, this term can be simply neglected without upsetting the accuracy of the method.
 
-In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{Codina_2008a} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see \Sec{C4_energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{Codina_2008a}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in \Eq{C2_velo_sgs} and another for the pressure subscales ($\Pi_c$) in \Eq{C2_press_sgs}. We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
+In fact, with this choice, the orthogonality between the space of subscales and the FE space is only guaranteed when the stabilization parameters are constant. If this is not the case, the method is still optimally convergent \cite{codina_analysis_2008} but this property is lost. In order to have truly orthogonal subscales, \emph{which guarantees a proper separation of the FE and the subgrid scale kinetic energies} (see \Sec{C4_energy}) a slight modification of the projection $\Pi_h$ is needed (see \cite{codina_analysis_2008}). We will use two different weighted projections: one for the velocity subscales ($\Pi_m$) in \Eq{C2_velo_sgs} and another for the pressure subscales ($\Pi_c$) in \Eq{C2_press_sgs}. We define the weighted projections $\Pi_m$ and $\Pi_c$ such that given any vector $\w\in\mathcal{V}_0$ and any scalar $r\in\mathcal{Q}_0$ we have
 \begin{align}
 \label{eq-C2_Pi_tau_m}
 &(\tau_m\Pi_m(\w),\v_h)=(\tau_m\w,\v_h)&&\forall\v_h\in\mathcal{V}_{0,h},\\

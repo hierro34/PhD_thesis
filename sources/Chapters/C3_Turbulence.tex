@@ -4,7 +4,7 @@ One of the main topics of this thesis is the turbulence phenomena that appear in
 
 Some elementary definitions are established in the first section of this chapter. Thereafter, a short introduction to the vorticity is given, together with some characteristic properties of this field. The definition of the Reynolds stresses is stated subsequently, giving some insights of what does \textit{turbulence modelling} mean. In forthcoming chapters, some turbulent quantities will be used to characterize the fluid flow, so we dedicate some lines in this chapter on the explanation of such quantities. Finally, particular characteristics of isotropic turbulence and wall bounded turbulent flows are detailed. Here we introduce the turbulence tests performed during the thesis.
 
-For a deeper explanation of turbulence phenomena we refer to \cite{pope,davidson,orlandi,tennekes,lesieur}.
+For a deeper explanation of turbulence phenomena we refer to \cite{pope_turbulent_2000,davidson_turbulence:_2004,orlandi_fluid_2012,tennekes_first_1972,lesieur_turbulence_2012}.
 
 \section{Introduction to turbulence}
 \label{sec-C3_introduction}
@@ -61,7 +61,7 @@ $$\omega\cdot d\mathbf{S}=\oint_C\mathbf{u}\cdot d\mathbf{l}.$$
 
 Vorticity cannot be created within hte interior of a fluid unless there are body forces present, but it spreats by diffusion and can be intensified by streaching of fluid elements. Boundary layers can be thought as diffusion layers for the vorticity generated on a surface.
 
-Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\omega$ are somewhat simpler than those governign $\u$. The second reason is that many flows are characterized by localised regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{Davidson?}.
+Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\omega$ are somewhat simpler than those governign $\u$. The second reason is that many flows are characterized by localised regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{davidson_turbulence:_2004}.
 \begin{equation}
 \label{eq-vorticity}
 I\frac{D\omega}{Dt}=-\omega\frac{DI}{Dt}+2\nu\mathbf{T}
@@ -79,7 +79,7 @@ Alternatively to \Eq{vorticity}, introducing the identity $\nabla(\u^2/2)=(\u\cd
 \end{equation}
 From \Eq{vorticity} and \Eq{vorticity_velocity} we can easily see that the rate of rotation of a fluid blob may increase or decrease due to changes in its moment of inertia, or changes because it is spun up or slowed down by viscous stresses. We also can state from equation \Eq{vorticity_velocity} that vorticity is advected by $\u$ and diffused by viscous stresses.
 
-Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\omega\cdot\nabla)\u$ represents intensification of vorticity by the streaching fluid elements, a justification of this suggestion can be fount in \cite{Pope}.
+Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\omega\cdot\nabla)\u$ represents intensification of vorticity by the streaching fluid elements, a justification of this suggestion can be fount in \cite{pope_turbulent_2000}.
 
 \subsection{Reynolds stresses and turbulence models}
 It is an empirical observation that if $Re$ is large enough a flow invariably becomes unstable and then turbulent. Suppose we have a turbulent flow in which $\u$ and $p$ consist of a time-averaged component, $\overline{\u}$ and $\overline{p}$, plus a fluctuating part, $\u'$ and $p'$:
@@ -125,7 +125,7 @@ It can be shown that this system of equations is not closed, in the sense that, 
 \label{subsubsec:reynolds_decomposition}
 Leonard (1974) introduced a decomposition of $\tau_{ij}^R$ into three component stresses.
 $$\tau_{ij}^R=L_{ij}+C_{ij}+R_{ij},$$
-where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}_j$ are the Leonard stresses. The cross stresses are $C_{ij}=\overline{\overline{u}_iu_j'}+\overline{u_i'\overline{u}_j}$ and finally, $R_{ij}=\overline{u_i'u_j'}$ are the subgrid scale (SGS) Reynolds stresses. Decomposing Reynolds stresses into Leonard, cross and SGS Reynolds stresses we can reformulate \Eq{momentum} as
+where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}_j$ are the Leonard stresses. The cross stresses are $C_{ij}=\overline{\overline{u}_iu_j'}+\overline{u_i'\overline{u}_j}$ and finally, $R_{ij}=\overline{u_i'u_j'}$ are the subgrid scale (SGS) Reynolds stresses. Decomposing Reynolds stresses into Leonard, cross and SGS Reynolds stresses we can reformulate \Eq{NS_strong_momentum} as
 $$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\Lbf+\nabla\cdot\Cbf+\nabla\cdot\Rbf$$
 
 \subsection{Definition of some turbulent quantities}
@@ -133,7 +133,7 @@ Turbulent flows are considered to be cahotic since, superimposed on the mean flo
 $$\left\langle q\right\rangle=\frac{1}{\Pi_{i=1}^{n_d}N_i}\sum_{j_1,...,j_{n_d}}q_{j_1,...,j_{n_d}},$$
 that is averaged over $n_d$ dimensions, each dimension $i$ having $N_i$ evaluation points. 
 
-In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results againts the references. We can find a more complete definition of the turbulent quantities that are going to be stated in this section in \cite{orlandi,pope,davidson}.
+In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results againts the references. We can find a more complete definition of the turbulent quantities that are going to be stated in this section in \cite{orlandi_fluid_2012,pope_turbulent_2000,davidson_turbulence:_2004}.
 
 \begin{itemize}
 \item\keyword{Velocity correlation function}\\ The velocity correlation function is defined by
@@ -247,7 +247,7 @@ which means that the nonlinear interactions transfer energy between different wa
 
 \subsubsection{Kolmogorov spectrum}
 \label{subsubsec-Kolmogorov_spectrum}
-In order to answer some key questions about turbulent flows, like \textit{what is the size of the smallest eddies that are responsible for dissipating the energy?}, Kolmogorov stated three hypotheses in \cite{kolmogorov_1941}. Let us remind these hypoteses:
+In order to answer some key questions about turbulent flows, like \textit{what is the size of the smallest eddies that are responsible for dissipating the energy?}, Kolmogorov stated three hypotheses in \cite{kolmogorov_local_1941}. Let us remind these hypoteses:
 \begin{itemize}
 \item\keyword{Local isotropy.} At sufficiently high Reynolds number, the small-scale turbulent motions are statistically isotropic.
 \item\keyword{First similarity hypothesis.} For the locally isotropic turbulence the statistics of the small-scale motions are uniquely determined by the quantities $ \nu $ and $ \varepsilon $.
@@ -267,6 +267,7 @@ E(k)\sim C\varepsilon^{2/3}k^{-5/3}.
 \label{subsec-isotropic_tests}
 
 \subsubsection{Decay of homogeneous isotropic turbulence}
+\label{subsubsec-C3_DHIT}
 The Decay of Homogeneous Isotropic Turbulence (DHIT) test is one of the most used benchmarks to test the simulation accuracy of isotropic turbulent flows. Here we want to analyse the statistics of an homogeneous isotropic turbulent flow in a 3D box of size $\Omega=\left\{(0,2\pi)\times(0,2\pi)\times(0,2\pi)\right\}$. The flow is initialized with an initial condition that has a predetermined energy spectrum, considering all the boundary conditions to be periodic.
 
 In this work, we have taken the energy spectrum expression from Mansour \& Wray \cite{mansour_decay_1994}.
@@ -302,7 +303,7 @@ Z&=\int_0^\infty k^2E(k,0)dk\\\nonumber
 &=\frac{15}{8}k_0^2.
 \end{align}
 
-Following Rogallo \cite{rogallo_numerical_1981}, we generate the initial field on the Fourier space such that it satisfies continuity and has the energy spectrum prescribed in (\ref{4.2.1}). First, we define two complex parameters:
+Following Rogallo \cite{rogallo_numerical_1981}, we generate the initial field on the Fourier space such that it satisfies continuity and has the energy spectrum prescribed in  \Eq{DHIT_init_spectrum2}. First, we define two complex parameters:
 $$\alpha=\left(\frac{E(k,0)}{2\pi k^2}\right)^{1/2}\exp(i\theta_1)\cos(\phi),$$
 $$\beta=\left(\frac{E(k,0)}{2\pi k^2}\right)^{1/2}\exp(i\theta_2)\cos(\phi).$$
 
@@ -344,17 +345,18 @@ E(k,t)=E(k,0)\exp(-2\nu k^2t).
 \end{equation}
 So, a first conclusion we can point out from \Eq{DHIT_final_decay} is that the initial spectra, $E(k,0)$, in the final period of decay, has a direct relation with the decay exponent. The total kinetic energy can be calculated integrating \Eq{DHIT_final_decay} over all wave numbers. Then, when $t\rightarrow\infty$, the power law decay is determined by the shape of the initial spectrum.
 
-Moreover, \cite{Staffman 1967} showed that if the initial field is generated by random impulsive forces, a spectrum of the form
+Moreover, \cite{saffman_large-scale_1967} showed that if the initial field is generated by random impulsive forces, a spectrum of the form
 \begin{equation}
 \label{eq-DHIT_staffman_decay}
 E(k,t)\sim k^2\exp(-2\nu k^2t)
 \end{equation}
 will ensue. Then, the total kinetic energy will decay with the law $K\sim t^{-3/2}$. But, anyway, we will not consider the case of having impulsive forces acting on the flow.
 
-Also in this direction \cite{rohe_analysis_2010} and \cite{chalot_consistent_1998}, say that in the long-run, the energy should decay following the $t^{-1.4}$ law.
+Also in this direction \cite{rohe_analysis_2010} and \cite{chalot1998consistent}, say that in the long-run, the energy should decay following the $t^{-1.4}$ law.
 
 \subsubsection{Taylor-Green Vortex flow}
-The Taylor-Green Vortex flow (TGV) problem is also a typical and widely used problem on turbulence numerical simulations. First introduced by Taylor and Green (1937) \cite{taylor}, this problem aims to show, in a relatively simple flow, the basic turbulence decay mechanisms like the turbulent energy cascade, the production of small eddies and the enhancement of dissipation by the stretching of vortex lines.
+\label{subsubsec-C3_TGV}
+The Taylor-Green Vortex flow (TGV) problem is also a typical and widely used problem on turbulence numerical simulations. First introduced by Taylor and Green (1937) \cite{taylor_mechanism_1937}, this problem aims to show, in a relatively simple flow, the basic turbulence decay mechanisms like the turbulent energy cascade, the production of small eddies and the enhancement of dissipation by the stretching of vortex lines.
 
 The initial analytical condition for this problem, unlike the DHIT problem, is defined on the physical space. Here we follow \cite{gassner_accuracy_????}, where the initial solution is defined by
 \begin{align}
@@ -408,7 +410,7 @@ Equation \Eq{TGV_u_perp} has a direct implication to the voritcity field, $\bold
 \end{align}
 Which means that the vorticity is perpendicular to each impermeable box face.
 
-We solve the Taylor-Green vortex (TG) problem using a Reynolds number $Re=1600$. The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
+We solve the TGV problem using a Reynolds number $Re=1600$. The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
 
 The TGV test is characterized by its laminar evolution at the initial time steps, when the flow is strongly anisotropic due to the structured large-scale vortexes directly related to the initial condition. If the Reynolds number is large enough, there appears the vortex-stretching process, which introduce the energy cascade effect, transfering energy from large to small-scales. Because of this procedure, the flow becomes unstable and, therefore, turbulent. According to Brachet et al. \cite{brachet_small-scale_1983}, the flow becomes nearly isotropic for $Re\geq1000$.
 
@@ -443,7 +445,7 @@ with
 \label{eq-shear_stress}
 \tau(y):=\nu\frac{d\left\langle u_x\right\rangle}{dy}-\left\langle u_xu_y\right\rangle,
 \end{equation}
-see \cite{pope} for a more detailed deduction. We will denote the wall shear stress as $ \tau_w:=\tau(0) $. It is seen that the shear stress is the sum of the viscous stress, $ \nu\frac{d\left\langle u_x\right\rangle}{dy} $, and the Reynolds stress $ -\left\langle u_xu_y\right\rangle $. At the wall, the no-slip boundary condition, $ \u=0 $, implies that
+see \cite{pope_turbulent_2000} for a more detailed deduction. We will denote the wall shear stress as $ \tau_w:=\tau(0) $. It is seen that the shear stress is the sum of the viscous stress, $ \nu\frac{d\left\langle u_x\right\rangle}{dy} $, and the Reynolds stress $ -\left\langle u_xu_y\right\rangle $. At the wall, the no-slip boundary condition, $ \u=0 $, implies that
 \begin{equation}
 \label{eq-wall_shear_stress}
 \tau_w=\nu\left.\frac{d\left\langle u_x\right\rangle}{dy}\right|_{y=0}.
@@ -483,7 +485,7 @@ According to \cite{pope_turbulent_2000}, most turbulent flows are bounded by one
 
 An evidence of the popularity of this test is the large amount of experimental and computational works done about it. This test consists of a flux that flows between two parallel walls driven by an imposed pressure gradient, where the mean velocity vector is parallel to the wall. The most important issues to consider when characterising the flow are the mean velocity profiles, velocity fluctuations and the shear stress carried by the fluid on the wall. It has to be noticed that we will concern only on the fully developed flow, which means that the turbulent regime has been reached at the time when we start our flow characterization.
 
-In this test, like in most of turbulent flow tests, the Reynolds number has an important role when defining the test parameters. In particular, in the turbulent channel flow test, the most characteristic parameter is the Reynolds number based on the wall shear velocity, $Re_\tau$. In the literature, there appear mostly three different values of this parameters: $Re_\tau=590$, $Re_\tau=395$  and $Re_\tau=180$, see \cite{bazilevs_variational_2007, Calderer2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}. We will restrict our work to $Re_\tau=180$ and $Re_\tau=395$ cases.
+In this test, like in most of turbulent flow tests, the Reynolds number has an important role when defining the test parameters. In particular, in the turbulent channel flow test, the most characteristic parameter is the Reynolds number based on the wall shear velocity, $Re_\tau$. In the literature, there appear mostly three different values of this parameters: $Re_\tau=590$, $Re_\tau=395$  and $Re_\tau=180$, see \cite{bazilevs_variational_2007, calderer_residual-based_2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}. We will restrict our work to $Re_\tau=180$ and $Re_\tau=395$ cases.
 
 We consider a computational domain defined by a box of length $(L_x\times L_y\times L_z)$, which depends on the Reynolds number. For ${\rm Re}_\tau=180$ the domain size is $(4\pi\delta\times 2\delta\times 4/3\pi\delta)$ while for  ${\rm Re}_\tau=395$ the size of the channel is $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called streamwise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the spanwise direction. In Fig. \ref{fig:Channel_geo} we show schematically the geometry of the computational domain for this test.
 
@@ -497,9 +499,9 @@ We consider a computational domain defined by a box of length $(L_x\times L_y\ti
 In the wall-normal direction boundaries ($y=-\delta$ and $y=\delta$) we impose a non-slip condition. The streamwise and spanwise directions are assumed to be homogeneous, so we use periodic boundary conditions in these directions. According to Kim  \emph{et al.} \cite{kim_turbulence_1987}, the use of periodic boundary conditions in the homogeneous directions can be justified when the computational box is such that the largest eddies in the flow fit in the computational domain. This is the case considered here.
 %In \cite{kim_turbulence_1987} is shown the adequacy of this computational domain for a Reynolds number based on the wall shear velocity $Re_\tau=180$.
 
-We solve the problem using different mesh discretizations, all of them uniform in the homogeneous directions and refined near the walls in the wall-normal direction. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{Calderer2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
+We solve the problem using different mesh discretizations, all of them uniform in the homogeneous directions and refined near the walls in the wall-normal direction. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{calderer_residual-based_2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
 $$y_i=\frac{\tanh\left(\gamma\left(\frac{2i}{np_y}-1\right)\right)}{\tanh(\gamma)},$$
-where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal direction. Here, $\gamma$ is  chosen to be equal to $2.75$ for both  ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$.  We refer the reader to \cite{Avila2014} for a complete study of the influence of the discretization in the results of the TCF.
+where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal direction. Here, $\gamma$ is  chosen to be equal to $2.75$ for both  ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$.  We refer the reader to \cite{avila_large_2014} for a complete study of the influence of the discretization in the results of the TCF.
 
 \section{Conclusions}
 \label{sec-C3_conclusions}
