@@ -9,7 +9,7 @@ Many problems in science and engineering can be simulated by incompressible flow
 The transient incompressible Navier-Stokes system of partial differential equations is nonlinear (due to convection) and indefinite (due to the divergence-free constraint), which complicates its discretization and the linear solver step. A fully implicit time-integration involves nonlinear iterations at every time step, increasing computational cost. On the other hand, it is hard to define scalable parallel solvers for non-symmetric and indefinite problems. The definition of scalable preconditioners for this nonlinear system of equations is an open problem both for domain decomposition and multigrid techniques. 
 Further, the nonlinear nature of the problem requires frequent preconditioner set-up steps, that make this approach computationally intensive. 
 
-The velocity-pressure block-segregation can be understood as a solver (introducing an additional splitting error) instead of a preconditioner, leading to the popular pressure-correction or fractional-step methods \cite{kim_application_1985,le_improvement_1991,codina_pressure_2006,badia_algebraic_2008}. This approach involves to solve decoupled a momentum equation for the velocity and a pressure Poisson equation. This is the most popular approach for the simulation of turbulent incompressible flows. The time integration of the momentum equation can be carried out using explicit, semi-implicit, or fully implicit methods. The fully implicit method has some of the drawbacks considered above, whereas an explicit integration of the viscous terms is not suitable for wall-bounded flows. In order to capture the viscous effects around solids, very refined anisotropic meshes are required, leading to too stringent viscous CFL conditions. The use of hp-adaptivity makes hard to use explicit methods, since intensive local refinement in some parts, e.g., the tip of an airfoil, leads to global time steps that must go to zero as $\frac{h^2 }{p^4}$ for stability purposes, being $h$ the characteristic element size and $p$ the degree of interpolation, and local time-stepping cannot be efficiently exploited on parallel platforms. The use of semi-implicit methods, which treat implicitly the diffusive term and explicitly the convective one, seems to be the perfect compromise for turbulent flows around objects and viscous flows. The time step restriction is given by the convective {CFL} condition, which is much weaker than the diffusive one and also avoids nonlinear iterations. In fact, the majority of direct and large eddy simulations of incompressible flows involve semi-implicit methods, in which only the viscous term is treated implicitly. 
+The velocity-pressure block-segregation can be understood as a solver (introducing an additional splitting error) instead of a preconditioner, leading to the popular pressure-correction or fractional-step methods \cite{kim_application_1985,le_improvement_1991,codina_pressure_2006,badia_algebraic_2008}. This approach involves to solve decoupled a momentum equation for the velocity and a pressure Poisson equation. This is the most popular approach for the simulation of turbulent incompressible flows. The time integration of the momentum equation can be carried out using explicit, semi-implicit, or fully implicit methods. The fully implicit method has some of the drawbacks considered above, whereas an explicit integration of the viscous terms is not suitable for wall-bounded flows. In order to capture the viscous effects around solids, very refined anisotropic meshes are required, leading to too stringent viscous Courant-Friedrichs-Lewy (CFL) conditions. The use of hp-adaptivity makes hard to use explicit methods, since intensive local refinement in some parts, e.g., the tip of an airfoil, leads to global time steps that must go to zero as $\frac{h^2 }{p^4}$ for stability purposes, being $h$ the characteristic element size and $p$ the degree of interpolation, and local time-stepping cannot be efficiently exploited on parallel platforms. The use of semi-implicit methods, which treat implicitly the diffusive term and explicitly the convective one, seems to be the perfect compromise for turbulent flows around objects and viscous flows. The time step restriction is given by the convective {CFL} condition, which is much weaker than the diffusive one and also avoids nonlinear iterations. In fact, the majority of direct and large eddy simulations of incompressible flows involve semi-implicit methods, in which only the viscous term is treated implicitly. 
 
 When high-order time integration aims to be achieved, a popular approach is to use Runge-Kutta (RK) schemes, due to the good stability properties, high-order accuracy, and the easy computation of time error estimates for adaptive time stepping (see \cite{hairer_numerical_1989,de_swart_construction_1997}). RK schemes involve several systems of equations at each time step. Further, when we use an implicit scheme all stages can be coupled, resulting in a large system of equations to be solved, which is quite impractical in terms of CPU cost. This is the case of \cite{sanderse_energy-conserving_2013}, where energy-conserving implicit Runge-Kutta methods are investigated. 
 This drawback can be bypassed using an explicit scheme, with the problems related by the time step restriction to ensure stability. An accuracy analysis of these methods is done by Sanderse et al in \cite{sanderse_accuracy_2012}. 
@@ -29,7 +29,7 @@ The statement of the incompressible Navier-Stokes equations is developed in Sect
 
 \section{Problem statement}
 \label{sec-C6_prob_statement}
-We start this section by briefly describing the Navier-Stokes problem, referring to Section XXX for a deep description of the problem statement.
+We start this section by briefly describing the Navier-Stokes problem, referring to \Sec{C2_gov_eq} for a deep description of the problem statement.
 Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number of space dimensions, $\Gamma=\partial\Omega$ its boundary and $(0,T]$ the time interval. The strong form of the incompressible Navier-Stokes problem consists of finding a velocity field $\u$ and a pressure $p$ such that 
 \begin{align}
 \label{eq-C6_NS_strong_mome}
@@ -48,7 +48,7 @@ with $\f$ the force vector and $\nu$ the kinematic viscosity. Recalling that bol
 \end{align}
 $\mathbf{n}$ being the unit outward vector normal to $\Gamma$. 
 
-Using the notation defined in Section XXX, the weak form of the transient incompressible Navier-Stokes problem (\ref{eq-C6_NS_strong_mome})-(\ref{eq-C6_NS_strong_Ini}) reads as follows: find $[\u(t),p(t)]\in H_0^1(\Omega) \times L^2_0(\Omega)$ such that
+Using the notation defined in \Sec{C2_functional_spaces}, the weak form of the transient incompressible Navier-Stokes problem (\ref{eq-C6_NS_strong_mome})-(\ref{eq-C6_NS_strong_Ini}) reads as follows: find $[\u(t),p(t)]\in H_0^1(\Omega) \times L^2_0(\Omega)$ such that
 \begin{equation}
 \label{eq-C6_NS_weak}
 (\partial_t\u,\v) + B(\u,(\u,p),(\v,q)) = \left<\f,\v\right> + (g,q)
@@ -83,8 +83,10 @@ Assuming that $\D\U(0) = \H(0)$, systems (\ref{eq-C6_NS_galerkin_mat1})-(\ref{eq
 Replacing this expression in (\ref{eq-C6_NS_galerkin_mat1}), we obtain an equation for the velocity field only:
 \begin{align}
 \label{eq-C6_NS_galerkin_ou}
-&\M\dot{\U}+ \Pi(\K+\C(\U))\U  = \Pi\F + \G(\D\M^{-1}\G)^{-1} \dot{\H}, \qquad \hbox{with } \ \Pi := 
-(\I - \G(\D\M^{-1}\G)^{-1}\D\M^{-1}), \end{align}
+&\M\dot{\U}+ \Pi(\K+\C(\U))\U  = \Pi\F + \G(\D\M^{-1}\G)^{-1} \dot{\H},
+\end{align}
+with
+$$\Pi := (\I - \G(\D\M^{-1}\G)^{-1}\D\M^{-1}),$$ 
 $\I$ being the identity matrix. This system matrix stands for the projected Navier-Stokes system onto the discrete divergence-free space; we can easily chech that $\D\M^{-1}\Pi = 0$, readily leading to $\D \dot{\U} = \dot{\H}$. It is a system of ordinary differential equations (ODEs) and the use of RK methods is now straightforward. 
 
 \section{Runge-Kutta time integration}
@@ -139,7 +141,7 @@ In particular, we can define a method in which the viscous term is treated impli
  \mathcal{G}(\U)&:= 
  \F - \C(\U)\U + \G(\D\M^{-1}\G)^{-1} \left( \D\M^{-1}(\K+\C(\U)\U - \F)+ \dot{\H} \right),
 \end{align}
-i.e., using an implicit treatment of the viscous term and an explicit one for the convective and forcing term. We note that the evaluation of the pressure-related term involves a discrete pressure Poisson equation $\D\M^{-1}G$.  However, in order to have a segregated RK method, \emph{the term involving $\D\M^{-1}G$ is treated always explicitly}. Alternatively, we could choose other definitions of $\mathcal{F}$ and $\mathcal{G}$, e.g., %For instance, we could treat the diffusive term explicitly, ending up with the half-explicit method in \cite{sanderse_accuracy_2012}. 
+i.e., using an implicit treatment of the viscous term and an explicit one for the convective and forcing term. We note that the evaluation of the pressure-related term involves a discrete pressure Poisson equation $\D\M^{-1}\G$.  However, in order to have a segregated RK method, \emph{the term involving $\D\M^{-1}\G$ is treated always explicitly}. Alternatively, we could choose other definitions of $\mathcal{F}$ and $\mathcal{G}$, e.g., %For instance, we could treat the diffusive term explicitly, ending up with the half-explicit method in \cite{sanderse_accuracy_2012}. 
 the convective term and the force term could be considered implicitly, leading to 
 \begin{align}
 \label{eq-C6_oper_def2}
@@ -246,14 +248,15 @@ Let us consider the SRK method with a $p$-th order scheme. The error for the vel
 \end{proposition}
 
 \begin{proof}
-Let us denote the time-continuous solution as $(\U^{\rm ex}(t),\P^{\rm ex}(t))$. The convergence order for the velocity is $\| \U_n - \U^{ex}(t_n)\|_{M} \leq c \delta t^{p}$ (where $\| \cdot \|_{\M}$ denotes the norm endowed by matrix $\M$) since the SRK method for the velocity amounts to a standard RK scheme for the ODE system \Eq{C6_NS_galerkin_mat1_ope} (see \cite{hairer_solving_2008}). The pressure error is straightforward from the velocity estimate, Eq. \Eq{C6_IMEX_NS_p_n+1}, and the fact that $\D\M^{-1}G$ is invertible. 
+Let us denote the time-continuous solution as $(\U^{\rm ex}(t),\P^{\rm ex}(t))$. The convergence order for the velocity is $\| \U_n - \U^{ex}(t_n)\|_{M} \leq c \delta t^{p}$ (where $\| \cdot \|_{\M}$ denotes the norm endowed by matrix $\M$) since the SRK method for the velocity amounts to a standard RK scheme for the ODE system \Eq{C6_NS_galerkin_mat1_ope} (see \cite{hairer_solving_2008}). The pressure error is straightforward from the velocity estimate, Eq. \Eq{C6_IMEX_NS_p_n+1}, and the fact that $\D\M^{-1}\G$ is invertible. 
 In order to obtain the pressure error, let us subtract Eq. \Eq{C6_NS_galerkin_DM-2} from Eq. \Eq{C6_IMEX_NS_p_n+1} at time value $t_n$, getting:
 \begin{align*}
-- \D\M^{-1}G(\P_{n} - \P^{\rm ex}(t_{n}))& = \D\M^{-1}((\K+\C(\U_{n}))\U_{n} - \D\M^{-1}(\K+\C(\U^{\rm ex}(t_{n}))\U^{\rm ex}(t_{n}) \\
- & = \D\M^{-1}((\K+\C(\U_{n}))(\U_{n} - \U^{\rm ex}(t_{n}))) + \D\M^{-1}C(\U_{n} - \U^{\rm ex}(t_{n}))\U^{\rm ex}(t_{n}).
+- \D\M^{-1}\G(\P_{n} - \P^{\rm ex}(t_{n}))& = \D\M^{-1}((\K+\C(\U_{n}))\U_{n} - \D\M^{-1}(\K+\C(\U^{\rm ex}(t_{n}))\U^{\rm ex}(t_{n}) \\
+ & = \D\M^{-1}((\K+\C(\U_{n}))(\U_{n} - \U^{\rm ex}(t_{n}))) \\
+ &+ \D\M^{-1}C(\U_{n} - \U^{\rm ex}(t_{n}))\U^{\rm ex}(t_{n}).
 %&\D\M^{-1}((\K+\C(\U_{n}))(\U_{n} - \U^{\rm ex}(t_{n}))) + \D\M^{-1}C(\U_{n} - \U^{\rm ex}(t_{n}))\U^{\rm ex}(t_{n}).
 \end{align*}
-Since $\D\M^{-1} G$ is a positive-definite matrix (due to the discrete inf-sup condition) we easily get
+Since $\D\M^{-1}\G$ is a positive-definite matrix (due to the discrete inf-sup condition) we easily get
 %Next, we pre-multiply the resulting equality by $\P_{n} - \P^{\rm ex}(t_{n})$, use the fact that $D = -G^T$, and apply the Cauchy-Schwarz inequality, getting:
 \begin{align*}
 \| (\P_{n} - \P^{\rm ex}(t_{n}))\|_{\M} &  \leq c \| \U_{n} - \U^{\rm ex}(t_{n}) \|_{\M} \leq c \delta t^{p},
@@ -308,7 +311,7 @@ $-y$
 \label{eq-C6_analytical_p}
 &p(x,y) = x+y.
 \end{align}
-This solution belongs to the finite element space, even for linear elements. We use inf-sup stable elements of the type $Q2-Q1$ in order to avoid the use of a stabilization which would introduce non-desired extra terms.  This test is solved in the unit square $\Omega=(0,1)^2$, discretized with a very coarse mesh with 10 elements per direction. With this coarse discretization we do not expect significant impact of the order reduction phenomena exposed in Subsection \ref{subsec-C6_order_reduction} for small viscosity since it occurs in the stiff regime, i.e.,  small element sizes and high viscosity. We define three different viscosities, $\nu=\{1.0,0.1,0.01\}$. We run this test in the time domain $(t_0,T) = (0,0.1)$, using several time step sizes. In particular, we start with a large time step $\delta t=0.1$ and we reduce it by a half recursively four times until we reach $\delta t=1.25\cdot10^{-2}$. The errors in the velocity and pressure fields, $e_u$ and $e_p$, are computed as the $\ell^\infty$-norm (with respect to the nodal values) of the difference between the computed solution and the analytical one at $t=T$. %In general, we define them as
+This solution belongs to the finite element space, even for linear elements. We use inf-sup stable elements of the type $Q_2/Q_1$ in order to avoid the use of a stabilization which would introduce non-desired extra terms.  This test is solved in the unit square $\Omega=(0,1)^2$, discretized with a very coarse mesh with 10 elements per direction. With this coarse discretization we do not expect significant impact of the order reduction phenomena exposed in Subsection \ref{subsec-C6_order_reduction} for small viscosity since it occurs in the stiff regime, i.e.,  small element sizes and high viscosity. We define three different viscosities, $\nu=\{1.0,0.1,0.01\}$. We run this test in the time domain $(t_0,T) = (0,0.1)$, using several time step sizes. In particular, we start with a large time step $\delta t=0.1$ and we reduce it by a half recursively four times until we reach $\delta t=1.25\cdot10^{-2}$. The errors in the velocity and pressure fields, $e_u$ and $e_p$, are computed as the $\ell^\infty$-norm (with respect to the nodal values) of the difference between the computed solution and the analytical one at $t=T$. %In general, we define them as
 %% \begin{align}
 %% \label{eq-C6_err_u}
 %% e_u:=&\max_{a\in Nu}|\U^a-\u(a)|\approx\|\u_h-\u\|_{L^\infty(\Omega)},\\
@@ -465,7 +468,7 @@ $-a\left[e^{az}\sin(ax+dy)+e^{ay}\cos(az+dx)\right]$
 &p(x,y,z) = -\frac{a^2}{2}\left[e^{2ax}+e^{2ay}+e^{2ay}+2\sin(ax+dy)\cos(az+dx)e^{a(y+z)}\right. \\\nonumber
 &\left.+2\sin(ay+dz)\cos(ax+dy)e^{a(z+x)}+2\sin(az+dx)\cos(ay+dz)e^{a(x+y)}\right].
 \end{align}
-To analyze the effect of the spatial error we solve the problem with the analytical solution \Eq{C6_beltrami_u}-\Eq{C6_beltrami_p} refining both in time and space keeping the ratio $\delta t/h$ constant. The problem is solved using $Q2-Q1$ elements with the IMEX SRK method, for all schemes stated in \ref{appendix:Butcher_tab}. A first result is obtained setting the $\delta t/h=0.01$, with the time step sizes $\delta t=\{5.0\cdot10^{-3},2.5\cdot10^{-3},1.25\cdot10^{-3},6.25\cdot10^{-4}\}$ and solving from $t=0$ till $T=5.0\cdot10^{-3}$. A second test is done with a smaller ratio, $\delta t/h=0.002$, being the time steps sizes $\delta t=\{1.0\cdot10^{-3},5.0\cdot10^{-4},2.5\cdot10^{-4},1.25\cdot10^{-4}\}$ from $t=0$ till $T=1.0\cdot10^{-3}$.
+To analyze the effect of the spatial error we solve the problem with the analytical solution \Eq{C6_beltrami_u}-\Eq{C6_beltrami_p} refining both in time and space keeping the ratio $\delta t/h$ constant. The problem is solved using $Q_2/Q_1$ elements with the IMEX SRK method, for all schemes stated in \ref{appendix:Butcher_tab}. A first result is obtained setting the $\delta t/h=0.01$, with the time step sizes $\delta t=\{5.0\cdot10^{-3},2.5\cdot10^{-3},1.25\cdot10^{-3},6.25\cdot10^{-4}\}$ and solving from $t=0$ till $T=5.0\cdot10^{-3}$. A second test is done with a smaller ratio, $\delta t/h=0.002$, being the time steps sizes $\delta t=\{1.0\cdot10^{-3},5.0\cdot10^{-4},2.5\cdot10^{-4},1.25\cdot10^{-4}\}$ from $t=0$ till $T=1.0\cdot10^{-3}$.
 \begin{figure}[h!]
   \centering
   \subfigure[Error convergence, $\frac{\delta t}{h}=0.01$]{\label{fig:beltrami_0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/dth_01}}    
@@ -511,7 +514,7 @@ In order to reduce computational cost, we first compute the flow from $t=0$ to $
 As exposed in the discussion of results in \cite{schafer_benchmark_1996}, the use of explicit schemes for the time integration of laminar flows is not an efficient approach. The restriction on the time step size to ensure stability of the method is critical since the physical time scale may be much larger. %However, in this subsection we will focus on the performance in terms of convergence, not in efficiency with respect to the fully implicit method. In Subsection \ref{subsec-C6_TGV} the efficiency of IMEX schemes is assessed for a turbulent test, where the physical time scale is not so large and may be smaller than the critical one. 
 As a result, we will only focus on the fully implicit and IMEX approaches. In this test we consider two different situations: 1) Fully implicit SRK scheme; 2) SRK scheme with diffusive term integrated implicitly and convective term explicitly.
 
-This test is solved using a mesh with 13886 $Q2-Q1$ elements, for all the schemes defined by the Butcher tableaus exposed in \ref{appendix:Butcher_tab} and for several time step sizes. In particular, the problem is solved with $\delta t=\{2.0\cdot10^{-2},1.0\cdot10^{-2},5.0\cdot10^{-3},2.5\cdot10^{-3},1.25\cdot10^{-3}\}$ for each scheme. Furthermore, an extra computation for the \textit{(3-3)} scheme is done with $\delta t=3.125\cdot10^{-4}$ in order to have a more accurate result from which we can compare to do the convergence analysis.
+This test is solved using a mesh with 13886 $Q_2/Q_1$ elements, for all the schemes defined by the Butcher tableaus exposed in \ref{appendix:Butcher_tab} and for several time step sizes. In particular, the problem is solved with $\delta t=\{2.0\cdot10^{-2},1.0\cdot10^{-2},5.0\cdot10^{-3},2.5\cdot10^{-3},1.25\cdot10^{-3}\}$ for each scheme. Furthermore, an extra computation for the \textit{(3-3)} scheme is done with $\delta t=3.125\cdot10^{-4}$ in order to have a more accurate result from which we can compare to do the convergence analysis.
 
 In \cite{schafer_benchmark_1996} there is not a prescribed correct value for the benchmark quantities, but there is a range within which most of the reported values are located. Then, we expect that our computation results will fit into these bounds.
 
@@ -758,7 +761,7 @@ with
 $$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
 We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. We solve the TGV problem using a Reynolds number ${\rm Re}=1600$, but in the literature the same test using different Reynolds numbers (e.g., ${\rm Re}=800$ and ${\rm Re}=3000$) can be found (see, e.g., \cite{gassner_accuracy_2013,hickel_adaptive_2006}).
 
-The problem is solved in a $64^3$ $Q2-Q1$ elements mesh, and no additional sub-grid modelling is being used. Our concern is about the time integration, therefore the spatial accuracy does not take a crucial role in this work. Anyway, we analyze some physical quantities, like the global kinetic energy or the kinetic energy dissipation rate, that are typically used for this test to calibrate different methods.
+The problem is solved in a $64^3$ $Q_2/Q_1$ elements mesh, and no additional sub-grid modelling is being used. Our concern is about the time integration, therefore the spatial accuracy does not take a crucial role in this work. Anyway, we analyze some physical quantities, like the global kinetic energy or the kinetic energy dissipation rate, that are typically used for this test to calibrate different methods.
 
 We only use the IMEX-SRK method with the convection treated explicitly, avoiding the need of nonlinear iterations. This situation is given by defining the operators $\mathcal{F}$ and $\mathcal{G}$ in  Eqs. (\ref{eq-C6_IMEX_NS_up}) and \Eq{C6_IMEX_NS_up_n+1} as
 $$\mathcal{F}(\U):=-K\U,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=\F-C(\U)\U-G\P.$$
