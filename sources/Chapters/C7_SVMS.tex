@@ -55,7 +55,7 @@ In order to derive the weak form of the problem \Eq{NS_strong_mome}-\Eq{NS_stron
 \label{eq-C7_scalar_product}
 (u,v)_\Omega\equiv(u,v):=\int_\Omega u(\x) \, v(\x)d\Omega
 \end{equation}
-and induced norm $\|u\|_{L^2(\Omega)}\equiv\|u\|=(u,u)^{1/2}$. Abusing of the notation, the same symbol as in \Eq{scalar_product} will be used for the integral of the product of two functions, even if these are not in $L^2(\Omega)$, and both for scalar and vector fields. The space of functions whose distributional derivatives up to order $m$ are in $L^2(\Omega)$ are denoted by $H^m(\Omega)$. We will focus on the case of $m=1$, which is also a Hilbert space. $H_0^1(\Omega)$ is the set of functions in $H^1(\Omega)$ that have zero trace on $\Gamma$. Furthermore, we denote by $H^{-1}(\Omega)$ the topological dual of $H_0^1(\Omega)$ and by $\left\langle\cdot,\cdot\right\rangle$ the duality pairing between $H^{-1}(\Omega)$ and $H_0^1(\Omega)$. Given a Banach space $X$,  $L^p(0,T;X)$ is the space of time dependent functions such that their $X$-norm is in $L^p(0,T)$.
+and induced norm $\|u\|_{L^2(\Omega)}\equiv\|u\|=(u,u)^{1/2}$. Abusing of the notation, the same symbol as in \Eq{C7_scalar_product} will be used for the integral of the product of two functions, even if these are not in $L^2(\Omega)$, and both for scalar and vector fields. The space of functions whose distributional derivatives up to order $m$ are in $L^2(\Omega)$ are denoted by $H^m(\Omega)$. We will focus on the case of $m=1$, which is also a Hilbert space. $H_0^1(\Omega)$ is the set of functions in $H^1(\Omega)$ that have zero trace on $\Gamma$. Furthermore, we denote by $H^{-1}(\Omega)$ the topological dual of $H_0^1(\Omega)$ and by $\left\langle\cdot,\cdot\right\rangle$ the duality pairing between $H^{-1}(\Omega)$ and $H_0^1(\Omega)$. Given a Banach space $X$,  $L^p(0,T;X)$ is the space of time dependent functions such that their $X$-norm is in $L^p(0,T)$.
 
 From equations \Eq{NS_strong_mome}-\Eq{NS_strong_Ini} one can derive the weak form of the problem, which consists in finding $[\u,p]\in\mathbf{L}^2(0,T;\mathcal{V}_0)\times L^1(0,T;\mathcal{Q}_0)$ such that
 \begin{equation}
@@ -80,29 +80,29 @@ There are some situations in which the strong imposition of the boundary conditi
 
 Despite of that, in many engineering problems it is more important to capture properly the large-scale flow properties than the fine-scales, focusing on the effect of the boundary layers on the mean flow instead of trying to solve properly the boundary layer itself. In this direction, an approach is to make use of the fact that the velocity profile at the boundary layer has been shown to have a relation to the wall-normal distance, [POPE]. Knowing this relation, one can impose weak boundary conditions on the Dirichlet boundary enforcing that the traction generated at that walls is the one given by an analytical expression. This approach was followed by Bazilevs and co-workers in \cite{bazilevs}, showing that weakly-imposed boundary conditions have the same results than strongly-imposed ones when using stretched meshes, but the former improves significantly the accuracy when using uniform meshes. 
 
-When weak Dirichlet boundary conditions are used, the funcitonal space of the test functions loose the property of having zero trace on $\Gamma$, then $\v\in\mathcal{V}$ and $q\in\mathcal{Q}$. Therefore, we have to consider the terms that arise when we use integration by parts to get the weak form of the Navier-Stokes equation \Eq{NS_weak}. That is to include the following terms to the bilinear form.
+When weak Dirichlet boundary conditions are used, the funcitonal space of the test functions loose the property of having zero trace on $\Gamma$, then $\v\in\mathcal{V}$ and $q\in\mathcal{Q}$. Therefore, we have to consider the terms that arise when we use integration by parts to get the weak form of the Navier-Stokes equation \Eq{C7_NS_weak}. That is to include the following terms to the bilinear form.
 \begin{align}
 \label{eq-C7_bilinear_boundary}
 B_\Gamma(\u,(\u,p),(\v,q))&=B(\u,(\u,p),(\v,q))\\\nonumber
 &-((-p\cdot\mathbf{I}+2\nu\nabla^s\u)\cdot\n,\v)_\Gamma+\frac{1}{2}((\u\cdot\n)\u,\v)_\Gamma.
 \end{align}
 
-The term that is in charge of enforcing a given traction on the wall can be written as
+Assuming that $ \u\cdot\nabla=0 $, the term that is in charge of enforcing a given traction on the wall can be written as
 \begin{equation}
 \label{eq-C7_wall_term}
-\left(\tau_w\boldsymbol{\tau},\v\right)_\Gamma=\left(\tau_w\frac{(\u-\u_g)}{\|\u-\u_g\|},\v\right)_\Gamma=\left(\alpha_b(\u-\u_g),\v\right)_\Gamma,
+\left(\tau_w\boldsymbol{\tau},\v\right)_{\Gamma_D}=\left(\tau_w\frac{(\u-\u_g)}{\|\u-\u_g\|},\v\right)_{\Gamma_D}=\left(\alpha_b(\u-\u_g),\v\right)_{\Gamma_D},
 \end{equation}
-where $ \boldsymbol{\tau} $ denotes the normalized vector acting on the direction of the traction and $ \tau_w $ the wall shear stress magnitude. The term \Eq{wall_term} is nothing else than a penalty term with a parameter \begin{equation}
+where $ \boldsymbol{\tau} $ denotes the normalized vector acting on the direction of the traction and $ \tau_w $ the wall shear stress magnitude. The term \Eq{C7_wall_term} is nothing else than a penalty term with a parameter \begin{equation}
 \label{eq-C7_alpha_b}
 \alpha_b:=\frac{\tau_w}{\|\u-\u_g\|}.
 \end{equation}
-In addition to this term, we also consider other boundary terms that arise when the so called Nitche's weak boundary conditions method is used, see \cite{Nitsche,Stenberg}. Then, the resulting bilinear form equivalent to \Eq{bilinear} will read
+In addition to this term, we also consider other boundary terms that arise when the so called Nitche's weak boundary conditions method is used, see \cite{Nitsche,Stenberg}. Then, the resulting bilinear form equivalent to \Eq{C7_bilinear} will read
 \begin{align}
 \label{eq-C7_bilinear_weak}
 B_{weak}(\u,(\u,p),(\v,q))&=B_\Gamma(\u,(\u,p),(\v,q))\\\nonumber
-&+\left(\alpha_b(\u-\u_g),\v\right)_\Gamma-((q\cdot\mathbf{I}+2\nu\nabla^s\v)\cdot\n,(\u-\u_g))_\Gamma.
+&+\left(\alpha_b(\u-\u_g),\v\right)_{\Gamma_D}-((q\cdot\mathbf{I}+2\nu\nabla^s\v)\cdot\n,(\u-\u_g))_{\Gamma_D}.
 \end{align}
-Note that the sign of the pressure test function in the second term of \Eq{bilinear_weak} is changed to keep the skewsymmetry of the velocity-pressure blocks. 
+Note that the sign of the pressure test function in the second term of \Eq{C7_bilinear_weak} is changed to keep the skewsymmetry of the velocity-pressure blocks. 
 
 The definition of the traction parameter $ \tau_w $ comes from the minimization of the residual of Spalding equation
 \begin{equation}
@@ -111,25 +111,46 @@ y^+=f(u^+)=u^++e^{-\chi B}\left(e^{\chi u^+}-1-\chi u^+-\frac{\left(\chi u^+\rig
 \end{equation}
 being $ \chi=0.4 $, $ B=5.5 $, $ y^+:=\frac{yu_\tau}{\nu} $ the wall distance and $ u^+:=\frac{\|\u_h\|}{u_\tau} $ the mean flow velocity in non-dimensional wall units. In this case, the distance to the wall is approximated to be proportional to the wall-normal mesh size, $ y=\frac{h_b}{C_b} $, and $ \tau_w=u_\tau^2 $. Here, $ h_b $ denotes the wall-normal mesh size and $ C_b $ a positive algorithmic constant.
 
-A deeper description of this method as well as the algorithm for computing the parameter $\alpha_b$ can be found in \cite{bazilevs...}. However, in \cite{bazilevs...}, the authors impose strongly the normal component of the velocity, a thing we want to avoid in the current work. Thus, we will split the penalty term distinguishing between the normal and tangential counterparts. 
+A deeper description of this method as well as the algorithm for computing the parameter $\alpha_b$ can be found in \cite{bazilevs...}. However, in \cite{bazilevs...}, the authors impose strongly the normal component of the velocity ($ \u\cdot\n=0 $ on $ \Gamma_D $), a thing we want to avoid in the current work. Thus, we will split the penalty term distinguishing between the normal and tangential counterparts. 
 
 Let us consider a function $ \v\in\mathcal{V} $. We can split its normal and tangential components as follows
 \begin{equation}
 \label{eq-C7_v_decomposition}
 \v = (\v\cdot\n)\n + (\v-(\v\cdot\n)\n)=(\n\otimes\n)\v + (\boldI-\n\otimes\n)\v.
 \end{equation}
-Introducing \Eq{v_decomposition} into the penalty term in \Eq{bilinear_weak} and using different constants for the normal and tangential directions we have a new expression for the bilinear form
+As said before, the weak imposition of the Dirichlet boundary conditions can be interpreted as imposing a force on the boundary that enforces the flow to reach that condition. Then, being $ \f_{eq} $ this equivalent force on the Dirichlet boundary, the traction on the boundary will be
+\begin{equation}
+\label{eq-C7_traction}
+(\boldsymbol{\sigma}\cdot\n,\v)_{\Gamma_D} = (-\f_{eq},\v)_{\Gamma_D}.
+\end{equation}
+Introducing \Eq{C7_v_decomposition} into \Eq{C7_traction} we have that
+\begin{align}
+\label{eq-C7_traction_decomposition}
+(\boldsymbol{\sigma}\cdot\n,\v)_{\Gamma_D} &= ((-\f_{eq}\cdot\n)\n,\v)_{\Gamma_D}+((-\f_{eq}\cdot\boldsymbol{\tau})\boldsymbol{\tau},\v)_{\Gamma_D}\\\nonumber
+&=-((\f_{eq}\cdot\n)\n,\v)_{\Gamma_D} - (\tau_w\boldsymbol{\tau},\v)_{\Gamma_D}\\\nonumber
+&=-(\alpha_{b,n}(\u-\u_g),(\n\otimes\n)\v)_{\Gamma_D} - (\alpha_{b,\tau}(\u-\u_g),(\boldI-\n\otimes\n)\v)_{\Gamma_D}.
+\end{align}
+In this case $ \boldsymbol{\tau}=\frac{(\boldI-\n\otimes\n)(\u-\u_g)}{\|(\boldI-\n\otimes\n)(\u-\u_g)\|} $ and we define the wall-normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_laminar}, leading to the following parameter definitions
+\begin{align}
+\label{eq-C7_alpha_b_n}
+&\alpha_{b,n}:=\beta\frac{C_b\nu}{h_b},\\
+\label{eq-C7_alpha_b_t}
+&\alpha_{b,\tau}:=\frac{\tau_w}{\|(\boldI-\n\otimes\n)(\u-\u_g)\|}.
+\end{align}
+In \Eq{C7_alpha_b_n}, $ \beta $ is a constant that we can tune to adjust the model. An assessment of the parameter selection is done in Section \ref{subsec-C7_TCF}.
+
+Replacing the penalty terms from \Eq{C7_traction_decomposition} into \Eq{C7_bilinear_weak}, we get a new expression for the bilinear form
 \begin{align}
 \label{eq-C7_bilinear_weak_by_components}
 B_{weak}(\u,(\u,p),(\v,q))&=B_\Gamma(\u,(\u,p),(\v,q))\\\nonumber
-&+\left(\alpha_{b,n}(\u-\u_g),(\n\otimes\n)\v\right)_\Gamma+\left(\alpha_{b,\tau}(\u-\u_g),(\boldI-\n\otimes\n)\v\right)_\Gamma\\\nonumber
-&-((\u-\u_g),(q\cdot\mathbf{I}+2\nu\nabla^s\v_h)\cdot\n)_\Gamma.
+&+\left(\alpha_{b,n}(\u-\u_g),(\n\otimes\n)\v\right)_{\Gamma_D}+\left(\alpha_{b,\tau}(\u-\u_g),(\boldI-\n\otimes\n)\v\right)_{\Gamma_D}\\\nonumber
+&-((\u-\u_g),(q\cdot\mathbf{I}+2\nu\nabla^s\v_h)\cdot\n)_{\Gamma_D}.
 \end{align}
-Here, we can use the same penalty constant based on the law of the wall for the tangential components $\alpha_{b,\tau}=\alpha_b$, and choose another definition for the normal component $\alpha_{b,n}$. In fact, we define the normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_laminar}
-\begin{equation}
-\label{eq-C7_alpha_b_n}
-\alpha_{b,n}:=\beta\frac{C_b\nu}{h_b},
-\end{equation} with $ \beta $ being a constant that we can tune to adjust the model. An assessment of the parameter selection is done in Section \ref{subsec-C7_TCF}.
+%Here, we can use the same penalty constant based on the law of the wall for the tangential components $\alpha_{b,\tau}=\alpha_b$, and choose another definition for the normal component $\alpha_{b,n}$. In fact, we define the normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_laminar}
+%\begin{equation}
+%\label{eq-C7_alpha_b_n}
+%\alpha_{b,n}:=\beta\frac{C_b\nu}{h_b},
+%\end{equation} with $ \beta $ being a constant that we can tune to adjust the model. An assessment of the parameter selection is done in Section \ref{subsec-C7_TCF}.
 
 \section{The VMS method as a LES model}
 \label{sec-C7_VMS}
@@ -140,7 +161,7 @@ In order to define the semi-discrete problem, we consider a FE partition $ \math
 (\partial_t\u_h,\v_h)+B(\u_h,(\u_h,p_h),(\v_h,q_h)) =\left<\f,\v_h\right>
 \quad\quad\forall\v_h\in\mathcal{V}_{0,h},\forall q_h\in\mathcal{Q}_{0,h}.
 \end{equation}
-With the boundary and initial conditions \Eq{}-\Eq{} satisfied in a weak sense. In \Eq{NS_galerkin} the subsets $ \mathcal{V}_{0,h} $ and $ \mathcal{Q}_{0,h} $ denote the set of functions belonging to $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively, with zero trace on $ \Gamma_D $. Moreover, the velocity field function space is defined as $ \mathcal{V}_{g,h}:=\lbrace\v_h\in\mathcal{V}_h: \left.\v_h\right|_{\Gamma_D}=\u_g\rbrace $.
+With the boundary and initial conditions \Eq{C7_}-\Eq{C7_} satisfied in a weak sense. In \Eq{C7_NS_galerkin} the subsets $ \mathcal{V}_{0,h} $ and $ \mathcal{Q}_{0,h} $ denote the set of functions belonging to $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively, with zero trace on $ \Gamma_D $. Moreover, the velocity field function space is defined as $ \mathcal{V}_{g,h}:=\lbrace\v_h\in\mathcal{V}_h: \left.\v_h\right|_{\Gamma_D}=\u_g\rbrace $.
 
 When weak boundary conditions are considered, the problem results in finding $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
 \begin{equation}
@@ -150,9 +171,9 @@ When weak boundary conditions are considered, the problem results in finding $[\
 \end{equation}
 Note that in this case $ \u_h,\v_h\in\mathcal{V}_h $ and $ p_h,q_h\in\mathcal{Q}_h $.
 
-Henceforward, we will assume that in the case when Dirichlet boundary conditions are considered, $ \Gamma_D\neq\O $, they will be imposed weakly, making use of the bilinear form defined in \Eq{bilinear_weak_by_components}.
+Henceforward, we will assume that in the case when Dirichlet boundary conditions are considered, $ \Gamma_D\neq\O $, they will be imposed weakly, making use of the bilinear form defined in \Eq{C7_bilinear_weak_by_components}.
 
-Following the VMS approach, \cite{hughes_variational_1998}, we consider a two-scale decomposition of the continuous spaces as $ \mathcal{V}=\mathcal{V}_h\oplus\widetilde{\mathcal{V}} $ and $ \mathcal{Q}=\mathcal{Q}_h\oplus\widetilde{\mathcal{Q}} $. Where $ \widetilde{\mathcal{V}} $ and $\widetilde{\mathcal{Q}} $ are infinite-dimesnional subscale spaces that complement the finite element spaces $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subscale component. Then, introducing the VMS decomposition into \Eq{NS_weak} with the bilinear definition \Eq{bilinear_weak_by_components}, we get the following semi-discrete probem: find 
+Following the VMS approach, \cite{hughes_variational_1998}, we consider a two-scale decomposition of the continuous spaces as $ \mathcal{V}=\mathcal{V}_h\oplus\widetilde{\mathcal{V}} $ and $ \mathcal{Q}=\mathcal{Q}_h\oplus\widetilde{\mathcal{Q}} $. Where $ \widetilde{\mathcal{V}} $ and $\widetilde{\mathcal{Q}} $ are infinite-dimesnional subscale spaces that complement the finite element spaces $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subscale component. Then, introducing the VMS decomposition into \Eq{C7_NS_weak} with the bilinear definition \Eq{C7_bilinear_weak_by_components}, we get the following semi-discrete probem: find 
 $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
 \begin{align}
 \label{eq-C7_NS_vms_weak}
@@ -160,12 +181,12 @@ $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ 
 &+\left(\tilde{\u},\mathcal{L}^*_\a(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)_h =\left<\f,\v_h\right>
 \quad\forall\v_h\in\mathcal{V}_{h},\forall q_h\in\mathcal{Q}_{h},
 \end{align}
-where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products \Eq{scalar_product} over each element $K$ of the partition $\mathcal{T}_h$. $ \mathcal{L}^*_\a(\v_h,q_h) $ is the formal adjoint operator of the momentum equation, defined as 
+where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products \Eq{C7_scalar_product} over each element $K$ of the partition $\mathcal{T}_h$. $ \mathcal{L}^*_\a(\v_h,q_h) $ is the formal adjoint operator of the momentum equation, defined as 
 \begin{equation}
 \label{eq-C7_NS_adjoint}
 \mathcal{L}^*_\a(\v_h,q_h):=-\nabla\cdot\left(2\nu\nabla^s\v_h\right)-\a\cdot\nabla\v_h-\nabla q_h.
 \end{equation}
-The fourth and fifth terms in \Eq{NS_vms_weak} involving the velocity and pressure subscales, respectively, come from an element-wise integration by parts, in which the boundary terms 
+The fourth and fifth terms in \Eq{C7_NS_vms_weak} involving the velocity and pressure subscales, respectively, come from an element-wise integration by parts, in which the boundary terms 
 $\left( \v_{h},\nu \n\cdot \nabla \tilde{\u}\right)_{\partial h}$ and
 $\left( q_{h},\n\cdot \tilde{\u}\right)_{\partial h}$
 have been neglected (the subscript ${\partial h}$ is used to denote the sum over all elements of the integral on the boundary of each element). It also involves the approximation 
@@ -175,14 +196,14 @@ $\left( \v_{h},\n\cdot \a \tilde{\u}\right)_{\partial h}$ and
 $(\tilde{\u},\nabla\cdot\a \, \v_h)$. 
 These approximations are discussed in  \cite{codina_time_2007} together with the choice of $\a$ which defines the type of scale splitting (linear or nonlinear), see also \cite{colomes_assessment_2015}.
 
-The resulting semi-discrete problem \Eq{NS_vms_weak} cannot be solved directly since the subscales belong to infinite-dimensional spaces, $ \tilde{\u}\in\widetilde{\mathcal{V}} $ and $ \tilde{p}\in\widetilde{\mathcal{Q}} $. Therefore, the modelling of the small scales is needed in order to obtain a feasible method. Considering the general case where the subscales are treated as time-dependent, and approximating the Navier-Stokes operator by two stabilization parameters $\tau_m^{-1}$ and $\tau_c^{-1}$ (see for example \cite{codina_time_2007}), the fine scale problem can be written as
+The resulting semi-discrete problem \Eq{C7_NS_vms_weak} cannot be solved directly since the subscales belong to infinite-dimensional spaces, $ \tilde{\u}\in\widetilde{\mathcal{V}} $ and $ \tilde{p}\in\widetilde{\mathcal{Q}} $. Therefore, the modelling of the small scales is needed in order to obtain a feasible method. Considering the general case where the subscales are treated as time-dependent, and approximating the Navier-Stokes operator by two stabilization parameters $\tau_m^{-1}$ and $\tau_c^{-1}$ (see for example \cite{codina_time_2007}), the fine scale problem can be written as
 \begin{align}
 \label{eq-C7_velo_sgs}
 \partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u),\\
 \label{eq-C7_press_sgs}
 \tau_c^{-1}\tilde{p}=\mathcal{P}(R_p).
 \end{align}
-In \Eq{velo_sgs}-\Eq{press_sgs} $\mathcal{P}$ denotes the projection onto the space of subscales. The vector $\R=[\R_u,R_p]^T$ is the residual of the Navier-Stokes equations \Eq{NS_strong_mome}-\Eq{NS_strong_inc}, with
+In \Eq{C7_velo_sgs}-\Eq{C7_press_sgs} $\mathcal{P}$ denotes the projection onto the space of subscales. The vector $\R=[\R_u,R_p]^T$ is the residual of the Navier-Stokes equations \Eq{C7_NS_strong_mome}-\Eq{C7_NS_strong_inc}, with
 \begin{align}
 \label{eq-C7_Ru}
 %&\R_u=\f-\left(\partial_t\u_h+N((\u_h+\tilde{\u}),\u_h)+\nabla p_h \right),\\
@@ -200,23 +221,23 @@ and the expressions of the stabilization parameters $\tau_m$ and $\tau_c$ is
 \end{align}
 where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants.
 
-Alternatively to \Eq{tau_c} one can consider the following definition of $ \tau_c $
+Alternatively to \Eq{C7_tau_c} one can consider the following definition of $ \tau_c $
 \begin{equation}
 \label{eq-C7_tau_c_alt}
 \tau_c=c_c\left(\nu+\frac{c_1}{c_2}h|\u_h|\right),
 \end{equation}
-which results from introducing \Eq{tau_m} into \Eq{tau_c} and considering a new constant $ c_c $.
+which results from introducing \Eq{C7_tau_m} into \Eq{C7_tau_c} and considering a new constant $ c_c $.
 
-Equations \Eq{NS_vms_weak}-\Eq{tau_c} define a generic VMS method that can be tuned depending on the selection of three different ingredients. The first one is the definition of the projection, $ \mathcal{P} $, used in \Eq{velo_sgs}-\Eq{press_sgs}. One possible choise is to select the projection as the identity, $\mathcal{P}:=\boldI$, which would lead to the Algebraic SubGrid Scales (ASGS) method. Another option is to choose the subscale space to be orthogonal to the FE space, then $ \mathcal{P}:=\Pi^\perp_h=\boldI-\Pi_h $, which lead to the Orthogonal SubScales method introduced in \cite{codina_stabilization_2000}. The second ingredient that can vary the definition of the VMS method is the nonlinearity of the advective velocity $ \a $. One can choose between a linear approach taking only the FE counterpart, $ \a=\u_h $, or a nonlinear advection term with $ \a=\u_h+\tilde{\u} $. Finally the velocity subscale time-dependency is the third ingredient that especialises the VMS method. We can leave as it is defined in \Eq{velo_sgs}, resulting in a dynamic approach for the velocity subscale, or we could assume quasi-static velocity subscales. In the last case, \Eq{velo_sgs} would read $ \tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u)$, and the second term in \Eq{NS_vms_weak} would be removed.
+Equations \Eq{C7_NS_vms_weak}-\Eq{C7_tau_c} define a generic VMS method that can be tuned depending on the selection of three different ingredients. The first one is the definition of the projection, $ \mathcal{P} $, used in \Eq{C7_velo_sgs}-\Eq{C7_press_sgs}. One possible choise is to select the projection as the identity, $\mathcal{P}:=\boldI$, which would lead to the Algebraic SubGrid Scales (ASGS) method. Another option is to choose the subscale space to be orthogonal to the FE space, then $ \mathcal{P}:=\Pi^\perp_h=\boldI-\Pi_h $, which lead to the Orthogonal SubScales method introduced in \cite{codina_stabilization_2000}. The second ingredient that can vary the definition of the VMS method is the nonlinearity of the advective velocity $ \a $. One can choose between a linear approach taking only the FE counterpart, $ \a=\u_h $, or a nonlinear advection term with $ \a=\u_h+\tilde{\u} $. Finally the velocity subscale time-dependency is the third ingredient that especialises the VMS method. We can leave as it is defined in \Eq{C7_velo_sgs}, resulting in a dynamic approach for the velocity subscale, or we could assume quasi-static velocity subscales. In the last case, \Eq{C7_velo_sgs} would read $ \tau_m^{-1}\tilde{\u}=\mathcal{P}(\R_u)$, and the second term in \Eq{C7_NS_vms_weak} would be removed.
 
 All combinations resulting from changing the different definitions of the VMS method have been studied for LES of incompressible turbulent flows in \cite{colomes_assessment_2015}. The final definition of the VMS method used in this work is stated in the following subsection.
 
 \subsection{OSS with implicit projection for mixed FE methods}
-Let us consider a quasi-static definition of the velocity and pressure subscales, neglecting the temporal derivative $ \partial_t\tilde{\u} $ in \Eq{velo_sgs}. Regarding the definition of the advetion velocity, we set $ \a=\u_h $, resulting in a linear approach for the velocity subscale. Furthermore, we select an orthogonal definition of the subscale space, $ \mathcal{P}:=\Pi_h^\perp=\boldI-\Pi_h $.
+Let us consider a quasi-static definition of the velocity and pressure subscales, neglecting the temporal derivative $ \partial_t\tilde{\u} $ in \Eq{C7_velo_sgs}. Regarding the definition of the advetion velocity, we set $ \a=\u_h $, resulting in a linear approach for the velocity subscale. Furthermore, we select an orthogonal definition of the subscale space, $ \mathcal{P}:=\Pi_h^\perp=\boldI-\Pi_h $.
 
 This setting for equal-order FE would result in the called \textit{static linear OSS (Sta-Lin-OSS)} method described in \cite{colomes_assessment_2015}. In the cited paper, an assessment of the different choices that can conform the VMS method where assessed, showing that all methods give similar results.  Despite of that, the dynamic and nonlinear version with orthogonal subscales was shown to be the most efficient choice in terms of computational cost.
 
-An alternative to the residual-based OSS method is to consider a term-by-term projection approach, proposed in \cite{codina_analysis_2008}. Instead of having al residual coupled, result of considering the residual projection in \Eq{velo_sgs} and the full adjoint operator in \Eq{NS_vms_weak}, only the essential terms to guarantee stability are taken into account. That is to replace the fourth term in \Eq{NS_vms_weak} by the orthogonal projection of the convective term plus the orthogonal projection of the pressure gradient term. Using static and linear subscales, this approach reads: find 
+An alternative to the residual-based OSS method is to consider a term-by-term projection approach, proposed in \cite{codina_analysis_2008}. Instead of having al residual coupled, result of considering the residual projection in \Eq{C7_velo_sgs} and the full adjoint operator in \Eq{C7_NS_vms_weak}, only the essential terms to guarantee stability are taken into account. That is to replace the fourth term in \Eq{C7_NS_vms_weak} by the orthogonal projection of the convective term plus the orthogonal projection of the pressure gradient term. Using static and linear subscales, this approach reads: find 
 $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
 \begin{align}
 \label{eq-C7_NS_vms_tbtoss}
@@ -242,13 +263,13 @@ being $ \etaa_h:=\Pi_h(\u_h\cdot\nabla\u_h) $ the projection of the convective t
 \left(\tau_m\etaa_h,\v_h\right)=\left(\tau_m\u_h\cdot\nabla\u_h,\v_h\right)\quad\forall\v_h\in\mathcal{V}_{h}
 \end{equation}
 
-In \Eq{NS_vms_mfe_oss}, the last term of the left-hand side, $ \left(\tau_c\nabla\cdot\u_h,\nabla\cdot\v_h\right)_h $, is usually called grad-div stabilization term, and in general it is not required to ensure stability of the problem. Nevertheless, when an inf-sup stable discretization is used, the influence of the grad-div stabilization on the accuracy of the method is essential. It has been shown that the this term has an influence on the mass conservation \cite{linke_collision_2009}, but it also influences the computational cost of the linear solvers \cite{olshanskii_grad-div_2004,heister_efficient_2013}. In \cite{colomes_mixed}, the effect of this term is assessed for the Taylor-Green Vortex problem and the Turbulent Channel Flow test using an ISS-OSS method.
+In \Eq{C7_NS_vms_mfe_oss}, the last term of the left-hand side, $ \left(\tau_c\nabla\cdot\u_h,\nabla\cdot\v_h\right)_h $, is usually called grad-div stabilization term, and in general it is not required to ensure stability of the problem. Nevertheless, when an inf-sup stable discretization is used, the influence of the grad-div stabilization on the accuracy of the method is essential. It has been shown that the this term has an influence on the mass conservation \cite{linke_collision_2009}, but it also influences the computational cost of the linear solvers \cite{olshanskii_grad-div_2004,heister_efficient_2013}. In \cite{colomes_mixed}, the effect of this term is assessed for the Taylor-Green Vortex problem and the Turbulent Channel Flow test using an ISS-OSS method.
 
 \subsection{Equivalence with LES models}
 \label{subsec-C7_tbt_OSS_ISS}
 LES models, filtered equations, residual tensor, reynolds-cross-leonard stresses...
 
-In order to justify that the method that we use in this work acts as a LES model without the need of adding any kind of physical based extra dissipation, we focus on the energy balance equations. To do so, we replace $ \v_h $ by $ \u_h $ and $ q_h $ by $ p_h $ in \Eq{NS_vms_mfe_oss}. The resultin equation is
+In order to justify that the method that we use in this work acts as a LES model without the need of adding any kind of physical based extra dissipation, we focus on the energy balance equations. To do so, we replace $ \v_h $ by $ \u_h $ and $ q_h $ by $ p_h $ in \Eq{C7_NS_vms_mfe_oss}. The resultin equation is
 \begin{align}
 \label{eq-C7_NS_ene_balance_1}
 (\partial_t\u_h,\u_h)&+(2\nu\nabla^s\u_h,\nabla\u_h)+b(\u_h,\u_h,\u_h)\\\nonumber
@@ -256,12 +277,12 @@ In order to justify that the method that we use in this work acts as a LES model
 &-((\u_h-\u_g),(p_h\cdot\mathbf{I}+2\nu\nabla^s\u_h)\cdot\n)_\Gamma\\\nonumber
 &+\left(\tau_m\Pi_h^\perp(\u_h\cdot\nabla\u_h),\u_h\cdot\nabla\u_h\right)_h+\left(\tau_c\nabla\cdot\u_h,\nabla\cdot\u_h\right)_h=\left\langle\f,\u_h\right\rangle.
 \end{align}
-Using the skewsymmetric convetive term defined in ..., the third term in \Eq{NS_ene_balance_1} reads
+Using the skewsymmetric convetive term defined in ..., the third term in \Eq{C7_NS_ene_balance_1} reads
 \begin{align*}
 b(\u_h,\u_h,\u_h)&=\frac{1}{2}(\u_h\cdot\nabla\u_h,\u_h)-\frac{1}{2}(\u_h,\u_h\cdot\nabla\u_h)+\frac{1}{2}\left((\u_h\cdot\n)\u_h,\u_h\right)_\Gamma=\frac{1}{2}\left((\u_h\cdot\n)\u_h,\u_h\right)_\Gamma\\
 &=\left\|(\u_h\cdot\n)^{1/2}\u_h\right\|^2_\Gamma.
 \end{align*}
-Making use of the orthogonality of the projection $ \Pi_h^\perp $, splitting the boundary terms into its normal and tangential components, and operating, equation \Eq{NS_ene_balance_1} can be rewritten as
+Making use of the orthogonality of the projection $ \Pi_h^\perp $, splitting the boundary terms into its normal and tangential components, and operating, equation \Eq{C7_NS_ene_balance_1} can be rewritten as
 \begin{align}
 \label{eq-C7_NS_ene_balance_2}
 &\frac{d}{dt}\left(\frac{1}{2}\left\|\u_h\right\|^2\right)+2\nu\left\|\nabla^s\u_h\right\|^2+\left\|\tau_m^{1/2}\Pi_h^\perp(\u_h\cdot\nabla\u_h)\right\|^2_h+\left\|\tau_c^{1/2}\nabla\cdot\u_h\right\|^2_h\\\nonumber
@@ -271,7 +292,7 @@ Making use of the orthogonality of the projection $ \Pi_h^\perp $, splitting the
 &-\left((\u_h-\u_g),(p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n\right)_\Gamma\\\nonumber
 &=\left\langle\f,\u_h\right\rangle.
 \end{align}
-Let us analyse in more detail the implication of each term of \Eq{NS_ene_balance_2} into the energy evolution of the problem. To simplify the notation, we rewrite \Eq{NS_ene_balance_2} as
+Let us analyse in more detail the implication of each term of \Eq{C7_NS_ene_balance_2} into the energy evolution of the problem. To simplify the notation, we rewrite \Eq{C7_NS_ene_balance_2} as
 \begin{align}
 \label{NS_ene_balance_3}
 \frac{dk_h}{dt}=&-\int_{\Omega}\varepsilon_{mol,h}\ d\Omega-\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega-\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\\\nonumber
@@ -282,7 +303,7 @@ being $ k_h:=\frac{1}{2}\left\|\u_h\right\|^2 $ the kinetic energy of the resolv
 
 Going further, assuming that strong boundary conditions are applied, we have that $ \varepsilon_{\a,h}=\varepsilon_{N,h}=W_{t,h}=0 $. For a fully developed turbulent flow, if the resolved scales are fine enough to capture the inertial subrange, the total energy of the problem account for almost all the energy of the problem, $ k_h\approx k $. Furthermore, when external forces mainly acts on the large scales of the flow we have that $ W_{f,h}\approx W_f $. Hence, knowing that the energy dissipation rate at the continuous level is
 $$ \frac{dk}{dt}=-\int_{\Omega}\varepsilon_{mol}\ d\Omega+\int_{\Omega}W_{f}\ d\Omega, $$
-from the energy balance equation \Eq{NS_balance_3}, we can say that our method acts properly as a LES method if
+from the energy balance equation \Eq{C7_NS_balance_3}, we can say that our method acts properly as a LES method if
 $$ \sum_e\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega+\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\approx\int_{\Omega}\varepsilon_{mol,h}\ d\Omega. $$
 According to \cite{guasch_statistical}, this condition is satisfied since 
 $$ \frac{1}{V_e}\left\langle\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega\right\rangle + \frac{1}{V_e}\left\langle\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\right\rangle\sim\varepsilon_{mol,h}\left[1+\mathcal{O}\left(\frac{h}{L}\right)^{2/3}\right], $$
@@ -291,13 +312,13 @@ with $ L $ the characteristic large eddies length.
 \section{Segregated Runge-Kutta time integration}
 \label{sec-C7_SRK}
 \subsection{Matricial form}
-Let us suppose that we solve the problem \Eq{NS_strong_mome}-\Eq{NS_strong_Ini} using the implicit \textit{term by term} OSS method with Inf-Sup stable elements, which definition is given by equations \Eq{NS_OSS}, \Eq{NSprojectiondef1} and \Eq{biliniar_oss_tbt_iss}. Assuming that $\u_h$, $p_h$ and $\etaa_h$ are defined by a finite element interpolation from the nodal values $\{\U^a\}_{a=1,...,N_u}$, $\{P^b\}_{b=1,...,N_p}$ and $\{\ETA^c\}_{c=1,...,N_\eta}$, the finite element approximation of the velocity, pressure and projection fields can be written as
+Let us suppose that we solve the problem \Eq{C7_NS_strong_mome}-\Eq{C7_NS_strong_Ini} using the implicit \textit{term by term} OSS method with Inf-Sup stable elements, which definition is given by equations \Eq{C7_NS_OSS}, \Eq{C7_NSprojectiondef1} and \Eq{C7_biliniar_oss_tbt_iss}. Assuming that $\u_h$, $p_h$ and $\etaa_h$ are defined by a finite element interpolation from the nodal values $\{\U^a\}_{a=1,...,N_u}$, $\{P^b\}_{b=1,...,N_p}$ and $\{\ETA^c\}_{c=1,...,N_\eta}$, the finite element approximation of the velocity, pressure and projection fields can be written as
 \begin{align*}
 &\u_h(\x)=\sum_{a=1}^{N_u}\boldsymbol{\phi}_a(\x)\U^a,\quad p_h(\x)=\sum_{b=1}^{N_p}\psi_b(\x)P^b,\quad \etaa_h(\x)=\sum_{c=1}^{N_\eta}\boldsymbol{\phi}_\eta(\x)\ETA^c,
 \end{align*}
 where $\{\boldsymbol{\phi}_{a,i}\}_{a=1,...,N_u;i=1,...,d}$, $\{\psi_b\}_{b=1,...,N_p}$ and $\{\boldsymbol{\phi}_{c,i}\}_{c=1,...,N_\eta;i=1,...,d}$ are the Langrangian basis associated to $\mathcal{V}_h$ and $\mathcal{Q}_h$. $N_u$, $N_p$ and $N_\eta$ are the total amount of nodes for the velocity, pressure and projection fields. 
 
-The matricial form of the stabilized problem \Eq{NS_OSS} introducing the definitions \Eq{NSprojectiondef1} and \Eq{biliniar_oss_tbt_iss} can be written as follows. 
+The matricial form of the stabilized problem \Eq{C7_NS_OSS} introducing the definitions \Eq{C7_NSprojectiondef1} and \Eq{C7_biliniar_oss_tbt_iss} can be written as follows. 
 \begin{equation}
 \label{eq-C7_NSmatform}
 \left[\begin{array}{c}
@@ -345,9 +366,9 @@ being $a$ and $b$ the node identification. Note that $\D=-\	G^T$, when boundary 
 
 \subsection{Time integration through Segregated Runge-Kutta schemes}
 \label{subsec:C7_SRK}
-Focusing in the time integration of the problem \Eq{NSmatform} we consider now the application of a Segregated Runge-Kutta scheme. SRK methods have been proposed in \cite{colomes_2015} and successfully tested for laminar flows. The main goal of this kind of time integrators is the segragation of velocity and pressure computations, giving much easier systems to be solved, taking advantage of an Implcit-Explicit (IMEX) Runge-Kutta scheme. The use of a Rung-Kutta scheme also allow a high order integration in time with no extra implementation efforts. Furthermore, with this kind of time integrators, an adaptive time stepping technique can be easily used.
+Focusing in the time integration of the problem \Eq{C7_NSmatform} we consider now the application of a Segregated Runge-Kutta scheme. SRK methods have been proposed in \cite{colomes_2015} and successfully tested for laminar flows. The main goal of this kind of time integrators is the segragation of velocity and pressure computations, giving much easier systems to be solved, taking advantage of an Implcit-Explicit (IMEX) Runge-Kutta scheme. The use of a Rung-Kutta scheme also allow a high order integration in time with no extra implementation efforts. Furthermore, with this kind of time integrators, an adaptive time stepping technique can be easily used.
 
-Let us now consider the matricial problem \Eq{NSmatform}, which can be written in a compact form in terms of the velocity and projection fields as follows
+Let us now consider the matricial problem \Eq{C7_NSmatform}, which can be written in a compact form in terms of the velocity and projection fields as follows
 \begin{subequations}\label{eq-C7_SRK_ueta}
 \begin{align}
 \label{eq-C7_SRK_u}
@@ -364,9 +385,9 @@ Where $\mathcal{F}$ and $\mathcal{G}$ are certain operators that contain the ter
 \mathcal{G}(\U,\ETA)&:=\F_u-(\C+\A_\tau)\U-\B_\tau\ETA\\\nonumber
 &+\G\left(\D\M^{-1}\G\right)^{-1}\left(\D\M^{-1}\left((\K+\C+\A_\tau)\U+\B_\tau\ETA-\F_u\right)\right).
 \end{align}
-Note that this choice will lead to a linear system of equations since the only term integrated implicitly is the viscous term. Another fact to be highlighted here is that the projection and the velocity fields are not coupled with this definition. Other choices could be used to define the operators $\mathcal{F}$ and $\mathcal{G}$, for instance, the convective and the projection terms could be integrated implicitly. In this later case, the resulting system would be nonlinear and would couple velocity and projection fields. We choose definitions \Eq{SRK_F}-\Eq{SRK_G} because we are interested on solving turbulent flows, where the time step restriction due to the hyperbolic CFL condition is often smaller than the restriction on the time step size required to capture the small time scales of the flow.
+Note that this choice will lead to a linear system of equations since the only term integrated implicitly is the viscous term. Another fact to be highlighted here is that the projection and the velocity fields are not coupled with this definition. Other choices could be used to define the operators $\mathcal{F}$ and $\mathcal{G}$, for instance, the convective and the projection terms could be integrated implicitly. In this later case, the resulting system would be nonlinear and would couple velocity and projection fields. We choose definitions \Eq{C7_SRK_F}-\Eq{C7_SRK_G} because we are interested on solving turbulent flows, where the time step restriction due to the hyperbolic CFL condition is often smaller than the restriction on the time step size required to capture the small time scales of the flow.
 
-We now proceed with the time integration scheme for equation \Eq{SRK_u}. Let us consider an IMEX RK method with $s$ stages, the velocity and projection at the stage $i$, $\U_i$ and $\ETA_i$, for $1\leq i\leq s$ are computed as
+We now proceed with the time integration scheme for equation \Eq{C7_SRK_u}. Let us consider an IMEX RK method with $s$ stages, the velocity and projection at the stage $i$, $\U_i$ and $\ETA_i$, for $1\leq i\leq s$ are computed as
 \begin{subequations}\label{eq-C7_SRK_ueta_RK}
 \begin{align}
 \label{eq-C7_SRK_u_RK}
@@ -377,7 +398,7 @@ We now proceed with the time integration scheme for equation \Eq{SRK_u}. Let us 
 \end{subequations}
 where $a_{ij}$ and $\hat{a}_{ij}$ are the coefficients of the implicit and explicit Butcher tableau, respectively.  
 %% Finally, write the problem in terms of pressures only
-After some manipulation, we can rewrite \Eq{SRK_ueta_RK} as
+After some manipulation, we can rewrite \Eq{C7_SRK_ueta_RK} as
 \begin{subequations}\label{eq-C7_SRK_upeta_RK}
 \begin{align}
 \label{eq-C7_SRK_upeta_RK_u}
@@ -401,7 +422,7 @@ The final update after the $s$ stages will read as follows
 \end{align}
 \end{subequations}
 
-Note that equations \Eq{SRK_upeta_RK_p} and \Eq{SRK_upeta_RK_p_n+1} are equivalent to solve a Darcy type problem, with the following expression
+Note that equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} are equivalent to solve a Darcy type problem, with the following expression
 \begin{equation}
 \label{eq-C7_SRK_upeta_RK_p_darcy}
 \left[\begin{array}{cc}
@@ -415,12 +436,12 @@ Note that equations \Eq{SRK_upeta_RK_p} and \Eq{SRK_upeta_RK_p_n+1} are equivale
 0
 \end{array}\right],
 \end{equation}
-with $k$ being $i$ or $n+1$, depending of the equation that we are solving, and $\U^*$ an auxiliar velocity field, which satisfies the discrete incompressibility constraint. Then, in practice, equations \Eq{SRK_upeta_RK_p} and \Eq{SRK_upeta_RK_p_n+1} are implemented as a Darcy problem \Eq{SRK_upeta_RK_p_darcy}, which can be efficiently solved through block preconditioning technique like what has been explained in subsection \ref{subsec-C7_Block_prec}.
+with $k$ being $i$ or $n+1$, depending of the equation that we are solving, and $\U^*$ an auxiliar velocity field, which satisfies the discrete incompressibility constraint. Then, in practice, equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} are implemented as a Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy}, which can be efficiently solved through block preconditioning technique like what has been explained in subsection \ref{subsec-C7_Block_prec}.
 
 \subsection{Weak Dirichlet boundary conditions for SRK schemes}
-In Section \ref{subsec-C7_weak_bcs} we have stated that in some situations weak Dirichlet boundary conditions may be used. In this case, the SRK time integration schemes have to take into account the boundary terms described in \Eq{bilinear_boundary} and \Eq{bilinear_weak}, which implementation is discussed in this subsection.
+In Section \ref{subsec-C7_weak_bcs} we have stated that in some situations weak Dirichlet boundary conditions may be used. In this case, the SRK time integration schemes have to take into account the boundary terms described in \Eq{C7_bilinear_boundary} and \Eq{C7_bilinear_weak}, which implementation is discussed in this subsection.
 
-The use of weak Dirichlet boundary conditions give a matricial equation equivalent to \Eq{NSmatform} that can be written as follows
+The use of weak Dirichlet boundary conditions give a matricial equation equivalent to \Eq{C7_NSmatform} that can be written as follows
 \begin{equation}
 \label{eq-C7_NSmatform_weak}
 \left[\begin{array}{c}
@@ -428,7 +449,7 @@ The use of weak Dirichlet boundary conditions give a matricial equation equivale
 \mathbf{0}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{ccc}
-\K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+M_\Gamma&\G+\G_\Gamma&\B_\tau\\
+\K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+\M_\Gamma&\G+\G_\Gamma&\B_\tau\\
 \D+\D_\Gamma&0&0\\
 \B_\tau^T&0&\M_\tau
 \end{array}\right]\left[\begin{array}{c}
@@ -443,49 +464,77 @@ The use of weak Dirichlet boundary conditions give a matricial equation equivale
 \end{equation}
 with 
 \begin{align*}
-&\M_{\Gamma}^{ab}:=\alpha_b(\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b})_\Gamma,&a,b=1,...,N_u,\\
-&\K_{\Gamma}^{ab}:=-2\nu(\boldsymbol{\phi}_{a},\nabla^s\boldsymbol{\phi}_{b}\cdot\n)_\Gamma-2\nu(\nabla^s\boldsymbol{\phi}_{a}\cdot\n,\boldsymbol{\phi}_{b})_\Gamma,&a,b=1,...,N_u,\\
+&\M_{\Gamma}^{ab}:=(\alpha_{b,n}(\n\otimes\n)\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b})_{\Gamma_D}+(\alpha_{b,\tau}(\mathbf{I}-\n\otimes\n)\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b})_{\Gamma_D},&a,b=1,...,N_u,\\
+&\K_{\Gamma}^{ab}:=-2\nu(\boldsymbol{\phi}_{a},\nabla^s\boldsymbol{\phi}_{b}\cdot\n)_\Gamma-2\nu(\nabla^s\boldsymbol{\phi}_{a}\cdot\n,\boldsymbol{\phi}_{b})_{\Gamma_D},&a,b=1,...,N_u,\\
 &\C_{\Gamma}^{ab}:=\frac{1}{2}(\boldsymbol{\phi}_{a},(\u\cdot\n)\boldsymbol{\phi}_{b})_\Gamma,&a,b=1,...,N_u,\\
 &\G_{\Gamma}^{ab}:=(\boldsymbol{\phi}_{a},\psi_{b}\mathbb{I}\cdot\n)_\Gamma,&a=1,...,N_u,b=1,...,N_p,\\
-&\D_{\Gamma}^{ab}:=-(\psi_{a}\mathbb{I}\cdot\n,\boldsymbol{\phi}_{b})_\Gamma,&a=1,...,N_p,b=1,...,N_u,\\
-&\F_{u,\Gamma}^{a}:=\alpha_b(\boldsymbol{\phi}_{a},\u_g)_\Gamma-2\nu(\nabla^s\boldsymbol{\phi}_{a}\cdot\n,\u_g)_\Gamma,&a=1,...,N_u,\\
-&\F_{p,\Gamma}^{a}:=-(\psi_{a}\mathbb{I}\cdot\n,\u_g)_\Gamma,&a=1,...,N_p,
+&\D_{\Gamma}^{ab}:=-(\psi_{a}\mathbb{I}\cdot\n,\boldsymbol{\phi}_{b})_{\Gamma_D},&a=1,...,N_p,b=1,...,N_u,\\
+&\F_{u,\Gamma}^{a}:=\alpha_b(\boldsymbol{\phi}_{a},\u_g)_\Gamma-2\nu(\nabla^s\boldsymbol{\phi}_{a}\cdot\n,\u_g)_{\Gamma_D},&a=1,...,N_u,\\
+&\F_{p,\Gamma}^{a}:=-(\psi_{a}\mathbb{I}\cdot\n,\u_g)_{\Gamma_D},&a=1,...,N_p,
 \end{align*}
 being $a$ and $b$ the node identification. The velocity-pressure block keeps its skewsymmetry since $\D_\Gamma=-\G_\Gamma^T$.
 
 Note that the incompressibility constrain equation in this case reads
 \begin{equation}
 \label{eq-C7_inc_constraint_eq_weak}
-(\D+\D_\Gamma)\U=\F_{p,\Gamma}.
+\widetilde{\D}\U=\F_{p,\Gamma},
 \end{equation}
-If we derive \Eq{inc_constraint_eq_weak} in time and we operate with first equation of \Eq{NSmatform_weak}, we have that
+being $ \widetilde{\D}:=(\D+\D_\Gamma) $. If we derive \Eq{C7_inc_constraint_eq_weak} in time and we operate with first equation of \Eq{C7_NSmatform_weak}, we have that
 \begin{align}
 \label{eq-C7_SRK_weak_u}
-\overbrace{(\D+\D_\Gamma)\M^{-1}\M\dot{\U}}^{\dot{\F}_{p,\Gamma}}
-+(\D+\D_\Gamma)\M^{-1}\left[(\K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+M_\Gamma)\U+(\G+\G_\Gamma)\P+\B_\tau\ETA\right] = \\\nonumber
-(\D+\D_\Gamma)\M^{-1}\left[\F_u+\F_{u,\Gamma}\right],
+\overbrace{\widetilde{\D}\M^{-1}\M\dot{\U}}^{\dot{\F}_{p,\Gamma}}
++\widetilde{\D}\M^{-1}\left[(\widetilde{\K}+\widetilde{\C}+\A_\tau+\M_\Gamma)\U+\widetilde{\G}\P+\B_\tau\ETA\right] = \widetilde{\D}\M^{-1}\widetilde{\F}_u,
 \end{align}
-from which we get
+with $ \widetilde{\K}:=(\K+\K_\Gamma) $, $ \widetilde{\C}:=(\C+\C_\Gamma) $, $ \widetilde{\G}:=(\G+\G_\Gamma) $ and $ \widetilde{\F}_u:=(\F_u+\F_{u,\Gamma}) $. From \Eq{C7_SRK_weak_u} we get
 \begin{align}
 \label{eq-C7_SRK_weak_dm1p}
-&(\D+\D_\Gamma)\M^{-1}(\G+\G_\Gamma)\P = \\\nonumber
-&(\D+\D_\Gamma)\M^{-1}\left[\F_u+\F_{u,\Gamma}-(\K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+M_\Gamma)\U-\B_\tau\ETA\right] - \dot{\F}_{p,\Gamma}.
+&\widetilde{\D}\M^{-1}\widetilde{\G}\P = \widetilde{\D}\M^{-1}\left[\widetilde{\F}_u-(\widetilde{\K}+\widetilde{\C}+\A_\tau+\M_\Gamma)\U-\B_\tau\ETA\right] - \dot{\F}_{p,\Gamma}.
 \end{align}
-Where $\dot{\F}_{p,\Gamma}=-(\psi_{a}\mathbb{I}\cdot\n,\dot{\u}_g)_\Gamma$, for $a=1,...,N_p$. Then, when using weak Dirichlet boundary conditions in SRK time integration schemes, the Darcy type problem equivalent to \Eq{SRK_upeta_RK_p_darcy} to be solved is
+Where $\dot{\F}_{p,\Gamma}^a=-(\psi_{a}\mathbb{I}\cdot\n,\dot{\u}_g)_\Gamma$, for $a=1,...,N_p$. Then, when using weak Dirichlet boundary conditions in SRK time integration schemes, the Darcy type problem equivalent to \Eq{C7_SRK_upeta_RK_p_darcy} to be solved is
 \begin{equation}
 \label{eq-C7_SRK_upeta_RK_p_darcy_weak}
 \left[\begin{array}{cc}
-\M&\G+\G_\Gamma\\
-\D+\D_\Gamma&0
+\M&\widetilde{\G}\\
+\widetilde{\D}&0
 \end{array}\right]\left[\begin{array}{c}
 \U^*\\
 \P_k
 \end{array}\right]=\left[\begin{array}{c}
-\F_u(t_k)+\F_{u,\Gamma}(t_k)-(\K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+M_\Gamma)\U_k-\B_\tau\ETA_k\\
+\widetilde{\F}_u(t_k)-(\widetilde{\K}+\widetilde{\C}+\A_\tau+\M_\Gamma)\U_k-\B_\tau\ETA_k\\
 \dot{\F}_{p,\Gamma}(t_k)
 \end{array}\right],
 \end{equation}
 with $k$ corresponding to the stage $i$ or the update $n+1$.
+
+\begin{remark}
+\label{remark-C7_vel_deriv}
+Note that the auxiliar velocity $ \U^* $ in \Eq{C7_SRK_upeta_RK_p_darcy_weak} is nothing else than the velocity derivative. Then, as the mass matrix $ \M $ is the same that is considered for the momentum equation, when weak Dirichlet boundary conditions are considered for the velocity field, any condition is imposed to its time derivative. In order to ensure stability of the time discretization scheme, we also impose weak boundary conditions to the velocity derivative, leading to an equivalent darcy problem to \Eq{C7_SRK_upeta_RK_p_darcy_weak} like 
+\begin{equation}
+\label{eq-C7_SRK_upeta_RK_p_darcy_weak_deriv}
+\left[\begin{array}{cc}
+\widetilde{\M}&\widetilde{\G}\\
+\widetilde{\D}&0
+\end{array}\right]\left[\begin{array}{c}
+\U^*\\
+\P_k
+\end{array}\right]=\left[\begin{array}{c}
+\widetilde{\F}_u(t_k)-(\widetilde{\K}+\widetilde{\C}+\A_\tau+\M_\Gamma)\U_k-\B_\tau\ETA_k+\dot{\F}_{u,\Gamma}(t_k)\\
+\dot{\F}_{p,\Gamma}(t_k)
+\end{array}\right].
+\end{equation}
+Here $ \widetilde{\M}:=\M+\dot{\M}_\Gamma $, with 
+\begin{equation}
+\label{eq-C7_M_deriv}
+\dot{\M}_\Gamma^{ab}:=(\alpha_{b,n}\delta t(\n\otimes\n)\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b})_{\Gamma_D}+(\alpha_{b,\tau}\delta t(\mathbf{I}-\n\otimes\n)\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b})_{\Gamma_D}
+\end{equation}
+and $$ \dot{\F}_{u,\Gamma}^a(t_k):= (\alpha_{b,n}\delta t(\n\otimes\n)\boldsymbol{\phi}_{a},\dot{\u}_g(t_k))_{\Gamma_D}+(\alpha_{b,\tau}\delta t(\mathbf{I}-\n\otimes\n)\boldsymbol{\phi}_{a},\dot{\u}_g(t_k))_{\Gamma_D},$$ for each $a,b=1,...,N_u$.
+\end{remark}	
+
+\begin{remark}
+In order to give consistency to the time integration scheme, when considering also weak Dirichlet boundary conditions for the velocity derivatives, as exposed in Remark \ref{remark-C7_vel_deriv}, the modified mass matrix $ \widetilde{\M} $ will also be used at all the equations of the SRK scheme. That is to consider $ \widetilde{\M} $ instead of $ \M $ at the equivalent equations to \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_p_n+1}.
+
+It worth highlighting that in the momentum equations \Eq{C7_SRK_upeta_RK_u} and \Eq{C7_SRK_upeta_RK_u_n+1}, the penalty terms introduced by $ \M_\Gamma $ and $ \dot{\M}_\Gamma $ are of the same order since the scalars that appear in \Eq{C7_M_deriv} are scaled by $ \delta t $.
+\end{remark}
 
 \subsection{Adaptive time-stepping technique}
 One of the advantadges when using a multi-stage time integration scheme, like a SRK method, is that an adaptive time stepping technique can be used straightforwardly. In fact, for a SRK scheme, the usage of an adaptive time stepping technique only requires an extra evaluation of the final velocity update, which involve a mass matrix solver, see \cite{gustafsson_control_1991,gustafsson_control-theoretic_1994}.
@@ -503,7 +552,7 @@ Moreover, when treating with explicit versions of the SRK scheme, we have to lim
 In this section we will discuss the construction of efficient and scalable solvers for the stabilized Navier-Stokes equations in turbulent flows through BDDC method in parallel contexts. First of all we will have a look at the block preconditioning technique used in the different systems involved in the SRK scheme. After that, the main characteristics of the BDDC solvers used in this work will be described.
 
 \subsection{Block-preconditioning technique for the segregated problem}
-Let us assume that the matricial problem \Eq{SRK_ueta} is solved with an IMEX verision of the SRK scheme given by the operators $ \mathcal{F} $ and $ \mathcal{G} $ defined in \Eq{SRK_F}-\Eq{SRK_G}. In this case, at the stage $ i $, for $ 1\le i \le s $, the resulting matrix from the system \Eq{SRK_ueta_RK} can be factorized into an exact LU matrix product as follows
+Let us assume that the matricial problem \Eq{C7_SRK_ueta} is solved with an IMEX verision of the SRK scheme given by the operators $ \mathcal{F} $ and $ \mathcal{G} $ defined in \Eq{C7_SRK_F}-\Eq{C7_SRK_G}. In this case, at the stage $ i $, for $ 1\le i \le s $, the resulting matrix from the system \Eq{C7_SRK_ueta_RK} can be factorized into an exact LU matrix product as follows
 \begin{equation}
 \label{eq-C7_SRK_u_mat}
 \A_u:=\left[\begin{array}{cc}
@@ -517,7 +566,7 @@ Let us assume that the matricial problem \Eq{SRK_ueta} is solved with an IMEX ve
 0&\Sb_u
 \end{array}\right],
 \end{equation}
-where $ \Sb_u:=\K_\tau-\B_\tau^T\M_\tau^{-1}\B_\tau$ is the Schur complement with respect to $\U$. We define a block-preconditioner, $ P(\A_u) $, based on inexact factorization of $ \A_u $ given by the upper triangular matrix in \Eq{SRK_u_mat}, reading
+where $ \Sb_u:=\K_\tau-\B_\tau^T\M_\tau^{-1}\B_\tau$ is the Schur complement with respect to $\U$. We define a block-preconditioner, $ P(\A_u) $, based on inexact factorization of $ \A_u $ given by the upper triangular matrix in \Eq{C7_SRK_u_mat}, reading
 \begin{equation}
 \label{eq-C7_SRK_u_prec}
 P(\A_u):=\left[\begin{array}{cc}
@@ -529,9 +578,9 @@ P(\A_u):=\left[\begin{array}{cc}
 \end{array}\right].
 \end{equation}
 
-To solve the system resulting from \Eq{SRK_ueta} we use a preconditioned GMRES method with the preconditioner defined in \Eq{SRK_u_prec}. The aplication of the preconditioner $ P(\A_u) $ simplifies to the computation of the inverse of the diagonal blocks, $ \M_\tau^{-1} $ and $ \Sb_u^{-1} $. The mass matrix inverse is approximated by one application of a diagonal DD preconditioner constructed from the diagonal values of $ \M_\tau $. The Schur complement is approximated to the velocity-velocity block matrix, $ \Sb_u\approx\K_\tau $, neglecting the contribution of the term comming from the projections $ -\B_\tau^T\M_\tau^{-1}\B_\tau $. This approximation is equivalent to consider a solution corresponding to a non-consistent formulation in which streamline diffusion is added, ensuring stability of the preconditioner. At his turn, the inverse $ \K_\tau^{-1} $ is approximated by one application of a BDDC preconditioner over this matrix.
+To solve the system resulting from \Eq{C7_SRK_ueta} we use a preconditioned GMRES method with the preconditioner defined in \Eq{C7_SRK_u_prec}. The aplication of the preconditioner $ P(\A_u) $ simplifies to the computation of the inverse of the diagonal blocks, $ \M_\tau^{-1} $ and $ \Sb_u^{-1} $. The mass matrix inverse is approximated by one application of a diagonal DD preconditioner constructed from the diagonal values of $ \M_\tau $. The Schur complement is approximated to the velocity-velocity block matrix, $ \Sb_u\approx\K_\tau $, neglecting the contribution of the term comming from the projections $ -\B_\tau^T\M_\tau^{-1}\B_\tau $. This approximation is equivalent to consider a solution corresponding to a non-consistent formulation in which streamline diffusion is added, ensuring stability of the preconditioner. At his turn, the inverse $ \K_\tau^{-1} $ is approximated by one application of a BDDC preconditioner over this matrix.
 
-Focusing on the Darcy-type equation \Eq{SRK_upeta_RK_p_darcy}, we also consider an LU factorization of the form
+Focusing on the Darcy-type equation \Eq{C7_SRK_upeta_RK_p_darcy}, we also consider an LU factorization of the form
 \begin{equation}
 \label{SRK_p_mat}
 \A_p:=\left[\begin{array}{cc}
@@ -557,9 +606,9 @@ P(\A_p):=\left[\begin{array}{cc}
 \end{array}\right].
 \end{equation}
 
-The resolution of system \Eq{SRK_upeta_RK_p_darcy} with a preconditioned GMRES method involve the computation of the inverse of matrices $ \M $ and $ \Sb_p $. The approach followed to approximate $ \M^{-1} $ is the same we have defined for $ \M_\tau^{-1} $, with one application of a diagonal DD preconditioner. Concerning about the Schur complement, we approximate it by a pressure Laplacian $ \Sb_p\approx\L_p $. Another time, its inverse is approximated by one application of a BDDC preconditioner over such matrix.
+The resolution of system \Eq{C7_SRK_upeta_RK_p_darcy} with a preconditioned GMRES method involve the computation of the inverse of matrices $ \M $ and $ \Sb_p $. The approach followed to approximate $ \M^{-1} $ is the same we have defined for $ \M_\tau^{-1} $, with one application of a diagonal DD preconditioner. Concerning about the Schur complement, we approximate it by a pressure Laplacian $ \Sb_p\approx\L_p $. Another time, its inverse is approximated by one application of a BDDC preconditioner over such matrix.
 
-The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK_upeta_RK_eta_n+1} are solved using a preconditioned GMRES with a diagonal DD preconditioner to approximate $ \M^{-1} $ and $ \M_\tau^{-1} $, respectively.
+The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{C7_SRK_upeta_RK_eta_n+1} are solved using a preconditioned GMRES with a diagonal DD preconditioner to approximate $ \M^{-1} $ and $ \M_\tau^{-1} $, respectively.
 
 \subsection{BDDC solver}
 
@@ -569,7 +618,7 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %
 %In \cite{colomes_2016} has been shown that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. This work aims to check the performance of this method when it is used together with a Segregated Runge-Kutta time integration scheme.
 %
-%The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers. This only happen when there is not any other term apart from the divergence in the pressure row, see the matricial form \Eq{NSmatform}, which is a feature of the OSS-ISS method. When we solve turbulent flows, some stabilization method is needed, not only to control the convection instabilities, but also to model the effect of the small scales. The ASGS and OSS stabilization methods proposed in the cited work introduce extra terms in the pressure row, which disallow the use of SRK schemes for the time integration. This is not the case of OSS-ISS method, which only introduces an extra term in the velocity-velocity block. Then, the applicability of SRK schemes to this method is straight forward as it has been exposed in subsection \ref{subsec:C7_SRK}.
+%The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers. This only happen when there is not any other term apart from the divergence in the pressure row, see the matricial form \Eq{C7_NSmatform}, which is a feature of the OSS-ISS method. When we solve turbulent flows, some stabilization method is needed, not only to control the convection instabilities, but also to model the effect of the small scales. The ASGS and OSS stabilization methods proposed in the cited work introduce extra terms in the pressure row, which disallow the use of SRK schemes for the time integration. This is not the case of OSS-ISS method, which only introduces an extra term in the velocity-velocity block. Then, the applicability of SRK schemes to this method is straight forward as it has been exposed in subsection \ref{subsec:C7_SRK}.
 %
 %\subsection{Taylor Green Vortex flow}
 %\label{subsec:C7_TGV-SRK}
@@ -629,7 +678,7 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %  \label{fig-TGV_SRK_mono_ene_dis}
 %\end{figure}
 %
-%%It is important to point out that the main computational cost of an explicit SRK scheme is given by the solution of the pressure equations \Eq{SRK_upeta_RK_p} and \Eq{SRK_upeta_RK_p_n+1} that in practice are equivalent to solve a Darcy problem like \Eq{SRK_upeta_RK_p_darcy}. The use of block preconditioning technique will lead to the solution of a mass matrix of the size of the velocity DOFs and a Laplacian matrix of the size of the pressure DOFs. Then, when using $Q2/Q1$ Finite Elements, the problem that will determine the computational cost will be the solution of the Laplacian matrix which is constructed by linear interpolation elements $Q1$. Thus, when comparing the SRK method against a monolithic approach, it is fair to compare solutions of the same pressure DOFs instead of velocity DOFs.
+%%It is important to point out that the main computational cost of an explicit SRK scheme is given by the solution of the pressure equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} that in practice are equivalent to solve a Darcy problem like \Eq{C7_SRK_upeta_RK_p_darcy}. The use of block preconditioning technique will lead to the solution of a mass matrix of the size of the velocity DOFs and a Laplacian matrix of the size of the pressure DOFs. Then, when using $Q2/Q1$ Finite Elements, the problem that will determine the computational cost will be the solution of the Laplacian matrix which is constructed by linear interpolation elements $Q1$. Thus, when comparing the SRK method against a monolithic approach, it is fair to compare solutions of the same pressure DOFs instead of velocity DOFs.
 %
 %\subsubsection{hp-refinement and adaptive time-stepping technique}
 %\label{subsubsec-C7_TGV_hp_refinement}
@@ -669,12 +718,12 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %\label{alg-SRK_solvers}
 %\caption{SRK system resolutions for one time step using the \textit{(1-2)} scheme}
 %\begin{enumerate}
-%\item Solve initial pressure (equation \Eq{SRK_upeta_RK_p}).
-%\item Solve second-stage momentum system (equations \Eq{SRK_upeta_RK_u}-\Eq{SRK_upeta_RK_eta}).
-%\item Solve second-stage pressure (equation \Eq{SRK_upeta_RK_p}).
-%\item Solve velocity update (equation \Eq{SRK_upeta_RK_u_n+1}).
-%\item Solve projection update (equation \Eq{SRK_upeta_RK_eta_n+1}).
-%\item Solve pressure update (equation \Eq{SRK_upeta_RK_p_n+1}).
+%\item Solve initial pressure (equation \Eq{C7_SRK_upeta_RK_p}).
+%\item Solve second-stage momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}).
+%\item Solve second-stage pressure (equation \Eq{C7_SRK_upeta_RK_p}).
+%\item Solve velocity update (equation \Eq{C7_SRK_upeta_RK_u_n+1}).
+%\item Solve projection update (equation \Eq{C7_SRK_upeta_RK_eta_n+1}).
+%\item Solve pressure update (equation \Eq{C7_SRK_upeta_RK_p_n+1}).
 %\end{enumerate}
 %\end{algorithm}
 %Note that the first system solver is only needed at the first step, since after that $ p_1=p_n $.
@@ -692,9 +741,9 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %  \label{fig-TGV_SRK_scal}
 %\end{figure}
 %
-%Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in Fig. \ref{fig-TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{SRK_upeta_RK_p} and \Eq{SRK_upeta_RK_p_n+1}). This behaviour is also expected, since the preconitioner of the schur complement ...
+%Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in Fig. \ref{fig-TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1}). This behaviour is also expected, since the preconitioner of the schur complement ...
 %
-%In what refers to the consumed CPU time, a first conclusion we can take looking at Fig. \ref{fig-TGV_SRK_scal_time_4}, Fig. \ref{fig-TGV_SRK_scal_time_8} and Fig. \ref{fig-TGV_SRK_scal_time_12} is that the most expensive resolution is the momentum system (equations \Eq{SRK_upeta_RK_u}-\Eq{SRK_upeta_RK_eta}). Although the number of solver iterations is smaller than the pressure computations, in terms of time consumed, the momentum equations resolution is much expensive, even counting together the three pressure solvers. This difference in the computational time required for the momentum equations versus the pressure ones, is due to the number of DOFs that are being solved. We have to take into account that both velocity and projection fields are computed with a second order polynomial, $ Q2 $, while the pressure is first order, $ Q1 $. Then, we not only have two vectorial fields versus a scalar field, but we have a second order interpolation versus a first order. Leaving aside the mass matrix blocks, the size of the system of equations to be solved in the velocity block of the momentum computation is $ \sim24 $ times larger than the one that arise for the pressure block of the Darcy computations, taking into account that the pressure system is solved using \Eq{SRK_upeta_RK_p_darcy_weak}.
+%In what refers to the consumed CPU time, a first conclusion we can take looking at Fig. \ref{fig-TGV_SRK_scal_time_4}, Fig. \ref{fig-TGV_SRK_scal_time_8} and Fig. \ref{fig-TGV_SRK_scal_time_12} is that the most expensive resolution is the momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}). Although the number of solver iterations is smaller than the pressure computations, in terms of time consumed, the momentum equations resolution is much expensive, even counting together the three pressure solvers. This difference in the computational time required for the momentum equations versus the pressure ones, is due to the number of DOFs that are being solved. We have to take into account that both velocity and projection fields are computed with a second order polynomial, $ Q2 $, while the pressure is first order, $ Q1 $. Then, we not only have two vectorial fields versus a scalar field, but we have a second order interpolation versus a first order. Leaving aside the mass matrix blocks, the size of the system of equations to be solved in the velocity block of the momentum computation is $ \sim24 $ times larger than the one that arise for the pressure block of the Darcy computations, taking into account that the pressure system is solved using \Eq{C7_SRK_upeta_RK_p_darcy_weak}.
 %
 %keeping with the discussion about the CPU time consumed shown in Fig. \ref{fig-TGV_SRK_scal}, we see that the computations of the momentum and pressure systems do not scale in terms of time. This performance has an easy explanation, which is given by the ratio between the fine and coarse system sizes. The coarse system size only depends on the number of processors (subdomains) used by the BDDC method. When corners, edges and faces of the subdomain are considered, the total amount of degrees of freedom of the coarse system is equivalent to a local mesh of $ Q2 $ elements (without the interior node) whith as many elements as subdomains. Consequently, for a $ H/h=4 $ local mesh, we can only expect to have weak scalability until $ 64 $ ($ 4^3 $) processors, for $ H/h=8 $ until $ 512 $ ($ 8^3 $) processors, and for $ H/h=12 $ until $ 1728 $ ($ 12^3 $) processors. In fact this is what we are seeing in Fig. \ref{fig-TGV_SRK_scal}, where, taking into account that the local meshes have the interor DOF inside each element, the results show the expected scalability performance.
 %
@@ -707,12 +756,12 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %  \label{fig-TGV_SRK_scal_ce}
 %\end{figure}
 %
-%%The number of iterations needed to solve the Darcy problem \Eq{SRK_upeta_RK_p_darcy} is shown in Fig. \ref{fig-TGV_SRK_scal_iter}, while the total elapsed CPU time for solving one step of the TGV problem is shown in Fig. \ref{fig-TGV_SRK_scal_time}. We see that the number of iterations remains constant when the number of processors is increased, meaning that the algorithm is scalable in terms of number of iterations. Looking at the total CPU time, we see that it increases as we increase the number of processors. That behaviour is caused because the coarse problem is bigger when the total amount of processors is increased, and the time consumed by the local problems in each processor is masked by the solution of the coarse problem. A multilevel implementation of the BDDC method should be used to overcome this problem.
+%%The number of iterations needed to solve the Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy} is shown in Fig. \ref{fig-TGV_SRK_scal_iter}, while the total elapsed CPU time for solving one step of the TGV problem is shown in Fig. \ref{fig-TGV_SRK_scal_time}. We see that the number of iterations remains constant when the number of processors is increased, meaning that the algorithm is scalable in terms of number of iterations. Looking at the total CPU time, we see that it increases as we increase the number of processors. That behaviour is caused because the coarse problem is bigger when the total amount of processors is increased, and the time consumed by the local problems in each processor is masked by the solution of the coarse problem. A multilevel implementation of the BDDC method should be used to overcome this problem.
 %
 %\subsection{Turbulent channel flow at $Re_\tau=395$}
 %In the previous section we have tested the suitability of the proposed VMS method using an IMEX SRK time integration scheme for the LES simulation of homogeneous turbulence. After that, we aim to show the performance of such methods for wall-bounded turbulent flows. In order to check the behaviour of the proposed approach, we solve the Turbulent Channel Flow (TCF) test with a Reynolds number based on the wall velocity $ Re_\tau=395 $.
 %
-%One of the main purposed of this test is to assess the accuracy of the solution when using the weak boundary conditions formulation given by the bilinear form described in \Eq{bilinear_weak_by_components}.
+%One of the main purposed of this test is to assess the accuracy of the solution when using the weak boundary conditions formulation given by the bilinear form described in \Eq{C7_bilinear_weak_by_components}.
 %
 %The TCF problem is solved in a boxed domain of size $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. Where the $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. Homogeneous Dirichlet boundary conditions for the velocity DOFs are weakly imposed on wall-normal direction boundaries ($y=-\delta$ and $y=\delta$), while periodic boundary conditions are defined on the stream-wise and span-wise directions. Fig. \ref{fig:Channel_geo} depicts schematically the geometry of the computational domain for this test.
 %\begin{figure}[h!]
@@ -735,7 +784,7 @@ The matricial systems arising from equations \Eq{SRK_upeta_RK_u_n+1} and \Eq{SRK
 %
 %To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q2/Q1 $ and $ Q3/Q2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs...}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
 %
-%According to \cite{colomes_2016}, the algorithmic constants that appear in \Eq{tau_m} and \Eq{tau_c} are chosen as $ c_1=12.0 $, $ c_2=8.0 $ and $ c_c=32.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $.
+%According to \cite{colomes_2016}, the algorithmic constants that appear in \Eq{C7_tau_m} and \Eq{C7_tau_c} are chosen as $ c_1=12.0 $, $ c_2=8.0 $ and $ c_c=32.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $.
 %
 %\subsubsection{Influence of the wall-normal component}
 %A significant difference on the approach followed for the weak enforcement of the Dirichlet boundary conditions considered in this work, with respect to the originaly proposed in \cite{bazilevs_...}, is the treatment of the normal component. In \cite{bazilevs_...} a no-penatration condition is considered, which means that the normal component of the velocity is imposed strongly, $ \u\cdot\n=0 $ on $ \Gamma_D $. We propose to keep the weak boundary imposition even in the wall-normal direction. The main advantadge of keeping the same approach for all components is revealed in curved boundaries. In that case, the different treatment of each component could lead to tedious code implementation.
