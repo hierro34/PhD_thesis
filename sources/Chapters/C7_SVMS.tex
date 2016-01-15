@@ -24,7 +24,7 @@ When trying to solve increasingly larger problems on super-computers, one has to
 
 The velocity-pressure segregation introduced by the SRK schemes lead to elasticiy-type and Darcy-type problems that can be preconditioned using a block-preconditioning technique, see XXX. In \cite{colomes_mixed} a recursive block-preconditioning technique was used to solve the monolithic Navier-Stokes problem in serial, giving scalable results when looking at the number of solver iterations. The performance of the block-preconditioning technique together with the BDDC methods proposed in XXX, are going to be tested in the ongoing work.
 
-This chapter is organized as follows: in Section \ref{sec:C7_prob_statment} the Navier-Stokes problem is stated and the weak Dirichlet boundary conditions imposition is described. In Section \ref{sec-C7_VMS} the VMS formulation is introduced. The SRK method, and its peculiarities when weak boundary conditions are considered, is defined in Section \ref{sec-C7_SRK}. In Section \ref{sec-C7_solver} the block-preconditioning technique and the parallel solver are defined. Three different tests have been considered in the numerical results section (Section \ref{sec:C7_results}), the Taylor-Green Vortex flow, the Turbulent Channel Flow test and the flow an airfoil near maximum lift defined with the NACA 4412 geometry. Finally, some conclusions are pointed out in Section \ref{sec-C7_conclusions}.
+This chapter is organized as follows: in Section \ref{sec:C7_prob_statment} the Navier-Stokes problem is stated and the weak Dirichlet boundary conditions imposition is described. In Section \ref{sec-C7_VMS} the VMS formulation is introduced. The SRK method, and its peculiarities when weak boundary conditions are considered, is defined in Section \ref{sec-C7_SRK}. In Section \ref{sec-C7_solver} the block-preconditioning technique and the parallel solver are defined. Three different tests have been considered in the numerical results section (\Sec{C7_experiments}), the Taylor-Green Vortex flow, the Turbulent Channel Flow test and the flow an airfoil near maximum lift defined with the NACA 4412 geometry. Finally, some conclusions are pointed out in Section \ref{sec-C7_conclusions}.
 
 \section{Problem statement}
 \label{sec:C7_prob_statment}
@@ -248,7 +248,7 @@ $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ 
 \end{align}
 This approach was tested in \cite{colomes_mixed} where an implicit treatment of the projections was considered. Together with the static and linear version of the ASGS method, the performance of the mentioned methods was tested for the LES of incompressible turbulent flows, and compared against an inf-sup stable mixed FE method with convection stabilization through orthogonal subscales.
 
-We will refer to the inf-sup stable mixed FE method with convection stabiliztion through orthogonal subscales as ISS-OSS method. It is defined with an inf-sup stable velocity-pressure pair composed by $ Q2/Q1 $ or $ Q3/Q2 $ elments with a term-by-term OSS method that only considers the convection stabilization term.
+We will refer to the inf-sup stable mixed FE method with convection stabiliztion through orthogonal subscales as ISS-OSS method. It is defined with an inf-sup stable velocity-pressure pair composed by $ Q_2/Q_1 $ or $ Q_3/Q_2 $ elments with a term-by-term OSS method that only considers the convection stabilization term.
 
 After all this considerations, the final semi-discrete problem in which the current work is based consists in finding 
 $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
@@ -538,6 +538,7 @@ It worth highlighting that in the momentum equations \Eq{C7_SRK_upeta_RK_u} and 
 \end{remark}
 
 \subsection{Adaptive time-stepping technique}
+\label{subsec-C7_adaptive}
 One of the advantadges when using a multi-stage time integration scheme, like a SRK method, is that an adaptive time stepping technique can be used straightforwardly. In fact, for a SRK scheme, the usage of an adaptive time stepping technique only requires an extra evaluation of the final velocity update, which involve a mass matrix solver, see \cite{gustafsson_control_1991,gustafsson_control-theoretic_1994}.
 
 This kind of strategy allow us to adapt the time step size to the flow conditions dynamicaly, that is to change the time step when the physical scales of the flow change, e.g., transition to turbulence. Many authors have been used adaptive time stepping to accurately solve the incompressible Navier-Stokes equations, see for instance \cite{feng_time-adaptive_2000,john_adaptive_2010,kay_adaptive_2010,veneziani_aladins:_2013}.
@@ -613,153 +614,154 @@ The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{
 
 \subsection{BDDC solver}
 
-%\section{Numerical tests}
-%\label{sec:C7_results}
-%In this section we show the numerical results for three different incompressible turbulent flow tests. The suitability of the OSS-ISS method, with weak boundary contitions and SRK time integration schemes, as a LES model for large scale problems is assessed in these tests. First, we analyse the advantadges of using SRK methods in the TGV problem, where a weak scalability analysis is performed. The suitability of weak boundary conditions in wall-bouned flows is analysed in the Turbulent Channel Flow test. Finally, some results are shown for the turbulent flow around an airfoil.
+\section{Numerical experiments}
+\label{sec:C7_experiments}
+In this section we show the numerical results for two different incompressible turbulent flow tests. The suitability of the OSS-ISS method, with weak boundary contitions and SRK time integration schemes, as a LES model for large scale problems is assessed in these tests. First, we analyse the advantadges of using SRK methods in the TGV problem, where a weak scalability analysis is performed. The suitability of weak boundary conditions in wall-bouned flows is analysed in the Turbulent Channel Flow test. %Finally, some results are shown for the turbulent flow around an airfoil.
+
+In \cite{colomes_mixed} has been shown that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. The experiments of this chapter aim to check the performance of this method when it is used together with a Segregated Runge-Kutta time integration scheme.
+
+The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers. This only happen when there is not any other term apart from the divergence in the pressure row, see the matricial form \Eq{C7_NSmatform}, which is a feature of the OSS-ISS method. When we solve turbulent flows, some stabilization method is needed, not only to control the convection instabilities, but also to model the effect of the small scales. The ASGS and OSS stabilization methods proposed in the cited work introduce extra terms in the pressure row, which disallow the use of SRK schemes for the time integration. This is not the case of OSS-ISS method, which only introduces an extra term in the velocity-velocity block. Then, the applicability of SRK schemes to this method is straight forward as it has been exposed in subsection \ref{subsec:C7_SRK}.
+
+\subsection{Taylor Green Vortex flow}
+\label{subsec-C7_TGV-SRK}
+The TGV is a widely used benchmark for turbulent numerical simulations. It consists in a free-evolving flow from an analytical solution, with a computational domain which is the cube $(0,2\pi)^3$ and with periodical boundary conditions (see, e.g., \cite{brachet_direct_1991}). We refer to Section \ref{subsubsec-C3_TGV} to a deeper description of this benchmark test. The initial solution is given by the following expression
+\begin{align}
+\label{eq-C7_ini_sol_TG}
+&\u(x,y,z,0)=\left(\begin{array}{c}
+u_x\\
+u_y\\
+u_z
+\end{array}\right)=\left(\begin{array}{c}
+u_0\cos(x)\sin(y)\sin(z)\\
+-u_0\sin(x)\cos(y)\sin(z)\\
+0
+\end{array}\right)\\\nonumber
+&p(x,y,z,0)=p_0+\frac{1}{16}\left(\cos(2x)+\cos(2y)\right)\left(\cos(2z)+2\right),
+\end{align}
+with
+$$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
+We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. We solve the TGV problem using a Reynolds number ${\rm Re}=1600$.
+
+\subsubsection{Setting}
+The problem is solved from $t=0.0$ to $T=10.0$ and the results are compared against a DNS by Brachet et al \cite{brachet_direct_1991}. We discretize the domain using different choices of the number of elements and the order of approximation, with either $ Q_2/Q_1 $ or $ Q_3/Q_2 $ velocity-pressure pairs.
+
+As it was shown in \cite{colomes_mixed} (see also \Chap{TBT_OSS}), the most appropiate algorithmic parameters for the TGV test when using inf-sup stable discretizations are $ c_1=12.0 $, $ c_2=4.0 $ and $ c_c=4.0 $.
+
+%\subsubsection{Time convergence}
+%\label{subsubsec-C7_TGV_time_convergence}
+%In order to check the suitability of SRK schemes for stabilized turbulent flows through OSS-ISS methods, we begin by performing a convergence analysis to check if the methods achieve the desired order of convergence in time. To do that, we solve the TGV problem from $t=0.0$ to $t=0.02$ for all the schemes \textit{(1-1)}, \textit{(1-2)} and \textit{(3-3)} for four different time step sizes ($\delta t=\{0.02,0.01,0.005,0.0025\}$) and we compare the solution against the one obtained with the \textit{(3-3)} scheme with a time step equal to $\delta t=1.25\cdot10^{-3}$. Then, we to compute the $L^{\infty}$-norm of the solution, comparing against a solution computed with a finer time step, but with the same spatial discretization. Note that with this approach we are eliminating the spatial error.
 %
-%In \cite{colomes_2016} has been shown that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. This work aims to check the performance of this method when it is used together with a Segregated Runge-Kutta time integration scheme.
-%
-%The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers. This only happen when there is not any other term apart from the divergence in the pressure row, see the matricial form \Eq{C7_NSmatform}, which is a feature of the OSS-ISS method. When we solve turbulent flows, some stabilization method is needed, not only to control the convection instabilities, but also to model the effect of the small scales. The ASGS and OSS stabilization methods proposed in the cited work introduce extra terms in the pressure row, which disallow the use of SRK schemes for the time integration. This is not the case of OSS-ISS method, which only introduces an extra term in the velocity-velocity block. Then, the applicability of SRK schemes to this method is straight forward as it has been exposed in subsection \ref{subsec:C7_SRK}.
-%
-%\subsection{Taylor Green Vortex flow}
-%\label{subsec:C7_TGV-SRK}
-%The Taylor Green Vortex (TGV) is a widely used benchmark for turbulent numerical simulations. It consists in a free-evolving flow from an analytical solution, with a computational domain which is the cube $(0,2\pi)^3$ and with periodical boundary conditions (see, e.g., \cite{brachet_direct_1991})
-%\begin{align}
-%\label{eq-C7_ini_sol_TG}
-%&\u(x,y,z,0)=\left(\begin{array}{c}
-%u_x\\
-%u_y\\
-%u_z
-%\end{array}\right)=\left(\begin{array}{c}
-%u_0\cos(x)\sin(y)\sin(z)\\
-%-u_0\sin(x)\cos(y)\sin(z)\\
-%0
-%\end{array}\right)\\\nonumber
-%&p(x,y,z,0)=p_0+\frac{1}{16}\left(\cos(2x)+\cos(2y)\right)\left(\cos(2z)+2\right),
-%\end{align}
-%with
-%$$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
-%We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. We solve the TGV problem using a Reynolds number ${\rm Re}=1600$.
-%
-%The problem is solved from $t=0.0$ to $T=10.0$ and the results are compared against a DNS by Brachet et al \cite{brachet_direct_1991}. We discretize the domain using different choices of the number of elements and the order of approximation, with either $ Q2/Q1 $ or $ Q3/Q2 $ velocity-pressure pairs.
-%
-%As it was shown in \cite{colomes_2016} the most appropiate algorithmic parameters for the TGV test when using inf-sup stable discretizations are $ c_1=12.0 $, $ c_2=4.0 $ and $ c_c=4.0 $.
-%
-%%\subsubsection{Time convergence}
-%%\label{subsubsec-C7_TGV_time_convergence}
-%%In order to check the suitability of SRK schemes for stabilized turbulent flows through OSS-ISS methods, we begin by performing a convergence analysis to check if the methods achieve the desired order of convergence in time. To do that, we solve the TGV problem from $t=0.0$ to $t=0.02$ for all the schemes \textit{(1-1)}, \textit{(1-2)} and \textit{(3-3)} for four different time step sizes ($\delta t=\{0.02,0.01,0.005,0.0025\}$) and we compare the solution against the one obtained with the \textit{(3-3)} scheme with a time step equal to $\delta t=1.25\cdot10^{-3}$. Then, we to compute the $L^{\infty}$-norm of the solution, comparing against a solution computed with a finer time step, but with the same spatial discretization. Note that with this approach we are eliminating the spatial error.
-%%
-%%We show in Fig. \ref{fig-TGV_SRK_conv} the order of convergence in time for both velocity (Fig. \ref{fig-TGV_SRK_conv_vel}) and pressure (Fig. \ref{fig-TGV_SRK_conv_pre}) fields. It is seen that the first and second order schemes follow the predicted rate for the implicit convective integration, while the explicit time integration of the convective term converge with a greater rate for the higher time step sizes. The \textit{(3-3)} scheme suffers order reduction when implicit treatment of the convective and projection terms is used.
-%%\begin{figure}[h!]
-%%  \centering
-%%  \subfigure[Velocity convergence]{\label{fig-TGV_SRK_conv_vel}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_erru/plt_SRK_OSS_erru}}
-%%  \subfigure[Pressure convergence]{\label{fig-TGV_SRK_conv_pre}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_errp/plt_SRK_OSS_errp}}
-%%  \caption{Velocity and pressure convergence in time.}
-%%  \label{fig-TGV_SRK_conv}
-%%\end{figure}
-%%
-%%Let us now compare the consumed CPU time of the different schemes used in the convergence analysis. The aim is to know which scheme performs better in terms of computational cost, that here is evaluated by the CPU time consumption. In Fig. \ref{fig-TGV_SRK_effi} we depict the velocity error against the elapsed CPU time for the three schemes considered in this subsection and the explicit and implicit versions of the time integration of the convective and projection terms. We see that the explicit versions are much less time consuming than the implicit ones, which is produced by the fact that smaller system of equations has to be solved and no nonlinear iterations are needed. The gain of accuracy of the implicit schemes does not worth in this situation, since the difference in the error is very small compared with the increase of the computational cost.
-%%\begin{figure}[h!]
-%%  \centering
-%%  \includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_timu/plt_SRK_OSS_timu}
-%%  \caption{Efficiency of the integration schemes.}
-%%  \label{fig-TGV_SRK_effi}
-%%\end{figure}
-%
-%\subsubsection{Monolithic vs Segregated Runge-Kutta}
-%\label{subsubsec-C7_TGV_mono_vs_SRK}
-%A firts point that we want to analyse is the comparison between the results obtained with a monolithic approach, using a Crank-Nicolson time integration scheme, against the ones computed using the IMEX version of the SRK method. In the later case we use the \textit{(3-3)} scheme, see \cite{segregated_colomes_2015}.  
-%
-%The results shown in Fig. \ref{fig-TGV_SRK_mono_ene_dis} have been computed using two different discretizations, one with $16^3$ $Q2/Q1$ elements and the other one with $32^3$ $Q2/Q1$. In Fig. \ref{fig-TGV_SRK_mono_ene} the energy evolution is depicted and in Fig. \ref{fig-TGV_SRK_mono_dis} we show the energy dissipation rate. It is seen that very little differences appear using the SRK time integration method instead of a monolithic Crank-Nicolson scheme. It is also clear that the differences become smaller when the mesh is refined.
+%We show in \Fig{TGV_SRK_conv} the order of convergence in time for both velocity (\Fig{TGV_SRK_conv_vel}) and pressure (\Fig{TGV_SRK_conv_pre}) fields. It is seen that the first and second order schemes follow the predicted rate for the implicit convective integration, while the explicit time integration of the convective term converge with a greater rate for the higher time step sizes. The \textit{(3-3)} scheme suffers order reduction when implicit treatment of the convective and projection terms is used.
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Energy evolution]{\label{fig-TGV_SRK_mono_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/srk_mono/plt_tg3d_ene/plt_tg3d_ene}}
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_SRK_mono_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/srk_mono/plt_tg3d_tot/plt_tg3d_tot}}
-%  \caption{Energy and Total energy dissipation rate evolution with $33^3$ velocity DOFs}
-%  \label{fig-TGV_SRK_mono_ene_dis}
+%  \subfigure[Velocity convergence]{\label{fig-TGV_SRK_conv_vel}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_erru/plt_SRK_OSS_erru}}
+%  \subfigure[Pressure convergence]{\label{fig-TGV_SRK_conv_pre}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_errp/plt_SRK_OSS_errp}}
+%  \caption{Velocity and pressure convergence in time.}
+%  \label{fig-TGV_SRK_conv}
 %\end{figure}
 %
-%%It is important to point out that the main computational cost of an explicit SRK scheme is given by the solution of the pressure equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} that in practice are equivalent to solve a Darcy problem like \Eq{C7_SRK_upeta_RK_p_darcy}. The use of block preconditioning technique will lead to the solution of a mass matrix of the size of the velocity DOFs and a Laplacian matrix of the size of the pressure DOFs. Then, when using $Q2/Q1$ Finite Elements, the problem that will determine the computational cost will be the solution of the Laplacian matrix which is constructed by linear interpolation elements $Q1$. Thus, when comparing the SRK method against a monolithic approach, it is fair to compare solutions of the same pressure DOFs instead of velocity DOFs.
-%
-%\subsubsection{hp-refinement and adaptive time-stepping technique}
-%\label{subsubsec-C7_TGV_hp_refinement}
-%In Fig \ref{fig-TGV_SRK_mono_ene_dis} we clearly see that refining the mesh, the results computed using the OSS-ISS method converge to the DNS. Moreover, it has been shown in \cite{colomes_2016} that a $ 32^3 $ $ Q3/Q2 $ elements mesh is fine enough to get very accurate results with the OSS-ISS method.
-%
-%One of the main problems when using explicit or IMEX time integration schemes is the restriction on the CFL number. In the case of the IMEX version of the SRK scheme, the diffusive term is treated implicitly and no restriction has to be satisfied for the parabolic CFL, but the convective term is treated explicitly. Then, we have to restrict the time step size in order to satisfy the parabolic CFL condition, $ \mbox{CFL}_u=\delta tu/h<1 $. This restriction becomes more important when the mesh is refined, i. e. $ h $ is reduced.
-%
-%An important goal of using SRK schemes is the possibility to easily implement an adaptive time stepping technique, see section XXX. The important point of using this kind of techniques is that one can dynamicaly (and automaticaly) adapt the time step in order to satisfy both, the pysical and numerical, requeriments. As stated in section XXX, the physical requiriment on the time step size will be given by the change in the solution. On the other hand, the numerical requirement will be given by the CFL condition.
-%
-%In order to check the performance of the SRK method using adaptive time stepping, we solve the TGV problem with different mesh sizes and interpolations. Particularly, we use $ 16^3 $ and $ 32^3 $ elements mesh with $ Q2/Q1 $ and $ Q3/Q2 $ discretizations, depicted in Fig \ref{fig-TGV_SRK_refinement}.
+%Let us now compare the consumed CPU time of the different schemes used in the convergence analysis. The aim is to know which scheme performs better in terms of computational cost, that here is evaluated by the CPU time consumption. In \Fig{TGV_SRK_effi} we depict the velocity error against the elapsed CPU time for the three schemes considered in this subsection and the explicit and implicit versions of the time integration of the convective and projection terms. We see that the explicit versions are much less time consuming than the implicit ones, which is produced by the fact that smaller system of equations has to be solved and no nonlinear iterations are needed. The gain of accuracy of the implicit schemes does not worth in this situation, since the difference in the error is very small compared with the increase of the computational cost.
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Energy evolution]{\label{fig-TGV_SRK_ref_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/refinement/ene}}
-%  \subfigure[Total energy dissipation rate]{\label{fig-TGV_SRK_ref_dis}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/refinement/dis}}
-%  \caption{Energy and total energy dissipation rate evolution refining the mesh}
-%  \label{fig-TGV_SRK_refinement}
+%  \includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/conv/plt_SRK_OSS_timu/plt_SRK_OSS_timu}
+%  \caption{Efficiency of the integration schemes.}
+%  \label{fig-TGV_SRK_effi}
 %\end{figure}
-%Looking at the kinetic energy evolution (Fig. \ref{fig-TGV_SRK_ref_ene}) and at the total energy dissipation rate (Fig. \ref{fig-TGV_SRK_ref_dis}), we can clearly see that when the mesh is refined the solution tends to the DNS result. It is important to highlight here the improvement of the results when higher order of approximation is used. We see that using $ Q3/Q2 $ elements we get better results than using $ Q2/Q1 $, even with less DOFs. This behaviour is observed comparing the $ 16^3 $ $ Q3/Q2 $ elements mesh, with $ 48^3 $ velocity DOFs, against the $ 32^3 $ $ Q2/Q1 $ elements discretization, which have $ 64^3 $ velocity DOFs. It is seen that the former mesh have better agreement with the DNS solution.
-%
-%As stated above, the mesh refinement has a direct implication in the time step size when explicit or IMEX schemes are used. To determine the influence of this refinement using an adaptive time stepping technique, we show the time step evolution for the four cases considered in this subsection, see Fig. \ref{fig-TGV_SRK_tim}. The initial time step is $ \delta t_0=5\cdot10^{-2} $ for all cases. It is seen that the coarser mesh ($ 16^3 $ $ Q2/Q1 $ elements) allow a higher time step, which is constantly increased until the difference on the solution between to time steps is too high. It occurs around $ t=4.0 $, moment from which the time step size is adapted, remaining between $ 0.1 $ and $ 0.12 $. The $ 16^3 $ $ Q3/Q2 $ and the $ 32^3 $ $ Q2/Q1 $ show moreorless the same behaviour, with a first stage where the time step is increased until the CFL restriction is violated, point at which the time step is reduced. This pattern is repeated until the solution between two time steps is different enough to require a smaller time step to give more accurate solution. In what concerns the finest mesh, $ 32^3 $ $ Q3/Q2 $, the CFL restriction prevails over the physical phenomena restriction. Consequently, the time step increase-decrease pattern is followed during the whole simulation.
-%\begin{figure}[h!]
-%  \centering
-%  \includegraphics[width=0.6\textwidth]{Figures/TGV/SRK/refinement/dtime}
-%  \caption{Time step size evolution refining the mesh}
-%  \label{fig-TGV_SRK_tim}
-%\end{figure}
-%
-%\subsubsection{Scalability analysis}
-%All the solutions have been computed with FEMPAR (Finite Element Multiphysics and massively PARallel) numerical software. FEMPAR is an open source in-house developed, parallel hybrid OpenMP/MPI, object-oriented (OO) framework which, among other features, provides the basic tools for the efficient parallel distributed-memory implementation  of substructuring domain decomposition solvers~\cite{badia_implementation_2013,art003}. Under this parallel framework, an important issue is the scalability of the algorithms when large scale problems are solved. This means that when refining the mesh, there is the need of having scalable solvers that do not increase the elapsed CPU time when the number of processors are increased. To check the suitability of the explicit SRK algorithm for large scale problems we perform a weak scalability test solving the TGV problem. 
-%
-%Let us denote $ H $ the unidirectional size of the domain partition and $ L $ the unidirectional domain length. The TGV problem is solved in a domain of size $ L^3 $, with structured subdomain partitions of size $ H^3 $, and with a uniformly structured mesh composed of elements of size $ h^3 $. In a weak scalability test we keep the local meshes constant, that is to keep the number of elements per processor constant, which means that $ H/h= C $. In order to preserve the numerical properties, i. e. keep $ h $ constant, instead of reducing $ h $ we increase $ L $. Hence, as the reference problem is computed in a domain of size $ L_0=2\pi $, the scalabitilty analysis will be done in a domain of size $ L=\beta L_0 $, beign $ \beta=\{1,2,3,4,5\} $. The reference partition size is $ H_0=L_0/4 $ and will be kept constant.
-%
-%We compute the solution after one time step of size $\delta t=5\cdot10^{-2}$ with the explicit version of the \textit{(1-2)} scheme, using the $ Q2/Q1 $ elment type, and reporting the number of solver iterations and the CPU time consumed by each system resolution. Different local mesh sizes are considered to see the effect of the local mesh size on the scalability of the solver. In particular, we will consider three cases: $ H/h=\{4,8,12\} $. The total amount of processors used to solve the problem will be $ (L/H)^3 = (4\beta)^3 $. The smallest mesh used to solve the problem in this analysis is a $ 16^3 $ $ Q2/Q1 $ elements mesh, while the biggest one is a $ 240^3 $ $ Q2/Q1 $ elements mesh, which give more than $ 680 $ million DOFs.
-%
-%The following results are computed with a two-level BDDC solver, considering the corners, edges and faces of the subdomain partitions as part of the coarse system. We recall that the first step of a SRK \textit{(1-2)} scheme consist in six system resolutions that are specified in Algorithm \ref{alg-SRK_solvers}.
-%\begin{algorithm}
-%\label{alg-SRK_solvers}
-%\caption{SRK system resolutions for one time step using the \textit{(1-2)} scheme}
-%\begin{enumerate}
-%\item Solve initial pressure (equation \Eq{C7_SRK_upeta_RK_p}).
-%\item Solve second-stage momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}).
-%\item Solve second-stage pressure (equation \Eq{C7_SRK_upeta_RK_p}).
-%\item Solve velocity update (equation \Eq{C7_SRK_upeta_RK_u_n+1}).
-%\item Solve projection update (equation \Eq{C7_SRK_upeta_RK_eta_n+1}).
-%\item Solve pressure update (equation \Eq{C7_SRK_upeta_RK_p_n+1}).
-%\end{enumerate}
-%\end{algorithm}
-%Note that the first system solver is only needed at the first step, since after that $ p_1=p_n $.
-%
-%Fig. \ref{fig-TGV_SRK_scal} depicts the solver iterations and the elapsed CPU time for the weak scalability analysis with the three different local mesh sizes. All the six system solvers are depicted in the solver iteration plots (Fig. \ref{fig-TGV_SRK_scal_iter_4}, Fig. \ref{fig-TGV_SRK_scal_iter_8} and Fig. \ref{fig-TGV_SRK_scal_iter_12}), while for the CPU time graphics (Fig. \ref{fig-TGV_SRK_scal_time_4}, Fig. \ref{fig-TGV_SRK_scal_time_8} and Fig. \ref{fig-TGV_SRK_scal_time_12}) the pressure system resolutions have been grouped and the building time has been added. The building time includes the time consumed to integrate all matrices and vectors and the time consumed computing the preconditioners.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Iterations, $H/h=4$]{\label{fig-TGV_SRK_scal_iter_4}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/iter_4_cef}}
-%  \subfigure[CPU time, $H/h=4$]{\label{fig-TGV_SRK_scal_time_4}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/time_4_cef}}\\
-%  \subfigure[Iterations, $H/h=8$]{\label{fig-TGV_SRK_scal_iter_8}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/iter_8_cef}}
-%  \subfigure[CPU time, $H/h=8$]{\label{fig-TGV_SRK_scal_time_8}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/time_8_cef}}\\
-%  \subfigure[Iterations, $H/h=12$]{\label{fig-TGV_SRK_scal_iter_12}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/iter_12_cef}}
-%  \subfigure[CPU time, $H/h=12$]{\label{fig-TGV_SRK_scal_time_12}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/time_12_cef}}\\
-%  \caption{Weak scalability test. Number of iterations and elapsed CPU time for solving one time step of the TGV problem with different local mesh sizes.}
-%  \label{fig-TGV_SRK_scal}
-%\end{figure}
-%
-%Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in Fig. \ref{fig-TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1}). This behaviour is also expected, since the preconitioner of the schur complement ...
-%
-%In what refers to the consumed CPU time, a first conclusion we can take looking at Fig. \ref{fig-TGV_SRK_scal_time_4}, Fig. \ref{fig-TGV_SRK_scal_time_8} and Fig. \ref{fig-TGV_SRK_scal_time_12} is that the most expensive resolution is the momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}). Although the number of solver iterations is smaller than the pressure computations, in terms of time consumed, the momentum equations resolution is much expensive, even counting together the three pressure solvers. This difference in the computational time required for the momentum equations versus the pressure ones, is due to the number of DOFs that are being solved. We have to take into account that both velocity and projection fields are computed with a second order polynomial, $ Q2 $, while the pressure is first order, $ Q1 $. Then, we not only have two vectorial fields versus a scalar field, but we have a second order interpolation versus a first order. Leaving aside the mass matrix blocks, the size of the system of equations to be solved in the velocity block of the momentum computation is $ \sim24 $ times larger than the one that arise for the pressure block of the Darcy computations, taking into account that the pressure system is solved using \Eq{C7_SRK_upeta_RK_p_darcy_weak}.
-%
-%keeping with the discussion about the CPU time consumed shown in Fig. \ref{fig-TGV_SRK_scal}, we see that the computations of the momentum and pressure systems do not scale in terms of time. This performance has an easy explanation, which is given by the ratio between the fine and coarse system sizes. The coarse system size only depends on the number of processors (subdomains) used by the BDDC method. When corners, edges and faces of the subdomain are considered, the total amount of degrees of freedom of the coarse system is equivalent to a local mesh of $ Q2 $ elements (without the interior node) whith as many elements as subdomains. Consequently, for a $ H/h=4 $ local mesh, we can only expect to have weak scalability until $ 64 $ ($ 4^3 $) processors, for $ H/h=8 $ until $ 512 $ ($ 8^3 $) processors, and for $ H/h=12 $ until $ 1728 $ ($ 12^3 $) processors. In fact this is what we are seeing in Fig. \ref{fig-TGV_SRK_scal}, where, taking into account that the local meshes have the interor DOF inside each element, the results show the expected scalability performance.
-%
-%In order to have even better results, one can reduce the size of the coarse system by considering only the corners and the edges of the subdomain. In Fig. \ref{fig-TGV_SRK_scal_ce} we depict the results obtained in this case, for a $ H/h=12 $ local mesh size. It is seen that when the subdomain faces are ignored, the number of solver iterations increase, see Fig. \ref{fig-TGV_SRK_scal_iter_12_ce}. Despite that, in the trade-off of having more solver iterations with smaller system of equations, ignoring the subdomain faces in the coarse system worth. As we can see in Fig. \ref{fig-TGV_SRK_scal_time_12_ce}, the momentum system is scalable up to 8.000 processors since the local problem is more expensive than the coarse one. We can not scale in time for the pressure solver because the local problem is much smaller than the coarse as we use $ Q1 $ elements for the pressure field.
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[Iterations]{\label{fig-TGV_SRK_scal_iter_12_ce}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/iter_12_ce}}
-%  \subfigure[CPU time]{\label{fig-TGV_SRK_scal_time_12_ce}\includegraphics[width=0.49\textwidth]{Figures/TGV/SRK/scal/time_12_ce}}\\
-%  \caption{Weak scalability test. Number of iterations and elapsed CPU time for solving one time step of the TGV problem with $ H/h=12 $ and only corners and edges at the coarse level.}
-%  \label{fig-TGV_SRK_scal_ce}
-%\end{figure}
-%
-%%The number of iterations needed to solve the Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy} is shown in Fig. \ref{fig-TGV_SRK_scal_iter}, while the total elapsed CPU time for solving one step of the TGV problem is shown in Fig. \ref{fig-TGV_SRK_scal_time}. We see that the number of iterations remains constant when the number of processors is increased, meaning that the algorithm is scalable in terms of number of iterations. Looking at the total CPU time, we see that it increases as we increase the number of processors. That behaviour is caused because the coarse problem is bigger when the total amount of processors is increased, and the time consumed by the local problems in each processor is masked by the solution of the coarse problem. A multilevel implementation of the BDDC method should be used to overcome this problem.
-%
-%\subsection{Turbulent channel flow at $Re_\tau=395$}
+
+\subsubsection{Monolithic vs Segregated Runge-Kutta}
+\label{subsubsec-C7_TGV_mono_vs_SRK}
+A firts point that we want to analyse is the comparison between the results obtained with a monolithic approach, using a Crank-Nicolson time integration scheme, against the ones computed using the IMEX version of the SRK method. In the later case we use the \textit{(3-3)} scheme, see Appendix \ref{appendix-butcher_tableaus}.  
+
+The results shown in \Fig{TGV_SRK_mono_ene_dis} have been computed using two different discretizations, one with $16^3$ $Q_2/Q_1$ elements and the other one with $32^3$ $Q_2/Q_1$. In \Fig{TGV_SRK_mono_ene} the energy evolution is depicted and in \Fig{TGV_SRK_mono_dis} we show the energy dissipation rate. It is seen that very little differences appear using the SRK time integration method instead of a monolithic Crank-Nicolson scheme. It is also clear that the differences become smaller when the mesh is refined.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-TGV_SRK_mono_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/srk_mono_ene}}
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_SRK_mono_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/srk_mono_tot}}
+  \caption{Energy and Total energy dissipation rate evolution with $33^3$ velocity DOFs}
+  \label{fig-TGV_SRK_mono_ene_dis}
+\end{figure}
+
+%It is important to point out that the main computational cost of an explicit SRK scheme is given by the solution of the pressure equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} that in practice are equivalent to solve a Darcy problem like \Eq{C7_SRK_upeta_RK_p_darcy}. The use of block preconditioning technique will lead to the solution of a mass matrix of the size of the velocity DOFs and a Laplacian matrix of the size of the pressure DOFs. Then, when using $Q_2/Q_1$ Finite Elements, the problem that will determine the computational cost will be the solution of the Laplacian matrix which is constructed by linear interpolation elements $Q_1$. Thus, when comparing the SRK method against a monolithic approach, it is fair to compare solutions of the same pressure DOFs instead of velocity DOFs.
+
+\subsubsection{$h$-$p$ refinement and adaptive time-stepping technique}
+\label{subsubsec-C7_TGV_hp_refinement}
+In Fig \ref{fig-TGV_SRK_mono_ene_dis} we clearly see that refining the mesh, the results computed using the OSS-ISS method converge to the DNS. Moreover, it has been shown in \Chap{TBT_OSS} that a $ 32^3 $ $ Q_3/Q_2 $ elements mesh is fine enough to get very accurate results with the OSS-ISS method.
+
+One of the main problems when using explicit or IMEX time integration schemes is the restriction on the CFL number. In the case of the IMEX version of the SRK scheme, the diffusive term is treated implicitly and no restriction has to be satisfied for the parabolic CFL, but the convective term is treated explicitly. Then, we have to restrict the time step size in order to satisfy the parabolic CFL condition, $ \mbox{CFL}_u=\delta tu/h<1 $. This restriction becomes more important when the mesh is refined, i. e. $ h $ is reduced.
+
+An important goal of using SRK schemes is the possibility to easily implement an adaptive time stepping technique, see section \ref{subsec-C7_adaptive}. The important point of using this kind of techniques is that one can dynamicaly (and automaticaly) adapt the time step in order to satisfy both, the pysical and numerical, requeriments. The physical requiriment on the time step size will be given by the change in the solution, while the numerical requirement will be given by the CFL condition.
+
+In order to check the performance of the SRK method using adaptive time stepping, we solve the TGV problem with different mesh sizes and interpolations. Particularly, we use $ 16^3 $ and $ 32^3 $ elements mesh with $ Q_2/Q_1 $ and $ Q_3/Q_2 $ discretizations, depicted in Fig \ref{fig-TGV_SRK_refinement}.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Energy evolution]{\label{fig-TGV_SRK_ref_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/refinement_ene}}
+  \subfigure[Total energy dissipation rate]{\label{fig-TGV_SRK_ref_dis}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/refinement_dis}}
+  \caption{Energy and total energy dissipation rate evolution refining the mesh}
+  \label{fig-TGV_SRK_refinement}
+\end{figure}
+Looking at the kinetic energy evolution (\Fig{TGV_SRK_ref_ene}) and at the total energy dissipation rate (\Fig{TGV_SRK_ref_dis}), we can clearly see that when the mesh is refined the solution tends to the DNS result. It is important to highlight here the improvement of the results when higher order of approximation is used. We see that using $ Q_3/Q_2 $ elements we get better results than using $ Q_2/Q_1 $, even with less DOFs. This behaviour is observed comparing the $ 16^3 $ $ Q_3/Q_2 $ elements mesh, with $ 48^3 $ velocity DOFs, against the $ 32^3 $ $ Q_2/Q_1 $ elements discretization, which have $ 64^3 $ velocity DOFs. It is seen that the former mesh have better agreement with the DNS solution.
+
+As stated above, the mesh refinement has a direct implication in the time step size when explicit or IMEX schemes are used. To determine the influence of this refinement using an adaptive time stepping technique, we show the time step evolution for the four cases considered in this subsection, see \Fig{TGV_SRK_tim}. The initial time step is $ \delta t_0=5\cdot10^{-2} $ for all cases. It is seen that the coarser mesh ($ 16^3 $ $ Q_2/Q_1 $ elements) allow a higher time step, which is constantly increased until the difference on the solution between to time steps is too high. It occurs around $ t=4.0 $, moment from which the time step size is adapted, remaining between $ 0.1 $ and $ 0.12 $. The $ 16^3 $ $ Q_3/Q_2 $ and the $ 32^3 $ $ Q_2/Q_1 $ show moreorless the same behaviour, with a first stage where the time step is increased until the CFL restriction is violated, point at which the time step is reduced. This pattern is repeated until the solution between two time steps is different enough to require a smaller time step to give more accurate solution. In what concerns the finest mesh, $ 32^3 $ $ Q_3/Q_2 $, the CFL restriction prevails over the physical phenomena restriction. Consequently, the time step increase-decrease pattern is followed during the whole simulation.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Figures/Chapter7/TGV/refinement_dtime}
+  \caption{Time step size evolution refining the mesh}
+  \label{fig-TGV_SRK_tim}
+\end{figure}
+
+\subsubsection{Scalability analysis}
+All the solutions have been computed with FEMPAR (Finite Element Multiphysics and massively PARallel) numerical software. FEMPAR is an open source in-house developed, parallel hybrid OpenMP/MPI, object-oriented (OO) framework which, among other features, provides the basic tools for the efficient parallel distributed-memory implementation  of substructuring domain decomposition solvers~\cite{badia_implementation_2013,art003}. Under this parallel framework, an important issue is the scalability of the algorithms when large scale problems are solved. This means that when refining the mesh, there is the need of having scalable solvers that do not increase the elapsed CPU time when the number of processors are increased. To check the suitability of the explicit SRK algorithm for large scale problems we perform a weak scalability test solving the TGV problem. 
+
+Let us denote $ H $ the unidirectional size of the domain partition and $ L $ the unidirectional domain length. The TGV problem is solved in a domain of size $ L^3 $, with structured subdomain partitions of size $ H^3 $, and with a uniformly structured mesh composed of elements of size $ h^3 $. In a weak scalability test we keep the local meshes constant, that is to keep the number of elements per processor constant, which means that $ H/h= C $. In order to preserve the numerical properties, i. e. keep $ h $ constant, instead of reducing $ h $ we increase $ L $. Hence, as the reference problem is computed in a domain of size $ L_0=2\pi $, the scalabitilty analysis will be done in a domain of size $ L=\beta L_0 $, beign $ \beta=\{1,2,3,4,5\} $. The reference partition size is $ H_0=L_0/4 $ and will be kept constant.
+
+We compute the solution after one time step of size $\delta t=5\cdot10^{-2}$ with the explicit version of the \textit{(1-2)} scheme, using the $ Q_2/Q_1 $ elment type, and reporting the number of solver iterations and the CPU time consumed by each system resolution. Different local mesh sizes are considered to see the effect of the local mesh size on the scalability of the solver. In particular, we will consider three cases: $ H/h=\{4,8,12\} $. The total amount of processors used to solve the problem will be $ (L/H)^3 = (4\beta)^3 $. The smallest mesh used to solve the problem in this analysis is a $ 16^3 $ $ Q_2/Q_1 $ elements mesh, while the biggest one is a $ 240^3 $ $ Q_2/Q_1 $ elements mesh, which give more than $ 680 $ million DOFs.
+
+The following results are computed with a two-level BDDC solver, considering the corners, edges and faces of the subdomain partitions as part of the coarse system. We recall that the first step of a SRK \textit{(1-2)} scheme consist in six system resolutions that are specified in Algorithm \ref{alg-SRK_solvers}.
+\begin{algorithm}
+\caption{SRK system resolutions for one time step using the \textit{(1-2)} scheme}
+\label{alg-SRK_solvers}
+\begin{enumerate}
+\item Solve initial pressure (equation \Eq{C7_SRK_upeta_RK_p}).
+\item Solve second-stage momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}).
+\item Solve second-stage pressure (equation \Eq{C7_SRK_upeta_RK_p}).
+\item Solve velocity update (equation \Eq{C7_SRK_upeta_RK_u_n+1}).
+\item Solve projection update (equation \Eq{C7_SRK_upeta_RK_eta_n+1}).
+\item Solve pressure update (equation \Eq{C7_SRK_upeta_RK_p_n+1}).
+\end{enumerate}
+\end{algorithm}
+Note that the first system solver is only needed at the first step, since after that $ p_1=p_n $.
+
+\Fig{TGV_SRK_scal} depicts the solver iterations and the elapsed CPU time for the weak scalability analysis with the three different local mesh sizes. All the six system solvers are depicted in the solver iteration plots (\Fig{TGV_SRK_scal_iter_4}, \Fig{TGV_SRK_scal_iter_8} and \Fig{TGV_SRK_scal_iter_12}), while for the CPU time graphics (\Fig{TGV_SRK_scal_time_4}, \Fig{TGV_SRK_scal_time_8} and \Fig{TGV_SRK_scal_time_12}) the pressure system resolutions have been grouped and the building time has been added. The building time includes the time consumed to integrate all matrices and vectors and the time consumed computing the preconditioners.
+\begin{figure}[p]
+  \centering
+  \subfigure[Iterations, $H/h=4$]{\label{fig-TGV_SRK_scal_iter_4}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/iter_4_cef}}
+  \subfigure[CPU time, $H/h=4$]{\label{fig-TGV_SRK_scal_time_4}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/time_4_cef}}\\
+  \subfigure[Iterations, $H/h=8$]{\label{fig-TGV_SRK_scal_iter_8}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/iter_8_cef}}
+  \subfigure[CPU time, $H/h=8$]{\label{fig-TGV_SRK_scal_time_8}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/time_8_cef}}\\
+  \subfigure[Iterations, $H/h=12$]{\label{fig-TGV_SRK_scal_iter_12}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/iter_12_cef}}
+  \subfigure[CPU time, $H/h=12$]{\label{fig-TGV_SRK_scal_time_12}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/time_12_cef}}\\
+  \caption{Weak scalability test. Number of iterations and elapsed CPU time for solving one time step of the TGV problem with different local mesh sizes.}
+  \label{fig-TGV_SRK_scal}
+\end{figure}
+
+Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in \Fig{TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1}). This behaviour is also expected, since the preconitioner of the schur complement ...
+
+In what refers to the consumed CPU time, a first conclusion we can take looking at \Fig{TGV_SRK_scal_time_4}, \Fig{TGV_SRK_scal_time_8} and \Fig{TGV_SRK_scal_time_12} is that the most expensive resolution is the momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}). Although the number of solver iterations is smaller than the pressure computations, in terms of time consumed, the momentum equations resolution is much expensive, even counting together the three pressure solvers. This difference in the computational time required for the momentum equations versus the pressure ones, is due to the number of DOFs that are being solved. We have to take into account that both velocity and projection fields are computed with a second order polynomial, $ Q_2 $, while the pressure is first order, $ Q_1 $. Then, we not only have two vectorial fields versus a scalar field, but we have a second order interpolation versus a first order. Leaving aside the mass matrix blocks, the size of the system of equations to be solved in the velocity block of the momentum computation is $ \sim24 $ times larger than the one that arise for the pressure block of the Darcy computations, taking into account that the pressure system is solved using \Eq{C7_SRK_upeta_RK_p_darcy_weak}.
+
+keeping with the discussion about the CPU time consumed shown in \Fig{TGV_SRK_scal}, we see that the computations of the momentum and pressure systems do not scale in terms of time. This performance has an easy explanation, which is given by the ratio between the fine and coarse system sizes. The coarse system size only depends on the number of processors (subdomains) used by the BDDC method. When corners, edges and faces of the subdomain are considered, the total amount of degrees of freedom of the coarse system is equivalent to a local mesh of $ Q_2 $ elements (without the interior node) whith as many elements as subdomains. Consequently, for a $ H/h=4 $ local mesh, we can only expect to have weak scalability until $ 64 $ ($ 4^3 $) processors, for $ H/h=8 $ until $ 512 $ ($ 8^3 $) processors, and for $ H/h=12 $ until $ 1728 $ ($ 12^3 $) processors. In fact this is what we are seeing in \Fig{TGV_SRK_scal}, where, taking into account that the local meshes have the interor DOF inside each element, the results show the expected scalability performance.
+
+In order to have even better results, one can reduce the size of the coarse system by considering only the corners and the edges of the subdomain. In \Fig{TGV_SRK_scal_ce} we depict the results obtained in this case, for a $ H/h=12 $ local mesh size. It is seen that when the subdomain faces are ignored, the number of solver iterations increase, see \Fig{TGV_SRK_scal_iter_12_ce}. Despite that, in the trade-off of having more solver iterations with smaller system of equations, ignoring the subdomain faces in the coarse system worth. As we can see in \Fig{TGV_SRK_scal_time_12_ce}, the momentum system is scalable up to 8.000 processors since the local problem is more expensive than the coarse one. We can not scale in time for the pressure solver because the local problem is much smaller than the coarse as we use $ Q_1 $ elements for the pressure field.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Iterations]{\label{fig-TGV_SRK_scal_iter_12_ce}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/iter_12_ce}}
+  \subfigure[CPU time]{\label{fig-TGV_SRK_scal_time_12_ce}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TGV/time_12_ce}}\\
+  \caption{Weak scalability test. Number of iterations and elapsed CPU time for solving one time step of the TGV problem with $ H/h=12 $ and only corners and edges at the coarse level.}
+  \label{fig-TGV_SRK_scal_ce}
+\end{figure}
+
+%The number of iterations needed to solve the Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy} is shown in \Fig{TGV_SRK_scal_iter}, while the total elapsed CPU time for solving one step of the TGV problem is shown in \Fig{TGV_SRK_scal_time}. We see that the number of iterations remains constant when the number of processors is increased, meaning that the algorithm is scalable in terms of number of iterations. Looking at the total CPU time, we see that it increases as we increase the number of processors. That behaviour is caused because the coarse problem is bigger when the total amount of processors is increased, and the time consumed by the local problems in each processor is masked by the solution of the coarse problem. A multilevel implementation of the BDDC method should be used to overcome this problem.
+
+\subsection{Turbulent channel flow at $Re_\tau=395$}
 %In the previous section we have tested the suitability of the proposed VMS method using an IMEX SRK time integration scheme for the LES simulation of homogeneous turbulence. After that, we aim to show the performance of such methods for wall-bounded turbulent flows. In order to check the behaviour of the proposed approach, we solve the Turbulent Channel Flow (TCF) test with a Reynolds number based on the wall velocity $ Re_\tau=395 $.
 %
 %One of the main purposed of this test is to assess the accuracy of the solution when using the weak boundary conditions formulation given by the bilinear form described in \Eq{C7_bilinear_weak_by_components}.
@@ -783,18 +785,21 @@ The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{
 %\end{align}
 %The constant $C$ is chosen in a such way that the field without fluctuations would have a bulk mean velocity $\bar{U}=1.0$. The fluctuation constant $\epsilon$ is $10\%$ of the bulk mean velocity.
 %
-%To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q2/Q1 $ and $ Q3/Q2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs...}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
+%To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q_2/Q_1 $ and $ Q_3/Q_2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs...}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
 %
 %According to \cite{colomes_2016}, the algorithmic constants that appear in \Eq{C7_tau_m} and \Eq{C7_tau_c} are chosen as $ c_1=12.0 $, $ c_2=8.0 $ and $ c_c=32.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $.
 %
-%\subsubsection{Influence of the wall-normal component}
+\subsubsection{Effect of $ c_c $ in uniform meshes}
+
+
+\subsubsection{Influence of the wall-normal component}
 %A significant difference on the approach followed for the weak enforcement of the Dirichlet boundary conditions considered in this work, with respect to the originaly proposed in \cite{bazilevs_...}, is the treatment of the normal component. In \cite{bazilevs_...} a no-penatration condition is considered, which means that the normal component of the velocity is imposed strongly, $ \u\cdot\n=0 $ on $ \Gamma_D $. We propose to keep the weak boundary imposition even in the wall-normal direction. The main advantadge of keeping the same approach for all components is revealed in curved boundaries. In that case, the different treatment of each component could lead to tedious code implementation.
 %
 %As stated in section \ref{subsec-C7_weak_bcs}, we define two differene penalty parameters. One for the tangential component, based on the law of the wall, and another one for the wall-normal component, which is proportional to the original penalty parameter proposed in \cite{bazilevs_original}, $ \alpha_{b,n}:=\beta\frac{C_b\nu}{h_b} $. As it is obvious, when $ \beta\rightarrow\infty $ the solution at the wall becomes closer to the one obtained imposing strongly the normal component, but the penalty term may disturb the proper solution. 
 %
-%In order to determine the best value for $ \beta $, we solve the TCF test from $ t=0 $ to $ t=20\Pi $ (10 times the required time that a particle needs to cross the channel flow traveling at the mean velocity), with different values $ \beta=\{1,2,4,8,16,32,64,128\} $ in a $ 16^3 $ $ Q2/Q1 $ elements mesh. The problem is sovled using an IMEX SRK scheme with adaptive time adaptive technique.
+%In order to determine the best value for $ \beta $, we solve the TCF test from $ t=0 $ to $ t=20\Pi $ (10 times the required time that a particle needs to cross the channel flow traveling at the mean velocity), with different values $ \beta=\{1,2,4,8,16,32,64,128\} $ in a $ 16^3 $ $ Q_2/Q_1 $ elements mesh. The problem is sovled using an IMEX SRK scheme with adaptive time adaptive technique.
 %
-%In Fig. \ref{fig-cha_ene_dtime} we show the energy evolution and the time step size evolution for the different settings of $ \beta $. Looking at the energy evolution (Fig. \ref{fig-cha_ene}), we clearly see that the choice of $ \beta $ has a direct implication on the results. For low values of $ \beta $, the solution starts dissipating too much energy at the early stages of the simulation. When increasing $ \beta $, the results tend to the ones obtained considering a strong imposition of the normal component, denoted by \textit{strong} in Fig. \ref{fig-cha_ene}. However, as it can be seen in Fig. \ref{fig-cha_dtime}, an increase of $ \beta $ results in a higher restriction on the time step size, making the problem more expensive. Looking for a trade off between accuracy and computational cost, we choose $ \beta=64 $ for forthcoming computations.
+%In \Fig{cha_ene_dtime} we show the energy evolution and the time step size evolution for the different settings of $ \beta $. Looking at the energy evolution (\Fig{cha_ene}), we clearly see that the choice of $ \beta $ has a direct implication on the results. For low values of $ \beta $, the solution starts dissipating too much energy at the early stages of the simulation. When increasing $ \beta $, the results tend to the ones obtained considering a strong imposition of the normal component, denoted by \textit{strong} in \Fig{cha_ene}. However, as it can be seen in \Fig{cha_dtime}, an increase of $ \beta $ results in a higher restriction on the time step size, making the problem more expensive. Looking for a trade off between accuracy and computational cost, we choose $ \beta=64 $ for forthcoming computations.
 %\begin{figure}[h!]
 %  \centering
 %  \subfigure[Energy evolution]{\label{fig-cha_ene}\includegraphics[width=0.49\textwidth]{Figures/TCF/ene}}
@@ -803,11 +808,11 @@ The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{
 %  \label{fig-cha_ene_dtime}
 %\end{figure}
 %
-%Note that with a fully implicit time integration scheme, the time step size required to solve properly the temporal scales for this problem is $ \delta t\sim0.03 $, see \cite{colomes_assessment}. Hence, the one given by the automatic adaptive time stepping for $ \beta=64 $ is $ \delta t\sim0.01 $, three times lower. This reduction on the time step size is compensated by the use of an explicit treatment of the convective term, with which we avoid the nonlinear iterations. For this particular case, with a $ 16^3 $ $ Q2/Q1 $ elements mesh, a time step resolution with an IMEX SRK scheme is around 6 times faster than a time step resolution with an implicit SRK scheme.
+%Note that with a fully implicit time integration scheme, the time step size required to solve properly the temporal scales for this problem is $ \delta t\sim0.03 $, see \cite{colomes_assessment}. Hence, the one given by the automatic adaptive time stepping for $ \beta=64 $ is $ \delta t\sim0.01 $, three times lower. This reduction on the time step size is compensated by the use of an explicit treatment of the convective term, with which we avoid the nonlinear iterations. For this particular case, with a $ 16^3 $ $ Q_2/Q_1 $ elements mesh, a time step resolution with an IMEX SRK scheme is around 6 times faster than a time step resolution with an implicit SRK scheme.
 %
 %The usage of IMEX SRK schemes only worths when uniform meshes are considered. Otherwise, when stretched meshes are employed to capture the boundary layer, the time step size restriction given by hyperbolic $ \mbox{CFL}_u $ make this schemes not affordable.
 %
-%\subsubsection{Comparison between strong and week boundary conditions imposition}
+\subsubsection{Comparison between strong and week boundary conditions imposition}
 %Once analysed the effect of the $ \beta $ parameter when Dirichlet boundary conditions are imposed weakly for the wall-normal component, let us check the performance of the approach followed in this work compared against a strong Dirichlet boundary conditions definition. We will compare with the results presented in \cite{colomes_mixed}, where the TCF test was solved using strong Dirichlet boundary conditions in a stretched mesh. In Table \ref{tab-y_plus} we state the distance to the wall of the nearest velocity DOF for an stretched and a uniform mesh, with two different discretizations.
 %\begin{table}[h]
 %\caption{Distance to the wall of the nearest velocity DOF in wall units.}
@@ -818,16 +823,16 @@ The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{
 %Mesh type&Discretization&$ y^+ $\\
 %\midrule
 %\midrule
-%\multirow{2}{*}{Stretched}&$ 16^3 $ $ Q2/Q1 $&$ 1.6 $\\
-%&$ 16^3 $ $ Q3/Q2 $&$ 1.0 $\\
+%\multirow{2}{*}{Stretched}&$ 16^3 $ $ Q_2/Q_1 $&$ 1.6 $\\
+%&$ 16^3 $ $ Q_3/Q_2 $&$ 1.0 $\\
 %\midrule
-%\multirow{2}{*}{Uniform}&$ 16^3 $ $ Q2/Q1 $&$ 24.7 $\\
-%&$ 16^3 $ $ Q3/Q2 $&$ 16.5 $\\
+%\multirow{2}{*}{Uniform}&$ 16^3 $ $ Q_2/Q_1 $&$ 24.7 $\\
+%&$ 16^3 $ $ Q_3/Q_2 $&$ 16.5 $\\
 %\bottomrule
 %\end{tabular}
 %\end{table}
 %
-%The TCF test is solved from $ t=0.0 $ to $ t=300.0 $, storing the statistics from the last $ 10.0 $ seconds, accumulating more than $ 1000 $ samples. The results are shown in Fig. \ref{fig-cha_vel}, where the mean stream-wise velocity is ploted (Fig. \ref{fig-cha_umean}) together with the velocity fluctuations in the stream-wise, wall-normal and span-wise directions (Figs. \ref{fig-cha_ufluc}, \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, respectively).
+%The TCF test is solved from $ t=0.0 $ to $ t=300.0 $, storing the statistics from the last $ 10.0 $ seconds, accumulating more than $ 1000 $ samples. The results are shown in \Fig{cha_vel}, where the mean stream-wise velocity is ploted (\Fig{cha_umean}) together with the velocity fluctuations in the stream-wise, wall-normal and span-wise directions (Figs. \ref{fig-cha_ufluc}, \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, respectively).
 %\begin{figure}[h!]
 %	\centering	
 %	\subfigure[Mean streamwise velocity]{\label{fig-cha_umean}\includegraphics[width=0.49\textwidth]{Figures/TCF/umean}}
@@ -838,6 +843,8 @@ The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{
 %	\label{fig-cha_vel}
 %\end{figure}
 %
-%It is seen in Fig. \ref{fig-cha_umean} that the mean stream-wise velocity profile is in good agreement with the DNS results and also with the results obtained with strong boundary conditions in a stretched mesh. Particularly accurate are the results obtained with the $ 16^3 $ $ Q3/Q2 $ elements mesh, in which all points except the nearest to the wall are almost on top of the DNS curve, giving a better agreement to the DNS solution than the solution obtained with a stretched mesh.
+%It is seen in \Fig{cha_umean} that the mean stream-wise velocity profile is in good agreement with the DNS results and also with the results obtained with strong boundary conditions in a stretched mesh. Particularly accurate are the results obtained with the $ 16^3 $ $ Q_3/Q_2 $ elements mesh, in which all points except the nearest to the wall are almost on top of the DNS curve, giving a better agreement to the DNS solution than the solution obtained with a stretched mesh.
 %
-%Similar results are observed for the velocity fluctuations. Looking at Fig. \ref{fig-cha_ufluc}, where the strem-wise velocity fluctuation is depicted, we see that the nearest to the wall point is far to the DNS curve for the weak and uniform case, but the remaining points fit to the desired results. As it is expected, an improvement in the solution is observed when higher order discretization is used. Same behaviour is observed for the wall-normal and span-wise velocity fluctuations, Figs. \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, where the $ 16^3 $ $ Q3/Q2 $ elements mesh with weak boundary conditions give even more accurate results than the strong boundary conditions in a stretched mesh.
+%Similar results are observed for the velocity fluctuations. Looking at \Fig{cha_ufluc}, where the strem-wise velocity fluctuation is depicted, we see that the nearest to the wall point is far to the DNS curve for the weak and uniform case, but the remaining points fit to the desired results. As it is expected, an improvement in the solution is observed when higher order discretization is used. Same behaviour is observed for the wall-normal and span-wise velocity fluctuations, Figs. \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, where the $ 16^3 $ $ Q_3/Q_2 $ elements mesh with weak boundary conditions give even more accurate results than the strong boundary conditions in a stretched mesh.
+
+\section{Conclusions}

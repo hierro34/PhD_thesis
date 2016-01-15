@@ -1,0 +1,72 @@
+\chapter{Flow around an airfoil at low Reynolds number}
+\label{chap-NACA}
+
+\section{Introduction}
+\label{sec-C8_introduction}
+Let us now consider the simulation of the flow around an airfoil near maximum lift. In particular, we select a NACA 4412 airfoil under a flow with an angle of attack of $12^o$, which, according to Wadcock 1987 and Hasting and Williams (1984,1987), was determined to be the one that results in the maximum lift.
+
+The main goal of this test is to check the performance of the proposed VMS methods as a LES approach using a SRK time integration scheme for a very complex flow. In a flow around an airfoil many flow characteristics are stressed, specially when high Reynolds numbers are considered. That is the case of the current test, which has to deal not simply with turbulent flows, but also with other difficulties like the presence of very thin laminar boundary layers, transition from laminar to turbulent regimes, wall-bounded flow or flow that separates from curved surfaces. The fact is that LES methods have been shown to be very useful for flows where the turbulent structure is dominated by the large-scale structures, like the TGV test discussed in sections \ref{subsec:TGV-VMS} and \ref{subsec:TGV-SRK} or homogeneous turbulent problems, see \cite{colomes_2014}. Despite that, the simulation of near-wall flows using LES methods has demonstrated to be a challenging task, manly because of the complex physical phenomena like the reduction of the large scales structures near the wall, the flow anisotropy or the mesh sensitivity to high aspect ratios. 
+
+Many works have been done discussing the suitability of LES methods for the simulation of flow around an airfoil. This is the case of the European project LESFOIL \cite{davidson_lesfoil:_2003}, where nine different academic and industrial groups worked with the aim to identify the potential of LES as a prediction method for separation in high-Reynolds-number airfoil flows. In this case, the simulated geometry was the Aerospatiale-A airfoil operating at a chord Reynolds number equal to $2.1\cdot10^6$ with an angle of attack equal to $13.3^o$ and a Mach number of $0.15$. Other authors have been worked with the same test setting considered in this section. This is the case of \cite{jansen_stabilized_1999, kaltenbach_large-eddy_1995, schmidt_assessment_????}, where the use of LES method for the simulation of the flow around a NACA4412 airfoil is studied using unstructured, structured and semi-structured grids, respectively.
+
+\section{Problem statement}
+\label{sec-C8_prob_statement}
+
+\section{Test setting}
+\label{sec-C8_setting}
+The computational domain is defined with an inlet boundary around 20 chord lengths away from the airfoil surface and an outlet boundary separated 40 chord lengths from the airfoil tail. At the inlet boundary a freestream velocity $U_\infty=10$ has been setted, while the outlet boundary has left free. 
+
+In this type of problems the mesh design plays an important role on the solution, in particular, a proper spacing has to be used at the boundary layer. As we do not use a wall-law model, we say that the proposed simulation is a \textit{Wall-Resolved LES} (WRLES). According to \cite{piomelli_large-eddy_1996}, the coherent structures that appear in the turbulent boundary layer can be captured with a WRLES method if the near-wall node of the mesh is located at a wall distance $y^+<2$ and the streamwise cell size is within the range $50<\Delta x^+<150$. The simulation of this test is done on a structured mesh around the airfoil profile and unstructured mesh on the remaining domain, see Fig. \ref{fig-NACA_mesh_global}, which allow us to have fine enough elements around the airfoil surface, the turbulent boundary layer and the wake region, while coarse elements are used in the far field region. At the leading edge, the near wall-node is located at $y\sim 2.0\cdot10^{-5}c$ which leads to a wall distance of $ y^+\sim1.4$. This distance is kept almost constant at the laminar region and is increased constantly until it reaches the maximum of $y\sim1.0\cdot10^{-4}$ at the trailing edge, where the wall distance is less restrictive $y^+<1$. The spanwise elemental length is $\Delta x\sim0.0015c$ constant over all the suction side of the airfoil, which at the leading edge give a normalized distance of $\Delta x\sim105$. We see that the mesh sizes satisfy the conditions needed to capture the boundary layer phenomena.
+%\begin{figure}[h!]
+%  \centering
+%  \subfigure[Structured mesh around the airfoil]{\label{fig-NACA_mesh_global}\includegraphics[width=\textwidth,clip=true,trim=2cm 14.2cm 10cm 4cm]{Figures/NACA/mesh_global}}\\
+%  \subfigure[Leading edge close up view]{\label{fig-NACA_mesh_leading}\includegraphics[width=0.49\textwidth,clip=true,trim=2.5cm 11cm 10.5cm 1.5cm]{Figures/NACA/mesh_leading}}
+%  \subfigure[Trailing edge close up view]{\label{fig-NACA_mesh_trailing}\includegraphics[width=0.49\textwidth,clip=true,trim=2.5cm 11cm 10.5cm 1.5cm]{Figures/NACA/mesh_trailing}}
+%  \caption{Mesh details of NACA 4412 airfoil}
+%  \label{fig-TGV_SRK_scal}
+%\end{figure}
+
+Like in the TGV test discussed in section \ref{subsec:TGV-SRK}, the spatial discretization is done using inf-sup stable elements $Q2-Q1$. These type of elements will allow us to use the OSS-ISS VMS approach descrived in \ref{subsec:VMS}. 
+
+The problem is solved using the implicit version of the SRK method introduced in section \ref{subsec:SRK} and also used in section \ref{subsec:TGV-SRK}. We begin with an initial solution that has been computed solving the Stokes problem and the total time needed until the flow is fully developed is about $18$ time units ($1$ time unit $=c/U_\infty$). After that, another $10$ time units are used to collect the data for reliable statistics. The time step used when the flow is fully developed is $2.5\cdot10^{-4}c/U_\infty$ giving a maximum hyperbolic CFL number below $1.2$, based on the maximum element length, and CFL$\sim8.0$ based on the minimum element length.
+
+\section{Simulation results and discussion}
+\label{sec-C8_results}
+
+\subsection{Effect of $ c_c $ in a 2D mesh with strong BCs}
+\subsection{Effect of $ \beta $ in a 2D mesh with weak BCs}
+\subsection{Strong vs weak BCs}
+\subsection{Instantaneous flowfields for the 3D case}
+\subsubsection{Velocity}
+\subsubsection{Pressure}
+\subsubsection{Vorticity}
+\subsection{Aerodynamic coefficients}
+\subsubsection{Pressure Coefficient}
+\subsubsection{Drag coefficient}
+\subsubsection{Lift coefficient}
+
+The results obtained with the previous problem setting are compared against experimental data from Wadcock \cite{wadcock_investigation_1987} and Hastings et al. \cite{Hastings}. In order to have a better idea of the performance of our VMS approach we also compare against other LES models that have been used to solve the same problem. These are the Katenbach  et al. work \cite{kaltenbach_large-eddy_1995}, the data from Jansen \cite{jansen_stabilized_1999} and three different LES models proposed by Schmidt et al. in \cite{schmidt_assessment_????}.
+
+The pressure coefficient $C_p$ is shown in Fig. 
+%\begin{figure}[h!]
+%  \centering
+%  \subfigure[$C_p$ compared with experimental data]{\label{fig-NACA_cp_glob}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp}}
+%  \subfigure[$C_p$ close up view compared with experimental data and other LES models]{\label{fig-NACA_cp_close}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp_close}}
+%  \caption{Pressure coefficient $C_p$.}
+%  \label{fig-NACA_cp}
+%\end{figure}
+
+
+%\begin{figure}[h!]
+%  \centering
+%  \subfigure[$x/c=0.529$]{\label{fig-NACA_profile1}\includegraphics[width=0.32\textwidth,clip=true,trim=3.5cm 0cm 3.5cm 0cm]{Figures/NACA/profile1}}
+%  \subfigure[$x/c=0.815$]{\label{fig-NACA_profile2}\includegraphics[width=0.32\textwidth,clip=true,trim=3.5cm 0cm 3.5cm 0cm]{Figures/NACA/profile2}}
+%  \subfigure[$x/c=0.952$]{\label{fig-NACA_profile3}\includegraphics[width=0.32\textwidth,clip=true,trim=3.5cm 0cm 3.5cm 0cm]{Figures/NACA/profile3}}
+%  \caption{Mean streamwise velocity profiles normalized by $U_\infty$.}
+%  \label{fig-NACA_cp}
+%\end{figure}
+
+
+
+\section{Conclusions}
+\label{sec-C8_conclusions}

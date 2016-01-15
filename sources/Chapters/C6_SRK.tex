@@ -369,7 +369,7 @@ Here we consider a SRK scheme with the convective and diffusive terms integrated
 $$\mathcal{F}(\U):=\F-(\K+\C(\U))\U,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=-G\P.$$
 It is important to highlight here that this scheme is nonlinear, since we have the convective velocity on the left-hand side of the equation.
 
-Fig. \ref{fig:IMEX_implcnv_RK_analytical} shows the convergence rate of the velocity and the pressure fields for the different viscosity choices. Looking at the stiffest case, Figs. \ref{fig:IMEX_implcnv_RK_vel_analytical_nu1.0} and \ref{fig:IMEX_implcnv_RK_pre_analytical_nu1.0}, where $\nu=1.0$, we see that schemes \textit{(2-2/2)} and \textit{(4-3)} seem to converge in a rate lower than two, which could be justified by the order reduction phenomena. Note that precisely these two methods do not satisfy the incompressibility constrain when time dependent boundary conditions are applied, see Proposition \ref{prop2}. Almost the same behaviour is observed for the scheme \textit{(2-3)} which also has an order reduction in its convergence. On the other hand, scheme \textit{(3-3) has a reduction on the order of convergence but it is still greater than two. Finally, scheme \textit{(5-3)} is not affected by the order reduction phenomena.}
+\Fig{IMEX_implcnv_RK_analytical} shows the convergence rate of the velocity and the pressure fields for the different viscosity choices. Looking at the stiffest case, Figs. \ref{fig:IMEX_implcnv_RK_vel_analytical_nu1.0} and \ref{fig:IMEX_implcnv_RK_pre_analytical_nu1.0}, where $\nu=1.0$, we see that schemes \textit{(2-2/2)} and \textit{(4-3)} seem to converge in a rate lower than two, which could be justified by the order reduction phenomena. Note that precisely these two methods do not satisfy the incompressibility constrain when time dependent boundary conditions are applied, see Proposition \ref{prop2}. Almost the same behaviour is observed for the scheme \textit{(2-3)} which also has an order reduction in its convergence. On the other hand, scheme \textit{(3-3) has a reduction on the order of convergence but it is still greater than two. Finally, scheme \textit{(5-3)} is not affected by the order reduction phenomena.}
 %schemes \textit{(3-3)} and \textit{(5-3)} are not affected by the order reduction phenomena for this combination of parameters. 
 
 When we reduce the viscosity to $\nu=0.1$, the schemes seem to start to recover their prescribed convergence rate. In Figs. \ref{fig:IMEX_implcnv_RK_vel_analytical_nu0.1} and  \ref{fig:IMEX_implcnv_RK_pre_analytical_nu0.1} the convergence rate in time are plotted for the velocity and pressure fields, respectively. It is seen that for small time steps all schemes converge with the correct rate, but for larger time steps the \textit{(2-2/1)} and \textit{(4-3)} schemes have order reduction.
@@ -377,14 +377,14 @@ When we reduce the viscosity to $\nu=0.1$, the schemes seem to start to recover 
 Finally, in  Figs. \ref{fig:IMEX_implcnv_RK_vel_analytical_nu0.01} and  \ref{fig:IMEX_implcnv_RK_pre_analytical_nu0.01}, where we show the convergence rate for the velocity and pressure fields with $\nu=0.01$, all schemes considered in this work perform with the prescribed convergence rate. 
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity convergence, $\nu=1.0$]{\label{fig:IMEX_implcnv_RK_vel_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E+00_implconv}}    
-  \subfigure[Pressure convergence, $\nu=1.0$]{\label{fig:IMEX_implcnv_RK_pre_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E+00_implconv}}\\
-  \subfigure[Velocity convergence, $\nu=0.1$]{\label{fig:IMEX_implcnv_RK_vel_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-01_implconv}}    
-  \subfigure[Pressure convergence, $\nu=0.1$]{\label{fig:IMEX_implcnv_RK_pre_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-01_implconv}}\\
-  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig:IMEX_implcnv_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_implconv}}    
-  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig:IMEX_implcnv_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_implconv}}
+  \subfigure[Velocity convergence, $\nu=1.0$]{\label{fig-IMEX_implcnv_RK_vel_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E+00_implconv}}    
+  \subfigure[Pressure convergence, $\nu=1.0$]{\label{fig-IMEX_implcnv_RK_pre_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E+00_implconv}}\\
+  \subfigure[Velocity convergence, $\nu=0.1$]{\label{fig-IMEX_implcnv_RK_vel_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-01_implconv}}    
+  \subfigure[Pressure convergence, $\nu=0.1$]{\label{fig-IMEX_implcnv_RK_pre_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-01_implconv}}\\
+  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig-IMEX_implcnv_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_implconv}}    
+  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig-IMEX_implcnv_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_implconv}}
   \caption{Fully implicit SRK.}
-  \label{fig:IMEX_implcnv_RK_analytical}
+  \label{fig-IMEX_implcnv_RK_analytical}
 \end{figure}
 
 \paragraph{IMEX-SRK.}
@@ -393,20 +393,20 @@ In this case the SRK scheme is defined only with the diffusive term integrated i
 $$\mathcal{F}(\U):=-K\U,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=\F-C(\U)\U-G\P.$$
 Note that for this case, there will be the limitation on the hyperbolic ${\rm CFL}_u$ number, which is less restrictive than the parabolic one. As it is seen in Table \ref{tab:CFL}, it is always less than $1.0$ for the chosen time step sizes.
 
-Fig. \ref{fig:IMEX_explcnv_RK_analytical} depicts the velocity and pressure convergence rate using different viscosities for this second case. 
+\Fig{IMEX_explcnv_RK_analytical} depicts the velocity and pressure convergence rate using different viscosities for this second case. 
 For the highest viscosity $\nu=1.0$ (Figs. \ref{fig:IMEX_explcnv_RK_vel_analytical_nu1.0} and \ref{fig:IMEX_explcnv_RK_pre_analytical_nu1.0}), we note that almost all methods perform in a similar way as the fully implicit SRK case, with the difference that scheme \textit{(3-3)} is also showing an order reduction in its convergence rate, being of 2nd order. In this case, we can state that the \textit{(5-3)} scheme is the only third-order scheme that does not show an order reduction in the time convergence, although for the smallest time steps, the velocity convergence rate is a little bit lower than 3.
 
 When we reduce the viscosity to $\nu=0.1$ or $\nu=0.01$, all schemes show the same behaviour as the fully implicit SRK case, see Figs. \ref{fig:IMEX_explcnv_RK_vel_analytical_nu0.1}, \ref{fig:IMEX_explcnv_RK_pre_analytical_nu0.1},  \ref{fig:IMEX_explcnv_RK_vel_analytical_nu0.01}, and  \ref{fig:IMEX_explcnv_RK_pre_analytical_nu0.01}. 
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity convergence, $\nu=1.0$]{\label{fig:IMEX_explcnv_RK_vel_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E+00_explconv}}    
-  \subfigure[Pressure convergence, $\nu=1.0$]{\label{fig:IMEX_explcnv_RK_pre_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E+00_explconv}}\\
-  \subfigure[Velocity convergence, $\nu=0.1$]{\label{fig:IMEX_explcnv_RK_vel_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-01_explconv}}    
-  \subfigure[Pressure convergence, $\nu=0.1$]{\label{fig:IMEX_explcnv_RK_pre_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-01_explconv}}\\
-  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig:IMEX_explcnv_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_explconv}}    
-  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig:IMEX_explcnv_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_explconv}}
+  \subfigure[Velocity convergence, $\nu=1.0$]{\label{fig-IMEX_explcnv_RK_vel_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E+00_explconv}}    
+  \subfigure[Pressure convergence, $\nu=1.0$]{\label{fig-IMEX_explcnv_RK_pre_analytical_nu1.0}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E+00_explconv}}\\
+  \subfigure[Velocity convergence, $\nu=0.1$]{\label{fig-IMEX_explcnv_RK_vel_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-01_explconv}}    
+  \subfigure[Pressure convergence, $\nu=0.1$]{\label{fig-IMEX_explcnv_RK_pre_analytical_nu0.1}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-01_explconv}}\\
+  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig-IMEX_explcnv_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_explconv}}    
+  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig-IMEX_explcnv_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_explconv}}
   \caption{SRK convergence with convection integrated explicitly and diffusion integrated implicitly.}
-  \label{fig:IMEX_explcnv_RK_analytical}
+  \label{fig-IMEX_explcnv_RK_analytical}
 \end{figure}
 Let us note that the \textit{(2-2/1)} scheme has much lower error in the IMEX-SRK case than in the fully implicit SRK case.
 
@@ -416,13 +416,13 @@ Finally we test the fully explicit situation, which consist on sending all terms
 $$\mathcal{F}(\U):=0,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=\F-(\K+\C(\U))\U-G\P.$$
 In this case the {CFL} number that limits the stability of the method is given by the parabolic one (${\rm CFL}_\nu$). This is far more restrictive than ${\rm CFL}_u$ in the IMEX case, and for the setting described above we get unstable results. Only when the viscosity is $\nu=0.01$, the ${\rm CFL}_\nu$ values are in the order or smaller than the critical value $1.0$.
 
-Fig. \ref{fig:Expl_RK_analytical} depicts the convergence rate for this case, where we see that for the velocity (Fig. \ref{fig:Expl_RK_vel_analytical_nu0.01}) and the pressure (Fig. \ref{fig:Expl_RK_pre_analytical_nu0.01}) fields the order of convergence is the desired one for most of the schemes, except for the \textit{(5-3)} scheme which converges with a higher order. Here does not appear the order reduction phenomena since it is not present for explicit schemes.
+\Fig{Expl_RK_analytical} depicts the convergence rate for this case, where we see that for the velocity (\Fig{Expl_RK_vel_analytical_nu0.01}) and the pressure (\Fig{Expl_RK_pre_analytical_nu0.01}) fields the order of convergence is the desired one for most of the schemes, except for the \textit{(5-3)} scheme which converges with a higher order. Here does not appear the order reduction phenomena since it is not present for explicit schemes.
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig:Expl_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_explfull}}    
-  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig:Expl_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_explfull}}
+  \subfigure[Velocity convergence, $\nu=0.01$]{\label{fig-Expl_RK_vel_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/vel_nu1dot0E-02_explfull}}    
+  \subfigure[Pressure convergence, $\nu=0.01$]{\label{fig-Expl_RK_pre_analytical_nu0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/pre_nu1dot0E-02_explfull}}
   \caption{Fully explicit SRK convergence.}
-  \label{fig:Expl_RK_analytical}
+  \label{fig-Expl_RK_analytical}
 \end{figure}
 
 
@@ -438,21 +438,21 @@ $-y$
 %\label{eq-C6_analytical_p_t2}
 &p(x,y) = x+y.
 \end{align*}
-This problem is solved with the fully implicit SRK method from $t=0$ to {$t=2.0$} using a time step size { $\delta t=1.0\cdot10^{-2}$} and a viscosity $\nu=0.01$. { The linear solver tolerance has been set equal to $1.0\cdot10^{-8}$, and for the implicit version, the nonlinear tolerance is $1.0\cdot10^{-6}$}. In Fig. \ref{fig:RK_analytical_t2} the evolution of $\|\nabla \cdot \u\|$ is depicted for all schemes considered in \ref{appendix:Butcher_tab}, for both the implicit and explicit versions of the SRK method. We see that for the first-order \textit{(1-1)} scheme the discrete divergence constraint is not preserved as it was expected. Moreover, the second-order schemes seem to give really accurate results when evaluating the discrete divergence, even when the time dependence of the solution is of order 2. { The \textit{(2-2/2)} and \textit{(4-3)} schemes, which do not satisfy the condition $b_i=\hat{b_i}$ for $i=1,...,s$, have the worst performance compared to the other methods of the same order. Although the errors are very small, we can observe the effect of the accumulation of solver error commented in Remark \ref{remark3}, which leads to an increasing value of $\|\nabla \cdot \u\|$. In any case, the third order schemes that have been proved to preserve the discrete divergence constraint (see Proposition \ref{prop2}) keep $\|\nabla \cdot \u\|$ below $10^{-9}$.
+This problem is solved with the fully implicit SRK method from $t=0$ to {$t=2.0$} using a time step size { $\delta t=1.0\cdot10^{-2}$} and a viscosity $\nu=0.01$. { The linear solver tolerance has been set equal to $1.0\cdot10^{-8}$, and for the implicit version, the nonlinear tolerance is $1.0\cdot10^{-6}$}. In \Fig{RK_analytical_t2} the evolution of $\|\nabla \cdot \u\|$ is depicted for all schemes considered in \ref{appendix:Butcher_tab}, for both the implicit and explicit versions of the SRK method. We see that for the first-order \textit{(1-1)} scheme the discrete divergence constraint is not preserved as it was expected. Moreover, the second-order schemes seem to give really accurate results when evaluating the discrete divergence, even when the time dependence of the solution is of order 2. { The \textit{(2-2/2)} and \textit{(4-3)} schemes, which do not satisfy the condition $b_i=\hat{b_i}$ for $i=1,...,s$, have the worst performance compared to the other methods of the same order. Although the errors are very small, we can observe the effect of the accumulation of solver error commented in Remark \ref{remark3}, which leads to an increasing value of $\|\nabla \cdot \u\|$. In any case, the third order schemes that have been proved to preserve the discrete divergence constraint (see Proposition \ref{prop2}) keep $\|\nabla \cdot \u\|$ below $10^{-9}$.
 }
 \begin{figure}[h!]
   \centering
-  \subfigure[Implicit SRK]{\label{fig:Impl_RK_analytical_t2}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/div_norm_implconv_0_2_dt0dot1e-01}}    
-  \subfigure[Explicit SRK]{\label{fig:Expl_RK_analytical_t2}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/div_norm_explconv_0_2_dt0dot1e-01}}
+  \subfigure[Implicit SRK]{\label{fig-Impl_RK_analytical_t2}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/div_norm_implconv_0_2_dt0dot1e-01}}    
+  \subfigure[Explicit SRK]{\label{fig-Expl_RK_analytical_t2}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/div_norm_explconv_0_2_dt0dot1e-01}}
   \caption{ $\| \nabla \cdot \u\|$ for the implicit and explicit SRK schemes.}
-  \label{fig:RK_analytical_t2}
+  \label{fig-RK_analytical_t2}
 \end{figure}
 %\begin{figure}[h!]
 %  \centering
 %  \includegraphics[width=0.49\textwidth]{Figures/analytical/div_norm_implconv_0_1_dt0dot1e-01}
 %  %\includegraphics[width=0.49\textwidth]{Figures/analytical/div_nu1dot0E-02_implconv_t2}  
 %  \caption{Residual of the divergence constraint equation for the fully explicit SRK scheme.}
-%  \label{fig:Impl_RK_analytical_t2}
+%  \label{fig-Impl_RK_analytical_t2}
 %\end{figure}
 
 \subsection{Beltrami flow}
@@ -471,22 +471,22 @@ $-a\left[e^{az}\sin(ax+dy)+e^{ay}\cos(az+dx)\right]$
 To analyze the effect of the spatial error we solve the problem with the analytical solution \Eq{C6_beltrami_u}-\Eq{C6_beltrami_p} refining both in time and space keeping the ratio $\delta t/h$ constant. The problem is solved using $Q_2/Q_1$ elements with the IMEX SRK method, for all schemes stated in \ref{appendix:Butcher_tab}. A first result is obtained setting the $\delta t/h=0.01$, with the time step sizes $\delta t=\{5.0\cdot10^{-3},2.5\cdot10^{-3},1.25\cdot10^{-3},6.25\cdot10^{-4}\}$ and solving from $t=0$ till $T=5.0\cdot10^{-3}$. A second test is done with a smaller ratio, $\delta t/h=0.002$, being the time steps sizes $\delta t=\{1.0\cdot10^{-3},5.0\cdot10^{-4},2.5\cdot10^{-4},1.25\cdot10^{-4}\}$ from $t=0$ till $T=1.0\cdot10^{-3}$.
 \begin{figure}[h!]
   \centering
-  \subfigure[Error convergence, $\frac{\delta t}{h}=0.01$]{\label{fig:beltrami_0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/dth_01}}    
-  \subfigure[Error convergence, $\frac{\delta t}{h}=0.002$]{\label{fig:beltrami_0.002}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/dth_002}}
+  \subfigure[Error convergence, $\frac{\delta t}{h}=0.01$]{\label{fig-beltrami_0.01}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/dth_01}}    
+  \subfigure[Error convergence, $\frac{\delta t}{h}=0.002$]{\label{fig-beltrami_0.002}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/analytical/dth_002}}
   \caption{Beltrami flow error convergence (red and blue lines below green line).}
-  \label{fig:beltrami}
+  \label{fig-beltrami}
 \end{figure}
-In Fig. \ref{fig:beltrami} the error convergence for both velocity and pressure fields is depicted. The results for the case with $\frac{\delta t}{h}=0.01$ are shown in Fig. \ref{fig:beltrami_0.01}, where we clearly see that the convergence rate for the pressure field is two, the one prescribed by the spatial discretization error, so here all schemes give the same result since the spatial error prevails over the temporal error. But looking at the velocity field results at the same figure, it is seen that the third-order of convergence given by the theoretical spatial error convergence is reduced. Here we see how the first order scheme \textit{(1-1)} starts loosing the convergence rate given by the spatial error and exhibits the convergence rate prescribed by the temporal discretization. All the other schemes converge with a second order slope, even the third-order schemes. This order reduction phenomena is also observed in \cite{sanz-serna_convergence_1986} when both $\delta t$ and $h$ are refined simultaneously.
-When we select a smaller ratio of $\delta t/h$, see Fig. \ref{fig:beltrami_0.002}, the temporal error is masked by the spatial error, giving a third-order convergence for the velocity field and a second-order convergence for the pressure field. A little reduction of the order is observed at the smallest time step sizes for the velocity field in Fig. \ref{fig:beltrami_0.002}.
+In \Fig{beltrami} the error convergence for both velocity and pressure fields is depicted. The results for the case with $\frac{\delta t}{h}=0.01$ are shown in \Fig{beltrami_0.01}, where we clearly see that the convergence rate for the pressure field is two, the one prescribed by the spatial discretization error, so here all schemes give the same result since the spatial error prevails over the temporal error. But looking at the velocity field results at the same figure, it is seen that the third-order of convergence given by the theoretical spatial error convergence is reduced. Here we see how the first order scheme \textit{(1-1)} starts loosing the convergence rate given by the spatial error and exhibits the convergence rate prescribed by the temporal discretization. All the other schemes converge with a second order slope, even the third-order schemes. This order reduction phenomena is also observed in \cite{sanz-serna_convergence_1986} when both $\delta t$ and $h$ are refined simultaneously.
+When we select a smaller ratio of $\delta t/h$, see \Fig{beltrami_0.002}, the temporal error is masked by the spatial error, giving a third-order convergence for the velocity field and a second-order convergence for the pressure field. A little reduction of the order is observed at the smallest time step sizes for the velocity field in \Fig{beltrami_0.002}.
 
 \subsection{2D Laminar flow around a cylinder}
 \label{subsec-C6_cylinder}
-Once studied the behaviour of the different methods proposed in Section \ref{sec-C6_SRK_developement} for a manufactured analytical solution, we study a widely used laminar flow benchmark which is the flow around a cylinder for a low Reynolds number $Re=100$. A detailed overview of benchmark computations of laminar flow around a cylinder are given in \cite{schafer_benchmark_1996}. The test performed in the current work is called \textit{2D-2} in that paper and is defined as shown in Fig. \ref{fig:Cyl_geom}. It basically consists in a rectangular channel with a cylinder located near the inflow boundary. A non-slip condition is imposed in the cylinder wall and the channel walls that are perpendicular to the flow direction ($x$).
+Once studied the behaviour of the different methods proposed in Section \ref{sec-C6_SRK_developement} for a manufactured analytical solution, we study a widely used laminar flow benchmark which is the flow around a cylinder for a low Reynolds number $Re=100$. A detailed overview of benchmark computations of laminar flow around a cylinder are given in \cite{schafer_benchmark_1996}. The test performed in the current work is called \textit{2D-2} in that paper and is defined as shown in \Fig{Cyl_geom}. It basically consists in a rectangular channel with a cylinder located near the inflow boundary. A non-slip condition is imposed in the cylinder wall and the channel walls that are perpendicular to the flow direction ($x$).
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{Figures/Chapter6/geom_2D} 
   \caption{Flow around a cylinder test geometry.}
-  \label{fig:Cyl_geom}
+  \label{fig-Cyl_geom}
 \end{figure}
 The inflow condition is
 $$\u(0,y,t)=\left(\begin{array}{c}
@@ -502,13 +502,13 @@ Our aim is not only to see the order of convergence of the time integration sche
 being $\rho=1.0$ the fluid density, $D=0.1$ the cylinder diameter, and $\bar{U}=1.0$ the mean velocity. The drag $F_D$ and lift $F_L$ forces are defined as $$F_D=\int_S\left(\rho\nu\frac{\partial v_t}{\partial n}n_y-pn_x\right){\rm d}S,\quad\quad F_L=-\int_S\left(\rho\nu\frac{\partial v_t}{\partial n}n_x-pn_y\right){\rm d}S,$$
 with $S$ the cylinder surface and $n$ the normal vector on $S$, with $n_x$ and $n_y$ the $x$-component and $y$-component, respectively. $v_t$ is the tangential velocity on $S$ for the tangent vector $t=(n_y,-n_x)$. These surface integrals are computed as the residual of the weak form on boundary nodes, as advocated in \cite{brezzi_variational_2001} for accuracy reasons.
 
-In order to reduce computational cost, we first compute the flow from $t=0$ to $t=8.0$ with a monolithic fully implicit Crank-Nicolson scheme with a time step equal to $\delta t=0.05$. In Fig. \ref{fig:Cyl_vorti} we show the vorticity field at $t=8.0$. It can be seen that at that time the flow is fully developed. So, at $t=8.0$ we can start the computations with the different schemes studied in this work. The computations are performed from $t=8.0$ to $t=8.4$, ensuring that we have two maximums of the lift coefficient, so we have a complete period of data after the first lift coefficient maximum. 
+In order to reduce computational cost, we first compute the flow from $t=0$ to $t=8.0$ with a monolithic fully implicit Crank-Nicolson scheme with a time step equal to $\delta t=0.05$. In \Fig{Cyl_vorti} we show the vorticity field at $t=8.0$. It can be seen that at that time the flow is fully developed. So, at $t=8.0$ we can start the computations with the different schemes studied in this work. The computations are performed from $t=8.0$ to $t=8.4$, ensuring that we have two maximums of the lift coefficient, so we have a complete period of data after the first lift coefficient maximum. 
 
 \begin{figure}[h!]
   \centering
   \includegraphics[clip=true,trim=1.5cm 22.5cm 1cm 3cm,width=\textwidth]{Figures/Chapter6/cylinder/vorticity}
   \caption{Vorticity field at $t=8.0$.}
-  \label{fig:Cyl_vorti}
+  \label{fig-Cyl_vorti}
 \end{figure}
 
 As exposed in the discussion of results in \cite{schafer_benchmark_1996}, the use of explicit schemes for the time integration of laminar flows is not an efficient approach. The restriction on the time step size to ensure stability of the method is critical since the physical time scale may be much larger. %However, in this subsection we will focus on the performance in terms of convergence, not in efficiency with respect to the fully implicit method. In Subsection \ref{subsec-C6_TGV} the efficiency of IMEX schemes is assessed for a turbulent test, where the physical time scale is not so large and may be smaller than the critical one. 
@@ -579,27 +579,27 @@ Let us point out that for this test the \textit{(1-2)} and \textit{(2-3)} scheme
 
 To check the convergence in time of the different time integration schemes, we perform a convergence analysis computing the $\ell^\infty$-norm of the velocity and the pressure errors, $e_u$ and $e_p$. In this case, the solution is not compared against an analytical one but computed with a finer time step ($\delta t=3.125\cdot10^{-4}$) with the \textit{(3-3)} scheme. The reason of this choice is related to the efficiency of this scheme, discussed below.
 
-In Fig. \ref{fig:IMEX_RK_cyl_conv} we show the convergence rate for both velocity and pressure fields, Figs. \ref{fig:IMEX_RK_vel_cyl_implconv} and  \ref{fig:IMEX_RK_pre_cyl_implconv}, respectively. A first conclusion that we can make is that for the largest time steps the order of convergence is not the prescribed one, especially for the first order scheme. It is explained by the fact that the largest time step sizes are greater than the one required for stability purposes when a fully-explicit scheme is used. %,%the largest time step size, $\delta t=2.0\cdot10^{-2}$, provides very inaccurate results, even though the computations do not blow up for this time step size. It is explained by the fact that this time step size is about two orders of magnitude the explicit one, required for stability purposes. 
+In \Fig{IMEX_RK_cyl_conv} we show the convergence rate for both velocity and pressure fields, Figs. \ref{fig:IMEX_RK_vel_cyl_implconv} and  \ref{fig:IMEX_RK_pre_cyl_implconv}, respectively. A first conclusion that we can make is that for the largest time steps the order of convergence is not the prescribed one, especially for the first order scheme. It is explained by the fact that the largest time step sizes are greater than the one required for stability purposes when a fully-explicit scheme is used. %,%the largest time step size, $\delta t=2.0\cdot10^{-2}$, provides very inaccurate results, even though the computations do not blow up for this time step size. It is explained by the fact that this time step size is about two orders of magnitude the explicit one, required for stability purposes. 
 %It seems that there is a kind of {CFL} condition on the velocity-pressure splitting approach that makes the computed results wrong for time steps larger than a certain time step size. It is important to highlight that this {CFL} condition is about one order of magnitude greater than the ${\rm CFL}_u$ and ${\rm CFL}_\nu$ ones. 
 %In the following case, with the convection integrated explicitly, we will discuss this issue with more detail. 
  For the time steps smaller than $2.0\cdot10^{-2}$ the convergence rates are the expected ones, with the exception of \textit{(1-1)} and \textit{(4-3)} schemes, with a convergence rate lower than the expected one.
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity convergence]{\label{fig:IMEX_RK_vel_cyl_implconv}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/vel_implconv}}    
-  \subfigure[Pressure convergence]{\label{fig:IMEX_RK_pre_cyl_implconv}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/pre_implconv}}
+  \subfigure[Velocity convergence]{\label{fig-IMEX_RK_vel_cyl_implconv}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/vel_implconv}}    
+  \subfigure[Pressure convergence]{\label{fig-IMEX_RK_pre_cyl_implconv}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/pre_implconv}}
   \caption{Fully implicit SRK convergence.}
-  \label{fig:IMEX_RK_cyl_conv}
+  \label{fig-IMEX_RK_cyl_conv}
 \end{figure}
-%Going back to Fig. \ref{fig:IMEX_RK_pre_cyl_implconv}, one may realize that the last points of the \textit{(3-3)} and \textit{(5-3)} schemes do not follow the correct convergence rate line. This behaviour is due to the nonlinear tolerance of the problem solution, which is set equal to $10^{-4}$. The accumulation of the error given by this weak nonlinear tolerance among the time steps results in a solution that does not follow the expected convergence rate.
+%Going back to \Fig{IMEX_RK_pre_cyl_implconv}, one may realize that the last points of the \textit{(3-3)} and \textit{(5-3)} schemes do not follow the correct convergence rate line. This behaviour is due to the nonlinear tolerance of the problem solution, which is set equal to $10^{-4}$. The accumulation of the error given by this weak nonlinear tolerance among the time steps results in a solution that does not follow the expected convergence rate.
 
-Fig. \ref{fig:IMEX_RK_cyl_conv} shows that the most accurate schemes are \textit{(3-3)} and \textit{(5-3)}. Now, let us analyze the computational cost of these methods based on the CPU time for a given target error. %\comment{All this section must be re-written without that point now.}
+\Fig{IMEX_RK_cyl_conv} shows that the most accurate schemes are \textit{(3-3)} and \textit{(5-3)}. Now, let us analyze the computational cost of these methods based on the CPU time for a given target error. %\comment{All this section must be re-written without that point now.}
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/Efficiency}  
   \caption{Fully implicit SRK CPU time efficiency.}
-  \label{fig:IMEX_RK_cyl_effi}
+  \label{fig-IMEX_RK_cyl_effi}
 \end{figure}
-In Fig. \ref{fig:IMEX_RK_cyl_effi} it is clearly seen that the most efficient scheme is \textit{(3-3)}, even for relatively high error ($\sim4\cdot10^{-2}$). For larger target errors, the \textit{(2-2/1)} schemes is competitive. We note that the first order \textit{(1-1)} scheme is not competitive at all, since the error is too large and there is no significant gain in CPU time. %Thus, as the most efficient is the \textit{(3-3)} scheme, the computation with a finer time step to compare the solution is done with this scheme.
+In \Fig{IMEX_RK_cyl_effi} it is clearly seen that the most efficient scheme is \textit{(3-3)}, even for relatively high error ($\sim4\cdot10^{-2}$). For larger target errors, the \textit{(2-2/1)} schemes is competitive. We note that the first order \textit{(1-1)} scheme is not competitive at all, since the error is too large and there is no significant gain in CPU time. %Thus, as the most efficient is the \textit{(3-3)} scheme, the computation with a finer time step to compare the solution is done with this scheme.
 
 \paragraph{IMEX-SRK.}
 
@@ -681,40 +681,40 @@ In Table \ref{tab:IMEX-RK_cyl2d_explconv} we show the benchmark quantities of th
 	\end{tabular}
 \end{table}
 
-%Concerning about the convergence in time, Fig. \ref{fig:IMEX_RK_cyl_conv_explcnv} depicts the convergence rate of all the schemes. Here, we show the $L^\infty$-norm of the error, $e_u$ and $e_p$, comparing each solution against the same reference solution used in the implicit convection integration case.
+%Concerning about the convergence in time, \Fig{IMEX_RK_cyl_conv_explcnv} depicts the convergence rate of all the schemes. Here, we show the $L^\infty$-norm of the error, $e_u$ and $e_p$, comparing each solution against the same reference solution used in the implicit convection integration case.
 %
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Velocity convergence]{\label{fig:IMEX_RK_vel_cyl_explconv}\includegraphics[width=0.49\textwidth]{Figures/cylinder/vel_explconv}}    
-%  \subfigure[Pressure convergence]{\label{fig:IMEX_RK_pre_cyl_explconv}\includegraphics[width=0.49\textwidth]{Figures/cylinder/pre_explconv}}
+%  \subfigure[Velocity convergence]{\label{fig-IMEX_RK_vel_cyl_explconv}\includegraphics[width=0.49\textwidth]{Figures/cylinder/vel_explconv}}    
+%  \subfigure[Pressure convergence]{\label{fig-IMEX_RK_pre_cyl_explconv}\includegraphics[width=0.49\textwidth]{Figures/cylinder/pre_explconv}}
 %  \caption{IMEX-RK convergence with diffusion integrated implicitly and convection explicitly.}
-%  \label{fig:IMEX_RK_cyl_conv_explcnv}
+%  \label{fig-IMEX_RK_cyl_conv_explcnv}
 %\end{figure}
-%Looking at Fig. \ref{fig:IMEX_RK_cyl_conv_explcnv}, we can only extract conclusions for the \textit{(1-1), (1-2), (2-2/2)} and \textit{(4-3)} schemes, since  we obtain a flat convergence rate for the others. This behaviour is caused by the stacking of the solver error, as for these small time steps the number of system resolutions from $t=8.0$ to $t=8.4$ is of the order of $\sim10^4$ and the solver tolerance of the order of $\sim10^{-10}$; it is also affected by the fac that the \emph{exact} solution has been obtained with a time step size similar to the ones considered in this test case (with an implicit method). The expected convergence rate is achieved by \textit{(1-1)}, \textit{(1-2)} and \textit{(2-2/2)} schemes, but not for \textit{(4-3)} scheme which, like the implicit convection version, shows a convergence rate lower than the expected one for either velocity field (Fig. \ref{fig:IMEX_RK_vel_cyl_explconv}) or pressure field (Fig. \ref{fig:IMEX_RK_pre_cyl_explconv}).
+%Looking at \Fig{IMEX_RK_cyl_conv_explcnv}, we can only extract conclusions for the \textit{(1-1), (1-2), (2-2/2)} and \textit{(4-3)} schemes, since  we obtain a flat convergence rate for the others. This behaviour is caused by the stacking of the solver error, as for these small time steps the number of system resolutions from $t=8.0$ to $t=8.4$ is of the order of $\sim10^4$ and the solver tolerance of the order of $\sim10^{-10}$; it is also affected by the fac that the \emph{exact} solution has been obtained with a time step size similar to the ones considered in this test case (with an implicit method). The expected convergence rate is achieved by \textit{(1-1)}, \textit{(1-2)} and \textit{(2-2/2)} schemes, but not for \textit{(4-3)} scheme which, like the implicit convection version, shows a convergence rate lower than the expected one for either velocity field (\Fig{IMEX_RK_vel_cyl_explconv}) or pressure field (\Fig{IMEX_RK_pre_cyl_explconv}).
 
 %Concerning about the convergence in time, it can be shown that all schemes converge with the same rate as the fully implicit version. As the stable time steps for the explicit convection term integration are so small, it does not make sense to show the convergence rate of the solution error computed between $t=8.0$ and $t=8.4$, since we would see a flat convergence rate stuck at $e_u,e_p\sim10^{-6}$. This behaviour is caused by the stacking of the solver error, as for these small time steps the number of system resolutions from $t=8.0$ to $t=8.4$ is of the order of $\sim10^4$ and the solver tolerance of the order of $\sim10^{-10}$; it is also affected by the fact that the \emph{exact} solution has been obtained with a time step size similar to the ones considered in this test case (with an implicit method).
 
 %\paragraph{Implicit vs. explicit.}
 
-In order to compare the efficiency between the implicit and explicit approaches for the time integration of the convective term for this particular test, we perform the convergence analysis for both methods at $t=8.01$ s. We restrict this test only to the most efficient schemes for each order of approximation, which are \textit{(1-1), (2-2/1)}, and \textit{(3-3)} schemes. %, see Fig. \ref{fig:IMEX_RK_cyl_effi}. 
-The results of the convergence in time for this comparison are shown in Fig. \ref{fig:IMEX_RK_cyl_conv_impl_expl}. Unstable results for the explicit convective term integration are not plotted in this figure.
+In order to compare the efficiency between the implicit and explicit approaches for the time integration of the convective term for this particular test, we perform the convergence analysis for both methods at $t=8.01$ s. We restrict this test only to the most efficient schemes for each order of approximation, which are \textit{(1-1), (2-2/1)}, and \textit{(3-3)} schemes. %, see \Fig{IMEX_RK_cyl_effi}. 
+The results of the convergence in time for this comparison are shown in \Fig{IMEX_RK_cyl_conv_impl_expl}. Unstable results for the explicit convective term integration are not plotted in this figure.
 
 The fully implicit versions of the SRK schemes considered here show a good agreement with the prescribed convergence rate. Furthermore, when the time step is sufficiently small, the explicit version seems to give more accurate results. This is especially remarkable for the \textit{(2-2/1)} scheme, where the differences are bigger. Same conclusions can be pointed out for both velocity and pressure fields, since there are not significant differences between their convergence rates, see Figs. \ref{fig:IMEX_RK_vel_cyl_impl_expl} and  \ref{fig:IMEX_RK_pre_cyl_impl_expl}. 
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity convergence]{\label{fig:IMEX_RK_vel_cyl_impl_expl}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/vel_impl_expl}}    
-  \subfigure[Pressure convergence]{\label{fig:IMEX_RK_pre_cyl_impl_expl}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/pre_impl_expl}}
+  \subfigure[Velocity convergence]{\label{fig-IMEX_RK_vel_cyl_impl_expl}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/vel_impl_expl}}    
+  \subfigure[Pressure convergence]{\label{fig-IMEX_RK_pre_cyl_impl_expl}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/pre_impl_expl}}
   \caption{Fully implicit and IMEX-SRK convergence rate comparison.}
-  \label{fig:IMEX_RK_cyl_conv_impl_expl}
+  \label{fig-IMEX_RK_cyl_conv_impl_expl}
 \end{figure}
-Fig. \ref{fig:IMEX_RK_cyl_conv_impl_expl} shows that the \textit{(3-3)} scheme is the most accurate one. Apart from the \textit{(2-2/1)} scheme, implicit and explicit versions give similar results when the time step is sufficiently small. 
+\Fig{IMEX_RK_cyl_conv_impl_expl} shows that the \textit{(3-3)} scheme is the most accurate one. Apart from the \textit{(2-2/1)} scheme, implicit and explicit versions give similar results when the time step is sufficiently small. 
 
-Next, we look at the overall computational time needed for each approach. This is shown in Fig. \ref{fig:IMEX_RK_cyl_effi_impl_expl}, where the error $e_u$ is plotted against the CPU time for each scheme and for each approach.
+Next, we look at the overall computational time needed for each approach. This is shown in \Fig{IMEX_RK_cyl_effi_impl_expl}, where the error $e_u$ is plotted against the CPU time for each scheme and for each approach.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/Efficiency_impl_expl}  
   \caption{Fully implicit and IMEX-SRK CPU time efficiency comparison.}
-  \label{fig:IMEX_RK_cyl_effi_impl_expl}
+  \label{fig-IMEX_RK_cyl_effi_impl_expl}
 \end{figure}
 We see that, as expected, the approach with explicit time integration of the convective term is more efficient than the implicit one when the time step is sufficiently small. For large time steps, we cannot use the explicit versions since the ${\rm CFL}_u$ condition is limiting the stability of the method, and therefore its accuracy. Note that there is not a big difference on the efficiency for \textit{(1-1)} and \textit{(3-3)} schemes, since the gain of treating the convective term explicitly is not too much relevant in laminar problem types. As exposed at the beginning of this subsection, explicit approaches involve time step size restrictions, which may be much smaller than the physical time scale. Furthermore, as it has also been exposed before, the nonlinearity of the convective term when it is integrated implicitly does not increase the cost too much. Despite of that, for errors smaller than $\sim10^{-4}$, the most efficient scheme is the \textit{(3-3)} using explicit time integration of the convective term, at least for this test.
 
@@ -729,15 +729,15 @@ We solve the problem from $t=8.0$ to $t=8.4$ using the SRK \textit{(3-3)} scheme
 
 To compute $\hat{\U}$ we have used the 2nd order Butcher tableau referred as \textit{Embedded Formula of Order 2} for the \textit{Third Order Strongly S-Stable Formula} defined in \cite{cash_diagonally_1979}, which is 3rd order and
 %The Butcher tableau used to compute $\hat{\U}$ is the \textit{Embedded Formula of Order 2} for the \textit{Third Order Strongly S-Stable Formula} defined in \cite{cash_diagonally_1979}, which 
-corresponds to the \textit{(3-3)} scheme defined in \ref{appendix:Butcher_tab}. The initial time step size is set to be $\delta t_0=1.0\cdot10^{-5}$, small enough to get an accurate first solution. In Fig. \ref{fig:IMEX_RK_cyl_adp_dt} we show the time step evolution for the two different cases considered in this subsection. We see that the time step size for the scheme with adaptive time stepping is increasing with a variable rate and seems to converge to an optimal one. %evolving  following a shape which is directly related to the flow performance.
+corresponds to the \textit{(3-3)} scheme defined in \ref{appendix:Butcher_tab}. The initial time step size is set to be $\delta t_0=1.0\cdot10^{-5}$, small enough to get an accurate first solution. In \Fig{IMEX_RK_cyl_adp_dt} we show the time step evolution for the two different cases considered in this subsection. We see that the time step size for the scheme with adaptive time stepping is increasing with a variable rate and seems to converge to an optimal one. %evolving  following a shape which is directly related to the flow performance.
 \begin{figure}[h!]
   \centering
-  \subfigure[Time step evolution]{\label{fig:IMEX_RK_cyl_adp_dt}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/time_step}}    
-  \subfigure[Lift coefficient (close up view)]{\label{fig:IMEX_RK_cyl_adp_lift}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/lift_close}}
+  \subfigure[Time step evolution]{\label{fig-IMEX_RK_cyl_adp_dt}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/time_step}}    
+  \subfigure[Lift coefficient (close up view)]{\label{fig-IMEX_RK_cyl_adp_lift}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/cylinder/lift_close}}
   \caption{Adaptive time stepping.}
-  \label{fig:IMEX_RK_cyl_adp}
+  \label{fig-IMEX_RK_cyl_adp}
 \end{figure}
-Fig. \ref{fig:IMEX_RK_cyl_adp_lift} depicts a close up view of the lift coefficient evolution. We see that for the implicit adaptive time step case, the results are really close to those obtained with the same scheme with a fixed time step of $\delta t=3.125\cdot10^{-4}$. Note that the adaptive time step size are twice or even three times larger than the fixed one. The total elapsed CPU time for the implicit scheme with adaptive time step is $3615$ s, while the total time for the implicit scheme with fixed time step is $8453$ s, which supposes a reduction of a $42.8\%$ of time consumption with a very little difference in the result.
+\Fig{IMEX_RK_cyl_adp_lift} depicts a close up view of the lift coefficient evolution. We see that for the implicit adaptive time step case, the results are really close to those obtained with the same scheme with a fixed time step of $\delta t=3.125\cdot10^{-4}$. Note that the adaptive time step size are twice or even three times larger than the fixed one. The total elapsed CPU time for the implicit scheme with adaptive time step is $3615$ s, while the total time for the implicit scheme with fixed time step is $8453$ s, which supposes a reduction of a $42.8\%$ of time consumption with a very little difference in the result.
 
 \subsection{Taylor-Green vortex flow}
 \label{subsec-C6_TGV}
@@ -768,57 +768,57 @@ $$\mathcal{F}(\U):=-K\U,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=\F-C(\
 
 First of all, we perform a time step convergence analysis at the beginning of the simulation, where the flow is still laminar. This convergence analysis consists in solving the problem from $t=0.0$ to $t=0.1$ for all the schemes proposed in \ref{appendix:Butcher_tab} for several time step sizes. In particular, we solve the problem with four different time step sizes ($\delta t=\{0.1,0.05,0.025,0.0125\}$) and we compare the solution against the one obtained with the \textit{(5-3)} scheme with a time step equal to $\delta t=6.25\cdot10^{-3}$. The $L^2$-norm of the kinetic energy error compared against the reference kinetic energy solution given by a DNS computation can be found in  \cite{boom_time-accurate_????}. Our approach is to compute the $L^{\infty}$-norm of the solution, comparing against a solution computed with a finer time step, but with the same spatial discretization. With this approach we are eliminating the spatial error and we are using a more restrictive error norm.
 
-We show in Fig. \ref{fig:TGV_conv_laminar} the order of convergence in time for both velocity (Fig. \ref{fig:TGV_vel_laminar}) and pressure (Fig. \ref{fig:TGV_pre_laminar}) fields. We can see that the order of convergence in this regime follows the predicted rate for almost all schemes; the \textit{(5-3)} schemes seems to converge with a higher rate than the expected one, being this performance especially remarkable for the velocity field convergence.
+We show in \Fig{TGV_conv_laminar} the order of convergence in time for both velocity (\Fig{TGV_vel_laminar}) and pressure (\Fig{TGV_pre_laminar}) fields. We can see that the order of convergence in this regime follows the predicted rate for almost all schemes; the \textit{(5-3)} schemes seems to converge with a higher rate than the expected one, being this performance especially remarkable for the velocity field convergence.
 
 \begin{figure}[h!]
   \centering
-  \subfigure[Velocity]{\label{fig:TGV_vel_laminar}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_vel_T0_Re1600_dt6dot25e-3}}    
-  \subfigure[Pressure]{\label{fig:TGV_pre_laminar}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_pre_T0_Re1600_dt6dot25e-3}}
+  \subfigure[Velocity]{\label{fig-TGV_vel_laminar}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_vel_T0_Re1600_dt6dot25e-3}}    
+  \subfigure[Pressure]{\label{fig-TGV_pre_laminar}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_pre_T0_Re1600_dt6dot25e-3}}
   \caption{IMEX-SRK convergence for the laminar regime.}
-  \label{fig:TGV_conv_laminar}
+  \label{fig-TGV_conv_laminar}
 \end{figure}
 
-Another point to be highlighted in Fig. \ref{fig:TGV_conv_laminar} is that the \textit{(2-2/1)} scheme shows a much lower error compared to the other second-order schemes. This performance is also observed on the previous tests when an IMEX-SRK (with explicit treatment of the convection) is used. 
+Another point to be highlighted in \Fig{TGV_conv_laminar} is that the \textit{(2-2/1)} scheme shows a much lower error compared to the other second-order schemes. This performance is also observed on the previous tests when an IMEX-SRK (with explicit treatment of the convection) is used. 
 
-As it has been done for the 2D laminar flow around a cylinder test (see Subsection \ref{subsec-C6_cylinder}) we analyze the efficiency of the methods comparing error  against CPU time. This comparison is in  Fig. \ref{fig:TGV_effi_laminar}, where the error is plotted in terms of the averaged elapsed CPU time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
+As it has been done for the 2D laminar flow around a cylinder test (see Subsection \ref{subsec-C6_cylinder}) we analyze the efficiency of the methods comparing error  against CPU time. This comparison is in  \Fig{TGV_effi_laminar}, where the error is plotted in terms of the averaged elapsed CPU time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_T0_Re1600_dt6dot25e-3_effi}
   \caption{IMEX-SRK efficiency for the laminar regime.}
-  \label{fig:TGV_effi_laminar}
+  \label{fig-TGV_effi_laminar}
 \end{figure}
-It is seen in Fig. \ref{fig:TGV_effi_laminar} that the most efficient schemes are the \textit{(2-2/1)} and  \textit{(3-3)} ones, which for errors greater than $\sim10^{-6}$ give the same error-CPU time ratio. As it is natural, below this threshold, the second-order scheme \textit{(2-2/1)} starts loosing efficiency and the \textit{(3-3)} scheme becomes the most efficient one for errors smaller than $\sim10^{-6}$.
+It is seen in \Fig{TGV_effi_laminar} that the most efficient schemes are the \textit{(2-2/1)} and  \textit{(3-3)} ones, which for errors greater than $\sim10^{-6}$ give the same error-CPU time ratio. As it is natural, below this threshold, the second-order scheme \textit{(2-2/1)} starts loosing efficiency and the \textit{(3-3)} scheme becomes the most efficient one for errors smaller than $\sim10^{-6}$.
 
-Once we have determined that the most efficient schemes for this test are the \textit{(2-2/1)} and \textit{(3-3)} ones, we now want to see their performance for a larger time interval. The aim is to solve the problem until the turbulence becomes fully developed, which for this Reynolds number case takes place around $t\sim9$. Following \cite{brachet_direct_1991}, the time interval will go from $t=0.0$ to $T=10.0$, so we will be able to compare the results with their DNS. For this computation, we select the time step size that has an error at $t=0.1$ in Fig. \ref{fig:TGV_vel_laminar} of the order $\sim1\cdot10^{-6}$, i.e., $\delta t=5.0\cdot10^{-2}$ for the \textit{(3-3)} scheme and $\delta t=3.6\cdot10^{-2}$ for the \textit{(2-2/1)} scheme.
+Once we have determined that the most efficient schemes for this test are the \textit{(2-2/1)} and \textit{(3-3)} ones, we now want to see their performance for a larger time interval. The aim is to solve the problem until the turbulence becomes fully developed, which for this Reynolds number case takes place around $t\sim9$. Following \cite{brachet_direct_1991}, the time interval will go from $t=0.0$ to $T=10.0$, so we will be able to compare the results with their DNS. For this computation, we select the time step size that has an error at $t=0.1$ in \Fig{TGV_vel_laminar} of the order $\sim1\cdot10^{-6}$, i.e., $\delta t=5.0\cdot10^{-2}$ for the \textit{(3-3)} scheme and $\delta t=3.6\cdot10^{-2}$ for the \textit{(2-2/1)} scheme.
 
-Fig. \ref{fig:TGV_ene_ens} depicts the total energy evolution (Fig. \ref{fig:TGV_ene}) and the kinetic energy dissipation rate of the resolved scales (Fig. \ref{fig:TGV_ens}) compared against the DNS provided by \cite{brachet_direct_1991}. The result is exactly the same for both schemes, despite the fact that the third-order scheme uses a larger time step. Looking at Fig. \ref{fig:TGV_ene}, we see that the energy evolution of the solution is not far from the DNS, but there is a gap after $t=6$, when the turbulence is developed. This is caused by the lack of any turbulent model which would capture the small scales proper dissipation. For the same reason we see big differences between our solutions and the DNS results in Fig. \ref{fig:TGV_ens} after $t=6$.
+\Fig{TGV_ene_ens} depicts the total energy evolution (\Fig{TGV_ene}) and the kinetic energy dissipation rate of the resolved scales (\Fig{TGV_ens}) compared against the DNS provided by \cite{brachet_direct_1991}. The result is exactly the same for both schemes, despite the fact that the third-order scheme uses a larger time step. Looking at \Fig{TGV_ene}, we see that the energy evolution of the solution is not far from the DNS, but there is a gap after $t=6$, when the turbulence is developed. This is caused by the lack of any turbulent model which would capture the small scales proper dissipation. For the same reason we see big differences between our solutions and the DNS results in \Fig{TGV_ens} after $t=6$.
 
 \begin{figure}[h!]
   \centering
-  \subfigure[Global energy.]{\label{fig:TGV_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_ene}}    
-  \subfigure[Kinetic energy dissipation rate.]{\label{fig:TGV_ens}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_ens}}
+  \subfigure[Global energy.]{\label{fig-TGV_ene}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_ene}}    
+  \subfigure[Kinetic energy dissipation rate.]{\label{fig-TGV_ens}\includegraphics[width=0.49\textwidth]{Figures/Chapter6/TGV/imex_nsi_explcnv_64_ens}}
   \caption{Global energy and Kinetic energy dissipation rate evolution (blue line below red line).}
-  \label{fig:TGV_ene_ens}
+  \label{fig-TGV_ene_ens}
 \end{figure}
 
-Looking at Fig. \ref{fig:TGV_ens} we clearly see that the error given by the spatial discretization when the flow becomes turbulent is too large to appreciate significant differences between time integration schemes. We want to highlight here that an adaptive time step technique could be used in order to efficiently solve the transient problem. However, the use of an adaptive time stepping technique without an accurate solution in space does not make sense. Future work in this direction involves the introduction of LES models within the IMEX-SRK approach proposed in this work.
+Looking at \Fig{TGV_ens} we clearly see that the error given by the spatial discretization when the flow becomes turbulent is too large to appreciate significant differences between time integration schemes. We want to highlight here that an adaptive time step technique could be used in order to efficiently solve the transient problem. However, the use of an adaptive time stepping technique without an accurate solution in space does not make sense. Future work in this direction involves the introduction of LES models within the IMEX-SRK approach proposed in this work.
 
-%The efficiency in terms of computational time of both schemes for the laminar regime is shown in Fig. \ref{fig:TGV_effi_laminar}, where we see that for an error in time less than $1.0\cdot10^{-5}$, the \textit{(5-3)} scheme is much more efficient than the \textit{(1-2)} one, although this last one requires less stages on the computation. The time shown in Fig. \ref{fig:TGV_effi_laminar} is given in seconds and corresponds to the averaged total elapsed time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
+%The efficiency in terms of computational time of both schemes for the laminar regime is shown in \Fig{TGV_effi_laminar}, where we see that for an error in time less than $1.0\cdot10^{-5}$, the \textit{(5-3)} scheme is much more efficient than the \textit{(1-2)} one, although this last one requires less stages on the computation. The time shown in \Fig{TGV_effi_laminar} is given in seconds and corresponds to the averaged total elapsed time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
 
 %For this test we only use two different Butcher tableau definitions: one is the \textit{(1-2)}, equivalent to the Crank-Nicolson scheme, and the other one is the \textit{(5-3)}. Initially we solve the problem from $t_0=0$ to $T=10$ for both schemes only for the Half-IMEX Runge-Kutta method with the convection treated explicitly, avoiding the need of nonlinear iterations. This situation is given by defining the operators $\mathcal{F}$ and $\mathcal{G}$ in (\ref{eq-C6_NS_galerkin_mat1_ope}) as
 %$$\mathcal{F}(\U):=-K\U,\quad\quad\mbox{and}\quad\quad\mathcal{G}(\U,\P):=\F-C(\U)\U-G\P.$$
 %
 %The time step size for the \textit{(1-2)} scheme is set $\delta t=7.5\cdot10^{-3}$ and $\delta t=2.5\cdot10^{-2}$ for the \textit{(5-3)} scheme, more than 3 times larger. The justification of this choice is given below.
 %
-%Fig. \ref{fig:TGV_ene_ens} depicts the total energy evolution (Fig. \ref{fig:TGV_ene}) and the kinetic energy dissipation rate of the resolved scales (Fig. \ref{fig:TGV_ens}) compared against the DNS provided by \cite{brachet_direct_1991}. It is seen that the result is exactly the same for both schemes, despite the third-order scheme uses a time step more than 3 times largest. Looking at Fig. \ref{fig:TGV_ene} we see that the energy evolution of the solution is not far from the DNS, but there is a gap after $t=6$, when the turbulence is developed. This is caused by the lack of any turbulent model which would capture the small scales proper dissipation. For the same reason we see big differences between our solutions and the DNS results in Fig. \ref{fig:TGV_ens} after $t=6$.
+%\Fig{TGV_ene_ens} depicts the total energy evolution (\Fig{TGV_ene}) and the kinetic energy dissipation rate of the resolved scales (\Fig{TGV_ens}) compared against the DNS provided by \cite{brachet_direct_1991}. It is seen that the result is exactly the same for both schemes, despite the third-order scheme uses a time step more than 3 times largest. Looking at \Fig{TGV_ene} we see that the energy evolution of the solution is not far from the DNS, but there is a gap after $t=6$, when the turbulence is developed. This is caused by the lack of any turbulent model which would capture the small scales proper dissipation. For the same reason we see big differences between our solutions and the DNS results in \Fig{TGV_ens} after $t=6$.
 %
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Global energy.]{\label{fig:TGV_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_ene}}    
-%  \subfigure[Kinetic energy dissipation rate.]{\label{fig:TGV_ens}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_ens}}
+%  \subfigure[Global energy.]{\label{fig-TGV_ene}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_ene}}    
+%  \subfigure[Kinetic energy dissipation rate.]{\label{fig-TGV_ens}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_ens}}
 %  \caption{Global energy and Kinetic energy dissipation rate evolution.}
-%  \label{fig:TGV_ene_ens}
+%  \label{fig-TGV_ene_ens}
 %\end{figure}
 %
 %Now we perform a time step convergence analysis for both schemes for $t\in[0,0.1]$, where the flow is still laminar, and for $t\in[8,8.1]$, where the flow is turbulent. To do that we solve the problem from with 4 different time step sizes ($\delta t=\{0.1,0.05,0.025,0.0125\}$) and we compare the solution against the one obtained with the \textit{(5-3)} scheme with a time step equal to $\delta t=6.25\cdot10^{-3}$. Here, \cite{boom_time-accurate_????} computes the $L^2$-norm of the kinetic energy error comparing against the reference kinetic energy solution given by a DNS computation. Our approach is to compute the $L^{\infty}$-norm of the solution, comparing against a solution computed with a finer time step, but with the same spatial discretization. With this approach we are eliminating the spatial error and we are using a more restrictive error norm.
@@ -827,44 +827,44 @@ Looking at Fig. \ref{fig:TGV_ens} we clearly see that the error given by the spa
 %
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Velocity]{\label{fig:TGV_vel_laminar}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_vel_T0_Re1600_dt6dot25e-3}}    
-%  \subfigure[Pressure]{\label{fig:TGV_pre_laminar}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_pre_T0_Re1600_dt6dot25e-3}}
+%  \subfigure[Velocity]{\label{fig-TGV_vel_laminar}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_vel_T0_Re1600_dt6dot25e-3}}    
+%  \subfigure[Pressure]{\label{fig-TGV_pre_laminar}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_pre_T0_Re1600_dt6dot25e-3}}
 %  \caption{IMEX-RK convergence for the laminar regime.}
-%  \label{fig:TGV_conv_laminar}
+%  \label{fig-TGV_conv_laminar}
 %\end{figure}
 %
-%In Fig. \ref{fig:TGV_conv_laminar} we show the order of convergence in time for both velocity (Fig. \ref{fig:TGV_vel_laminar}) and pressure (Fig. \ref{fig:TGV_pre_laminar}) fields. We can see in Fig. \ref{fig:TGV_conv_laminar} that the order of convergence in this regime for the third order scheme is even greater than the one predicted by the Butcher tableau definition. Moreover, here comes the reason of the choice of different time step sizes for the computation of the full simulation that was exposed before. Given a time step of the $\delta t=7.25\cdot10^{-3}$ for the \textit{(1-2)} scheme, making a simple extrapolation from Fig. \ref{fig:TGV_conv_laminar} the time step for the \textit{(5-3)} that gives more or less the same error is $\delta t=2.5\cdot10^{-2}$.
+%In \Fig{TGV_conv_laminar} we show the order of convergence in time for both velocity (\Fig{TGV_vel_laminar}) and pressure (\Fig{TGV_pre_laminar}) fields. We can see in \Fig{TGV_conv_laminar} that the order of convergence in this regime for the third order scheme is even greater than the one predicted by the Butcher tableau definition. Moreover, here comes the reason of the choice of different time step sizes for the computation of the full simulation that was exposed before. Given a time step of the $\delta t=7.25\cdot10^{-3}$ for the \textit{(1-2)} scheme, making a simple extrapolation from \Fig{TGV_conv_laminar} the time step for the \textit{(5-3)} that gives more or less the same error is $\delta t=2.5\cdot10^{-2}$.
 %
 %\begin{figure}[h!]
 %  \centering
 %  \includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_T0_Re1600_dt6dot25e-3_effi}
 %  \caption{IMEX-RK efficiency for the laminar regime.}
-%  \label{fig:TGV_effi_laminar}
+%  \label{fig-TGV_effi_laminar}
 %\end{figure}
 %
-%The efficiency in terms of computational time of both schemes for the laminar regime is shown in Fig. \ref{fig:TGV_effi_laminar}, where we see that for an error in time less than $1.0\cdot10^{-5}$, the \textit{(5-3)} scheme is much more efficient than the \textit{(1-2)} one, although this last one requires less stages on the computation. The time shown in Fig. \ref{fig:TGV_effi_laminar} is given in seconds and corresponds to the averaged total elapsed time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
+%The efficiency in terms of computational time of both schemes for the laminar regime is shown in \Fig{TGV_effi_laminar}, where we see that for an error in time less than $1.0\cdot10^{-5}$, the \textit{(5-3)} scheme is much more efficient than the \textit{(1-2)} one, although this last one requires less stages on the computation. The time shown in \Fig{TGV_effi_laminar} is given in seconds and corresponds to the averaged total elapsed time per processor needed to complete the simulation from $t=0$ to $t=0.1$.
 %
 %\subsubsection{Turbulent regime}
 %
-%At $t=8.0$ the turbulence is fully developed as it is seen at Fig. \ref{fig:TGV_ens}, where at that time the energy dissipation rate is near to reach its maximum value. So at this point we can evaluate the performance of the proposed integration schemes in a turbulent regime.
+%At $t=8.0$ the turbulence is fully developed as it is seen at \Fig{TGV_ens}, where at that time the energy dissipation rate is near to reach its maximum value. So at this point we can evaluate the performance of the proposed integration schemes in a turbulent regime.
 %
-%In Fig. \ref{fig:TGV_conv_turbulent} we show the convergence in time of \textit{(1-2)} and \textit{(5-3)} schemes. Similar order of convergence is achieved in the turbulent regime, compared with the laminar case shown before. The order of convergence does not seem to be affected by the flow state, but the absolute value of the error does. Looking at the velocity (Fig. \ref{fig:TGV_vel_turbulent}) and the pressure (Fig. \ref{fig:TGV_pre_turbulent}) error values, we see that they are about four orders of magnitude higher than the ones in the laminar regime. As it is natural, we expect a greater error in time for a more fluctuating flow. This result also indicates that the temporal scale is much lower for the turbulent regime than the laminar case. Therefore, as exposed in subsection \ref{subsec-C6_cylinder}, in this kind of flows the critical time step is not given by stability requirements, but by the temporal scale of the flow which will affect the accuracy of the solution.
+%In \Fig{TGV_conv_turbulent} we show the convergence in time of \textit{(1-2)} and \textit{(5-3)} schemes. Similar order of convergence is achieved in the turbulent regime, compared with the laminar case shown before. The order of convergence does not seem to be affected by the flow state, but the absolute value of the error does. Looking at the velocity (\Fig{TGV_vel_turbulent}) and the pressure (\Fig{TGV_pre_turbulent}) error values, we see that they are about four orders of magnitude higher than the ones in the laminar regime. As it is natural, we expect a greater error in time for a more fluctuating flow. This result also indicates that the temporal scale is much lower for the turbulent regime than the laminar case. Therefore, as exposed in subsection \ref{subsec-C6_cylinder}, in this kind of flows the critical time step is not given by stability requirements, but by the temporal scale of the flow which will affect the accuracy of the solution.
 %
 %\begin{figure}[h!]
 %  \centering
-%  \subfigure[Velocity]{\label{fig:TGV_vel_turbulent}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_vel_T8_Re1600_dt6dot25e-3}}    
-%  \subfigure[Pressure]{\label{fig:TGV_pre_turbulent}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_pre_T8_Re1600_dt6dot25e-3}}
+%  \subfigure[Velocity]{\label{fig-TGV_vel_turbulent}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_vel_T8_Re1600_dt6dot25e-3}}    
+%  \subfigure[Pressure]{\label{fig-TGV_pre_turbulent}\includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_pre_T8_Re1600_dt6dot25e-3}}
 %  \caption{IMEX-RK convergence for the turbulent regime.}
-%  \label{fig:TGV_conv_turbulent}
+%  \label{fig-TGV_conv_turbulent}
 %\end{figure}
 %
-%In terms of computational efficiency, Fig. \ref{fig:TGV_effi_turbulent} shows that the gain in efficiency of the \textit{(5-3)} scheme that appeared in the laminar regime is not so clear here. In this case, both curves tend to be more parallel and the intersection between them (indicated by the tendency of the \textit{(1-2)} curve) seems to be for higher CPU times. However, since the error in this figure is larger than in Fig. \ref{fig:TGV_effi_laminar} it could be said that if we are looking for errors in time of the order of $10^{-2}$, the \textit{(5-3)} is the most efficient time integration scheme.
+%In terms of computational efficiency, \Fig{TGV_effi_turbulent} shows that the gain in efficiency of the \textit{(5-3)} scheme that appeared in the laminar regime is not so clear here. In this case, both curves tend to be more parallel and the intersection between them (indicated by the tendency of the \textit{(1-2)} curve) seems to be for higher CPU times. However, since the error in this figure is larger than in \Fig{TGV_effi_laminar} it could be said that if we are looking for errors in time of the order of $10^{-2}$, the \textit{(5-3)} is the most efficient time integration scheme.
 %
 %\begin{figure}[h!]
 %  \centering
 %  \includegraphics[width=0.49\textwidth]{Figures/TGV/imex_nsi_explcnv_64_T8_Re1600_dt6dot25e-3_effi}
 %  \caption{IMEX-RK efficiency for the turbulent regime.}
-%  \label{fig:TGV_effi_turbulent}
+%  \label{fig-TGV_effi_turbulent}
 %\end{figure}
 %
 %A very clear result that can be observed comparing the results for the TGV test in the laminar regime and the turbulent one is that, if we want to keep the same order of the error in time, an adaptive time step technique must be used. In this type of problems, where there is a transition between laminar to turbulent flow, there may be a large difference in the temporal scales. Then, in order to guarantee accurate results, the time step size has to be adapted to them.
