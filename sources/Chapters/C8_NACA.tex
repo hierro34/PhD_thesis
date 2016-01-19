@@ -3,6 +3,14 @@
 
 \section{Introduction}
 \label{sec-C8_introduction}
+As noticed at the introduction of this thesis, \Chap{Introduction}, a common application of CFD software is the simulation of flows around airfoils. These simulations are needed by the aerospace industry to optimize their products and reduce the costs of experimentation.
+
+The aim of this chapter is to apply all the numerical improvements that this thesis has contributed with, to the resolution of a realistic problem. We consider the simulation of turbulent incompressible flow around an airfoil, particularly a NACA 0012 airfoil, \cite{NACA}.
+
+The NACA airfoils are widely used as a benchmark of a real life problem. Both, numerical simulations and experiments in wind tunnels have been done with several configurations of this type of airfoils. The NACA 0012 is one of the mosts used configurations, see for instance \cite{Sheldahl,McCroskey,Rivera}, but other like the NACA 4412 are also widly studied, see \cite{Wadcock 1987 and Hasting and Williams (1984,1987)}. Another type of airfoil that are also used as a benchmark in the literature is the Aerospatiale-A airfoil, used in the LESFOIL project \cite{Davidson_2012}.
+
+Although that most of the works that can be found in the literature deal with challenging configurations, i.e. high Reynolds numbers and high angles of attack, see \cite{jansen_stabilized_1999, kaltenbach_large-eddy_1995, schmidt_assessment_????,lesons_from_LESFOIL}, we will restrict ourselve to a more modest scenario.
+
 Let us now consider the simulation of the flow around an airfoil near maximum lift. In particular, we select a NACA 4412 airfoil under a flow with an angle of attack of $12^o$, which, according to Wadcock 1987 and Hasting and Williams (1984,1987), was determined to be the one that results in the maximum lift.
 
 The main goal of this test is to check the performance of the proposed VMS methods as a LES approach using a SRK time integration scheme for a very complex flow. In a flow around an airfoil many flow characteristics are stressed, specially when high Reynolds numbers are considered. That is the case of the current test, which has to deal not simply with turbulent flows, but also with other difficulties like the presence of very thin laminar boundary layers, transition from laminar to turbulent regimes, wall-bounded flow or flow that separates from curved surfaces. The fact is that LES methods have been shown to be very useful for flows where the turbulent structure is dominated by the large-scale structures, like the TGV test discussed in sections \ref{subsec:TGV-VMS} and \ref{subsec:TGV-SRK} or homogeneous turbulent problems, see \cite{colomes_2014}. Despite that, the simulation of near-wall flows using LES methods has demonstrated to be a challenging task, manly because of the complex physical phenomena like the reduction of the large scales structures near the wall, the flow anisotropy or the mesh sensitivity to high aspect ratios. 

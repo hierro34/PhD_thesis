@@ -12,19 +12,19 @@ In order to model the fine scales in a LES method, a physicaly based approach ca
 
 The VMS method (extensively descrived in \Sec{C2_vms}) introduced by Hughes in \cite{hughes_multiscale_1995,hughes_variational_1998} is a framework to develop stable and accurate numerical approximations of partial differential equations, preventing numerical instabilities that arise when the standard Galerkin FE method is used. The use of VMS method as an ILES method was firstly suggested in \cite{hughes_multiscale_2001,hughes_large_2001,codina_stabilized_2002} and, since then, several VMS methods have been developed and used as ILES. We can distinguish between those that introduce a three scale decomposition into resolved large and small scales and unresolved scales \cite{koobus_variational_2004,john_variants_2008, john_numerical_2010, masud_variational_2011}, with a Smagorinsky type model for the influence of unresolved scales onto the small resolved ones, and those that introduce a two scale decomposition into resolved and unresolved ones \cite{bazilevs_variational_2007,colomes_assessment_2015} using a residual based or projection based model of the unresolved scales to account for their influence into the resolved ones. We recall that \cite{colomes_assessment_2015} has motivated \Chap{Rb_VMS}.
 
-In this chapter we will consider a two scale VMS approach based on an orthogonal definition of the subscales space, firstly proposed in \cite{codina_stabilization_2000}, and named OSS method. Moreover, in \cite{codina_analysis_2008} an alternative definition of the OSS method was proposed, making use of a term-by-term stabilization that does not involve the full residual. Furthermore, we will follow the approach considered in \cite{colomes_mixed}, where a symmetric projection stabilization of the convective term using a OSS decomposition is used for inf-sup stable elements. It worth pointing out that this approach is the one described in \Chap{TBT_OSS}, so we refer to that chapter for a deeper understanding of such methods.
+In this chapter we will consider a two scale VMS approach based on an orthogonal definition of the subscales space, firstly proposed in \cite{codina_stabilization_2000}, and named OSS method. Moreover, in \cite{codina_analysis_2008} an alternative definition of the OSS method was proposed, making use of a term-by-term stabilization that does not involve the full residual. Furthermore, we will follow the approach considered in \cite{colomes_mixed_2015}, where a symmetric projection stabilization of the convective term using a OSS decomposition is used for inf-sup stable elements. It worth pointing out that this approach is the one described in \Chap{TBT_OSS}, so we refer to that chapter for a deeper understanding of such methods.
 
-It is a common approach in the computational fluid dynamics field to consider a strong imposition of the Dirichlet boundary conditions. That is to impose the solution at the nodes of the Dirichlet boundary. In some situations this approach may lead to inaccurate solutions, specialy when LES methods to simulate wall-bounded turbulent flows are considered. LES methods are used to simulate turbulent flows in quite coarse meshes, which often are insufficently fine to capture the boundary layer that appear in wall-bounded flows. In this case, the effect of not capturing properly the solution at the boundary layer can affect to the mean flow, resulting in imprecise simulations. In order to overcome this issue, weak imposition of the Dirichlet boundary conditions can be contemplated. This technique was considered in \cite{bazilevs_2007CF} and later improved with a wall-law based approach for turbulent flows in \cite{bazilevs_2007CMAME}. In \cite{v_John_2002} a weak treatment of the boundary conditions is also considered for the simulation of flows with slip with friction and penetration with resistence boundary conditions. Other examples on using weak Dirichlet boundary conditions can be found in \cite{CHALMERS,DASSAULT}.
+It is a common approach in the computational fluid dynamics field to consider a strong imposition of the Dirichlet boundary conditions. That is to impose the solution at the nodes of the Dirichlet boundary. In some situations this approach may lead to inaccurate solutions, specialy when LES methods to simulate wall-bounded turbulent flows are considered. LES methods are used to simulate turbulent flows in quite coarse meshes, which often are insufficently fine to capture the boundary layer that appear in wall-bounded flows. In this case, the effect of not capturing properly the solution at the boundary layer can affect to the mean flow, resulting in imprecise simulations. In order to overcome this issue, weak imposition of the Dirichlet boundary conditions can be contemplated. This technique was considered in \cite{bazilevs_weak_2007-1} and later improved with a wall-law based approach for turbulent flows in \cite{bazilevs_weak_2007}. In \cite{john_slip_2002} a weak treatment of the boundary conditions is also considered for the simulation of flows with slip with friction and penetration with resistence boundary conditions. Other examples on using weak Dirichlet boundary conditions can be found in \cite{davidson_lesfoil:_2000}.
 
-As noticed before, the turbulent phenomena is characterized by having not only many spatial scales, but also a multiscale description in time. Then, the time discretization becomes an important issue when simulating this kind of flows. Many authors favor implicit time integration schemes to avoid the time step restriction given by the Courant-Friedrichs-Lewy (CFL) number, see XXX. However, at high Reynolds number, the hyperbolic CFL number (given by the convective term) has to be kept of the order of the unity, see \cite{choi_effects_of_the computational...}. Then, it is a common practice to consider an explicit time integration scheme, see XXX, where Runge-Kutta schemes are used. Alternatively, one can consider to treat only explicitly the convective term, which prevents on using too small time step sizes given by the restriction of the parabolic CFL number. This is the case of \cite{forti}, where a semi-implicit BDF time integration scheme is considered together with a VMS-LES spatial discretization approach.
+As noticed before, the turbulent phenomena is characterized by having not only many spatial scales, but also a multiscale description in time. Then, the time discretization becomes an important issue when simulating this kind of flows. Many authors favor implicit time integration schemes to avoid the time step restriction given by the Courant-Friedrichs-Lewy (CFL) number. However, at high Reynolds number, the hyperbolic CFL number (given by the convective term) has to be kept of the order of the unity, see \cite{choi_effects_1994}. Then, it is a common practice to consider a semi-implicit time integration scheme where only the convective term is treated explicit, which prevents on using too small time step sizes given by the restriction of the parabolic CFL number. See for instance \cite{le1991improvement}, where a fractional-step method with Runge-Kutta schemes are used. Another example of this type of time integration schemes can be found in \cite{forti_semi-implicit_2015}, where a semi-implicit BDF time integration scheme is considered together with a VMS-LES spatial discretization approach.
 
-The SRK time integration schemes for the incompressible Navier-Stokes equations where firstly proposed in \cite{colomes_segregated}, which work has motivated \Chap{SRK}. These schemes are based on two main goals. First, the segregation of the velocity and pressure computations at the time integration level, without the need to perform additional fractional step techniques that spoil high orders of accuracy. Second, the preservation of the same order of accuracy for both velocities and pressures. In this work we will consider the IMEX version of the SRK scheme that consists on treating implicitly the diffusive term and explicitly the convective term.
+The SRK time integration schemes for the incompressible Navier-Stokes equations where firstly proposed in \cite{colomes_segregated_2015}, which work has motivated \Chap{SRK}. These schemes are based on two main goals. First, the segregation of the velocity and pressure computations at the time integration level, without the need to perform additional fractional step techniques that spoil high orders of accuracy. Second, the preservation of the same order of accuracy for both velocities and pressures. In this work we will consider the IMEX version of the SRK scheme that consists on treating implicitly the diffusive term and explicitly the convective term.
 
-When trying to solve increasingly larger problems on super-computers, one has to ensure efficiency on the computational cost. That is to build scalable solvers that guarantee that the computational cost will not increase when more resources are used. BDDC REFs
+When trying to solve increasingly larger problems on super-computers, one has to ensure efficiency on the computational cost. That is to build scalable solvers that guarantee that the computational cost will not increase when more resources are used. In this work we consider the use of BDDC preconditioners, firstly introduced in \cite{dohrmann_preconditioner_2003} and following the implementations described in \cite{badia_highly_2014,alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????}.
 
-The velocity-pressure segregation introduced by the SRK schemes lead to elasticiy-type and Darcy-type problems that can be preconditioned using a block-preconditioning technique, see XXX. In \cite{colomes_mixed} a recursive block-preconditioning technique was used to solve the monolithic Navier-Stokes problem in serial, giving scalable results when looking at the number of solver iterations. The performance of the block-preconditioning technique together with the BDDC methods proposed in XXX, are going to be tested in the ongoing work.
+The velocity-pressure segregation introduced by the SRK schemes lead to elasticiy-type and Darcy-type problems that can be preconditioned using a block-preconditioning technique, see \cite{badia_block_2014}. In \cite{colomes_mixed_2015} a recursive block-preconditioning technique was used to solve the monolithic Navier-Stokes problem in serial, giving scalable results when looking at the number of solver iterations. The performance of the block-preconditioning technique together with the BDDC methods proposed in \cite{alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????}, are going to be tested in the ongoing work.
 
-This chapter is organized as follows: in Section \ref{sec:C7_prob_statment} the Navier-Stokes problem is stated and the weak Dirichlet boundary conditions imposition is described. In Section \ref{sec-C7_VMS} the VMS formulation is introduced. The SRK method, and its peculiarities when weak boundary conditions are considered, is defined in Section \ref{sec-C7_SRK}. In Section \ref{sec-C7_solver} the block-preconditioning technique and the parallel solver are defined. Three different tests have been considered in the numerical results section (\Sec{C7_experiments}), the Taylor-Green Vortex flow, the Turbulent Channel Flow test and the flow an airfoil near maximum lift defined with the NACA 4412 geometry. Finally, some conclusions are pointed out in Section \ref{sec-C7_conclusions}.
+This chapter is organized as follows: in Section \ref{sec:C7_prob_statment} the Navier-Stokes problem is stated and the weak Dirichlet boundary conditions imposition is described. In Section \ref{sec-C7_VMS} the VMS formulation is introduced. The SRK method, and its peculiarities when weak boundary conditions are considered, is defined in Section \ref{sec-C7_SRK}. In Section \ref{sec-C7_solver} the block-preconditioning technique and the parallel solver are defined. Two different tests have been considered in the numerical results section (\Sec{C7_experiments}), the Taylor-Green Vortex flow and the Turbulent Channel Flow test. Finally, some conclusions are pointed out in Section \ref{sec-C7_conclusions}.
 
 \section{Problem statement}
 \label{sec:C7_prob_statment}
@@ -37,14 +37,14 @@ We begin with a brief revision of the Navier-Stokes equations statement, referri
 \label{eq-C7_NS_strong_inc}
 \nabla\cdot\u&=0&\mbox{in $\Omega\times(0,T]$,}
 \end{align}
-with $\f$ the force vector and $\nu$ the kinematic viscosity. Hereafter bold characters will denote vectors and tensors.
+with $\f$ the force vector and $\nu$ the kinematic viscosity. Like in previous chapters, bold characters will denote vectors and tensors.
 
 Equations \Eq{C7_NS_strong_mome} and \Eq{C7_NS_strong_inc} need to be supplied with apropiate boundary and initial conditions. The boundary $\Gamma$ is divided into the Dirichlet ($\Gamma_D$) and the Neumann ($\Gamma_N$) parts such that $\Gamma_D\cup\Gamma_N=\Gamma$ and $\Gamma_D\cap\Gamma_N=\O$. Then, the boundary and intial conditions can be written as
 \begin{align}
 \label{eq-C7_NS_strong_Dir}
 \u&=\u_g&\mbox{on $\Gamma_D\times(0,T]$,}\\
 \label{eq-C7_NS_strong_Neu}
-(-p\cdot\mathbf{I}+\nu(\nabla\u+\nabla\u^T))\cdot\mathbf{n}&=\mathbf{t}_N&\mbox{on $\Gamma_N\times(0,T]$,}\\
+(-p\mathbf{I}+\nu(\nabla\u+\nabla\u^T))\cdot\mathbf{n}&=\mathbf{t}_N&\mbox{on $\Gamma_N\times(0,T]$,}\\
 \label{eq-C7_NS_strong_Ini}
 \u(\x,0)&=\u_0(\x)&\mbox{in $\Omega\times\{0\}$,}
 \end{align}
@@ -77,9 +77,9 @@ We refer to \Sec{C2_variational} for a more complete description of the variatio
 
 \subsection{Weak Dirichlet boundary conditions}
 \label{subsec-C7_weak_bcs}
-There are some situations in which the strong imposition of the boundary conditions may have negative effects on the simulation performance. That is the case, for instance, of LES methods for wall-bounded flow problems. It is well known that LES methods have several difficulties when trying to solve wall-bounded problems, see for instance XXX. The issue of solving this kind of problems using a LES method is that the boundary layer that appear next to the wall can not be captured properly using relatively coarse meshes. Then, there is the need of using very thin elements next to the wall in order to have at least one point in the viscous sublayer layer ($ y^+\sim1 $), see POPE?. Usually, this requirement is satisfied by the use of stretched meshes, with very thin elements on the boundary and coarser ones in the middle of the channel.
+There are some situations in which the strong imposition of the boundary conditions may have negative effects on the simulation performance. That is the case, for instance, of LES methods for wall-bounded flow problems. It is well known that LES methods have several difficulties when trying to solve wall-bounded problems, see for instance \cite{spalart_strategies_2000,spalart1997comments}. The issue of solving this kind of problems using a LES method is that the boundary layer that appear next to the wall can not be captured properly using relatively coarse meshes. Then, there is the need of using very thin elements next to the wall in order to have at least one point in the viscous sublayer layer ($ y^+\sim1 $), see \cite{pope_turbulent_2000}. Usually, this requirement is satisfied by the use of stretched meshes, with very thin elements on the boundary and coarser ones in the middle of the channel.
 
-Despite of that, in many engineering problems it is more important to capture properly the large-scale flow properties than the fine-scales, focusing on the effect of the boundary layers on the mean flow instead of trying to solve properly the boundary layer itself. In this direction, an approach is to make use of the fact that the velocity profile at the boundary layer has been shown to have a relation to the wall-normal distance, [POPE]. Knowing this relation, one can impose weak boundary conditions on the Dirichlet boundary enforcing that the traction generated at that walls is the one given by an analytical expression. This approach was followed by Bazilevs and co-workers in \cite{bazilevs}, showing that weakly-imposed boundary conditions have the same results than strongly-imposed ones when using stretched meshes, but the former improves significantly the accuracy when using uniform meshes. 
+Despite of that, in many engineering problems it is more important to capture properly the large-scale flow properties than the fine-scales, focusing on the effect of the boundary layers on the mean flow instead of trying to solve properly the boundary layer itself. In this direction, an approach is to make use of the fact that the velocity profile at the boundary layer has been shown to have a relation to the wall-normal distance, \cite{pope_turbulent_2000}. Knowing this relation, one can impose weak boundary conditions on the Dirichlet boundary enforcing that the traction generated at that walls is the one given by an analytical expression. This approach was followed by Bazilevs and co-workers in \cite{bazilevs_weak_2007}, showing that weakly-imposed boundary conditions have the same results than strongly-imposed ones when using stretched meshes, but the former improves significantly the accuracy when using uniform meshes. 
 
 When weak Dirichlet boundary conditions are used, the funcitonal space of the test functions loose the property of having zero trace on $\Gamma$, then $\v\in\mathcal{V}$ and $q\in\mathcal{Q}$. Therefore, we have to consider the terms that arise when we use integration by parts to get the weak form of the Navier-Stokes equation \Eq{C7_NS_weak}. That is to include the following terms to the bilinear form.
 \begin{align}
@@ -97,7 +97,7 @@ where $ \boldsymbol{\tau} $ denotes the normalized vector acting on the directio
 \label{eq-C7_alpha_b}
 \alpha_b:=\frac{\tau_w}{\|\u-\u_g\|}.
 \end{equation}
-In addition to this term, we also consider other boundary terms that arise when the so called Nitche's weak boundary conditions method is used, see \cite{Nitsche,Stenberg}. Then, the resulting bilinear form equivalent to \Eq{C7_bilinear} will read
+In addition to this term, we also consider other boundary terms that arise when the so called Nitche's weak boundary conditions method is used, see \cite{nitsche_uber_1971,stenberg_techniques_1995}. Then, the resulting bilinear form equivalent to \Eq{C7_bilinear} will read
 \begin{align}
 \label{eq-C7_bilinear_weak}
 B_{weak}(\u,(\u,p),(\v,q))&=B_\Gamma(\u,(\u,p),(\v,q))\\\nonumber
@@ -112,7 +112,7 @@ y^+=f(u^+)=u^++e^{-\chi B}\left(e^{\chi u^+}-1-\chi u^+-\frac{\left(\chi u^+\rig
 \end{equation}
 being $ \chi=0.4 $, $ B=5.5 $, $ y^+:=\frac{yu_\tau}{\nu} $ the wall distance and $ u^+:=\frac{\|\u_h\|}{u_\tau} $ the mean flow velocity in non-dimensional wall units. In this case, the distance to the wall is approximated to be proportional to the wall-normal mesh size, $ y=\frac{h_b}{C_b} $, and $ \tau_w=u_\tau^2 $. Here, $ h_b $ denotes the wall-normal mesh size and $ C_b $ a positive algorithmic constant.
 
-A deeper description of this method as well as the algorithm for computing the parameter $\alpha_b$ can be found in \cite{bazilevs...}. However, in \cite{bazilevs...}, the authors impose strongly the normal component of the velocity ($ \u\cdot\n=0 $ on $ \Gamma_D $), a thing we want to avoid in the current work. Thus, we will split the penalty term distinguishing between the normal and tangential counterparts. 
+A deeper description of this method as well as the algorithm for computing the parameter $\alpha_b$ can be found in \cite{bazilevs_weak_2007}. However, in that work, the authors impose strongly the normal component of the velocity ($ \u\cdot\n=0 $ on $ \Gamma_D $), a thing we want to avoid in the current work. Thus, we will split the penalty term distinguishing between the normal and tangential counterparts. 
 
 Let us consider a function $ \v\in\mathcal{V} $. We can split its normal and tangential components as follows
 \begin{equation}
@@ -131,7 +131,7 @@ Introducing \Eq{C7_v_decomposition} into \Eq{C7_traction} we have that
 &=-((\f_{eq}\cdot\n)\n,\v)_{\Gamma_D} - (\tau_w\boldsymbol{\tau},\v)_{\Gamma_D}\\\nonumber
 &=-(\alpha_{b,n}(\u-\u_g),(\n\otimes\n)\v)_{\Gamma_D} - (\alpha_{b,\tau}(\u-\u_g),(\boldI-\n\otimes\n)\v)_{\Gamma_D}.
 \end{align}
-In this case $ \boldsymbol{\tau}=\frac{(\boldI-\n\otimes\n)(\u-\u_g)}{\|(\boldI-\n\otimes\n)(\u-\u_g)\|} $ and we define the wall-normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_laminar}, leading to the following parameter definitions
+In this case $ \boldsymbol{\tau}=\frac{(\boldI-\n\otimes\n)(\u-\u_g)}{\|(\boldI-\n\otimes\n)(\u-\u_g)\|} $ and we define the wall-normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_2007-1}, leading to the following parameter definitions
 \begin{align}
 \label{eq-C7_alpha_b_n}
 &\alpha_{b,n}:=\beta\frac{C_b\nu}{h_b},\\
@@ -162,7 +162,7 @@ In order to define the semi-discrete problem, we consider a FE partition $ \math
 (\partial_t\u_h,\v_h)+B(\u_h,(\u_h,p_h),(\v_h,q_h)) =\left<\f,\v_h\right>
 \quad\quad\forall\v_h\in\mathcal{V}_{0,h},\forall q_h\in\mathcal{Q}_{0,h}.
 \end{equation}
-With the boundary and initial conditions \Eq{C7_}-\Eq{C7_} satisfied in a weak sense. In \Eq{C7_NS_galerkin} the subsets $ \mathcal{V}_{0,h} $ and $ \mathcal{Q}_{0,h} $ denote the set of functions belonging to $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively, with zero trace on $ \Gamma_D $. Moreover, the velocity field function space is defined as $ \mathcal{V}_{g,h}:=\lbrace\v_h\in\mathcal{V}_h: \left.\v_h\right|_{\Gamma_D}=\u_g\rbrace $.
+With the boundary and initial conditions \Eq{C7_NS_strong_Dir}-\Eq{C7_NS_strong_Ini} satisfied in a weak sense. In \Eq{C7_NS_galerkin} the subsets $ \mathcal{V}_{0,h} $ and $ \mathcal{Q}_{0,h} $ denote the set of functions belonging to $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively, with zero trace on $ \Gamma_D $. Moreover, the velocity field function space is defined as $ \mathcal{V}_{g,h}:=\lbrace\v_h\in\mathcal{V}_h: \left.\v_h\right|_{\Gamma_D}=\u_g\rbrace $.
 
 When weak boundary conditions are considered, the problem results in finding $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
 \begin{equation}
@@ -172,9 +172,9 @@ When weak boundary conditions are considered, the problem results in finding $[\
 \end{equation}
 Note that in this case $ \u_h,\v_h\in\mathcal{V}_h $ and $ p_h,q_h\in\mathcal{Q}_h $.
 
-Henceforward, we will assume that in the case when Dirichlet boundary conditions are considered, $ \Gamma_D\neq\O $, they will be imposed weakly, making use of the bilinear form defined in \Eq{C7_bilinear_weak_by_components}.
+Henceforward, we will assume that in the case when Dirichlet boundary conditions are considered, $ \Gamma_D\neq \emptyset $, they will be imposed weakly, making use of the bilinear form defined in \Eq{C7_bilinear_weak_by_components}.
 
-Following the VMS approach, \cite{hughes_variational_1998}, we consider a two-scale decomposition of the continuous spaces as $ \mathcal{V}=\mathcal{V}_h\oplus\widetilde{\mathcal{V}} $ and $ \mathcal{Q}=\mathcal{Q}_h\oplus\widetilde{\mathcal{Q}} $. Where $ \widetilde{\mathcal{V}} $ and $\widetilde{\mathcal{Q}} $ are infinite-dimesnional subscale spaces that complement the finite element spaces $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively. Hereinafter the subscript $(\cdot)_h$ will denote the FE component and the tilde $\widetilde{(\cdot)}$ the subscale component. Then, introducing the VMS decomposition into \Eq{C7_NS_weak} with the bilinear definition \Eq{C7_bilinear_weak_by_components}, we get the following semi-discrete probem: find 
+Following the VMS approach, \cite{hughes_variational_1998}, we consider a two-scale decomposition of the continuous spaces as $ \mathcal{V}=\mathcal{V}_h\oplus\widetilde{\mathcal{V}} $ and $ \mathcal{Q}=\mathcal{Q}_h\oplus\widetilde{\mathcal{Q}} $. Where $ \widetilde{\mathcal{V}} $ and $\widetilde{\mathcal{Q}} $ are infinite-dimesnional subscale spaces that complement the finite element spaces $ \mathcal{V}_h $ and $ \mathcal{Q}_h $, respectively. Then, introducing the VMS decomposition into \Eq{C7_NS_weak} with the bilinear definition \Eq{C7_bilinear_weak_by_components}, we get the following semi-discrete probem: find 
 $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ such that
 \begin{align}
 \label{eq-C7_NS_vms_weak}
@@ -182,7 +182,7 @@ $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ 
 &+\left(\tilde{\u},\mathcal{L}^*_\a(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)_h =\left<\f,\v_h\right>
 \quad\forall\v_h\in\mathcal{V}_{h},\forall q_h\in\mathcal{Q}_{h},
 \end{align}
-where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products \Eq{C7_scalar_product} over each element $K$ of the partition $\mathcal{T}_h$. $ \mathcal{L}^*_\a(\v_h,q_h) $ is the formal adjoint operator of the momentum equation, defined as 
+where $ \mathcal{L}^*_\a(\v_h,q_h) $ is the formal adjoint operator of the momentum equation, defined as 
 \begin{equation}
 \label{eq-C7_NS_adjoint}
 \mathcal{L}^*_\a(\v_h,q_h):=-\nabla\cdot\left(2\nu\nabla^s\v_h\right)-\a\cdot\nabla\v_h-\nabla q_h.
@@ -234,6 +234,7 @@ Equations \Eq{C7_NS_vms_weak}-\Eq{C7_tau_c} define a generic VMS method that can
 All combinations resulting from changing the different definitions of the VMS method have been studied for LES of incompressible turbulent flows in \cite{colomes_assessment_2015}. The final definition of the VMS method used in this work is stated in the following subsection.
 
 \subsection{OSS with implicit projection for mixed FE methods}
+\label{subsec-C7_OSS_mixed}
 Let us consider a quasi-static definition of the velocity and pressure subscales, neglecting the temporal derivative $ \partial_t\tilde{\u} $ in \Eq{C7_velo_sgs}. Regarding the definition of the advetion velocity, we set $ \a=\u_h $, resulting in a linear approach for the velocity subscale. Furthermore, we select an orthogonal definition of the subscale space, $ \mathcal{P}:=\Pi_h^\perp=\boldI-\Pi_h $.
 
 This setting for equal-order FE would result in the called \textit{static linear OSS (Sta-Lin-OSS)} method described in \cite{colomes_assessment_2015}. In the cited paper, an assessment of the different choices that can conform the VMS method where assessed, showing that all methods give similar results.  Despite of that, the dynamic and nonlinear version with orthogonal subscales was shown to be the most efficient choice in terms of computational cost.
@@ -246,7 +247,7 @@ $[\u_h,p_h]\in\mathbf{L}^2(0,T;\mathcal{V}_{h})\times L^1(0,T;\mathcal{Q}_{h})$ 
 &+\left(\tau_m\Pi_h^\perp(\nabla p_h),\nabla q_h\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)_h=\left<\f,\v_h\right>
 \quad\forall\v_h\in\mathcal{V}_{h},\forall q_h\in\mathcal{Q}_{h}.
 \end{align}
-This approach was tested in \cite{colomes_mixed} where an implicit treatment of the projections was considered. Together with the static and linear version of the ASGS method, the performance of the mentioned methods was tested for the LES of incompressible turbulent flows, and compared against an inf-sup stable mixed FE method with convection stabilization through orthogonal subscales.
+This approach has been tested in \Chap{TBT_OSS} where an implicit treatment of the projections was considered. Together with the static and linear version of the ASGS method, the performance of the mentioned methods was tested for the LES of incompressible turbulent flows, and compared against an inf-sup stable mixed FE method with convection stabilization through orthogonal subscales.
 
 We will refer to the inf-sup stable mixed FE method with convection stabiliztion through orthogonal subscales as ISS-OSS method. It is defined with an inf-sup stable velocity-pressure pair composed by $ Q_2/Q_1 $ or $ Q_3/Q_2 $ elments with a term-by-term OSS method that only considers the convection stabilization term.
 
@@ -264,13 +265,11 @@ being $ \etaa_h:=\Pi_h(\u_h\cdot\nabla\u_h) $ the projection of the convective t
 \left(\tau_m\etaa_h,\v_h\right)=\left(\tau_m\u_h\cdot\nabla\u_h,\v_h\right)\quad\forall\v_h\in\mathcal{V}_{h}
 \end{equation}
 
-In \Eq{C7_NS_vms_mfe_oss}, the last term of the left-hand side, $ \left(\tau_c\nabla\cdot\u_h,\nabla\cdot\v_h\right)_h $, is usually called grad-div stabilization term, and in general it is not required to ensure stability of the problem. Nevertheless, when an inf-sup stable discretization is used, the influence of the grad-div stabilization on the accuracy of the method is essential. It has been shown that the this term has an influence on the mass conservation \cite{linke_collision_2009}, but it also influences the computational cost of the linear solvers \cite{olshanskii_grad-div_2004,heister_efficient_2013}. In \cite{colomes_mixed}, the effect of this term is assessed for the Taylor-Green Vortex problem and the Turbulent Channel Flow test using an ISS-OSS method.
+In \Eq{C7_NS_vms_mfe_oss}, the last term of the left-hand side, $ \left(\tau_c\nabla\cdot\u_h,\nabla\cdot\v_h\right)_h $, is usually called grad-div stabilization term, and in general it is not required to ensure stability of the problem. Nevertheless, when an inf-sup stable discretization is used, the influence of the grad-div stabilization on the accuracy of the method is essential. It has been shown that this term has an influence on the mass conservation \cite{linke_collision_2009}, but it also influences the computational cost of the linear solvers \cite{olshanskii_grad-div_2004,heister_efficient_2013}. In \Chap{TBT_OSS}, the effect of this term is assessed for the Taylor-Green Vortex problem and the Turbulent Channel Flow test using an ISS-OSS method.
 
 \subsection{Equivalence with LES models}
 \label{subsec-C7_tbt_OSS_ISS}
-LES models, filtered equations, residual tensor, reynolds-cross-leonard stresses...
-
-In order to justify that the method that we use in this work acts as a LES model without the need of adding any kind of physical based extra dissipation, we focus on the energy balance equations. To do so, we replace $ \v_h $ by $ \u_h $ and $ q_h $ by $ p_h $ in \Eq{C7_NS_vms_mfe_oss}. The resultin equation is
+In order to justify that the method that we use in this work acts as a LES model without the need of adding any kind of physical based extra dissipation, we focus on the energy balance equations. To do so, we replace $ \v_h $ by $ \u_h $ and $ q_h $ by $ p_h $ in \Eq{C7_NS_vms_mfe_oss}. The resulting equation is
 \begin{align}
 \label{eq-C7_NS_ene_balance_1}
 (\partial_t\u_h,\u_h)&+(2\nu\nabla^s\u_h,\nabla\u_h)+b(\u_h,\u_h,\u_h)\\\nonumber
@@ -295,7 +294,7 @@ Making use of the orthogonality of the projection $ \Pi_h^\perp $, splitting the
 \end{align}
 Let us analyse in more detail the implication of each term of \Eq{C7_NS_ene_balance_2} into the energy evolution of the problem. To simplify the notation, we rewrite \Eq{C7_NS_ene_balance_2} as
 \begin{align}
-\label{NS_ene_balance_3}
+\label{eq-C7_NS_ene_balance_3}
 \frac{dk_h}{dt}=&-\int_{\Omega}\varepsilon_{mol,h}\ d\Omega-\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega-\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\\\nonumber
 &-\int_{\Gamma}\varepsilon_{\a,h}\ d\Gamma-\int_{\Gamma}\varepsilon_{N,h}\ d\Gamma\\\nonumber
 &+\int_{\Omega}W_{f,h}\ d\Omega+\int_{\Gamma}W_{t,h}\ d\Gamma,
@@ -304,22 +303,22 @@ being $ k_h:=\frac{1}{2}\left\|\u_h\right\|^2 $ the kinetic energy of the resolv
 
 Going further, assuming that strong boundary conditions are applied, we have that $ \varepsilon_{\a,h}=\varepsilon_{N,h}=W_{t,h}=0 $. For a fully developed turbulent flow, if the resolved scales are fine enough to capture the inertial subrange, the total energy of the problem account for almost all the energy of the problem, $ k_h\approx k $. Furthermore, when external forces mainly acts on the large scales of the flow we have that $ W_{f,h}\approx W_f $. Hence, knowing that the energy dissipation rate at the continuous level is
 $$ \frac{dk}{dt}=-\int_{\Omega}\varepsilon_{mol}\ d\Omega+\int_{\Omega}W_{f}\ d\Omega, $$
-from the energy balance equation \Eq{C7_NS_balance_3}, we can say that our method acts properly as a LES method if
+from the energy balance equation \Eq{C7_NS_ene_balance_3}, we can say that our method acts properly as a LES method if
 $$ \sum_e\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega+\sum_e\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\approx\int_{\Omega}\varepsilon_{mol,h}\ d\Omega. $$
-According to \cite{guasch_statistical}, this condition is satisfied since 
+According to \cite{guasch_statistical_2013}, this condition is satisfied since 
 $$ \frac{1}{V_e}\left\langle\int_{\Omega_e}\widetilde{\varepsilon}_m\ d\Omega\right\rangle + \frac{1}{V_e}\left\langle\int_{\Omega_e}\widetilde{\varepsilon}_c\ d\Omega\right\rangle\sim\varepsilon_{mol,h}\left[1+\mathcal{O}\left(\frac{h}{L}\right)^{2/3}\right], $$
 with $ L $ the characteristic large eddies length.
 
 \section{Segregated Runge-Kutta time integration}
 \label{sec-C7_SRK}
 \subsection{Matricial form}
-Let us suppose that we solve the problem \Eq{C7_NS_strong_mome}-\Eq{C7_NS_strong_Ini} using the implicit \textit{term by term} OSS method with Inf-Sup stable elements, which definition is given by equations \Eq{C7_NS_OSS}, \Eq{C7_NSprojectiondef1} and \Eq{C7_biliniar_oss_tbt_iss}. Assuming that $\u_h$, $p_h$ and $\etaa_h$ are defined by a finite element interpolation from the nodal values $\{\U^a\}_{a=1,...,N_u}$, $\{P^b\}_{b=1,...,N_p}$ and $\{\ETA^c\}_{c=1,...,N_\eta}$, the finite element approximation of the velocity, pressure and projection fields can be written as
+Let us suppose that we solve the problem \Eq{C7_NS_strong_mome}-\Eq{C7_NS_strong_Ini} using the implicit \textit{term by term} OSS method with Inf-Sup stable elements, which definition is given by equations \Eq{C7_NS_vms_tbtoss}-\Eq{C7_NS_vms_mfe_oss}. Assuming that $\u_h$, $p_h$ and $\etaa_h$ are defined by a finite element interpolation from the nodal values $\{\U^a\}_{a=1,...,N_u}$, $\{P^b\}_{b=1,...,N_p}$ and $\{\ETA^c\}_{c=1,...,N_\eta}$, the finite element approximation of the velocity, pressure and projection fields can be written as
 \begin{align*}
 &\u_h(\x)=\sum_{a=1}^{N_u}\boldsymbol{\phi}_a(\x)\U^a,\quad p_h(\x)=\sum_{b=1}^{N_p}\psi_b(\x)P^b,\quad \etaa_h(\x)=\sum_{c=1}^{N_\eta}\boldsymbol{\phi}_\eta(\x)\ETA^c,
 \end{align*}
 where $\{\boldsymbol{\phi}_{a,i}\}_{a=1,...,N_u;i=1,...,d}$, $\{\psi_b\}_{b=1,...,N_p}$ and $\{\boldsymbol{\phi}_{c,i}\}_{c=1,...,N_\eta;i=1,...,d}$ are the Langrangian basis associated to $\mathcal{V}_h$ and $\mathcal{Q}_h$. $N_u$, $N_p$ and $N_\eta$ are the total amount of nodes for the velocity, pressure and projection fields. 
 
-The matricial form of the stabilized problem \Eq{C7_NS_OSS} introducing the definitions \Eq{C7_NSprojectiondef1} and \Eq{C7_biliniar_oss_tbt_iss} can be written as follows. 
+The matricial form of the stabilized problem \Eq{C7_NS_vms_tbtoss} introducing the definition \Eq{C7_NS_vms_mfe_oss} and considering strong Dirichlet boundary conditions can be written as follows. 
 \begin{equation}
 \label{eq-C7_NSmatform}
 \left[\begin{array}{c}
@@ -367,7 +366,7 @@ being $a$ and $b$ the node identification. Note that $\D=-\	G^T$, when boundary 
 
 \subsection{Time integration through Segregated Runge-Kutta schemes}
 \label{subsec:C7_SRK}
-Focusing in the time integration of the problem \Eq{C7_NSmatform} we consider now the application of a Segregated Runge-Kutta scheme. SRK methods have been proposed in \cite{colomes_2015} and successfully tested for laminar flows. The main goal of this kind of time integrators is the segragation of velocity and pressure computations, giving much easier systems to be solved, taking advantage of an Implcit-Explicit (IMEX) Runge-Kutta scheme. The use of a Rung-Kutta scheme also allow a high order integration in time with no extra implementation efforts. Furthermore, with this kind of time integrators, an adaptive time stepping technique can be easily used.
+Focusing in the time integration of the problem \Eq{C7_NSmatform} we consider now the application of a Segregated Runge-Kutta scheme. SRK methods have been proposed in \cite{colomes_segregated_2015} and successfully tested for laminar flows,see \Chap{SRK}. The main goal of this kind of time integrators is the segragation of velocity and pressure computations, giving much easier systems to be solved, taking advantage of an IMEX Runge-Kutta scheme. The use of a Rung-Kutta scheme also allow a high order integration in time with no extra implementation efforts. Furthermore, with this kind of time integrators, an adaptive time stepping technique can be easily used.
 
 Let us now consider the matricial problem \Eq{C7_NSmatform}, which can be written in a compact form in terms of the velocity and projection fields as follows
 \begin{subequations}\label{eq-C7_SRK_ueta}
@@ -437,7 +436,9 @@ Note that equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} are eq
 0
 \end{array}\right],
 \end{equation}
-with $k$ being $i$ or $n+1$, depending of the equation that we are solving, and $\U^*$ an auxiliar velocity field, which satisfies the discrete incompressibility constraint. Then, in practice, equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} are implemented as a Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy}, which can be efficiently solved through block preconditioning technique like what has been explained in subsection \ref{subsec-C7_Block_prec}.
+with $k$ being $i$ or $n+1$, depending of the equation that we are solving, and $\U^*$ an auxiliar velocity field, which satisfies the discrete incompressibility constraint. Then, in practice, equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1} are implemented as a Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy}, which can be efficiently solved through block preconditioning technique like what it is explained in subsection \ref{subsec-C7_block_prec}.
+
+The system of equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_p_n+1} that arise when using a SRK time integration schem over the particular definition of a VMS method exposed in Section \ref{subsec-C7_OSS_mixed}, will be denoted as \textit{Segregated Variational MultiScale} (SVMS) method.
 
 \subsection{Weak Dirichlet boundary conditions for SRK schemes}
 In Section \ref{subsec-C7_weak_bcs} we have stated that in some situations weak Dirichlet boundary conditions may be used. In this case, the SRK time integration schemes have to take into account the boundary terms described in \Eq{C7_bilinear_boundary} and \Eq{C7_bilinear_weak}, which implementation is discussed in this subsection.
@@ -554,6 +555,7 @@ Moreover, when treating with explicit versions of the SRK scheme, we have to lim
 In this section we will discuss the construction of efficient and scalable solvers for the stabilized Navier-Stokes equations in turbulent flows through BDDC method in parallel contexts. First of all we will have a look at the block preconditioning technique used in the different systems involved in the SRK scheme. After that, the main characteristics of the BDDC solvers used in this work will be described.
 
 \subsection{Block-preconditioning technique for the segregated problem}
+\label{subsec-C7_block_prec}
 Let us assume that the matricial problem \Eq{C7_SRK_ueta} is solved with an IMEX verision of the SRK scheme given by the operators $ \mathcal{F} $ and $ \mathcal{G} $ defined in \Eq{C7_SRK_F}-\Eq{C7_SRK_G}. In this case, at the stage $ i $, for $ 1\le i \le s $, the resulting matrix from the system \Eq{C7_SRK_ueta_RK} can be factorized into an exact LU matrix product as follows
 \begin{equation}
 \label{eq-C7_SRK_u_mat}
@@ -613,12 +615,25 @@ The resolution of system \Eq{C7_SRK_upeta_RK_p_darcy} with a preconditioned GMRE
 The matricial systems arising from equations \Eq{C7_SRK_upeta_RK_u_n+1} and \Eq{C7_SRK_upeta_RK_eta_n+1} are solved using a preconditioned GMRES with a diagonal DD preconditioner to approximate $ \M^{-1} $ and $ \M_\tau^{-1} $, respectively.
 
 \subsection{BDDC solver}
+As stated above, the solution of the resulting discrete equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_p_n+1} is done through a block-preconditioning technique that, for the diagonal blocks, makes use of BDDC preconditioners. The BDDC method, firstly introduced by Dohrmann \cite{dohrmann_preconditioner_2003}, basicaly consists on decomposing the FE mesh into a set of subdomains that share an interface between each other. The nodes in this interface are classificated by corners, edges and faces (this last class only appears in the 3D case), and conform a coarse problem that is used to precondition the finner. The continuity among subdomains is only weakly enforced, e.g., the value on subdomain corners and mean values on subdomain edges and subdomain faces, so each interface entity is equivalent to a node at the coarse level.
+
+The main properties of BDDC preconditioner that make this kind of preconditioners very suitable to reach extreme scalability are: 
+\begin{itemize}
+\item The mathematically supported extremely aggressive coarsening, keeping the sparsity pattern of the coarse matrix similar to the original system matrix.
+\item The possibility to compute in parallel the coarse and the fine components due to the orthogonal definition of the coarse space with respect to the finner.
+\item The possibility to extend the algorithm with a multilevel approach, based on the similarity of the coarse matrix pattern.
+\end{itemize}
+
+Regarding the last point, a fully-distributed, communicator-aware, recursive, and interlevel-overlapped message-passing implementation of the multilevel balancing domain decomposition by constraints (MLBDDC) preconditioner has been developed in \cite{alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????}. In that work, excellent weak scalability results have been obtained for the resolution of a 3D Laplacian and elasticity problems. Hence, as a result of the block-preconditioning technique described in Section \ref{subsec-C7_block_prec}, we end up with a Laplacian-type and an elasticity-type problem, which can use the implementation of the MLBDDC proposed in \cite{alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????}.
+
+In some situations the mesh partition may lead to singular coarse problems, especially for the Laplacian-type problem. This problem can be overcome by the use of a perturbed BDDC with the addition of a properly scaled mass matrix at the preconditioner, see \cite{santiago_badia_hieu_nguyen_balancing_2015}. This approach will be used in \Chap{NACA}, where a non-structured mesh partition is used.
+
 
 \section{Numerical experiments}
-\label{sec:C7_experiments}
+\label{sec-C7_experiments}
 In this section we show the numerical results for two different incompressible turbulent flow tests. The suitability of the OSS-ISS method, with weak boundary contitions and SRK time integration schemes, as a LES model for large scale problems is assessed in these tests. First, we analyse the advantadges of using SRK methods in the TGV problem, where a weak scalability analysis is performed. The suitability of weak boundary conditions in wall-bouned flows is analysed in the Turbulent Channel Flow test. %Finally, some results are shown for the turbulent flow around an airfoil.
 
-In \cite{colomes_mixed} has been shown that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. The experiments of this chapter aim to check the performance of this method when it is used together with a Segregated Runge-Kutta time integration scheme.
+In \cite{colomes_mixed_2015} has been shown that OSS-ISS has a great potential as a LES model, especially when we the computational cost is taken into account. The experiments of this chapter aim to check the performance of this method when it is used together with a Segregated Runge-Kutta time integration scheme.
 
 The main goal of a SRK scheme is the velocity and pressure decoupling, allowing the use of more efficient solvers. This only happen when there is not any other term apart from the divergence in the pressure row, see the matricial form \Eq{C7_NSmatform}, which is a feature of the OSS-ISS method. When we solve turbulent flows, some stabilization method is needed, not only to control the convection instabilities, but also to model the effect of the small scales. The ASGS and OSS stabilization methods proposed in the cited work introduce extra terms in the pressure row, which disallow the use of SRK schemes for the time integration. This is not the case of OSS-ISS method, which only introduces an extra term in the velocity-velocity block. Then, the applicability of SRK schemes to this method is straight forward as it has been exposed in subsection \ref{subsec:C7_SRK}.
 
@@ -645,7 +660,7 @@ We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. We solve t
 \subsubsection{Setting}
 The problem is solved from $t=0.0$ to $T=10.0$ and the results are compared against a DNS by Brachet et al \cite{brachet_direct_1991}. We discretize the domain using different choices of the number of elements and the order of approximation, with either $ Q_2/Q_1 $ or $ Q_3/Q_2 $ velocity-pressure pairs.
 
-As it was shown in \cite{colomes_mixed} (see also \Chap{TBT_OSS}), the most appropiate algorithmic parameters for the TGV test when using inf-sup stable discretizations are $ c_1=12.0 $, $ c_2=4.0 $ and $ c_c=4.0 $.
+As it was shown in \cite{colomes_mixed_2015} (see also \Chap{TBT_OSS}), the most appropiate algorithmic parameters for the TGV test when using inf-sup stable discretizations are $ c_1=12.0 $, $ c_2=4.0 $ and $ c_c=4.0 $.
 
 %\subsubsection{Time convergence}
 %\label{subsubsec-C7_TGV_time_convergence}
@@ -714,7 +729,7 @@ All the solutions have been computed with FEMPAR (Finite Element Multiphysics an
 
 Let us denote $ H $ the unidirectional size of the domain partition and $ L $ the unidirectional domain length. The TGV problem is solved in a domain of size $ L^3 $, with structured subdomain partitions of size $ H^3 $, and with a uniformly structured mesh composed of elements of size $ h^3 $. In a weak scalability test we keep the local meshes constant, that is to keep the number of elements per processor constant, which means that $ H/h= C $. In order to preserve the numerical properties, i. e. keep $ h $ constant, instead of reducing $ h $ we increase $ L $. Hence, as the reference problem is computed in a domain of size $ L_0=2\pi $, the scalabitilty analysis will be done in a domain of size $ L=\beta L_0 $, beign $ \beta=\{1,2,3,4,5\} $. The reference partition size is $ H_0=L_0/4 $ and will be kept constant.
 
-We compute the solution after one time step of size $\delta t=5\cdot10^{-2}$ with the explicit version of the \textit{(1-2)} scheme, using the $ Q_2/Q_1 $ elment type, and reporting the number of solver iterations and the CPU time consumed by each system resolution. Different local mesh sizes are considered to see the effect of the local mesh size on the scalability of the solver. In particular, we will consider three cases: $ H/h=\{4,8,12\} $. The total amount of processors used to solve the problem will be $ (L/H)^3 = (4\beta)^3 $. The smallest mesh used to solve the problem in this analysis is a $ 16^3 $ $ Q_2/Q_1 $ elements mesh, while the biggest one is a $ 240^3 $ $ Q_2/Q_1 $ elements mesh, which give more than $ 680 $ million DOFs.
+We compute the solution after one time step of size $\delta t=5\cdot10^{-2}$ with the IMEX version of the \textit{(1-2)} scheme (see Appendix \ref{appendix-butcher_tableaus}), using the $ Q_2/Q_1 $ elment type, and reporting the number of solver iterations and the CPU time consumed by each system resolution. Different local mesh sizes are considered to see the effect of the local mesh size on the scalability of the solver. In particular, we will consider three cases: $ H/h=\{4,8,12\} $. The total amount of processors used to solve the problem will be $ (L/H)^3 = (4\beta)^3 $. The smallest mesh used to solve the problem in this analysis is a $ 16^3 $ $ Q_2/Q_1 $ elements mesh, while the biggest one is a $ 240^3 $ $ Q_2/Q_1 $ elements mesh, which give more than $ 680 $ million DOFs.
 
 The following results are computed with a two-level BDDC solver, considering the corners, edges and faces of the subdomain partitions as part of the coarse system. We recall that the first step of a SRK \textit{(1-2)} scheme consist in six system resolutions that are specified in Algorithm \ref{alg-SRK_solvers}.
 \begin{algorithm}
@@ -759,46 +774,45 @@ In order to have even better results, one can reduce the size of the coarse syst
   \label{fig-TGV_SRK_scal_ce}
 \end{figure}
 
-%The number of iterations needed to solve the Darcy problem \Eq{C7_SRK_upeta_RK_p_darcy} is shown in \Fig{TGV_SRK_scal_iter}, while the total elapsed CPU time for solving one step of the TGV problem is shown in \Fig{TGV_SRK_scal_time}. We see that the number of iterations remains constant when the number of processors is increased, meaning that the algorithm is scalable in terms of number of iterations. Looking at the total CPU time, we see that it increases as we increase the number of processors. That behaviour is caused because the coarse problem is bigger when the total amount of processors is increased, and the time consumed by the local problems in each processor is masked by the solution of the coarse problem. A multilevel implementation of the BDDC method should be used to overcome this problem.
+Although that the weak scalability of the proposed method have been demonstrated up to 8000 processors, we could go further making use of a three-level method as it is defined in the multilevel implementation MLBDDC proposed in \cite{alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????}.
 
 \subsection{Turbulent channel flow at $Re_\tau=395$}
-%In the previous section we have tested the suitability of the proposed VMS method using an IMEX SRK time integration scheme for the LES simulation of homogeneous turbulence. After that, we aim to show the performance of such methods for wall-bounded turbulent flows. In order to check the behaviour of the proposed approach, we solve the Turbulent Channel Flow (TCF) test with a Reynolds number based on the wall velocity $ Re_\tau=395 $.
-%
-%One of the main purposed of this test is to assess the accuracy of the solution when using the weak boundary conditions formulation given by the bilinear form described in \Eq{C7_bilinear_weak_by_components}.
-%
-%The TCF problem is solved in a boxed domain of size $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. Where the $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. Homogeneous Dirichlet boundary conditions for the velocity DOFs are weakly imposed on wall-normal direction boundaries ($y=-\delta$ and $y=\delta$), while periodic boundary conditions are defined on the stream-wise and span-wise directions. Fig. \ref{fig:Channel_geo} depicts schematically the geometry of the computational domain for this test.
-%\begin{figure}[h!]
-%	\centering	
-%	\includegraphics[width=0.5\textwidth]{Figures/TCF/channel_geom}
-%	\caption{Channel computational domain.}
-%	\label{fig:Channel_geo}
-%\end{figure}
-%
-%We select the problem parameters according to the DNS computation performed by Moser et al in \cite{moser_direct_1999,kim_turbulence_1987} (MKM-DNS), so we can compare our results with the cited work. The bulk mean velocity and the half channel height are taken equal to one, $\bar{U}=1$ and $\delta=1$. The estimated Reynolds number based on the bulk mean velocity is known, $Re=\bar{U}2\delta/\nu\approx 13,750$ (see \cite{pope_turbulent_2000}). Therefore, one can obtain the value of the viscosity, $\nu=1.4545\cdot10^{-4}$, and from the Reynolds number based on the friction velocity, we can determine the friction velocity magnitude: $u_\tau=Re_\tau\nu/\delta=5.745\cdot10^{-2}$. Thus, the wall shear stress reads $\tau_w=u_\tau^2=3.3010\cdot10^{-3}$. A force equivalent to a pressure gradient is imposed to drive the movement of the flow in the stream-wise direction, $f_x=\tau_w/\delta$.
-%
-%An initial solution proposed in \cite{moin_numerical_1980} is used to reach the statistically steady state faster, which consists in a unidirectional velocity profile over which is added a fluctuation:
-%\begin{align}
-%\label{eq-C7_TCF_initial_sol}
-%&u_x = C\left(1-y^8\right)+\epsilon\frac{L_x}{2}\sin(\pi y)\cos\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\\nonumber
-%&u_y = -\epsilon(1+\cos(\pi y))\sin(\pi y)\sin\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\
-%&u_z = -\epsilon\frac{L_z}{2}\sin\left(\frac{4\pi x}{L_x}\right)\sin(\pi y)\cos\left(\frac{2\pi z}{L_z}\right).\nonumber
-%\end{align}
-%The constant $C$ is chosen in a such way that the field without fluctuations would have a bulk mean velocity $\bar{U}=1.0$. The fluctuation constant $\epsilon$ is $10\%$ of the bulk mean velocity.
-%
-%To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q_2/Q_1 $ and $ Q_3/Q_2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs...}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
-%
+\label{subsec-C7_TCF}
+In the previous section we have tested the suitability of the proposed VMS method using an IMEX SRK time integration scheme for the LES simulation of homogeneous turbulence. After that, we aim to show the performance of such methods for wall-bounded turbulent flows. In order to check the behaviour of the proposed approach, we solve the TCF test with a Reynolds number based on the wall velocity $ Re_\tau=395 $.
+
+One of the main purposed of this test is to assess the accuracy of the solution when using the weak boundary conditions formulation given by the bilinear form described in \Eq{C7_bilinear_weak_by_components}. Then, the TCF test is suitable for this assessment.
+
+\subsubsection{Setting}
+The TCF problem is solved in a boxed domain of size $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. Where the $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. Homogeneous Dirichlet boundary conditions for the velocity DOFs are weakly imposed on wall-normal direction boundaries ($y=-\delta$ and $y=\delta$), while periodic boundary conditions are defined on the stream-wise and span-wise directions. We refer to Section \ref{subsec-C3_TCF} for a deeper description of this test.
+
+We select the problem parameters according to the DNS computation performed by Moser et al in \cite{moser_direct_1999,kim_turbulence_1987} (MKM-DNS), so we can compare our results with the cited work. The bulk mean velocity and the half channel height are taken equal to one, $\bar{U}=1$ and $\delta=1$. The estimated Reynolds number based on the bulk mean velocity is known, $Re=\bar{U}2\delta/\nu\approx 13,750$ (see \cite{pope_turbulent_2000}). Therefore, one can obtain the value of the viscosity, $\nu=1.4545\cdot10^{-4}$, and from the Reynolds number based on the friction velocity, we can determine the friction velocity magnitude: $u_\tau=Re_\tau\nu/\delta=5.745\cdot10^{-2}$. Thus, the wall shear stress reads $\tau_w=u_\tau^2=3.3010\cdot10^{-3}$. A force equivalent to a pressure gradient is imposed to drive the movement of the flow in the stream-wise direction, $f_x=\tau_w/\delta$.
+
+As we have done in Section \ref{subsec-C5_turb_channel}, an initial solution proposed in \cite{moin_numerical_1980} is used to reach the statistically steady state faster, which consists in a unidirectional velocity profile over which is added a fluctuation:
+\begin{align}
+\label{eq-C7_TCF_initial_sol}
+&u_x = C\left(1-y^8\right)+\epsilon\frac{L_x}{2}\sin(\pi y)\cos\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\\nonumber
+&u_y = -\epsilon(1+\cos(\pi y))\sin(\pi y)\sin\left(\frac{4\pi x}{L_x}\right)\sin\left(\frac{2\pi z}{L_z}\right),\\
+&u_z = -\epsilon\frac{L_z}{2}\sin\left(\frac{4\pi x}{L_x}\right)\sin(\pi y)\cos\left(\frac{2\pi z}{L_z}\right).\nonumber
+\end{align}
+The constant $C$ is chosen in a such way that the field without fluctuations would have a bulk mean velocity $\bar{U}=1.0$. The fluctuation constant $\epsilon$ is $10\%$ of the bulk mean velocity.
+
+To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q_2/Q_1 $ and $ Q_3/Q_2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs_weak_2007}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
+
 %According to \cite{colomes_2016}, the algorithmic constants that appear in \Eq{C7_tau_m} and \Eq{C7_tau_c} are chosen as $ c_1=12.0 $, $ c_2=8.0 $ and $ c_c=32.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $.
 %
 \subsubsection{Effect of $ c_c $ in uniform meshes}
+In Section \ref{subsec-C5_turb_channel} we have analysed the effect of the constant $ c_c $ that appear in equation \Eq{C7_tau_c_alt} for the case in which we have strong imposition of the boundary conditions together with the use of stretched meshes that capture the boundary layer. In this section we aim to check the performance of the method when changing the $ c_c $ algorithmic parameter in uniform meshes and weak boundary conditions imposition. In this case, in order to avoid the influence of the weak imposition of the wall normal component, we restrict strongly the wall-normal velocity, e.g. $ \u\cdot\n=0 $ on $ \Gamma_D $.
+
+In \Fig{} we show the energy evolution of the solution for different values of $ c_c $ from $ t=0.0 $ to $ t=100.0 $
 
 
 \subsubsection{Influence of the wall-normal component}
-%A significant difference on the approach followed for the weak enforcement of the Dirichlet boundary conditions considered in this work, with respect to the originaly proposed in \cite{bazilevs_...}, is the treatment of the normal component. In \cite{bazilevs_...} a no-penatration condition is considered, which means that the normal component of the velocity is imposed strongly, $ \u\cdot\n=0 $ on $ \Gamma_D $. We propose to keep the weak boundary imposition even in the wall-normal direction. The main advantadge of keeping the same approach for all components is revealed in curved boundaries. In that case, the different treatment of each component could lead to tedious code implementation.
-%
-%As stated in section \ref{subsec-C7_weak_bcs}, we define two differene penalty parameters. One for the tangential component, based on the law of the wall, and another one for the wall-normal component, which is proportional to the original penalty parameter proposed in \cite{bazilevs_original}, $ \alpha_{b,n}:=\beta\frac{C_b\nu}{h_b} $. As it is obvious, when $ \beta\rightarrow\infty $ the solution at the wall becomes closer to the one obtained imposing strongly the normal component, but the penalty term may disturb the proper solution. 
-%
-%In order to determine the best value for $ \beta $, we solve the TCF test from $ t=0 $ to $ t=20\Pi $ (10 times the required time that a particle needs to cross the channel flow traveling at the mean velocity), with different values $ \beta=\{1,2,4,8,16,32,64,128\} $ in a $ 16^3 $ $ Q_2/Q_1 $ elements mesh. The problem is sovled using an IMEX SRK scheme with adaptive time adaptive technique.
-%
+A significant difference on the approach followed for the weak enforcement of the Dirichlet boundary conditions considered in this work, with respect to the originaly proposed in \cite{bazilevs_weak_2007}, is the treatment of the normal component. In \cite{bazilevs_weak_2007} a no-penatration condition is considered, which means that the normal component of the velocity is imposed strongly, $ \u\cdot\n=0 $ on $ \Gamma_D $. We propose to keep the weak boundary imposition even in the wall-normal direction. The main advantadge of keeping the same approach for all components is revealed in curved boundaries. In that case, the different treatment of each component could lead to tedious code implementation.
+
+As stated in section \ref{subsec-C7_weak_bcs}, we define two differene penalty parameters. One for the tangential component, based on the law of the wall, and another one for the wall-normal component, which is proportional to the original penalty parameter proposed in \cite{bazilevs_weak_2007-1}, $ \alpha_{b,n}:=\beta\frac{C_b\nu}{h_b} $. As it is obvious, when $ \beta\rightarrow\infty $ the solution at the wall becomes closer to the one obtained imposing strongly the normal component, but the penalty term may disturb the proper solution. 
+
+In order to determine the best value for $ \beta $, we solve the TCF test from $ t=0.0 $ to $ t=100.0 $, with different values $ \beta=\{1.0,10,100,1000\} $ in a $ 16^3 $ $ Q_2/Q_1 $ elements mesh. The problem is sovled using an IMEX SRK scheme with adaptive time adaptive technique.
+
 %In \Fig{cha_ene_dtime} we show the energy evolution and the time step size evolution for the different settings of $ \beta $. Looking at the energy evolution (\Fig{cha_ene}), we clearly see that the choice of $ \beta $ has a direct implication on the results. For low values of $ \beta $, the solution starts dissipating too much energy at the early stages of the simulation. When increasing $ \beta $, the results tend to the ones obtained considering a strong imposition of the normal component, denoted by \textit{strong} in \Fig{cha_ene}. However, as it can be seen in \Fig{cha_dtime}, an increase of $ \beta $ results in a higher restriction on the time step size, making the problem more expensive. Looking for a trade off between accuracy and computational cost, we choose $ \beta=64 $ for forthcoming computations.
 %\begin{figure}[h!]
 %  \centering
@@ -813,26 +827,26 @@ In order to have even better results, one can reduce the size of the coarse syst
 %The usage of IMEX SRK schemes only worths when uniform meshes are considered. Otherwise, when stretched meshes are employed to capture the boundary layer, the time step size restriction given by hyperbolic $ \mbox{CFL}_u $ make this schemes not affordable.
 %
 \subsubsection{Comparison between strong and week boundary conditions imposition}
-%Once analysed the effect of the $ \beta $ parameter when Dirichlet boundary conditions are imposed weakly for the wall-normal component, let us check the performance of the approach followed in this work compared against a strong Dirichlet boundary conditions definition. We will compare with the results presented in \cite{colomes_mixed}, where the TCF test was solved using strong Dirichlet boundary conditions in a stretched mesh. In Table \ref{tab-y_plus} we state the distance to the wall of the nearest velocity DOF for an stretched and a uniform mesh, with two different discretizations.
-%\begin{table}[h]
-%\caption{Distance to the wall of the nearest velocity DOF in wall units.}
-%\label{tab-y_plus}
-%\centering
-%\begin{tabular}{ccc}
-%\toprule
-%Mesh type&Discretization&$ y^+ $\\
-%\midrule
-%\midrule
-%\multirow{2}{*}{Stretched}&$ 16^3 $ $ Q_2/Q_1 $&$ 1.6 $\\
-%&$ 16^3 $ $ Q_3/Q_2 $&$ 1.0 $\\
-%\midrule
-%\multirow{2}{*}{Uniform}&$ 16^3 $ $ Q_2/Q_1 $&$ 24.7 $\\
-%&$ 16^3 $ $ Q_3/Q_2 $&$ 16.5 $\\
-%\bottomrule
-%\end{tabular}
-%\end{table}
-%
-%The TCF test is solved from $ t=0.0 $ to $ t=300.0 $, storing the statistics from the last $ 10.0 $ seconds, accumulating more than $ 1000 $ samples. The results are shown in \Fig{cha_vel}, where the mean stream-wise velocity is ploted (\Fig{cha_umean}) together with the velocity fluctuations in the stream-wise, wall-normal and span-wise directions (Figs. \ref{fig-cha_ufluc}, \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, respectively).
+Once analysed the effect of the $ \beta $ parameter when Dirichlet boundary conditions are imposed weakly for the wall-normal component, let us check the performance of the approach followed in this work compared against a strong Dirichlet boundary conditions definition. We will compare with the results presented in \cite{colomes_mixed_2015}, where the TCF test was solved using strong Dirichlet boundary conditions in a stretched mesh. In Table \ref{tab-y_plus} we state the distance to the wall of the nearest velocity DOF for an stretched and a uniform mesh, with two different discretizations.
+\begin{table}[h]
+\caption{Distance to the wall of the nearest velocity DOF in wall units.}
+\label{tab-y_plus}
+\centering
+\begin{tabular}{ccc}
+\toprule
+Mesh type&Discretization&$ y^+ $\\
+\midrule
+\midrule
+\multirow{2}{*}{Stretched}&$ 16^3 $ $ Q_2/Q_1 $&$ 1.6 $\\
+&$ 16^3 $ $ Q_3/Q_2 $&$ 1.0 $\\
+\midrule
+\multirow{2}{*}{Uniform}&$ 16^3 $ $ Q_2/Q_1 $&$ 24.7 $\\
+&$ 16^3 $ $ Q_3/Q_2 $&$ 16.5 $\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The TCF test is solved from $ t=0.0 $ to $ t=300.0 $, storing the statistics from the last $ 10.0 $ seconds, accumulating more than $ 1000 $ samples. The results are shown in \Fig{cha_vel}, where the mean stream-wise velocity is ploted (\Fig{cha_umean}) together with the velocity fluctuations in the stream-wise, wall-normal and span-wise directions (Figs. \ref{fig-cha_ufluc}, \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, respectively).
 %\begin{figure}[h!]
 %	\centering	
 %	\subfigure[Mean streamwise velocity]{\label{fig-cha_umean}\includegraphics[width=0.49\textwidth]{Figures/TCF/umean}}
@@ -848,3 +862,13 @@ In order to have even better results, one can reduce the size of the coarse syst
 %Similar results are observed for the velocity fluctuations. Looking at \Fig{cha_ufluc}, where the strem-wise velocity fluctuation is depicted, we see that the nearest to the wall point is far to the DNS curve for the weak and uniform case, but the remaining points fit to the desired results. As it is expected, an improvement in the solution is observed when higher order discretization is used. Same behaviour is observed for the wall-normal and span-wise velocity fluctuations, Figs. \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, where the $ 16^3 $ $ Q_3/Q_2 $ elements mesh with weak boundary conditions give even more accurate results than the strong boundary conditions in a stretched mesh.
 
 \section{Conclusions}
+\label{sec-C7_conclusions}
+In this chapter we have adressed the suitability of using SRK time integrations schemes for the LES of turbulent incompressible flows. A mixed FE formulation with convection stabilization through OSS method have been used for the spatial discretization of the Navier-Stokes equations, which, together with the SRK methods, conform a promising combination of spatial and temporal discretizations that are suitable for the simulation of turbulent incompressible flows. This particular combination have been denoted as \textit{Segregated Variational MultiScale}, SVMS, method.
+
+The application of the SVMS method to the simulation of turbulent incompressible flows has been tested with the TGV test, showing that same results are achieved when considering a SRK time integration scheme instead of the traditional Crank-Nicolson scheme. The convergence to the DNS solution has also been demonstrated when a refinement both in $ h $ and $ p $ is considered, giving more accurate results the $ p $-refinement.
+
+One of the advantages of using SRK schemes is the easy implementation of time adaptive techniques that allow the automatic time step adaptation to the numerical and physical requeriments. This issue has also been adressed for the TGV test, where we have seen that the method is able to adapt to the numerical restriction given by the CFL conditions and to the physical requeriments given by the change in the solution.
+
+Another advantadge of the SVMS methods is the possibility to use block-preconditioning techniques that lead to the approximation of the inverse of Laplacian-type and elasticity-type matrices, which at his turn are suitable to be preconditioned with BDDC algorithms. The weak scalability of this approach for the reslution of one time step of the TGV test have been demonstrades up to 8000 cores. Furthermore, a three-level MLBDDC algorithm could be used to achieve weak scalability in a higher number of processors.
+
+Moreover, aside from the TGV test, we have also checked the performance of SVMS method for the wall-bounded TCF test. In this case, we have also proposed the use of weak Dirichlet boundary conditions with the particularity of considering a wall-law based tangential traction and also a weak imposition of the wall-normal component.
