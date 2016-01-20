@@ -85,7 +85,7 @@ When weak Dirichlet boundary conditions are used, the funcitonal space of the te
 \begin{align}
 \label{eq-C7_bilinear_boundary}
 B_\Gamma(\u,(\u,p),(\v,q))&=B(\u,(\u,p),(\v,q))\\\nonumber
-&-((-p\cdot\mathbf{I}+2\nu\nabla^s\u)\cdot\n,\v)_\Gamma+\frac{1}{2}((\u\cdot\n)\u,\v)_\Gamma.
+&-((-p\mathbf{I}+2\nu\nabla^s\u)\cdot\n,\v)_\Gamma+\frac{1}{2}((\u\cdot\n)\u,\v)_\Gamma.
 \end{align}
 
 Assuming that $ \u\cdot\nabla=0 $, the term that is in charge of enforcing a given traction on the wall can be written as
@@ -101,7 +101,7 @@ In addition to this term, we also consider other boundary terms that arise when 
 \begin{align}
 \label{eq-C7_bilinear_weak}
 B_{weak}(\u,(\u,p),(\v,q))&=B_\Gamma(\u,(\u,p),(\v,q))\\\nonumber
-&+\left(\alpha_b(\u-\u_g),\v\right)_{\Gamma_D}-((q\cdot\mathbf{I}+2\nu\nabla^s\v)\cdot\n,(\u-\u_g))_{\Gamma_D}.
+&+\left(\alpha_b(\u-\u_g),\v\right)_{\Gamma_D}-((q\mathbf{I}+2\nu\nabla^s\v)\cdot\n,(\u-\u_g))_{\Gamma_D}.
 \end{align}
 Note that the sign of the pressure test function in the second term of \Eq{C7_bilinear_weak} is changed to keep the skewsymmetry of the velocity-pressure blocks. 
 
@@ -145,7 +145,7 @@ Replacing the penalty terms from \Eq{C7_traction_decomposition} into \Eq{C7_bili
 \label{eq-C7_bilinear_weak_by_components}
 B_{weak}(\u,(\u,p),(\v,q))&=B_\Gamma(\u,(\u,p),(\v,q))\\\nonumber
 &+\left(\alpha_{b,n}(\u-\u_g),(\n\otimes\n)\v\right)_{\Gamma_D}+\left(\alpha_{b,\tau}(\u-\u_g),(\boldI-\n\otimes\n)\v\right)_{\Gamma_D}\\\nonumber
-&-((\u-\u_g),(q\cdot\mathbf{I}+2\nu\nabla^s\v_h)\cdot\n)_{\Gamma_D}.
+&-((\u-\u_g),(q\mathbf{I}+2\nu\nabla^s\v)\cdot\n)_{\Gamma_D}.
 \end{align}
 %Here, we can use the same penalty constant based on the law of the wall for the tangential components $\alpha_{b,\tau}=\alpha_b$, and choose another definition for the normal component $\alpha_{b,n}$. In fact, we define the normal component parameter to be proportional to the original definition of the penalty term in \cite{bazilevs_weak_laminar}
 %\begin{equation}
@@ -273,8 +273,8 @@ In order to justify that the method that we use in this work acts as a LES model
 \begin{align}
 \label{eq-C7_NS_ene_balance_1}
 (\partial_t\u_h,\u_h)&+(2\nu\nabla^s\u_h,\nabla\u_h)+b(\u_h,\u_h,\u_h)\\\nonumber
-&-\left((-p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n,\u_h\right)_\Gamma\\\nonumber&+\left(\alpha_{b,n}(\u_h-\u_g),(\n\otimes\n)\u_h\right)_\Gamma+\left(\alpha_{b,\tau}(\u_h-\u_g),(\boldI-\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
-&-((\u_h-\u_g),(p_h\cdot\mathbf{I}+2\nu\nabla^s\u_h)\cdot\n)_\Gamma\\\nonumber
+&-\left((-p_h\boldI+2\nu\nabla^s\u_h)\cdot\n,\u_h\right)_\Gamma\\\nonumber&+\left(\alpha_{b,n}(\u_h-\u_g),(\n\otimes\n)\u_h\right)_\Gamma+\left(\alpha_{b,\tau}(\u_h-\u_g),(\boldI-\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
+&-((\u_h-\u_g),(p_h\mathbf{I}+2\nu\nabla^s\u_h)\cdot\n)_\Gamma\\\nonumber
 &+\left(\tau_m\Pi_h^\perp(\u_h\cdot\nabla\u_h),\u_h\cdot\nabla\u_h\right)_h+\left(\tau_c\nabla\cdot\u_h,\nabla\cdot\u_h\right)_h=\left\langle\f,\u_h\right\rangle.
 \end{align}
 Using the skewsymmetric convetive term defined in ..., the third term in \Eq{C7_NS_ene_balance_1} reads
@@ -286,10 +286,10 @@ Making use of the orthogonality of the projection $ \Pi_h^\perp $, splitting the
 \begin{align}
 \label{eq-C7_NS_ene_balance_2}
 &\frac{d}{dt}\left(\frac{1}{2}\left\|\u_h\right\|^2\right)+2\nu\left\|\nabla^s\u_h\right\|^2+\left\|\tau_m^{1/2}\Pi_h^\perp(\u_h\cdot\nabla\u_h)\right\|^2_h+\left\|\tau_c^{1/2}\nabla\cdot\u_h\right\|^2_h\\\nonumber
-&+\left(\alpha_{b,n}(\u_h-\u_g)-(-p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n,(\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
-&+\left(\alpha_{b,\tau}(\u_h-\u_g)-(-p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n,(\boldI-\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
+&+\left(\alpha_{b,n}(\u_h-\u_g)-(-p_h\boldI+2\nu\nabla^s\u_h)\cdot\n,(\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
+&+\left(\alpha_{b,\tau}(\u_h-\u_g)-(-p_h\boldI+2\nu\nabla^s\u_h)\cdot\n,(\boldI-\n\otimes\n)\u_h\right)_\Gamma\\\nonumber
 &+\left\|(\u_h\cdot\n)^{1/2}\u_h\right\|^2_\Gamma\\\nonumber
-&-\left((\u_h-\u_g),(p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n\right)_\Gamma\\\nonumber
+&-\left((\u_h-\u_g),(p_h\boldI+2\nu\nabla^s\u_h)\cdot\n\right)_\Gamma\\\nonumber
 &=\left\langle\f,\u_h\right\rangle.
 \end{align}
 Let us analyse in more detail the implication of each term of \Eq{C7_NS_ene_balance_2} into the energy evolution of the problem. To simplify the notation, we rewrite \Eq{C7_NS_ene_balance_2} as
@@ -299,7 +299,7 @@ Let us analyse in more detail the implication of each term of \Eq{C7_NS_ene_bala
 &-\int_{\Gamma}\varepsilon_{\a,h}\ d\Gamma-\int_{\Gamma}\varepsilon_{N,h}\ d\Gamma\\\nonumber
 &+\int_{\Omega}W_{f,h}\ d\Omega+\int_{\Gamma}W_{t,h}\ d\Gamma,
 \end{align}
-being $ k_h:=\frac{1}{2}\left\|\u_h\right\|^2 $ the kinetic energy of the resolved scales, $ \varepsilon_{mol,h}:=2\nu\left(\nabla^s\u_h\right)^2 $ the molecular dissipation introduced by the resolved scales, $ \widetilde{\varepsilon}_m:=\tau_m\left(\Pi_h^\perp(\u_h\cdot\nabla\u_h)\right)^2 $ the energy transfer through the momentum subscale, $ \widetilde{\varepsilon}_c:=\tau_c\left(\nabla\cdot\u_h\right)^2 $ the energy transfer through the continuity subscale, $ \varepsilon_{\a,h}:=(\u_h\cdot\n)\u_h\cdot\u_h $ the dissipation introduced by the convective term on the boundary, $ \varepsilon_{N,h}:=(\u_h-\u_g)\cdot(p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n $ the dissipation introduced by the Nitsche's terms, $ W_{f,h}:=\f\cdot\u_h $ the work introduced by the volumetric external forces, and $ W_{t,h}:=\left[\alpha_{b,n}(\u_h-\u_g)-(-p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n\right]\cdot\left[(\n\otimes\n)\u_h\right]+\left[\alpha_{b,\tau}(\u_h-\u_g)-(-p_h\cdot\boldI+2\nu\nabla^s\u_h)\cdot\n\right]\cdot\left[(\boldI-\n\otimes\n)\u_h\right] $ the work introduced by the boundary forces.
+being $ k_h:=\frac{1}{2}\left\|\u_h\right\|^2 $ the kinetic energy of the resolved scales, $ \varepsilon_{mol,h}:=2\nu\left(\nabla^s\u_h\right)^2 $ the molecular dissipation introduced by the resolved scales, $ \widetilde{\varepsilon}_m:=\tau_m\left(\Pi_h^\perp(\u_h\cdot\nabla\u_h)\right)^2 $ the energy transfer through the momentum subscale, $ \widetilde{\varepsilon}_c:=\tau_c\left(\nabla\cdot\u_h\right)^2 $ the energy transfer through the continuity subscale, $ \varepsilon_{\a,h}:=(\u_h\cdot\n)\u_h\cdot\u_h $ the dissipation introduced by the convective term on the boundary, $ \varepsilon_{N,h}:=(\u_h-\u_g)\cdot(p_h\boldI+2\nu\nabla^s\u_h)\cdot\n $ the dissipation introduced by the Nitsche's terms, $ W_{f,h}:=\f\cdot\u_h $ the work introduced by the volumetric external forces, and $ W_{t,h}:=\left[\alpha_{b,n}(\u_h-\u_g)-(-p_h\boldI+2\nu\nabla^s\u_h)\cdot\n\right]\cdot\left[(\n\otimes\n)\u_h\right]+\left[\alpha_{b,\tau}(\u_h-\u_g)-(-p_h\boldI+2\nu\nabla^s\u_h)\cdot\n\right]\cdot\left[(\boldI-\n\otimes\n)\u_h\right] $ the work introduced by the boundary forces.
 
 Going further, assuming that strong boundary conditions are applied, we have that $ \varepsilon_{\a,h}=\varepsilon_{N,h}=W_{t,h}=0 $. For a fully developed turbulent flow, if the resolved scales are fine enough to capture the inertial subrange, the total energy of the problem account for almost all the energy of the problem, $ k_h\approx k $. Furthermore, when external forces mainly acts on the large scales of the flow we have that $ W_{f,h}\approx W_f $. Hence, knowing that the energy dissipation rate at the continuous level is
 $$ \frac{dk}{dt}=-\int_{\Omega}\varepsilon_{mol}\ d\Omega+\int_{\Omega}W_{f}\ d\Omega, $$
@@ -798,7 +798,7 @@ The constant $C$ is chosen in a such way that the field without fluctuations wou
 
 To solve the problem we use two different meshes, composed by $ 16^3 $ $ Q_2/Q_1 $ and $ Q_3/Q_2 $ elements. As a weak imposition of the boundary conditions is considered, we use uniformly distributed elements along the wall-normal direction. The effect of considering uniform or stretched meshes in the wall-normal direction is assessed in \cite{bazilevs_weak_2007}, concluding that similar results are achieved when weak Dirichlet boundary conditions are used.
 
-%According to \cite{colomes_2016}, the algorithmic constants that appear in \Eq{C7_tau_m} and \Eq{C7_tau_c} are chosen as $ c_1=12.0 $, $ c_2=8.0 $ and $ c_c=32.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $.
+According to the results obtained in \Chap{TBT_OSS}, the algorithmic constants that appear in \Eq{C7_tau_m} and \Eq{C7_tau_c} are chosen as $ c_1=12.0 $ and $ c_2=8.0 $. The constant that appear in the weak boundary conditions formulation is set to $ C_b=32.0 $. We will analyse the effect of the constant $ c_c $ for the current problem setting as it plays an important role when using inf-sup stable elements.
 %
 \subsubsection{Effect of $ c_c $ in uniform meshes}
 In Section \ref{subsec-C5_turb_channel} we have analysed the effect of the constant $ c_c $ that appear in equation \Eq{C7_tau_c_alt} for the case in which we have strong imposition of the boundary conditions together with the use of stretched meshes that capture the boundary layer. In this section we aim to check the performance of the method when changing the $ c_c $ algorithmic parameter in uniform meshes and weak boundary conditions imposition. In this case, in order to avoid the influence of the weak imposition of the wall normal component, we restrict strongly the wall-normal velocity, e.g. $ \u\cdot\n=0 $ on $ \Gamma_D $.
@@ -807,6 +807,7 @@ In \Fig{} we show the energy evolution of the solution for different values of $
 
 
 \subsubsection{Influence of the wall-normal component}
+\label{subsubsec-C7_TCF_wall_normal}
 A significant difference on the approach followed for the weak enforcement of the Dirichlet boundary conditions considered in this work, with respect to the originaly proposed in \cite{bazilevs_weak_2007}, is the treatment of the normal component. In \cite{bazilevs_weak_2007} a no-penatration condition is considered, which means that the normal component of the velocity is imposed strongly, $ \u\cdot\n=0 $ on $ \Gamma_D $. We propose to keep the weak boundary imposition even in the wall-normal direction. The main advantadge of keeping the same approach for all components is revealed in curved boundaries. In that case, the different treatment of each component could lead to tedious code implementation.
 
 As stated in section \ref{subsec-C7_weak_bcs}, we define two differene penalty parameters. One for the tangential component, based on the law of the wall, and another one for the wall-normal component, which is proportional to the original penalty parameter proposed in \cite{bazilevs_weak_2007-1}, $ \alpha_{b,n}:=\beta\frac{C_b\nu}{h_b} $. As it is obvious, when $ \beta\rightarrow\infty $ the solution at the wall becomes closer to the one obtained imposing strongly the normal component, but the penalty term may disturb the proper solution. 
