@@ -7,12 +7,12 @@ Let us start with a review of the equations that govern the fluid flow. In this 
 From the Newton's second law, the momentum equation relates the fluid particle acceleration, $\frac{D\u}{Dt}$ to the external forces acting on such fluid particle. The external forces can be decomposed into the surface forces and the body forces, $\f$. The surface forces are described by the stress tensor $\boldsigma(\x,t)$ that is symmetric and, for constant-property Newtonian fluids, is defined by
 \begin{equation}
 \label{eq-stress_tensor_def}
-\boldsigma = -\breve{p}\boldI + 2\mu\varepsilon(\u), 
+\boldsigma = -\breve{p}\boldI + 2\mu\boldsymbol{\varepsilon}(\u), 
 \end{equation}
-where $\breve{p}$ is the pressure field, $\boldI$ the identity tensor, $\mu$ the viscosity and $\varepsilon(\u)$ the strain rate tensor, which is defined by the following expression
+where $\breve{p}$ is the pressure field, $\boldI$ the identity tensor, $\mu$ the viscosity and $\boldsymbol{\varepsilon}(\u)$ the strain rate tensor, which is defined by the following expression
 \begin{equation}
 \label{eq-strain_tensor_def}
-\varepsilon(\u)=\frac{1}{2}\left[\nabla\u+\left(\nabla\u\right)^T\right].
+\boldsymbol{\varepsilon}(\u)=\frac{1}{2}\left[\nabla\u+\left(\nabla\u\right)^T\right].
 \end{equation}
 
 The acceleration of the fluid particle is caused by the external forces according to the momentum equation
@@ -23,7 +23,7 @@ The acceleration of the fluid particle is caused by the external forces accordin
 being $\rho$ the density of the flow. Introducing the defintion of the stress tensor \Eq{stress_tensor_def} into \Eq{momentum_equation_def1}, and dividing by the density $\rho$, which we consider to be constant, we get an alternative expression of the momentum equation
 \begin{equation}
 \label{eq-momentum_equation_def2}
-\frac{D\u}{Dt}=-\nabla p+\nabla\cdot(2\nu\varepsilon(\u))+\f,
+\frac{D\u}{Dt}=-\nabla p+\nabla\cdot(2\nu\boldsymbol{\varepsilon}(\u))+\f,
 \end{equation}
 where we have used that $(1/\rho)\nabla\breve{p}=\nabla(\breve{p}/\rho)=\nabla p$, being $p:=\breve{p}/\rho$ the kinematic pressure, and $\nu=\mu/\rho$ the kinematic viscosity.
 
@@ -57,7 +57,7 @@ Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be suppl
 \label{eq-NS_strong_Dir}
 \u&=\u_g&\mbox{on $\Gamma_D\times(0,T]$,}\\
 \label{eq-NS_strong_Neu}
-(-p\cdot\mathbf{I}+\nu(\nabla\u+\nabla\u^T))\cdot\mathbf{n}&=\mathbf{t}_N&\mbox{on $\Gamma_N\times(0,T]$,}\\
+(-p\mathbf{I}+\nu(\nabla\u+\nabla\u^T))\cdot\mathbf{n}&=\mathbf{t}_N&\mbox{on $\Gamma_N\times(0,T]$,}\\
 \label{eq-NS_strong_Ini}
 \u(\x,0)&=\u_0(\x)&\mbox{in $\Omega\times\{0\}$,}
 \end{align}

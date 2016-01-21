@@ -803,8 +803,13 @@ According to the results obtained in \Chap{TBT_OSS}, the algorithmic constants t
 \subsubsection{Effect of $ c_c $ in uniform meshes}
 In Section \ref{subsec-C5_turb_channel} we have analysed the effect of the constant $ c_c $ that appear in equation \Eq{C7_tau_c_alt} for the case in which we have strong imposition of the boundary conditions together with the use of stretched meshes that capture the boundary layer. In this section we aim to check the performance of the method when changing the $ c_c $ algorithmic parameter in uniform meshes and weak boundary conditions imposition. In this case, in order to avoid the influence of the weak imposition of the wall normal component, we restrict strongly the wall-normal velocity, e.g. $ \u\cdot\n=0 $ on $ \Gamma_D $.
 
-In \Fig{} we show the energy evolution of the solution for different values of $ c_c $ from $ t=0.0 $ to $ t=100.0 $
-
+In \Fig{TCF_ene_ktc} we show the energy evolution of the solution for different values of $ c_c $ from $ t=0.0 $ to $ t=100.0 $, and computed on a $ 16^3 $ $ Q_2/Q_1 $ mesh. It can be shown that for uniform meshes, high values of $ c_c $ makes the solution more energy conserving, so the energy is not dissipating properly. The value $ c_c=1.0 $ is the first case that reaches the stadisticaly stable state, at $ t\sim280.0 $, with the lowest global energy. Then, in following sections we will use $ c_c=1.0 $.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Figures/Chapter7/TCF/ene_ktc}
+  \caption{Energy evolution for the TCF test for different values of $ c_c $.}
+  \label{fig-TCF_ene_ktc}
+\end{figure}
 
 \subsubsection{Influence of the wall-normal component}
 \label{subsubsec-C7_TCF_wall_normal}
@@ -814,7 +819,13 @@ As stated in section \ref{subsec-C7_weak_bcs}, we define two differene penalty p
 
 In order to determine the best value for $ \beta $, we solve the TCF test from $ t=0.0 $ to $ t=100.0 $, with different values $ \beta=\{1.0,10,100,1000\} $ in a $ 16^3 $ $ Q_2/Q_1 $ elements mesh. The problem is sovled using an IMEX SRK scheme with adaptive time adaptive technique.
 
-%In \Fig{cha_ene_dtime} we show the energy evolution and the time step size evolution for the different settings of $ \beta $. Looking at the energy evolution (\Fig{cha_ene}), we clearly see that the choice of $ \beta $ has a direct implication on the results. For low values of $ \beta $, the solution starts dissipating too much energy at the early stages of the simulation. When increasing $ \beta $, the results tend to the ones obtained considering a strong imposition of the normal component, denoted by \textit{strong} in \Fig{cha_ene}. However, as it can be seen in \Fig{cha_dtime}, an increase of $ \beta $ results in a higher restriction on the time step size, making the problem more expensive. Looking for a trade off between accuracy and computational cost, we choose $ \beta=64 $ for forthcoming computations.
+In \Fig{TCF_ene_beta} we show the energy evolution for the different settings of $ \beta $. We clearly see that the choice of $ \beta $ has not a large implication on the results unless too low values of $ beta $ are used. For too low values of $ \beta $, the case of $ \beta=1.0 $, the solution starts dissipating too much energy at the early stages of the simulation. When increasing $ \beta $, the results tend to the ones obtained considering a strong imposition of the normal component, denoted by \textit{strong}. However, as it has been said before, the proposed method on uniform meshes is too little dissipative, so we will choose the value of $ \beta=10.0 $, which is a little bit more dissipative than greater values.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{Figures/Chapter7/TCF/ene_beta}
+  \caption{Energy evolution for the TCF test for different values of $ \beta $.}
+  \label{fig-TCF_ene_beta}
+\end{figure}
 %\begin{figure}[h!]
 %  \centering
 %  \subfigure[Energy evolution]{\label{fig-cha_ene}\includegraphics[width=0.49\textwidth]{Figures/TCF/ene}}
@@ -848,19 +859,21 @@ Mesh type&Discretization&$ y^+ $\\
 \end{table}
 
 The TCF test is solved from $ t=0.0 $ to $ t=300.0 $, storing the statistics from the last $ 10.0 $ seconds, accumulating more than $ 1000 $ samples. The results are shown in \Fig{cha_vel}, where the mean stream-wise velocity is ploted (\Fig{cha_umean}) together with the velocity fluctuations in the stream-wise, wall-normal and span-wise directions (Figs. \ref{fig-cha_ufluc}, \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, respectively).
-%\begin{figure}[h!]
-%	\centering	
-%	\subfigure[Mean streamwise velocity]{\label{fig-cha_umean}\includegraphics[width=0.49\textwidth]{Figures/TCF/umean}}
-%	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_ufluc}\includegraphics[width=0.49\textwidth]{Figures/TCF/ufluc}}\\   
-%  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_vfluc}\includegraphics[width=0.49\textwidth]{Figures/TCF/vfluc}}
-%  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_wfluc}\includegraphics[width=0.49\textwidth]{Figures/TCF/wfluc}}
-%	\caption{Mean stream-wise velocity and rms velocity fluctuations for using different discretizations.}
-%	\label{fig-cha_vel}
-%\end{figure}
+\begin{figure}[h!]
+	\centering	
+	\subfigure[Mean streamwise velocity]{\label{fig-cha_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TCF/umean}}
+	\subfigure[Rms streamwise velocity fluctuation]{\label{fig-cha_ufluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TCF/ufluc}}\\   
+  	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig-cha_vfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TCF/vfluc}}
+  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig-cha_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter7/TCF/wfluc}}
+	\caption{Mean stream-wise velocity and rms velocity fluctuations for using different discretizations.}
+	\label{fig-cha_vel}
+\end{figure}
+
+It is seen in \Fig{cha_umean} that the mean stream-wise velocity profile is a little bit far from the DNS results and also from the results obtained with strong boundary conditions in a stretched mesh. This behaviour is related to the energy evolution that we have shown in \Fig{TCF_ene_ktc}, where it is seen that the method does not dissipate the energy as it should.
+
+%Particularly accurate are the results obtained with the $ 16^3 $ $ Q_3/Q_2 $ elements mesh, in which all points except the nearest to the wall are almost on top of the DNS curve, giving a better agreement to the DNS solution than the solution obtained with a stretched mesh.
 %
-%It is seen in \Fig{cha_umean} that the mean stream-wise velocity profile is in good agreement with the DNS results and also with the results obtained with strong boundary conditions in a stretched mesh. Particularly accurate are the results obtained with the $ 16^3 $ $ Q_3/Q_2 $ elements mesh, in which all points except the nearest to the wall are almost on top of the DNS curve, giving a better agreement to the DNS solution than the solution obtained with a stretched mesh.
-%
-%Similar results are observed for the velocity fluctuations. Looking at \Fig{cha_ufluc}, where the strem-wise velocity fluctuation is depicted, we see that the nearest to the wall point is far to the DNS curve for the weak and uniform case, but the remaining points fit to the desired results. As it is expected, an improvement in the solution is observed when higher order discretization is used. Same behaviour is observed for the wall-normal and span-wise velocity fluctuations, Figs. \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}, where the $ 16^3 $ $ Q_3/Q_2 $ elements mesh with weak boundary conditions give even more accurate results than the strong boundary conditions in a stretched mesh.
+Similar results are observed for the velocity fluctuations. Looking at \Fig{cha_ufluc}, where the strem-wise velocity fluctuation is depicted, we see that the nearest to the wall point is far to the DNS curve for the weak and uniform case, but we see that the remaining points fit to the desired results. As it is expected, an improvement in the solution is observed when higher order discretization is used. Same behaviour is observed for the wall-normal and span-wise velocity fluctuations, Figures \ref{fig-cha_vfluc} and \ref{fig-cha_wfluc}.
 
 \section{Conclusions}
 \label{sec-C7_conclusions}

@@ -101,7 +101,7 @@ In this test we study the flow around a NACA 0012 airfoil with a span-wise lengt
   \caption{NACA 0012 airfoil geometry.}
   \label{fig-NACA_geometry}
 \end{figure}
-The computational domain is defined with an inlet and outlet boundaries around 10 chord lengths away from the airfoil surface. At the inlet boundary a freestream velocity $U_\infty=10$ has been setted, while the outlet boundary has left free. 
+The computational domain is defined with an inlet and outlet boundaries around 10 chord lengths away from the airfoil surface. At the inlet boundary a freestream velocity $U_\infty=10$ has been setted, while the outlet boundary has left free. We consider an angle of attack of $ \alpha = 6 $ deg and a Reynolds number based on the chord length $ Re_c=2.3\cdot10^4 $, the same used in \cite{kojima,kim}.
 
 The simulation of this test is done on a structured C-type mesh around the airfoil profile. We consider two different 2-dimensional meshes of quadrilaterals, one much finner than the other, that are extruded along the span-wise direction. The goal of using two different meshes is to assess the performance of the weak imposition of the Dirichlet boundary conditions at the airfoil surface. We define the meshes in a such way that we have fine enough elements around the airfoil surface, the turbulent boundary layer and the wake region, while coarse elements are used in the far field region. In \Fig{NACA_meshes} we depict the two meshes used in this test.
 \begin{figure}[h!]
@@ -116,7 +116,7 @@ Focusing on the finner mesh, shown in \Fig{NACA_mesh_fine_close}, at the leading
 
 Regarding the coarse mesh, see \Fig{NACA_mesh_coarse} and \Fig{NACA_mesh_coarse_close}, the near wall-node is located at $y\sim 1.2\cdot10^{-3}c$ leading to a wall distans of the order of $ y^+\sim 2 $. This distance is constantly increased until it reaches a value of $y\sim6.4\cdot10^{-3}c$ at the trailing edge, much grater than the finner mesh. In this mesh, the maximum stream-wise elemental length is $\Delta x\sim0.032c$ that is equivalent to a normalized distance of $\Delta x^+\sim50$. We only compute the 3D test on the coarse mesh, with a constant span-wise elemental length equal to $ \Delta z\sim0.02c $.
 
-The spatial discretization is done using inf-sup stable elements $Q_2/Q_1$. These type of elements will allow us to use the SVMS approach descrived in the previous \Sec{C8_prob_statement}. Here we use the same algorithmic parameters, $ c_1=12.0 $ and $ c_2=8.0, $ as used in Section \ref. The problem is solved using the IMEX version of the SRK method introduced in \Chap{SRK} and also used in \Chap{SVMS} with a \textit{(3-3)} scheme, see Appendix \ref{appendix-SRK}, and an adaptive time stepping technique as exposed in Section \ref{subsec-C7_adaptive}.
+The spatial discretization is done using inf-sup stable elements $Q_2/Q_1$. These type of elements will allow us to use the SVMS approach descrived in the previous \Sec{C8_prob_statement}. Here we use the same algorithmic parameters, $ c_1=12.0 $ and $ c_2=8.0, $ as used in Section \ref. The problem is solved using the IMEX version of the SRK method introduced in \Chap{SRK} and also used in \Chap{SVMS} with a \textit{(3-3)} scheme, see Appendix \ref{appendix-SRK}, and an adaptive time stepping technique as exposed in Section \ref{subsec-C7_adaptive}. The time step size evolves tending to $ \delta t= 5.0\cdot10^{-4}c/U_\infty$ giving a maximum hyperbolic CFL around $ 0.3 $.
 
 \section{Simulation results and discussion}
 \label{sec-C8_results}
@@ -128,53 +128,109 @@ We first analyse the effect of the $ c_c $ constant that appear in equation \Eq{
 We depict the Drag and Lift coefficients in \Fig{NACA_c_c_drag_lift}, computed as stated in Section \ref{subsec-C6_cylinder}. It is seen in both the drag (\Fig{NACA_c_c_drag}) and lift (\Fig{NACA_c_c_lift}) coefficients that at some point, the computations for $ c_c<32.0 $ blows up.
 \begin{figure}[h!]
   \centering
-  \subfigure[Drag coefficient.]{\label{fig-NACA_c_c_drag}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/drag}}\\
-  \subfigure[Lift coefficient.]{\label{fig-NACA_c_c_lift}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/lift}}
+  \subfigure[Drag coefficient.]{\label{fig-NACA_c_c_drag}\includegraphics[width=0.6\textwidth]{Figures/Chapter8/strong/drag}}\\
+  \subfigure[Lift coefficient.]{\label{fig-NACA_c_c_lift}\includegraphics[width=0.6\textwidth]{Figures/Chapter8/strong/lift}}
   \caption{Drag and Lift coefficients for the 2D computation for different $ c_c $ values.}
   \label{fig-NACA_c_c_drag_lift}
 \end{figure}
 Let us now focus on the evolution of the velocity divergence norm, which is shown in \Fig{NACA_c_c_divel} scaled by the kinetic energy of the problem. It is seen on this figure that, for $ c_c<32.0 $, the velocity divergence norm is increased with a constant rate until it reaches an unstable point from wich it explodes. This behavior does not occur for $ c_c=32.0 $ until $ t=1.0 $. We also see that the rate of increase of the velocity divergence tends to the one followed by the $ c_c=32.0 $ case. This constant increase shown in \Fig{NACA_c_c_divel} is normal and may be caused by the flow development from a laminar initial solution to a fully developed turbulent flow.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/divel}
+  \includegraphics[width=0.6\textwidth]{Figures/Chapter8/strong/divel}
   \caption{$\|\nabla\cdot\u\|/K$ for the 2D computation for different $ c_c $ values.}
   \label{fig-NACA_c_c_divel}
 \end{figure}
-In the forthcomming computations of this test we will use $ c_c=32.0/ $.
+In the forthcomming computations of this test we will use $ c_c=32.0 $.
 
 \subsection{Effect of $ \beta $ in a 2D mesh with weak BCs}
-Once analysed the effect of the constant $ c_c $ on the solution, we proceed to check the effect of the $ \beta $ constant that appear on the definition of the weak imposition of the wall-normal component on the Dirichlet boundary. In this case we select four different values, $ \beta={10,100,1000} $ and we solve the problem on the coarse mesh from $ t=0.0 $ to $ t=0.6 $.
+Once analysed the effect of the constant $ c_c $ on the solution, we proceed to check the effect of the $ \beta $ constant that appear on the definition of the weak imposition of the wall-normal component on the Dirichlet boundary. In this case we select four different values, $ \beta={10,100,1000} $ and we solve the problem on the coarse mesh from $ t=0.0 $ to $ t=0.5 $.
 
-In this case, as it is seen in \Fig{NACA_b_drag_lift}, any difference can be distinguished during the laminar transition to turbulent flow for the different values of $ \beta $. Furthermore, if we compare against the solution obtained with strong imposition of the boundary conditions, we see that the results are very similar for the inital evolution of the solution.
+In this case, as it is seen in \Fig{NACA_b_drag_lift}, any difference can be distinguished during the laminar transition to turbulent flow for the different values of $ \beta $. Furthermore, if we compare against the solution obtained with strong imposition of the boundary conditions using the fine and the coarse mesh, we see that the results are very similar for the inital evolution of the solution oth the fine mesh. 
 \begin{figure}[h!]
   \centering
-  \subfigure[Drag coefficient.]{\label{fig-NACA_b_drag}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/weak/drag}}\\
-  \subfigure[Lift coefficient.]{\label{fig-NACA_b_lift}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/weak/lift}}
-  \caption{Drag and Lift coefficients for the 2D computation for different $ c_c $ values.}
+  \subfigure[Drag coefficient.]{\label{fig-NACA_b_drag}\includegraphics[width=0.6\textwidth]{Figures/Chapter8/weak/drag}}\\
+  \subfigure[Lift coefficient.]{\label{fig-NACA_b_lift}\includegraphics[width=0.6\textwidth]{Figures/Chapter8/weak/lift}}
+  \caption{Drag and Lift coefficients for the 2D computation for different $ \beta $ values.}
   \label{fig-NACA_b_drag_lift}
 \end{figure}
 As have been shown in Section \ref{subsubsec-C7_TCF_wall_normal}, lower values of $ \beta $ result in lower computational time, so we will favour $ \beta=10 $ for the following computations.
 
 \subsection{Strong vs weak BCs}
+In order to see the difference on the computed solution when using strong or weak Dirichlet boundary conditions, we show the mean flow for both, fine and coarse meshes, respectively, averaging the results obtained between $ t=0.8 $ and $ t=1.0 $.
+
+In \Fig{NACA_mean_velo} we depict the mean velocity magnitude for the case in which we impose strongly the boundary conditions in a fine mesh (\Fig{NACA_mean_velo_fine}) and the case in which we impose weakly the boundary conditions in a coarse mesh (\Fig{NACA_mean_velo_coarse}). We see the same velocity distribution in both cases, with very tiny changes between them. In order to better see the difference between both solutions, in \Fig{NACA_mean_velo_diff} we depict the mean velocity isolines for the two cases. We see that the solution is very similar for the two computations, conserving the same structures 
+\begin{figure}[h!]
+  \centering
+  \subfigure[Fine mesh, strong BCs.]{\label{fig-NACA_mean_velo_fine}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/velo_mean_fine}}\\
+  \subfigure[Coarse mesh, weak BCs.]{\label{fig-NACA_mean_velo_coarse}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/velo_mean_coarse}}\\
+  \subfigure[Velocity magnitude isolines.]{\label{fig-NACA_mean_velo_diff}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/diff_velo_mean}}
+  \caption{Mean velocity magnitude for the fine and coarse meshes.}
+  \label{fig-NACA_mean_velo}
+\end{figure}
+Focusing on the velocity fluctuations, in \Fig{NACA_dev_velo} we depict the standard deviation of the velocity magnitude computed from $ t=0.8 $ to $ t=1.0 $. In this case, we also see very litle differences, noting that the fluctuating regions are located at the same positions in both cases.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Fine mesh, strong BCs.]{\label{fig-NACA_dev_velo_fine}\includegraphics[width=0.49\textwidth]{Figures/Chapter8/strong/velo_dev_fine}}
+  \subfigure[Coarse mesh, weak BCs.]{\label{fig-NACA_dev_velo_coarse}\includegraphics[width=0.49\textwidth]{Figures/Chapter8/strong/velo_dev_coarse}}
+  \caption{Standard deviation of the velocity magnitude for the fine and coarse meshes.}
+  \label{fig-NACA_dev_velo}
+\end{figure}
+
+Looking now at the mean pressure plots depicted in \Fig{NACA_mean_press} we can observe the same similarities between the two computations. In \Fig{NACA_mean_press_fine} the fine mesh with strong BCs solution is ploted, while the solution in the coarse mesh and weak BCs is shown in \Fig{NACA_mean_press_coarse}. The little differences between the two results can be distinguished in \Fig{NACA_mean_press_diff}, where the pressure isolines are depicted.
+\begin{figure}[h!]
+  \centering
+  \subfigure[Fine mesh, strong BCs.]{\label{fig-NACA_mean_press_fine}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/press_mean_fine}}\\
+  \subfigure[Coarse mesh, weak BCs.]{\label{fig-NACA_mean_press_coarse}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/press_mean_coarse}}\\
+  \subfigure[Velocity magnitude isolines.]{\label{fig-NACA_mean_press_diff}\includegraphics[width=0.7\textwidth]{Figures/Chapter8/strong/diff_press_mean}}
+  \caption{Mean pressure for the fine and coarse meshes.}
+  \label{fig-NACA_mean_press}
+\end{figure}
+
 \subsection{Instantaneous flowfields for the 3D case}
-\subsubsection{Velocity}
-\subsubsection{Pressure}
-\subsubsection{Vorticity}
-\subsection{Aerodynamic coefficients}
-\subsubsection{Pressure Coefficient}
-\subsubsection{Drag coefficient}
-\subsubsection{Lift coefficient}
+Once analysed the efect of using weak Dirichlet boundary conditions on a two-dimensional mesh, we check the performance for the 3D case. Here we use as an initial solution the extruded solution of the 2D case at $ t=1.0 $. Then, we let the flow evolve until it reach a 3D description, which occurs after about one time unit.
 
-The results obtained with the previous problem setting are compared against experimental data from Wadcock \cite{wadcock_investigation_1987} and Hastings et al. \cite{Hastings}. In order to have a better idea of the performance of our VMS approach we also compare against other LES models that have been used to solve the same problem. These are the Katenbach  et al. work \cite{kaltenbach_large-eddy_1995}, the data from Jansen \cite{jansen_stabilized_1999} and three different LES models proposed by Schmidt et al. in \cite{schmidt_assessment_????}.
+In this section we will analyse the instantaneous flow fields, trying to identify the turbulent structures that are generated along the wing.
 
-The pressure coefficient $C_p$ is shown in Fig. 
-%\begin{figure}[h!]
-%  \centering
-%  \subfigure[$C_p$ compared with experimental data]{\label{fig-NACA_cp_glob}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp}}
-%  \subfigure[$C_p$ close up view compared with experimental data and other LES models]{\label{fig-NACA_cp_close}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp_close}}
-%  \caption{Pressure coefficient $C_p$.}
-%  \label{fig-NACA_cp}
-%\end{figure}
+In \Fig{NACA_3D_velo} we can see the velocity isosurfaces for $ \|\u\|=25.0 $ colored by the pressure value. In this figure we can clearly see the flow transition from a laminar regime at the leading edge to a turbulent flow, starting the 3D flow development near the maximum wing thikness point.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Figures/Chapter8/weak/velo_3d}
+  \caption{Velocity isosurface for $ \|\u\|=25.0  $.}
+  \label{fig-NACA_3D_velo}
+\end{figure}
+
+To study the structures that arise in the turbulent flow we use the $Q$-criterion defined as $ Q=\frac{1}{2}(|\omega|^2-|\boldsymbol{\varepsilon}(\u)|^2) $, being $ \omega $ the vorticity and $ \boldsymbol{\varepsilon} $ the strain rate tensor. The isosurface of $ Q=5\cdot 10^5$ is depicted in \Fig{NACA_3D_Q}, where we can see the generation of 2D coherent vortices that break up near the maximum thickness point, turning into hairpin vortices. Similar results are obtained in \cite{Kojima}, where a much finner mesh is used to solve the same problem.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Figures/Chapter8/weak/Q_criterion_3d}
+  \caption{Q-criterion isosurface for $ Q=5\cdot10^5 $ and colored by velocity magnitude.}
+  \label{fig-NACA_3D_Q}
+\end{figure}
+In \Fig{NACA_3D_Q_top} we present a top view of the $ Q=5\cdot 10^5 $ isosurface. There, we can see the position of the first 2D coherent vortex, located at $ x/c=0.37 $. This result is similar to the obtained in \cite{Kojima}, where the first 2D vortex is located at $ x/c=0.41 $.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth,clip=true,trim=2cm 9cm 2cm 6cm]{Figures/Chapter8/weak/Q_criterion_rule}
+  \caption{Top view of Q-criterion isosurface for $ Q=5\cdot10^5 $.}
+  \label{fig-NACA_3D_Q_top}
+\end{figure}
+
+%\subsection{Aerodynamic coefficients}
+%\subsubsection{Pressure Coefficient}
+%\subsubsection{Drag coefficient}
+%\subsubsection{Lift coefficient}
+%
+%
+%
+%The results obtained with the previous problem setting are compared against experimental data from Wadcock \cite{wadcock_investigation_1987} and Hastings et al. \cite{Hastings}. In order to have a better idea of the performance of our VMS approach we also compare against other LES models that have been used to solve the same problem. These are the Katenbach  et al. work \cite{kaltenbach_large-eddy_1995}, the data from Jansen \cite{jansen_stabilized_1999} and three different LES models proposed by Schmidt et al. in \cite{schmidt_assessment_????}.
+%
+%The pressure coefficient $C_p$ is shown in Fig. 
+%%\begin{figure}[h!]
+%%  \centering
+%%  \subfigure[$C_p$ compared with experimental data]{\label{fig-NACA_cp_glob}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp}}
+%%  \subfigure[$C_p$ close up view compared with experimental data and other LES models]{\label{fig-NACA_cp_close}\includegraphics[width=0.49\textwidth]{Figures/NACA/cp_close}}
+%%  \caption{Pressure coefficient $C_p$.}
+%%  \label{fig-NACA_cp}
+%%\end{figure}
 
 
 %\begin{figure}[h!]
@@ -186,7 +242,13 @@ The pressure coefficient $C_p$ is shown in Fig.
 %  \label{fig-NACA_cp}
 %\end{figure}
 
-
-
 \section{Conclusions}
 \label{sec-C8_conclusions}
+In this chapter we have tested the behavior of the SVMS method with weak boundary conditions based on a wall-law model for the simulation of turbulent flows around an airfoil. 
+
+Considering weak boundary conditions when coarse meshes are used have been demonstrated to be necesary when the mesh size at the wall does not allow to capture properly the boundary layer. Furthermore, the weak imposition of the wall-normal component have been succesfully used in this test, avoiding the complex techniques that are required for the strong imposition of only the normal component on curvilinean geometries.
+
+The effect of the algorithmic constatns $ c_c $ and $ \beta $ have been assessed for this test, concluding that, as noted in previous turbulent tests, the $ c_c $ constant has a clear effect on the solution. This phenomena have been studied in previous chapters, where the dependency of the solution on the $ c_c $ value have been related to the fact that the grad-div stabilization term is highly important when using inf-sup stable elements.
+
+
+
