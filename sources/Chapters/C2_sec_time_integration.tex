@@ -1,6 +1,6 @@
 In this section, our aim is to state some basic concepts about the time discretization. Once we have defined the semi-discrete problem, as it has been formulated in Section \ref{subsec-variational_semidiscrete}, we end up with an Ordinary Differential Equation (ODE), which has to be integrated in order to get the solution of the problem.
 
-In the current work we only will consider the called \textit{direct integration} methods. The \textit{direct integration} of the transient equations rely on a numerical step-by-step procedure, where the word \textit{direct} means that no transformation of the ODE problem is carried out a priori. Looking at the litarature, many techniques can be found based in this kind of procedure. For instance in \cite{bathe_finite_2006} the description of the following methods can be found: the central difference method, the Houbold method, the Newmark method or the $ \theta $-method. An exhaustive analysis of such methods can be found in \cite{belytschko_computational_1983}.
+In the current work we only will consider the called \textit{direct integration} methods. The \textit{direct integration} of the transient equations rely on a numerical step-by-step procedure, where the word \textit{direct} means that no transformation of the ODE problem is carried out a priory. Looking at the literature, many techniques can be found based in this kind of procedure. For instance in \cite{bathe_finite_2006} the description of the following methods can be found: the central difference method, the Houbold method, the Newmark method or the $ \theta $-method. An exhaustive analysis of such methods can be found in \cite{belytschko_computational_1983}.
 
 Other commonly used time integration methods in the computational fluid dynamics field are the Backward Differentiation Formulas (BDF), the generalized-$ \alpha $ method or the Runge-Kutta time integration schemes, see \cite{brayton_new_1972, jansen_generalized-alpha_2000, dettmer_analysis_2003,hairer_solving_2008} for instance.
 
@@ -79,9 +79,9 @@ Also related with the time integration procedures, there appears the idea of usi
 
 
 \subsection{Stability and order of convergence}
-Some definitions of stability and order of convergence need to be introduced since it will be used to charachterize some of the methods used in forthcoming chapters. Deeper explanations on stability and order conditions can be found in \cite{hairer_solving_2008,hairer_solving_1993}.
+Some definitions of stability and order of convergence need to be introduced since it will be used to characterize some of the methods used in forthcoming chapters. Deeper explanations on stability and order conditions can be found in \cite{hairer_solving_2008,hairer_solving_1993}.
 
-When analysing stability of ODEs, the solution of the Dahlquist's equation $ u'=\lambda u $ is studied. After applying the implicit Euler method it reads
+When analyzing stability of ODEs, the solution of the Dahlquist's equation $ u'=\lambda u $ is studied. After applying the implicit Euler method it reads
 \begin{equation}
 \label{eq-C2_Dahlquist}
 u_1=u_0+h\lambda u_1,
@@ -98,7 +98,7 @@ Under these definitions we say that a method is \textit{A-stable} if
 \label{eq-C2_A_stable}
 z\in\mathbb{C}^-,\quad\mbox{with $\quad\mathbb{C^-}:=\{z\in\mathbb{C}|\ Re\ z\le0\} $}.
 \end{equation}
-It can be shown that a $ \theta $-method is A-stable for all $ \theta\ge\dfrac{1}{2} $, see \cite{lambert_numerical_1991}. Furthermore, we say that a method is \textit{L-stable} when it is A-stable and additionaly it satisfies
+It can be shown that a $ \theta $-method is A-stable for all $ \theta\ge\dfrac{1}{2} $, see \cite{lambert_numerical_1991}. Furthermore, we say that a method is \textit{L-stable} when it is A-stable and additionally it satisfies
 \begin{equation}
 \label{eq-C2_L_stable}
 \lim_{z\rightarrow\infty}R(z)=0.

@@ -101,9 +101,9 @@ The Galerkin FE approximation of (\ref{eq-C4_NS_weak}) consists in finding $[\u_
 
 \subsection{VMS framework}
 \label{subsec-C4_VMS_framework}
-As it was pointed out in \Sec{C2_vms}, the Galerkin FE formulation \Eq{C4_NS_galerkin} suffers from numerical instabilities for high mesh Reynolds number problems, i.e., convection dominated flows. The discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure is also a problem that arise in the Galerkin FE formulation. The VMS method described in \Sec{C2_vms} overcomes these two inestabilities.
+As it was pointed out in \Sec{C2_vms}, the Galerkin FE formulation \Eq{C4_NS_galerkin} suffers from numerical instabilities for high mesh Reynolds number problems, i.e., convection dominated flows. The discrete \textit{inf-sup} condition that must be satisfied by the pair $\mathcal{V}_{0,h} \times\mathcal{Q}_{0,h}$ in order to have a well-posed problem with bounded pressure is also a problem that arise in the Galerkin FE formulation. The VMS method described in \Sec{C2_vms} overcomes these two instabilities.
 
-After the space splitting into the FE space and the supscale space $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. The VMS semi-discrete problem reads: find $[\u_h,p_h]\in {L}^2(0,T;\mathcal{V}_{0,h})\times {\cal D}'(0,T;\mathcal{Q}_{0,h})$ such that
+After the space splitting into the FE space and the subscale space $\mathcal{V}_0=\mathcal{V}_{0,h}\oplus\widetilde{\mathcal{V}}_0$ and $\mathcal{Q}=\mathcal{Q}_{0,h}\oplus\widetilde{\mathcal{Q}}_0$, where $\widetilde{\mathcal{V}}_0$ and $\widetilde{\mathcal{Q}}_0$ are infinite-dimensional spaces that complete the FE spaces in $\mathcal{V}_0$ and $\mathcal{Q}_0$, respectively. The VMS semi-discrete problem reads: find $[\u_h,p_h]\in {L}^2(0,T;\mathcal{V}_{0,h})\times {\cal D}'(0,T;\mathcal{Q}_{0,h})$ such that
 \begin{equation}
 \label{eq-C4_NS_discrete}
 (\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)+B(\a;[\u_h,p_h],[\v_h,q_h])+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>.
@@ -316,6 +316,8 @@ which is exactly (\ref{eq-C4_total_balance_ASGS2}) except for the projection of 
 \label{sec-C4_discrete}
 Applying a time integration algorithm to (\ref{eq-C4_NS_discrete})-(\ref{eq-C4_velo_sgs})-(\ref{eq-C4_press_sgs}) we get the fully discrete problem. The final implementation of the discrete problem is written here considering a Picard linearization of the convective term and the Backward Euler (BE) scheme for the time discretization. It can be straightforwardly modified to consider the Crank-Nicolson time integration scheme; this last scheme is the one used in the numerical examples of Sections \ref{subsec-C4_DHIT},  \ref{subsec-C4_TGV} and \ref{subsec-C4_TCF}.
 
+Some tips and comments on the implementation of the methods described hereinafter are given in Appendix \ref{appendix-VMS_implementation}.
+
 \subsection{Algebraic Subgrid Scales (ASGS)}
 
 Taking the nonlinear advection velocity definition \Eq{C2_a_nl} and considering the time derivative in the fine scales, we have the Dynamic and Nonlinear ASGS method, hereinafter Dyn-Nl-ASGS. 
@@ -377,7 +379,7 @@ We can readily define the rest of possible combinations of time and nonlinear tr
 
 \subsection{Orthogonal Subscales (OSS)}
 
-Let us state the Dynamic and Nonlinear OSS (Dyn-Nl-OSS) method, which means to take into account the nonlinearity of the advection velocity (\ref{eq-C4_a_nl}) and the time derivative of the subscales. At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ by solving
+Let us state the Dynamic and Nonlinear OSS (Dyn-Nl-OSS) method, which means to take into account the nonlinearity of the advection velocity \Eq{C2_a_nl} and the time derivative of the subscales. At time step $n$ and nonlinear iteration $i$, given $\u_h^{n,i-1}$, $\u_h^{n-1}$, $\tilde{\u}^{n,i-1}$ and $\tilde{\u}^{n-1}$ we compute $\mathbf{u}_h^{n,i}$ and $ p_h^{n,i} $ by solving
 %problem using linear FEs, a BE discretization in time and the Picard method for the nonlinear term, at time step $t_{n+1}$ and nonlinear iteration $i$, is the following
 % \begin{align}
 % \label{eq-C4_Dyn-Nl-OSS}
@@ -488,7 +490,7 @@ allows one to decrease the total amount of time steps needed for the computation
 %It can be seen that the reduction factor is bigger than the amplification factor, which allows us to extend the interval of time between reductions, therefore, we reduce the number of steps in which we have to calculate the solution more than once.
 At each time step the nonlinear system is solved as described in Section \ref{sec-C4_discrete}. 
 
-It has been seen that for a coarse mesh like the $32^3$ linear hexaedral elements mesh that we are using for this test, the total amount of energy at the initial time step (computed after the Inverse Fast Fourier Transform of the velocity field is far from the theoretical starting point $E_0=1.5$. This error is due to the projection from the Fourier space onto the FE space, which obviously depends on the mesh size. As we refine the mesh, the initial value of total energy tends to $1.5$, as can be seen in Figure \ref{fig:initial_ene}.
+It has been seen that for a coarse mesh like the $32^3$ linear hexahedral elements mesh that we are using for this test, the total amount of energy at the initial time step (computed after the Inverse Fast Fourier Transform of the velocity field is far from the theoretical starting point $E_0=1.5$. This error is due to the projection from the Fourier space onto the FE space, which obviously depends on the mesh size. As we refine the mesh, the initial value of total energy tends to $1.5$, as can be seen in Figure \ref{fig:initial_ene}.
 \begin{figure}[h!]
 	\centering	
 	\includegraphics[width=0.5\textwidth]{Figures/Chapter4/DHIT/Initial_ene}
@@ -496,13 +498,13 @@ It has been seen that for a coarse mesh like the $32^3$ linear hexaedral element
 	\label{fig:initial_ene}
 \end{figure}
 
-Knowing this behavior of the initial condition, it is difficult to draw conclusions comparing the simulations with a DNS like AGARD database, \cite{_selection_????}. In order to avoid this problem, we scale the inital condition in a such way that its initial energy achieve the desired value. This has been done multiplying the initial condition by a factor defined as
+Knowing this behavior of the initial condition, it is difficult to draw conclusions comparing the simulations with a DNS like AGARD database, \cite{_selection_????}. In order to avoid this problem, we scale the initial condition in a such way that its initial energy achieve the desired value. This has been done multiplying the initial condition by a factor defined as
 $$\u_{0_{new}}=\sqrt{\frac{E_{0_{new}}}{E_{0_{old}}}}\u_{0_{old}},\quad\quad\mbox{where $E_{0_{new}}=1.5$}.$$
 
 \subsubsection{Vorticity}
-As an introductory result, we show the vorticity contour at two different time steps, $t=5.0\cdot10^{-3}$ and $t=2.0$. These results are obtained considering the nonlinear definition of $\a$ and the dynamic subscales tracking for the OSS method with a $64^3$ hexaedral trilinear elements mesh. 
+As an introductory result, we show the vorticity contour at two different time steps, $t=5.0\cdot10^{-3}$ and $t=2.0$. These results are obtained considering the nonlinear definition of $\a$ and the dynamic subscales tracking for the OSS method with a $64^3$ hexahedral trilinear elements mesh. 
 
-In Figure \ref{fig:vorti_contour} we see that at the earlier time step the structures are much bigger than at $ t=2.0 $. As we will see in forthcomming sections, when the energy of the problem is dissipated, the energy containing eddies become smaller, reducing its vorticity. This mechanism induces a flattening of the energy spectra, as we will discuss later.
+In Figure \ref{fig:vorti_contour} we see that at the earlier time step the structures are much bigger than at $ t=2.0 $. As we will see in forthcoming sections, when the energy of the problem is dissipated, the energy containing eddies become smaller, reducing its vorticity. This mechanism induces a flattening of the energy spectra, as we will discuss later.
 \begin{figure}[h!]
   \centering
   \subfigure[$t=5.0\cdot10^{-3}$]{\label{fig:vorti_contour_1}\includegraphics[clip=true, trim=18cm 2.25cm 18cm 2.25cm, width=0.49\textwidth]{Figures/Chapter4/DHIT/vorti_contour_1}}    
@@ -763,7 +765,7 @@ We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The pressu
 
 We solve the TGV problem using a Reynolds number ${\rm Re}=1600$. 
 The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
-We use the same VMS methods as for the DHIT problem defined in Section \ref{sec-C4_DHIT} to solve this test, namely the ASGS and OSS methods, both with linear and nonlinear definitions of the convective term and static or dynamic tracking in time of the subscales, as it is summarized in Table \ref{table:DHIT_cases}.
+We use the same VMS methods as for the DHIT problem defined in Section \ref{subsec-C4_DHIT} to solve this test, namely the ASGS and OSS methods, both with linear and nonlinear definitions of the convective term and static or dynamic tracking in time of the subscales, as it is summarized in Table \ref{table:DHIT_cases}.
 The stabilization parameters for each method are the same as those chosen for the DHIT test, see Subsection~\ref{subsubsec-C4_DHIT_setting}, and discussed in Section \ref{subsec-C4_effect_const}.
 
 Initially we consider a mesh of $32^3$ hexahedral linear elements $(Q_1)$, but we will redefine this discretization to analyze the method performance when we refine the mesh, decreasing the element size $h$ or increasing the degree of the interpolation polynomial $p$. It implies to solve the problem on meshes with $64^3$ and $128^3$ linear $(Q_1)$, quadratic $(Q_2)$ or cubic $(Q_3)$ hexahedral elements. We also use a $20^3(Q_3)$ discretization to compare against other authors results.
@@ -856,7 +858,7 @@ We plot the total dissipation in Fig. \ref{fig:enediss_dynsmag_total}. We can se
 \label{subsec-C4_TCF}
 After studying the performance of VMS in the LES of homogeneous flows we turn our attention to wall-bounded turbulent flow and present results of fully developed turbulent flow in a channel.
 
-This test consists of a fluid that flows between two parallel walls driven by an imposed pressure gradient which is defined by the Reynolds number based on the wall shear velocity, ${\rm Re}_\tau$. In the important amount of literature devoted to this problem, the usual Reynolds numbers are: ${\rm Re}_\tau=590$, ${\rm Re}_\tau=395$  and ${\rm Re}_\tau=180$ (see \cite{bazilevs_variational_2007, Calderer2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}). We will restrict our attention to ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$. See Section \ref{sec-C3_TCF} for an extended description of this test.
+This test consists of a fluid that flows between two parallel walls driven by an imposed pressure gradient which is defined by the Reynolds number based on the wall shear velocity, ${\rm Re}_\tau$. In the important amount of literature devoted to this problem, the usual Reynolds numbers are: ${\rm Re}_\tau=590$, ${\rm Re}_\tau=395$  and ${\rm Re}_\tau=180$ (see \cite{bazilevs_variational_2007, Calderer2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}). We will restrict our attention to ${\rm Re}_\tau=180$ and ${\rm Re}_\tau=395$. See Section \ref{subsubsec-C3_TCF} for an extended description of this test.
 
 \subsubsection{Setting}
 \label{subsubsec-C4_TCF_setting}
@@ -896,16 +898,16 @@ Our purpose is to check the VMS methods defined in Subsection \ref{subsec-C4_VMS
 %However, in the definition of the stabilization parameters (\ref{eq-C4_tau_m})-(\ref{eq-C4_tau_c}), the characteristic length, $h$, is choosen to be the minumum element length.
 
 \subsubsection{Velocity profiles}
-We first present the mean streamwise velocity profile scaled by the wall shear stress velocity, $\langle u\rangle^+=\frac{\langle u\rangle}{u_\tau}$ for all cases defined in Table \ref{table:DHIT_cases}, where $\langle\cdot\rangle$  denotes the mean value in streamwise and spanwise direction and in time, as a function of $y^+ = \frac{y u_\tau}{\nu}$.
+We first present the mean stream-wise velocity profile scaled by the wall shear stress velocity, $\langle u\rangle^+=\frac{\langle u\rangle}{u_\tau}$ for all cases defined in Table \ref{table:DHIT_cases}, where $\langle\cdot\rangle$  denotes the mean value in stream-wise and span-wise direction and in time, as a function of $y^+ = \frac{y u_\tau}{\nu}$.
 
-In Fig. \ref{fig:Channel_umean_32} we show the mean streamwise velocity normalized by the wall-shear velocity, $u_\tau$, obtained for all cases considered in Table \ref{table:DHIT_cases} in a $32^3$ linear elements mesh for the ${\rm Re}_\tau=395$ case. We compare the results with the DNS one obtained in  \cite{moser_direct_1999}. We can observe in Fig. \ref{fig:Channel_umean_32} that all methods perform quite similar and are very close to the DNS result. Fig. \ref{fig:Channel_re395_32} also depicts the streamwise, spanwise and wall-normal root mean square (rms) velocity fluctuation components normalized by the wall-shear stress velocity. 
+In Fig. \ref{fig:Channel_umean_32} we show the mean stream-wise velocity normalized by the wall-shear velocity, $u_\tau$, obtained for all cases considered in Table \ref{table:DHIT_cases} in a $32^3$ linear elements mesh for the ${\rm Re}_\tau=395$ case. We compare the results with the DNS one obtained in  \cite{moser_direct_1999}. We can observe in Fig. \ref{fig:Channel_umean_32} that all methods perform quite similar and are very close to the DNS result. Fig. \ref{fig:Channel_re395_32} also depicts the stream-wise, span-wise and wall-normal root mean square (rms) velocity fluctuation components normalized by the wall-shear stress velocity. 
 \begin{figure}[h!]
 	\centering	
-	\subfigure[Mean streamwise velocity]{\label{fig:Channel_umean_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean}}
-	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:Channel_ufluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/ufluc}}\\   
+	\subfigure[Mean stream-wise velocity]{\label{fig:Channel_umean_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean}}
+	\subfigure[Rms stream-wise velocity fluctuation]{\label{fig:Channel_ufluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/ufluc}}\\   
   	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:Channel_vfluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/vfluc}}
-  	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:Channel_wfluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc}}
-	\caption{Mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=395$ case using a $32^3$ $Q$1 mesh.}
+  	\subfigure[Rms span-wise velocity fluctuation]{\label{fig:Channel_wfluc_32}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc}}
+	\caption{Mean stream-wise velocity and rms velocity fluctuations for ${\rm Re}_\tau=395$ case using a $32^3$ $Q$1 mesh.}
 	\label{fig:Channel_re395_32}
 \end{figure}
 
@@ -926,7 +928,7 @@ R_{xy}=-\left\langle a_x'a_y'\right\rangle+\nu\frac{\partial\left\langle u_h\rig
 \end{equation}
 being $a_i$ the $i$-th component of the advection velocity. In (\ref{eq-C4_Rey_shear_disc}) we have used the nonlinear definition of the advection velocity defined in \Eq{C2_a_nl}.
 
-The first term on the second part of  (\ref{eq-C4_Rey_shear_disc}) (term $I$) is the contribution of the resolved scales (FE component) to the cross term $\left\langle a_x'a_y'\right\rangle$. Term $II$ denotes the contribution of the subgrid scales and their interaction with the FE components, that is, the unresolved part of the equation. Finally, term $III$ accounts for the viscous portion of the Reynolds shear stress. Note that the derivatives of the approximated subscales are not computable, since these approximated subscales are discontinuous and have been designed to approximate the effect of the exact subscales on the FE scales elementwise. 
+The first term on the second part of  (\ref{eq-C4_Rey_shear_disc}) (term $I$) is the contribution of the resolved scales (FE component) to the cross term $\left\langle a_x'a_y'\right\rangle$. Term $II$ denotes the contribution of the subgrid scales and their interaction with the FE components, that is, the unresolved part of the equation. Finally, term $III$ accounts for the viscous portion of the Reynolds shear stress. Note that the derivatives of the approximated subscales are not computable, since these approximated subscales are discontinuous and have been designed to approximate the effect of the exact subscales on the FE scales element-wise. 
 
 For a fully developed and statistically stable turbulent flow, the Reynolds shear stress along the wall-normal direction has a linear shape  (see \cite{kim_turbulence_1987}). Normalized by the viscous term $III$ value at the wall, the total Reynolds shear stress in terms of $y/	\delta$ should have the following expression: $R_{xy}(y/\delta)=(-y/\delta)$. Fig.~\ref{fig:OSS_dyn_Nl_reystr} depicts the absolute value of the Reynolds shear stress along the upper half channel ($y>0$), with the different terms appearing in (\ref{eq-C4_Rey_shear_disc}) and compared with the DNS in \cite{moser_direct_1999}, for the Dyn-Nl-OSS case with ${\rm Re}_\tau=395$. The computed results are almost identical to the DNS ones. It has to be noted that the computed results are evaluated at the integration points due to the presence of the derivative in the Reynolds shear stress, which using linear FEs is constant at each element. Then, using two integration points per direction for the numerical integration, term $III$ will be constant for those two integration points being in the same element. This behavior is observed in Fig.~\ref{fig:OSS_dyn_Nl_reystr}, where the viscous term is pairwise constant. This last fact also affects the total Reynolds shear stress. Since the resolved term has different values at each element Gauss point, the sum of terms $I$ and $III$ results in an oscillatory shape near the wall, where the viscous term is more relevant. It is also seen that the unresolved term $II$ does not contribute to the Reynolds shear stress, which is a good property of the tested VMS methods. The results for the remaining cases in Table \ref{table:DHIT_cases} are similar to those presented in Fig. \ref{fig:OSS_dyn_Nl_reystr} and have not been reported. 
 \begin{figure}[h!]
@@ -1019,14 +1021,14 @@ In order to go in depth on the effect of the algorithmic constants $c_1$ and $c_
 	\subfigure[Mean streamwise velocity]{\label{fig:OSS_taus_umean}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/umean_taus_DOSS}}
   	\subfigure[Rms streamwise velocity fluctuation]{\label{fig:OSS_Matias_ufluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/ufluc_taus_DOSS}}\\    
   	\subfigure[Rms wall-normal velocity fluctuation]{\label{fig:OSS_Matias_vfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/vfluc_taus_DOSS}}
- 	\subfigure[Rms spanwise velocity fluctuation]{\label{fig:OSS_Matias_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc_taus_DOSS}}
+ 	\subfigure[Rms span-wise velocity fluctuation]{\label{fig:OSS_Matias_wfluc}\includegraphics[width=0.49\textwidth]{Figures/Chapter4/CF/wfluc_taus_DOSS}}
  	\caption{Comparison of mean streamwise velocity and rms velocity fluctuations for ${\rm Re}_\tau=180$ case using a $32^3$ $Q$1 mesh.}
     \label{fig:OSS_taus_fluc}
 \end{figure}
 
 In Fig. \ref{fig:OSS_taus_umean} the mean velocity in the streamwise direction is shown. As in the case of homogeneous turbulence, some differences between the three cases can be observed, the choice used in section \ref{subsec-C4_TCF} being the most accurate one. The effect of the algorithmic constant $c_2$ and the stabilization parameter $\tau_c$ in the problem solution can be clearly observed, i.e., the less dissipative choice gives the best results.
 %Not only  $\tau_c=0$ but also setting $c_2=8$ (instead of $c_2=2$) give less dissipative results.
-Figs. \ref{fig:OSS_Matias_ufluc}, \ref{fig:OSS_Matias_vfluc} and \ref{fig:OSS_Matias_wfluc} depict the rms velocity fluctuations in all directions. The fluctuations in the streamwise direction are better predicted using ($c_1=12$, $c_2=8$ and $\tau_c=0$) but the spanwise and wall-normal directions are not.
+Figs. \ref{fig:OSS_Matias_ufluc}, \ref{fig:OSS_Matias_vfluc} and \ref{fig:OSS_Matias_wfluc} depict the rms velocity fluctuations in all directions. The fluctuations in the streamwise direction are better predicted using ($c_1=12$, $c_2=8$ and $\tau_c=0$) but the span-wise and wall-normal directions are not.
 
 \subsection{Behavior in the small time step limit}
 \label{subsec-C4_small_time_step}

@@ -9,13 +9,13 @@ For a deeper explanation of turbulence phenomena we refer to \cite{pope_turbulen
 \section{Introduction to turbulence}
 \label{sec-C3_introduction}
 \subsection{Elementary concepts}
-In the comming chapters some elmentary conceps will be used. Here we give a brief definition of the most important ones:
+In the coming chapters some elementary concepts will be used. Here we give a brief definition of the most important ones:
 \begin{itemize}
-\item\keyword{Categories of fluid flow:}\\Fluid mechanics and fluid flows are often divided into different regimes. In particular, one can make three different sub-divisions. The first division distinguishes between fluids that may be treated as inviscid or fluids in where the finite viscosity must be taken into account. The second sub-division distingishes between laminar (organized) and turbulent (chaotic) flow. The final sub-division is between irrotational(or potential) flow and rotational flow.
+\item\keyword{Categories of fluid flow:}\\Fluid mechanics and fluid flows are often divided into different regimes. In particular, one can make three different sub-divisions. The first division distinguishes between fluids that may be treated as inviscid or fluids in where the finite viscosity must be taken into account. The second sub-division distinguishes between laminar (organized) and turbulent (chaotic) flow. The final sub-division is between irrotational(or potential) flow and rotational flow.
 
 In this thesis we will mainly focus on the second sub-division, distinguishing between laminar and turbulent flows. Except when stated, the fluid will be considered to be viscous and rotational.
 
-\item\keyword{Newton's law of viscosity}\\In most fluids the shear stress is quantified using an empirical law known as Newton's law of viscosity. This law says that a shear stress, $\tau$, is required to cause relative sliding of the fluid layers. Moreover it states that $\tau$ is directly proportional to the angular distortion rate $\frac{d\gamma}{dt}$. It can be shown that in a one-dimensional flow (being $x$ the flow direction), $ u_x(y) $, $ \frac{d\gamma}{dt}=\frac{\partial u}{\partial y} $. Then the shear stress can be writen as
+\item\keyword{Newton's law of viscosity}\\In most fluids the shear stress is quantified using an empirical law known as Newton's law of viscosity. This law says that a shear stress, $\tau$, is required to cause relative sliding of the fluid layers. Moreover it states that $\tau$ is directly proportional to the angular distortion rate $\frac{d\gamma}{dt}$. It can be shown that in a one-dimensional flow (being $x$ the flow direction), $ u_x(y) $, $ \frac{d\gamma}{dt}=\frac{\partial u}{\partial y} $. Then the shear stress can be written as
 $$\tau=\rho\nu\frac{\partial u_x}{\partial y},\quad\quad\nu=\frac{\mu}{\rho}.$$
 Where $ \nu $ is called the kinematic viscosity.
 
@@ -24,7 +24,7 @@ $$ \tau_{xy}=\rho\nu\left(\frac{\partial u_x}{\partial y}+\frac{\partial u_y}{\p
 
 %Shear stresses are important not just because they cause fluid elements to distord, but because an imbalance in shear stress can give rise to a net force on individual fluid elements.
 
-\item\keyword{Reynolds number}\\We define the inertial force of a fluid as the force due to the fluid motion and the viscous force as the force produced by the friction. The visous forces per unit volume have a size: $ f_\nu\sim\frac{\rho\nu|\mathbf{u}|}{l_\bot^2} $, where $ l_\bot^2 $ is a characteristic length scale normal to the streamlines. The inertial forces per unit volume are of the order of: $ f_{in}\sim\frac{\rho |\mathbf{u}|^2}{l} $, where $ l $ is a typical geometric lenght scale. 
+\item\keyword{Reynolds number}\\We define the inertial force of a fluid as the force due to the fluid motion and the viscous force as the force produced by the friction. The viscous forces per unit volume have a size: $ f_\nu\sim\frac{\rho\nu|\mathbf{u}|}{l_\bot^2} $, where $ l_\bot^2 $ is a characteristic length scale normal to the streamlines. The inertial forces per unit volume are of the order of: $ f_{in}\sim\frac{\rho |\mathbf{u}|^2}{l} $, where $ l $ is a typical geometric length scale. 
 
 We can estimate the ratio between the inertial forces and the viscous forces. This ratio is called \textit{Reynolds number},
 $$Re=\frac{\frac{\rho |\mathbf{u}|^2}{l}}{\frac{\rho\nu|\mathbf{u}|}{l_\bot^2}}=\frac{ul}{\nu}.$$
@@ -36,7 +36,7 @@ $$(\u\cdot\nabla)\u=-\nabla\left(\frac{p}{\rho}\right)$$
 subject to the inviscid boundary condition $\u\cdot dS=0$ on all solid surfaces. This determines the so-called \textit{external problem}. If the fluid satisfies the no-slip condition $\mathbf{u}=0$, there must be some region where the velocity adjust to zero. This region is the called \textit{Boundary Layer}. In this region the only mechanical forces available to cause a drop in velocity are viscous shear stresses. Thus the viscous term must be of the same order as the other terms within the boundary layer, 
 $$\nu\Delta\u\sim(\u\cdot\nabla)\u,$$
 
-If the inertial forces are of the same order than the viscous forces in the boundary layer, we can stablish the following relation
+If the inertial forces are of the same order than the viscous forces in the boundary layer, we can establish the following relation
 \begin{eqnarray*}
 f_{in}&\sim& f_\nu\\
 \frac{\rho u^2}{l} \sim\frac{\rho\nu u}{\delta^2} &\Rightarrow& \frac{\delta}{l}\sim\left(\frac{ul}{\nu}\right)^{-1/2}=Re^{-1/2},
@@ -49,26 +49,26 @@ Boundary layers have another important characteristic, called \textit{separation
 
 \item\keyword{Laminar and Turbulent flow:}\\It is an empirical observation that at low values of $Re$ flows are laminar, while at high values of $Re$ they are turbulent (chaotic).
 
-A turbulent flow is charactarised by the fact that, superimposed on the mean flow patern, there is random, chaotic motion. The transition from laminar to turbulent flow occurs because, at certain value of $Re$, inestabilities develop in the laminar flow, usually driven by the inertial forces. At low values of $Re$ these potential inestabilities are damped out by viscoity, while at high values of $Re$ the damping is inadequate.
+A turbulent flow is characterized by the fact that, superimposed on the mean flow pattern, there is random, chaotic motion. The transition from laminar to turbulent flow occurs because, at certain value of $Re$, instabilities develop in the laminar flow, usually driven by the inertial forces. At low values of $Re$ these potential instabilities are damped out by viscosity, while at high values of $Re$ the damping is inadequate.
 
 \end{itemize}
 
 \subsection{Vorticity}
 %%% REVIEW!!!
-The vorticity is a measure of the rotation of individual fluid elements and it is defined by the following expresion
+The vorticity is a measure of the rotation of individual fluid elements and it is defined by the following expression
 $$\omega\cdot d\mathbf{S}=\oint_C\mathbf{u}\cdot d\mathbf{l}.$$
 %%%
 
-Vorticity cannot be created within hte interior of a fluid unless there are body forces present, but it spreats by diffusion and can be intensified by streaching of fluid elements. Boundary layers can be thought as diffusion layers for the vorticity generated on a surface.
+Vorticity cannot be created within the interior of a fluid unless there are body forces present, but it spreads by diffusion and can be intensified by stretching of fluid elements. Boundary layers can be thought as diffusion layers for the vorticity generated on a surface.
 
-Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\omega$ are somewhat simpler than those governign $\u$. The second reason is that many flows are characterized by localised regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{davidson_turbulence:_2004}.
+Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\omega$ are somewhat simpler than those governing $\u$. The second reason is that many flows are characterized by localized regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{davidson_turbulence:_2004}.
 \begin{equation}
 \label{eq-vorticity}
 I\frac{D\omega}{Dt}=-\omega\frac{DI}{Dt}+2\nu\mathbf{T}
 \end{equation}
 where $I$ is the moment of inertia of a small material element that is \textit{instantaneously} spherical and $\nu\mathbf{T}$ denotes the viscous torque acting on the sphere. The equation \Eq{vorticity} suggest several results:
 \begin{itemize}
-\item $\omega$ evolves indepently of $ p $.
+\item $\omega$ evolves independently of $ p $.
 \item If $\omega$ is initially zero, and the flow is inviscid ($ \nu=0 $), then $\omega$ should remain zero in each fluid particle.
 \item If $I$ decreases (the vortex is stretching) in a inviscid fluid element, then the vorticity of that element should increase.
 \end{itemize}
@@ -79,7 +79,7 @@ Alternatively to \Eq{vorticity}, introducing the identity $\nabla(\u^2/2)=(\u\cd
 \end{equation}
 From \Eq{vorticity} and \Eq{vorticity_velocity} we can easily see that the rate of rotation of a fluid blob may increase or decrease due to changes in its moment of inertia, or changes because it is spun up or slowed down by viscous stresses. We also can state from equation \Eq{vorticity_velocity} that vorticity is advected by $\u$ and diffused by viscous stresses.
 
-Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\omega\cdot\nabla)\u$ represents intensification of vorticity by the streaching fluid elements, a justification of this suggestion can be fount in \cite{pope_turbulent_2000}.
+Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\omega\cdot\nabla)\u$ represents intensification of vorticity by the stretching fluid elements, a justification of this suggestion can be fount in \cite{pope_turbulent_2000}.
 
 \subsection{Reynolds stresses and turbulence models}
 It is an empirical observation that if $Re$ is large enough a flow invariably becomes unstable and then turbulent. Suppose we have a turbulent flow in which $\u$ and $p$ consist of a time-averaged component, $\overline{\u}$ and $\overline{p}$, plus a fluctuating part, $\u'$ and $p'$:
@@ -129,11 +129,11 @@ where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}
 $$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\Lbf+\nabla\cdot\Cbf+\nabla\cdot\Rbf$$
 
 \subsection{Definition of some turbulent quantities}
-Turbulent flows are considered to be cahotic since, superimposed on the mean flow patern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremly fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow patern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
+Turbulent flows are considered to be chaotic since, superimposed on the mean flow pattern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremely fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow pattern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
 $$\left\langle q\right\rangle=\frac{1}{\Pi_{i=1}^{n_d}N_i}\sum_{j_1,...,j_{n_d}}q_{j_1,...,j_{n_d}},$$
 that is averaged over $n_d$ dimensions, each dimension $i$ having $N_i$ evaluation points. 
 
-In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results againts the references. We can find a more complete definition of the turbulent quantities that are going to be stated in this section in \cite{orlandi_fluid_2012,pope_turbulent_2000,davidson_turbulence:_2004}.
+In this section we will briefly define the turbulent quantities that are going to be used to characterize the turbulent flow simulations and that will allow us to compare the results against the references. We can find a more complete definition of the turbulent quantities that are going to be stated in this section in \cite{orlandi_fluid_2012,pope_turbulent_2000,davidson_turbulence:_2004}.
 
 \begin{itemize}
 \item\keyword{Velocity correlation function}\\ The velocity correlation function is defined by
@@ -175,7 +175,7 @@ If we define the enstrophy as $Z:=\frac{1}{2}\left\langle\boldsymbol{\omega}^2\r
 \label{eq-third_order_structure}
 \left\langle[\Delta u(r)]^3\right\rangle=\left\langle[u_x(\x+r\hat{\e}_x)-u_x(\x)]^3\right\rangle.
 \end{equation*}
-For further discussions, it is more usefull to work with the skewness factor. This factor is a normalized version of the third-order structure function
+For further discussions, it is more useful to work with the skewness factor. This factor is a normalized version of the third-order structure function
 \begin{equation}
 \label{eq-skewness_factor}
 S(r)=\frac{\left\langle[\Delta u(r)]^3\right\rangle}{\left\langle[\Delta u(r)]^2\right\rangle^{3/2}}.
@@ -189,7 +189,7 @@ $$\frac{\ell}{\eta}\sim\frac{u^3}{\varepsilon^{3/4}\nu^{3/4}}\sim\left(\frac{u\e
 Where $Re_l$ is the integral Reynolds number. Thus, the inertial range includes a set of scales growing with $Re_\ell^{3/4}$. If we want to accurately simulate the inertial range, the number grid points on an uniform 3D mesh should be $N\sim\left((Re_\ell)^{3/4}\right)^3=(Re_\ell)^{9/4}$. 
 \item\keyword{Taylor microscale}\\Apart from the Kolmogorov and integral length scale, there is another length scale that can characterize a turbulent flow. This is the Taylor microscale and provides a convenient estimate for the fluctuating strain rate field. It is a standard turbulent length that identifies the inertial subrange. The Taylor microscale is defined as $$\lambda^2=\frac{15u^2}{\left\langle\boldsymbol{\omega}^2\right\rangle}=\frac{15\nu u^2}{\varepsilon}.$$
 \item\keyword{Taylor-microscale Reynolds number}\\The Taylor-microscale Reynolds number is associated to the characteristic Taylor-microscale length and it is defined as $$Re_\lambda=\frac{u\lambda}{\nu}=\sqrt{15}\frac{u^2}{\left(\nu\varepsilon\right)^{1/2}}=\frac{1}{\nu}\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\left(\int_0^\infty k^2E(k)dk\right)^{1/2}}.$$
-\item\keyword{Energy dissipation rate}\\For a closed domain wiht stationary boundaries, the total rate of energy dissipation per unit of mass is given by
+\item\keyword{Energy dissipation rate}\\For a closed domain with stationary boundaries, the total rate of energy dissipation per unit of mass is given by
 $$\varepsilon=2\nu\frac{1}{2}\left\langle\boldsymbol{\omega}^2\right\rangle=\frac{15\nu u^2}{\lambda^2}.$$
 See Section \ref{subsec-isotropic_energy_dissipation}, where we derive this result.
 \end{itemize}
@@ -247,7 +247,7 @@ which means that the nonlinear interactions transfer energy between different wa
 
 \subsubsection{Kolmogorov spectrum}
 \label{subsubsec-Kolmogorov_spectrum}
-In order to answer some key questions about turbulent flows, like \textit{what is the size of the smallest eddies that are responsible for dissipating the energy?}, Kolmogorov stated three hypotheses in \cite{kolmogorov_local_1941}. Let us remind these hypoteses:
+In order to answer some key questions about turbulent flows, like \textit{what is the size of the smallest eddies that are responsible for dissipating the energy?}, Kolmogorov stated three hypotheses in \cite{kolmogorov_local_1941}. Let us remind these hypotheses:
 \begin{itemize}
 \item\keyword{Local isotropy.} At sufficiently high Reynolds number, the small-scale turbulent motions are statistically isotropic.
 \item\keyword{First similarity hypothesis.} For the locally isotropic turbulence the statistics of the small-scale motions are uniquely determined by the quantities $ \nu $ and $ \varepsilon $.
@@ -268,7 +268,7 @@ E(k)\sim C\varepsilon^{2/3}k^{-5/3}.
 
 \subsubsection{Decay of homogeneous isotropic turbulence}
 \label{subsubsec-C3_DHIT}
-The Decay of Homogeneous Isotropic Turbulence (DHIT) test is one of the most used benchmarks to test the simulation accuracy of isotropic turbulent flows. Here we want to analyse the statistics of an homogeneous isotropic turbulent flow in a 3D box of size $\Omega=\left\{(0,2\pi)\times(0,2\pi)\times(0,2\pi)\right\}$. The flow is initialized with an initial condition that has a predetermined energy spectrum, considering all the boundary conditions to be periodic.
+The Decay of Homogeneous Isotropic Turbulence (DHIT) test is one of the most used benchmarks to test the simulation accuracy of isotropic turbulent flows. Here we want to analyze the statistics of an homogeneous isotropic turbulent flow in a 3D box of size $\Omega=\left\{(0,2\pi)\times(0,2\pi)\times(0,2\pi)\right\}$. The flow is initialized with an initial condition that has a predetermined energy spectrum, considering all the boundary conditions to be periodic.
 
 In this work, we have taken the energy spectrum expression from Mansour \& Wray \cite{mansour_decay_1994}.
 \begin{equation}
@@ -316,9 +316,9 @@ Where $\theta_1$, $\theta_2$ and $\phi$ are random numbers on the interval $(0,2
 \end{align}
 where $k_h=\left(k_1^2+k_2^2\right)^{1/2}$ and $|k|=\left(k_1^2+k_2^2+k_3^2\right)^{1/2}$.
 
-To have the field \Eq{DHIT_initial_u_fourier} in the physical space we apply the inverse Fast Fourier Transform, see Appendix \ref{appendix-spectrum_implementation} for a detailed description of the implementation fo the Fourier Transform.
+To have the field \Eq{DHIT_initial_u_fourier} in the physical space we apply the inverse Fast Fourier Transform, see Appendix \ref{appendix-spectrum_implementation} for a detailed description of the implementation of the Fourier Transform.
 
-In order to check the accuracy of the proposed methods, we will compare the results with those showed in \cite{_selection_????}. Then, we set $k_0=6$ and the viscosity such that the asossiated Taylor-microscale Reynolds number is $Re_\lambda=952$,
+In order to check the accuracy of the proposed methods, we will compare the results with those showed in \cite{_selection_????}. Then, we set $k_0=6$ and the viscosity such that the associated Taylor-microscale Reynolds number is $Re_\lambda=952$,
 $$Re_\lambda=\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\nu\left(2\int_0^\infty k^2E(k)dk\right)^{1/2}}=952\,$$
 which results in $\nu=3.5014006\cdot 10^{-4}$.
 
@@ -330,7 +330,7 @@ In \Fig{DHIT_initial_spectrum} we show the initial analytical energy spectrum an
 	\label{fig-DHIT_initial_spectrum}
 \end{figure}
 
-In \Fig{DHIT_isovorticity} we depict the characteristic structures of a fully developed homogeneous and isotropic turbulent flow, plotting the vorticity isosurfaces obtained in the DHIT tes.
+In \Fig{DHIT_isovorticity} we depict the characteristic structures of a fully developed homogeneous and isotropic turbulent flow, plotting the vorticity isosurfaces obtained in the DHIT test.
 \begin{figure}[h!]
 	\centering	
 	\includegraphics[trim=18cm 3.3cm 14cm 3.2cm,clip=true,width=0.7\textwidth]{Figures/Chapter3/DHIT_isovorticity}
@@ -368,9 +368,9 @@ The initial analytical condition for this problem, unlike the DHIT problem, is d
 \end{align}
 With
 $$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
-We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The Reynolds number is defined as the inverse of the kinematic viscosity $\nu$, noting that the length and velocity scales are of the same order. This is done according to \cite{gassner_accuracy_????} and \cite{brachet_direct_1991}, and will allow us to compare our results with those showed on these papers. For simplicity, the pressure constant parameter $p_0$ is choosen equal to zero.
+We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The Reynolds number is defined as the inverse of the kinematic viscosity $\nu$, noting that the length and velocity scales are of the same order. This is done according to \cite{gassner_accuracy_????} and \cite{brachet_direct_1991}, and will allow us to compare our results with those showed on these papers. For simplicity, the pressure constant parameter $p_0$ is chosen equal to zero.
 
-With these definitions we can compute analitycaly the initial total kinetic energy of the problem, which is 
+With these definitions we can compute analytically the initial total kinetic energy of the problem, which is 
 \begin{align}
 \label{eq-TGV_initial_energy}
 K&=\frac{1}{2}\frac{1}{V}\int_0^L\int_0^L\int_0^L\u\cdot\u\ dV\\\nonumber
@@ -412,9 +412,9 @@ Which means that the vorticity is perpendicular to each impermeable box face.
 
 We solve the TGV problem using a Reynolds number $Re=1600$. The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
 
-The TGV test is characterized by its laminar evolution at the initial time steps, when the flow is strongly anisotropic due to the structured large-scale vortexes directly related to the initial condition. If the Reynolds number is large enough, there appears the vortex-stretching process, which introduce the energy cascade effect, transfering energy from large to small-scales. Because of this procedure, the flow becomes unstable and, therefore, turbulent. According to Brachet et al. \cite{brachet_small-scale_1983}, the flow becomes nearly isotropic for $Re\geq1000$.
+The TGV test is characterized by its laminar evolution at the initial time steps, when the flow is strongly anisotropic due to the structured large-scale vortexes directly related to the initial condition. If the Reynolds number is large enough, there appears the vortex-stretching process, which introduce the energy cascade effect, transferring energy from large to small-scales. Because of this procedure, the flow becomes unstable and, therefore, turbulent. According to Brachet et al. \cite{brachet_small-scale_1983}, the flow becomes nearly isotropic for $Re\geq1000$.
 
-In \Fig{TGV_vorticity_streamlines} we depict a vorticity isosurface image computed using a $128^3$ trilinear hexaedral elements mesh. In this picture we can see the symmetry plans stated before.
+In \Fig{TGV_vorticity_streamlines} we depict a vorticity isosurface image computed using a $128^3$ trilinear hexahedral elements mesh. In this picture we can see the symmetry plans stated before.
 
 %\begi\end{figure}d{figure}
 \begin{figure}[h!]
@@ -426,16 +426,16 @@ In \Fig{TGV_vorticity_streamlines} we depict a vorticity isosurface image comput
 
 \section{Turbulence in wall-bounded flow}
 \label{sec-C3_wall_bounded}
-The vast majority of turbulent flows that we can find in the nature are bounded by, at least, one solid surface. Some examples of bounded flows can be the flow throug a pipe or a duct, the flow in a channel or a river, the flow around an aircraft or a ship, or even the atmospheric flow that is bounded by the terrain. In a turbulent wall-bounded flow, the turbulence is generated through the viscous forces near the wall and then propagated to the outer layer. In this kind of flows, we are interested on defining the mean velocity profiles as well as the friction laws, which will allow us to determine the forces that the fluid flow exerts on the the solid wall.
+The vast majority of turbulent flows that we can find in the nature are bounded by, at least, one solid surface. Some examples of bounded flows can be the flow through a pipe or a duct, the flow in a channel or a river, the flow around an aircraft or a ship, or even the atmospheric flow that is bounded by the terrain. In a turbulent wall-bounded flow, the turbulence is generated through the viscous forces near the wall and then propagated to the outer layer. In this kind of flows, we are interested on defining the mean velocity profiles as well as the friction laws, which will allow us to determine the forces that the fluid flow exerts on the the solid wall.
 \subsection{Mean flow}
 \subsubsection{Shear stress}
-Let us assume that within a certain region near the wall the mean velocity is parallel, or almost parallel, to that wall. We consider that we have a wall on the plane $ (x-z) $ where the mean flow is predominantly in the $ x $-direction, which we will denote as the stream-wise direction and statistically independent of $ z $. The $ y $-direction will be denoted by the wall-normal direction and the $ z $-direction the span-wise direction. Under this assumtions, $ \left\langle u_z\right\rangle=0 $ and the $ \left\langle u_x\right\rangle $ is independent of $ x $, leading to a mean continuity equation
+Let us assume that within a certain region near the wall the mean velocity is parallel, or almost parallel, to that wall. We consider that we have a wall on the plane $ (x-z) $ where the mean flow is predominantly in the $ x $-direction, which we will denote as the stream-wise direction and statistically independent of $ z $. The $ y $-direction will be denoted by the wall-normal direction and the $ z $-direction the span-wise direction. Under this assumptions, $ \left\langle u_z\right\rangle=0 $ and the $ \left\langle u_x\right\rangle $ is independent of $ x $, leading to a mean continuity equation
 \begin{equation}
 \label{eq-mean_continuity}
 \frac{d\left\langle u_y\right\rangle}{dy}=0.
 \end{equation}
 
-From the mean meomentum equation in the wall-normal direction we can conclude that the pressure is uniform across the flow, satisfying $$ \frac{\partial\left\langle p\right\rangle}{\partial x}=\frac{d p_w}{dx}, $$ being $ p_w(x) $ the pressure value at the wall. Then, from the axial mean momentum equation we have that the shear total shear stress $ \tau(y) $ follows
+From the mean momentum equation in the wall-normal direction we can conclude that the pressure is uniform across the flow, satisfying $$ \frac{\partial\left\langle p\right\rangle}{\partial x}=\frac{d p_w}{dx}, $$ being $ p_w(x) $ the pressure value at the wall. Then, from the axial mean momentum equation we have that the shear total shear stress $ \tau(y) $ follows
 \begin{equation}
 \label{eq-shear_stress_law}
 \frac{d\tau}{dy}=\frac{d p_w}{dx},
@@ -452,7 +452,7 @@ see \cite{pope_turbulent_2000} for a more detailed deduction. We will denote the
 \end{equation}
 
 \subsubsection{Friction quantities}
-From \Eq{wall_shear_stress} one can observe that the viscosity $ \nu $ is an important parameter in tubulent wall-bounded flows, particularly in the region near the wall. Hence, the mean velocity profile  will depend on the Reynolds number. Moreover, in the region near the wall we can define the appropiate viscous velocity and length scales. We will call friction velocity the velocity scale in the near-wall region, which is defined as
+From \Eq{wall_shear_stress} one can observe that the viscosity $ \nu $ is an important parameter in turbulent wall-bounded flows, particularly in the region near the wall. Hence, the mean velocity profile  will depend on the Reynolds number. Moreover, in the region near the wall we can define the appropriate viscous velocity and length scales. We will call friction velocity the velocity scale in the near-wall region, which is defined as
 \begin{equation}
 \label{eq-friction_velocity}
 u_\tau:=\sqrt{\frac{\tau_w}{\rho}},
@@ -467,7 +467,7 @@ Note that the Reynolds number based on the viscous scales is equal to the unity,
 \label{eq-friction_reynolds}
 Re_\tau:=\frac{u_\tau\delta}{\nu},
 \end{equation}
-being $ \delta $ the boundary layer thicknes. 
+being $ \delta $ the boundary layer thickness. 
 
 For wall-bounded turbulent flows it is a common practise to use the quantities in terms of wall units. We will define the distance from the wall in wall units as $ y^+:=\frac{y}{\delta_\nu}=\frac{u_\tau y}{\nu} $, and the mean stream-wise velocity in wall units as $ u^+:=\frac{\left\langle u_x\right\rangle}{u_\tau} $.
 
@@ -477,18 +477,18 @@ It has been shown that in the region near the wall, the mean stream-wise velocit
 \label{eq-wall_law}
 u^+=\frac{1}{\kappa}\ln y^++B,
 \end{equation}
-whith $ \kappa=0.41 $ and $ B=5.2 $.
+with $ \kappa=0.41 $ and $ B=5.2 $.
 
 \subsection{Benchmark tests}
 \subsubsection{Turbulent Channel Flow}
 \label{subsubsec-C3_TCF}
 According to \cite{pope_turbulent_2000}, most turbulent flows are bounded by one or more solid surfaces, giving wall-bounded flows. There are several turbulent wall-bounded tests, e.g. fully developed channel flow, fully developed pipe flow and the flat-plate boundary layer. We will test just one of them, in particular the fully developed Turbulent Channel Flow (TCF), which is a widely used wall-bounded turbulent benchmark. 
 
-An evidence of the popularity of this test is the large amount of experimental and computational works done about it. This test consists of a flux that flows between two parallel walls driven by an imposed pressure gradient, where the mean velocity vector is parallel to the wall. The most important issues to consider when characterising the flow are the mean velocity profiles, velocity fluctuations and the shear stress carried by the fluid on the wall. It has to be noticed that we will concern only on the fully developed flow, which means that the turbulent regime has been reached at the time when we start our flow characterization.
+An evidence of the popularity of this test is the large amount of experimental and computational works done about it. This test consists of a flux that flows between two parallel walls driven by an imposed pressure gradient, where the mean velocity vector is parallel to the wall. The most important issues to consider when characterizing the flow are the mean velocity profiles, velocity fluctuations and the shear stress carried by the fluid on the wall. It has to be noticed that we will concern only on the fully developed flow, which means that the turbulent regime has been reached at the time when we start our flow characterization.
 
 In this test, like in most of turbulent flow tests, the Reynolds number has an important role when defining the test parameters. In particular, in the turbulent channel flow test, the most characteristic parameter is the Reynolds number based on the wall shear velocity, $Re_\tau$. In the literature, there appear mostly three different values of this parameters: $Re_\tau=590$, $Re_\tau=395$  and $Re_\tau=180$, see \cite{bazilevs_variational_2007, calderer_residual-based_2013, gamnitzer_time-dependent_2010, gravemeier_algebraic_2010, gullbrand_effect_2003, hughes_large_2001, john_variants_2008, kim_turbulence_1987, masud_variational_2011, moser_direct_1999}. We will restrict our work to $Re_\tau=180$ and $Re_\tau=395$ cases.
 
-We consider a computational domain defined by a box of length $(L_x\times L_y\times L_z)$, which depends on the Reynolds number. For ${\rm Re}_\tau=180$ the domain size is $(4\pi\delta\times 2\delta\times 4/3\pi\delta)$ while for  ${\rm Re}_\tau=395$ the size of the channel is $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called streamwise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the spanwise direction. In Fig. \ref{fig:Channel_geo} we show schematically the geometry of the computational domain for this test.
+We consider a computational domain defined by a box of length $(L_x\times L_y\times L_z)$, which depends on the Reynolds number. For ${\rm Re}_\tau=180$ the domain size is $(4\pi\delta\times 2\delta\times 4/3\pi\delta)$ while for  ${\rm Re}_\tau=395$ the size of the channel is $(2\pi\delta\times 2\delta\times 2/3\pi\delta)$. The $x$-direction is the flow direction, also called stream-wise direction, the $y$-direction is the wall-normal direction, and the $z$-direction is the span-wise direction. In Fig. \ref{fig:Channel_geo} we show schematically the geometry of the computational domain for this test.
 
 \begin{figure}[h!]
 	\centering	
@@ -497,7 +497,7 @@ We consider a computational domain defined by a box of length $(L_x\times L_y\ti
 	\label{fig:Channel_geo}
 \end{figure}
 
-In the wall-normal direction boundaries ($y=-\delta$ and $y=\delta$) we impose a non-slip condition. The streamwise and spanwise directions are assumed to be homogeneous, so we use periodic boundary conditions in these directions. According to Kim  \emph{et al.} \cite{kim_turbulence_1987}, the use of periodic boundary conditions in the homogeneous directions can be justified when the computational box is such that the largest eddies in the flow fit in the computational domain. This is the case considered here.
+In the wall-normal direction boundaries ($y=-\delta$ and $y=\delta$) we impose a non-slip condition. The stream-wise and span-wise directions are assumed to be homogeneous, so we use periodic boundary conditions in these directions. According to Kim  \emph{et al.} \cite{kim_turbulence_1987}, the use of periodic boundary conditions in the homogeneous directions can be justified when the computational box is such that the largest eddies in the flow fit in the computational domain. This is the case considered here.
 %In \cite{kim_turbulence_1987} is shown the adequacy of this computational domain for a Reynolds number based on the wall shear velocity $Re_\tau=180$.
 
 We solve the problem using different mesh discretizations, all of them uniform in the homogeneous directions and refined near the walls in the wall-normal direction. The refinement in the wall-normal direction follows a hyperbolic function, also used in \cite{calderer_residual-based_2013,  gamnitzer_time-dependent_2010,  gravemeier_algebraic_2010, gullbrand_effect_2003, masud_variational_2011}, defined as 
@@ -508,8 +508,8 @@ where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal di
 \label{sec-C3_conclusions}
 With the aim of having a self-contained thesis, in this chapter we have described the basic concepts of turbulent flows. Any of the ideas exposed in this chapter have been extracted from the investigation carried out during the thesis development. Although there are not any innovative concepts in this chapter, all the definitions given in it are basic for the development and interpretation of further investigations. In any case, all the information provided in this chapter have been properly referenced.
 
-We have started the chapter with some basic definitions that will be used during al this thesis. We also have analysed the vorticity field and its behaviour in a turbulenf flow. The definition of the Reynolds stresses and some turbulent quantities have also been described in the first section of this chapter.
+We have started the chapter with some basic definitions that will be used during al this thesis. We also have analyzed the vorticity field and its behaviour in a turbulent flow. The definition of the Reynolds stresses and some turbulent quantities have also been described in the first section of this chapter.
 
-Some particular insights about isotropic turbulence have been given in the second section of the chapter. The energy dissipation of this kind of turbulent flows have been analysed in both real and spectral spaces. We have stated the relation between the energy dissipation and the enstrophy of the flow, and we have given a formula for the energy spectra in terms of the wave length and energy dissipation rate. Finally, two different isotropic turbulent benchmarks have been defined in the second section, the decaying of homogeneous isotropic turbulence and the Taylor-Green vortex flow.
+Some particular insights about isotropic turbulence have been given in the second section of the chapter. The energy dissipation of this kind of turbulent flows have been analyzed in both real and spectral spaces. We have stated the relation between the energy dissipation and the enstrophy of the flow, and we have given a formula for the energy spectra in terms of the wave length and energy dissipation rate. Finally, two different isotropic turbulent benchmarks have been defined in the second section, the decaying of homogeneous isotropic turbulence and the Taylor-Green vortex flow.
 
 In the third section of this chapter, the particular characteristics of wall-bounded turbulent flows have been defined. First, the description of the mean flow of such problems is studied. Then, the definition of the turbulent channel flow test is given as a benchmark for this kind of turbulent flows.

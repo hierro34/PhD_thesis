@@ -7,9 +7,9 @@
 
 In this appendix we will briefly resume the code that has to be implemented to obtain the energy spectra of a turbulent fluid sample.
 
-We assume that we are working with a two-dimensional fluid flow with periodic boundary conditions on both directions. We also assume that we compute the energy spectrum from the velocity field, comming from the Navier-Stoke equations. There also are many works on the turbulence world that use the vorticity field to calculate the energy spectra.
+We assume that we are working with a two-dimensional fluid flow with periodic boundary conditions on both directions. We also assume that we compute the energy spectrum from the velocity field, coming from the Navier-Stoke equations. There also are many works on the turbulence world that use the vorticity field to calculate the energy spectra.
 
-As we are using a Finite Element Method to calculate the velocity field, our data will be a discrete data with the values of the velocity on each node of the FEM mesh. The first thing we need to do is to store the velocity field into an array with the same components as problem dimensions. Usually, the velocity field that arise after the solution of the FE system of equations is stored in a vector. Then, we must transform the velocity field into two-dimensional array, having a matrix with the same rows as nodes in the vertical direction and the same columns as nodes in the horitzontal direction. The matrix values must be stored in the equivalent position than the node position in the FEM mesh.
+As we are using a Finite Element Method to calculate the velocity field, our data will be a discrete data with the values of the velocity on each node of the FEM mesh. The first thing we need to do is to store the velocity field into an array with the same components as problem dimensions. Usually, the velocity field that arise after the solution of the FE system of equations is stored in a vector. Then, we must transform the velocity field into two-dimensional array, having a matrix with the same rows as nodes in the vertical direction and the same columns as nodes in the horizontal direction. The matrix values must be stored in the equivalent position than the node position in the FEM mesh.
 
 It also has to be said that for a problem with periodic boundary conditions we only have to transform those values that are not repeated. For a two-dimensional grid with $N_x\times N_y$ divisions ($(N_x+1)\times(N_y+1)$ nodes), the values to be transformed are those corresponding to the nodes $1$ to $N_x$, in the $x$-direction, and $1$ to $N_y$, in the $y$-direction. The $(N_x+1)$-th and $(N_y+1)$-th nodes have the same value as the first ones.
 
@@ -18,7 +18,7 @@ Once we have obtained the velocity field and we have transformed into a two dime
 \begin{itemize}
 \item[1.]\textit{FFT transform of the velocity field}
 
-At this point we perform the Discrete Fast Fourier Transform (DFFT) of each component of the velocity field. To do that we use the \textit{fft99} and \textit{cfft99} packages that we can find in \cite{orlandi}. The first code transforms a real data vector to a half-complex vector with the transformed field. The second one transforms a complex vector to another complex vector with the transformed field.
+At this point we perform the Discrete Fast Fourier Transform (DFFT) of each component of the velocity field. To do that we use the \textit{fft99} and \textit{cfft99} packages that we can find in \cite{orlandi_fluid_2012}. The first code transforms a real data vector to a half-complex vector with the transformed field. The second one transforms a complex vector to another complex vector with the transformed field.
 
 Both packages are based on the following Discrete Fast Fourier Transform definitions:
 \begin{equation*}
@@ -33,9 +33,9 @@ with $k$ the wave number, $N$ the number of values to transform, $f_k$ the $k$-t
 
 We also must have into account that to use these packages the lengths of the transforms must be an even number greater than 4 that has no other prime factors than 2, 3 and 5.
 
-Since we have a two-dimensional real data field, and using the Fourier Transforms theory, we compute the two-dimensional transform by first transforming a set of vectors using \textit{fft99} along one direction and then transforming the results using \textit{cfft99} along the orthogonl direction.
+Since we have a two-dimensional real data field, and using the Fourier Transforms theory, we compute the two-dimensional transform by first transforming a set of vectors using \textit{fft99} along one direction and then transforming the results using \textit{cfft99} along the orthogonal direction.
 
-By this way, if we first transform the horitzontal direction, the real to complex transformation give us a half-complex matrix with dimension $\left(N_x\times\left(\frac{N_y}{2}+1\right)\right)$. It means that the matrix is built by $N_x$ vectors each containing the Fourier coeficients $a(k_y)$ and $b(k_y)$ for $0\leq k_y\leq \frac{N_y}{2}$, defining the Fourier transform as
+By this way, if we first transform the horizontal direction, the real to complex transformation give us a half-complex matrix with dimension $\left(N_x\times\left(\frac{N_y}{2}+1\right)\right)$. It means that the matrix is built by $N_x$ vectors each containing the Fourier coefficients $a(k_y)$ and $b(k_y)$ for $0\leq k_y\leq \frac{N_y}{2}$, defining the Fourier transform as
 $$c(k_y)=a(k_y)+ib(k_y).$$
 
 Note that with this definitions we should have a matrix of dimension $\left(N_x\times\left(\frac{N_y}{2}+2\right)\right)$. But the fact that the input values are real implies that $b(0)=b(N_y/2)=0$, then we can get rid of one value for each row.
@@ -76,7 +76,7 @@ k_{max}=\max\left\{integer\left(\sqrt{k_x^2+k_y^2}+0.5\right)\right\}.
 
 It is equivalent to say that each one-dimensional wave number $k(l)$ will be composed for all $k_x$ and $k_y$ such that the value of $\sqrt{k_x^2+k_y^2}$ is in the interval $[k-0.5,k+0.5]$.
 
-To compute the energy spectra we only use those wave numbers betwen $0$ and $\frac{k_{max}}{\sqrt{2}}$. Suppose that we have a squared domain with the same number of nodes in both direction, that is $N_x=N_y=N$. Then the maximum wave numer will be:
+To compute the energy spectra we only use those wave numbers between $0$ and $\frac{k_{max}}{\sqrt{2}}$. Suppose that we have a squared domain with the same number of nodes in both direction, that is $N_x=N_y=N$. Then the maximum wave number will be:
 \begin{align*}
 \label{1.12.7}
 k_{max}&=int\left(\sqrt{\left(\frac{N_x}{2}\right)^2+\left(\frac{N_y}{2}\right)^2}+0.5\right)=int\left(\sqrt{2\left(\frac{N}{2}\right)^2}+0.5\right)\\

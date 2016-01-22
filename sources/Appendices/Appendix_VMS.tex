@@ -3,7 +3,7 @@
 \chapter{VMS methods implementation} % Main appendix title
 \label{appendix-VMS_implementation}
 
-In this appendix we give some tips and some comments on how the VMS methods defined  in Chapter \ref{chap-RB_VMS} are implemented in a FE software.
+In this appendix we give some tips and some comments on how the VMS methods defined in Chapter \ref{chap-Rb_VMS} are implemented in a FE software.
 
 We will describe the algorithms used to implement the dynamic and nonlinear versions for both the ASGS and the OSS methods. The quasi-static alternatives and the linear subscales definition can be though as a particular case of the former version.
 
@@ -28,7 +28,7 @@ together with the subscales equations
 \tau_c^{-1}\tilde{p}=R_p.
 \end{align}
 
-The previous expressions are solved using the Picard method for nonlinear equations. Once discretized in time using a Backward Euler discretization, we have that at the step $ n+1 $ and each nonlinear iteration $ i $, the values of $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculed solving the following decomposed equations
+The previous expressions are solved using the Picard method for nonlinear equations. Once discretized in time using a Backward Euler discretization, we have that at the step $ n+1 $ and each nonlinear iteration $ i $, the values of $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculated solving the following decomposed equations
 \begin{align}
 \label{7}
 &\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
@@ -46,7 +46,7 @@ where
 \end{equation}
 With $ \mathbf{a}^i=\mathbf{u}_h^{n+1,i-1}+\tilde{\mathbf{u}}^{n+1,i-1} $ and $ \tau_{m,t}=\left[\frac{1}{\delta t}+\frac{1}{\tau_m}\right]^{-1} $
 
-The implementation of the dynamic subscales has been done only for a linear approximation. It means that the terms involving the laplacian $ \Delta(\cdot) $ are equal to zero. Given this assumption, the symplified expressions of (\ref{7}) and (\ref{8}) are:
+The implementation of the dynamic subscales has been done only for a linear approximation. It means that the terms involving the laplacian $ \Delta(\cdot) $ are equal to zero. Given this assumption, the simplified expressions of (\ref{7}) and (\ref{8}) are:
 \begin{align}
 \label{9}
 &\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
@@ -65,7 +65,7 @@ with
 An alternative equation to (\ref{10}) can be the equivalent to \Eq{C4_velo_sgs_discrete_impl}.
 
 \subsection*{Orthogonal Subscales (OSS)}
-The Orthogonal Subscales (OSS) method is characterized by the following projection definiton.
+The Orthogonal Subscales (OSS) method is characterized by the following projection definition.
 \begin{equation}
 \label{11}
 \mathcal{P}:=\Pi_\tau^\bot=\mathbf{I}-\Pi_\tau
@@ -78,7 +78,7 @@ Then, the equivalent subscales equations to \Eq{A2_velo_asgs}-\Eq{A2_press_asgs}
 \tau_c^{-1}\tilde{p}=\Pi_\tau^\bot(R_p).
 \end{align}
 
-As we have done for the ASGS method, using a Backward Euler time discretization and the Picard method for solving the nonlinearity, at the time step $ n+1 $ and at each iteration $ i $, $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculed solving the following decomposed equations
+As we have done for the ASGS method, using a Backward Euler time discretization and the Picard method for solving the nonlinearity, at the time step $ n+1 $ and at each iteration $ i $, $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculated solving the following decomposed equations
 \begin{align}
 \label{14}
 &\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber

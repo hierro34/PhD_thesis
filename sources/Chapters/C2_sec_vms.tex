@@ -8,12 +8,12 @@ Let us consider a two-scale decomposition of spaces $\mathcal{V}_0$ and $\mathca
 (\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)&+B(\a;[\u_h,p_h],[\v_h,q_h])\\\nonumber
 &+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>,
 \end{align}
-where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products (\ref{eq:scalar_product}) over each element $K$ of the partition $\mathcal{T}_h$, and
+where $(\cdot,\cdot)_h=\sum_{K\in\mathcal{T}_h}(\cdot,\cdot)_K$ is the sum of scalar products \Eq{C2_scalar_product} over each element $K$ of the partition $\mathcal{T}_h$, and
 \begin{equation}
 \label{eq-C2_adjoint}
 \mathcal{L}_{\a}^*(\v_h,q_h):=-\nu\nabla^2\v_h-\a\cdot\nabla\v_h-\nabla q_h
 \end{equation}
-is the formal of the adjoint operator of the momentum equation. The term involving the adjoint operator comes from an elementwise integration by parts of the terms involving the subscales, in which the boundary terms 
+is the formal of the adjoint operator of the momentum equation. The term involving the adjoint operator comes from an element-wise integration by parts of the terms involving the subscales, in which the boundary terms 
 $\left( \v_{h},\nu \n\cdot \nabla \tilde{\u}\right)_{\partial h}$ and
 $\left( q_{h},\n\cdot \tilde{\u}\right)_{\partial h}$
 have been neglected (the subscript ${\partial h}$ is used to denote the sum over all elements of the integral on the boundary of each element). It also involves the approximation 
@@ -57,8 +57,8 @@ whereas we consider two possible definitions of $\tau_c$, viz. $\tau_c = 0$ (whi
 \end{align}
 where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression \Eq{C2_tau_m}:
 \begin{itemize}
-\item The influence of the constants $c_1$ and $c_2$ is discussed in \Sec{C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
-\item The definition of $\tau_m$ in \Eq{C2_tau_m} is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of \Eq{C2_tau_m}, $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{hsu_improving_2010,gamnitzer_time-dependent_2010}). We refer to \Sec{C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
+\item The influence of the constants $c_1$ and $c_2$ is discussed in Section \ref{subsec-C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
+\item The definition of $\tau_m$ in \Eq{C2_tau_m} is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of \Eq{C2_tau_m}, $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{hsu_improving_2010,gamnitzer_time-dependent_2010}). We refer to Section \ref{subsec-C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
 \item Expression \Eq{C2_tau_m} corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{principe_dissipative_2010}.
 \end{itemize}
 
