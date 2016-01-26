@@ -39,14 +39,15 @@ onehalfspacing %singlespacing, % Single line spacing, alternatives: onehalfspaci
 
 \usepackage{palatino} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=ieee,natbib=false,isbn=false,doi=false,url=false,sorting=nyt]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
-\addbibresource{C2_preliminaries.bib} % The filename of the bibliography
-\addbibresource{C3_turbulence.bib} % The filename of the bibliography
-\addbibresource{C4_RB_VMS.bib} % The filename of the bibliography
-\addbibresource{C5_TBT_OSS.bib} % The filename of the bibliography
-\addbibresource{C6_SRK.bib} % The filename of the bibliography
-\addbibresource{C7_SVMS.bib} % The filename of the bibliography
-\addbibresource{C8_NACA.bib} % The filename of the bibliography
+%\usepackage[backend=bibtex,style=trad-unsrt,sorting=nyt,natbib=true,isbn=false,doi=false,url=false]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
+%\addbibresource{C2_preliminaries.bib} % The filename of the bibliography
+%\addbibresource{C3_turbulence.bib} % The filename of the bibliography
+%\addbibresource{C4_RB_VMS.bib} % The filename of the bibliography
+%\addbibresource{C5_TBT_OSS.bib} % The filename of the bibliography
+%\addbibresource{C6_SRK.bib} % The filename of the bibliography
+%\addbibresource{C7_SVMS.bib} % The filename of the bibliography
+%\addbibresource{C8_NACA.bib} % The filename of the bibliography
+\bibliographystyle{abbrv}
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
@@ -326,7 +327,8 @@ Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\printbibliography[heading=bibintoc]
+%\printbibliography[heading=bibintoc]
+\bibliography{C2_preliminaries,C3_turbulence,C4_RB_VMS,C5_TBT_OSS,C6_SRK,C7_SVMS,C8_NACA}
 
 %----------------------------------------------------------------------------------------
 

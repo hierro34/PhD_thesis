@@ -1,0 +1,28 @@
+cp C2_preliminaries.bib C2_preliminaries.bck 
+cat C2_preliminaries.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C2_preliminaries.bib
+cp C3_turbulence.bib C3_turbulence.bck 
+cat C3_turbulence.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C3_turbulence.bib
+cp C4_RB_VMS.bib C4_RB_VMS.bck 
+cat C4_RB_VMS.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C4_RB_VMS.bib
+cp C5_TBT_OSS.bib C5_TBT_OSS.bck 
+cat C5_TBT_OSS.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C5_TBT_OSS.bib
+cp C6_SRK.bib C6_SRK.bck 
+cat C6_SRK.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C6_SRK.bib
+cp C7_SVMS.bib C7_SVMS.bck 
+cat C7_SVMS.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C7_SVMS.bib
+cp C8_NACA.bib C8_NACA.bck 
+cat C8_NACA.bib |  grep -v month" "" "*=" "" "* > /tmp/kk
+mv -f /tmp/kk C8_NACA.bib
+rm -Rf main.log
+rm -Rf main.aux
+pdflatex main.tex
+bibtex main
+pdflatex main.tex
+pdflatex main.tex
+

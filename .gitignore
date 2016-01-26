@@ -23,4 +23,5 @@
 *.synctex.gz
 *.zip
 *.xml
+*.bck
 template/

@@ -57,12 +57,12 @@ whereas we consider two possible definitions of $\tau_c$, viz. $\tau_c = 0$ (whi
 \end{align}
 where $h$ is the mesh size and $c_1$ and $c_2$ are algorithmic constants. Let us comment on expression \Eq{C2_tau_m}:
 \begin{itemize}
-\item The influence of the constants $c_1$ and $c_2$ is discussed in Section \ref{subsec-C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch-codina-13}. 
+\item The influence of the constants $c_1$ and $c_2$ is discussed in Section \ref{subsec-C4_effect_const}. A theoretical way to determine them would be to impose that the numerical dissipation they introduce be equal to the molecular dissipation in turbulent regimes, as explained in~\cite{guasch_statistical_2013}. 
 \item The definition of $\tau_m$ in \Eq{C2_tau_m} is not standard, in the sense that the one used often depends on the time step size of the time discretization, $\delta t$. Instead of \Eq{C2_tau_m}, $\tau_m^{-1}=\frac{1}{\delta t} + \frac{c_1\nu}{h^2}+\frac{c_2|\a|}{h}$ is more often considered (see, e.g., \cite{hsu_improving_2010,gamnitzer_time-dependent_2010}). We refer to Section \ref{subsec-C4_small_time_step} for a more detailed discussion about this topic. Likewise, other expressions with the same asymptotic behavior in terms of $h$, $\nu$ and $|\a|$ can also be employed.
 \item Expression \Eq{C2_tau_m} corresponds to linear isotropic elements. If elements of order $p$ are used ($p$ is not the pressure, here), $c_1$ must be replaced by $c_1 p^4$ and $c_2$ by $c_2 p$. For anisotropic elements, the definition of $h$ within each element is not obvious. A possibility is explained in \cite{principe_dissipative_2010}.
 \end{itemize}
 
-In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{codina_dissipative_2010}, together with some numerical experiments. 
+In the following three sections we discuss the particular ingredients of our VMS models. A different summary can also be found in \cite{Codina-chap-2011}, together with some numerical experiments. 
 
 \subsection{The dynamics of the subscales}
 \label{subsec-C2_dyn}
@@ -73,7 +73,7 @@ Stabilized formulations were originally developed for steady convection-diffusio
 \end{equation}
 that is, to neglect the temporal derivative of the subscales in \Eq{C2_velo_sgs}. In this case, the subscales are called quasi-static in what follows.
 
-The subscale as a time dependent variable of the problem was introduced in \cite{codina_stabilized_2002,codina_time_2007}. It gives rise to important properties like commutativity of space and time discretization, stability without restrictions on the time step size \cite{codina_time_2007,badia_multiscale_2009} and, combined with orthogonal subscales, to convergence towards weak solutions of the Navier-Stokes equations \cite{badia_convergence_2014} and the possibility of predicting backscatter \cite{codina_dissipative_2010,principe_dissipative_2010}. 
+The subscale as a time dependent variable of the problem was introduced in \cite{codina_stabilized_2002,codina_time_2007}. It gives rise to important properties like commutativity of space and time discretization, stability without restrictions on the time step size \cite{codina_time_2007,badia_multiscale_2009} and, combined with orthogonal subscales, to convergence towards weak solutions of the Navier-Stokes equations \cite{badia_convergence_2014} and the possibility of predicting backscatter \cite{Codina-chap-2011,principe_dissipative_2010}. 
 
 Equation \Eq{C2_velo_sgs} can be analytically integrated to give
 \begin{equation}
@@ -136,7 +136,7 @@ b(\a,\u_h +\tilde\u,\v_h)= - (\u_h\otimes\u_h, \nabla\v_h)
 - (\u_h\otimes\tilde\u, \nabla\v_h)- (\tilde\u\otimes\u_h, \nabla\v_h)
 - (\tilde\u\otimes\tilde\u, \nabla\v_h).\label{eq:nonconconv}
 \end{align}
-Even if this is not exactly what we get using the non-conservative or skew-symmetric forms because of the approximation error, this allows us to interpret the different contributions arising from the nonlinear scale splitting. As it is explained in \cite{codina_dissipative_2010}, from (\ref{eq:nonconconv}) we can identify the contributions from the cross stresses, the Reynolds stresses and the subgrid scale tensor. 
+Even if this is not exactly what we get using the non-conservative or skew-symmetric forms because of the approximation error, this allows us to interpret the different contributions arising from the nonlinear scale splitting. As it is explained in \cite{Codina-chap-2011}, from (\ref{eq:nonconconv}) we can identify the contributions from the cross stresses, the Reynolds stresses and the subgrid scale tensor. 
 \end{remark}
 
 \subsection{The space for the subscales}

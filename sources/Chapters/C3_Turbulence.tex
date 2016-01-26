@@ -358,7 +358,7 @@ Also in this direction \cite{rohe_analysis_2010} and \cite{chalot1998consistent}
 \label{subsubsec-C3_TGV}
 The Taylor-Green Vortex flow (TGV) problem is also a typical and widely used problem on turbulence numerical simulations. First introduced by Taylor and Green (1937) \cite{taylor_mechanism_1937}, this problem aims to show, in a relatively simple flow, the basic turbulence decay mechanisms like the turbulent energy cascade, the production of small eddies and the enhancement of dissipation by the stretching of vortex lines.
 
-The initial analytical condition for this problem, unlike the DHIT problem, is defined on the physical space. Here we follow \cite{gassner_accuracy_????}, where the initial solution is defined by
+The initial analytical condition for this problem, unlike the DHIT problem, is defined on the physical space. Here we follow \cite{gassner_accuracy_2013}, where the initial solution is defined by
 \begin{align}
 \label{eq-TGV_initial_condition}
 &u_x=u_0\cos(x)\sin(y)\sin(z),\\\nonumber
@@ -368,7 +368,7 @@ The initial analytical condition for this problem, unlike the DHIT problem, is d
 \end{align}
 With
 $$u_0=\frac{2}{\sqrt{3}}\sin\left(\gamma+\frac{2\pi}{3}\right).$$
-We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The Reynolds number is defined as the inverse of the kinematic viscosity $\nu$, noting that the length and velocity scales are of the same order. This is done according to \cite{gassner_accuracy_????} and \cite{brachet_direct_1991}, and will allow us to compare our results with those showed on these papers. For simplicity, the pressure constant parameter $p_0$ is chosen equal to zero.
+We choose $\gamma=0$, which gives the mean initial velocity  $u_0=1$. The Reynolds number is defined as the inverse of the kinematic viscosity $\nu$, noting that the length and velocity scales are of the same order. This is done according to \cite{gassner_accuracy_2013} and \cite{brachet_direct_1991}, and will allow us to compare our results with those showed on these papers. For simplicity, the pressure constant parameter $p_0$ is chosen equal to zero.
 
 With these definitions we can compute analytically the initial total kinetic energy of the problem, which is 
 \begin{align}
@@ -410,7 +410,7 @@ Equation \Eq{TGV_u_perp} has a direct implication to the voritcity field, $\bold
 \end{align}
 Which means that the vorticity is perpendicular to each impermeable box face.
 
-We solve the TGV problem using a Reynolds number $Re=1600$. The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_????, jb_chapelier_final_2012}).
+We solve the TGV problem using a Reynolds number $Re=1600$. The most common Reynolds numbers available in the literature are ${\rm Re}=800$, ${\rm Re}=1600$ and ${\rm Re}=3000$ (see, e.g., \cite{andrea_d._beck_numerical_2012, fauconnier_construction_2009, gassner_accuracy_2013, jb_chapelier_final_2012}).
 
 The TGV test is characterized by its laminar evolution at the initial time steps, when the flow is strongly anisotropic due to the structured large-scale vortexes directly related to the initial condition. If the Reynolds number is large enough, there appears the vortex-stretching process, which introduce the energy cascade effect, transferring energy from large to small-scales. Because of this procedure, the flow becomes unstable and, therefore, turbulent. According to Brachet et al. \cite{brachet_small-scale_1983}, the flow becomes nearly isotropic for $Re\geq1000$.
 
