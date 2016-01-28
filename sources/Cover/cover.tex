@@ -1,0 +1,136 @@
+\documentclass[11pt,spinewidth=15mm,coverwidth=210mm,coverheight=297mm,flapwidth=0mm]{bookcover}
+
+\usepackage{contour}
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\contourlength{1pt}
+\definecolor{lightbrown}{RGB}{200,100,0}
+\colorlet{title}{white}
+
+
+
+\begin{document}
+% BACKGROUND
+%----------------------------------------------------------------------------------------
+% white background color on the whole cover
+\setbookcover{bgcolor}{whole}{color=white}
+% Brown background picture on the whole cover, without the flaps
+\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover}
+
+
+%% Vertical light brown transparent trails on the back cover by a tikz code
+%\setbookcover{bgtikz}{back}{
+%\fill[opacity=0.3,color=lightbrown]
+%(0mm,0mm) rectangle (20mm,210mm)
+%(100mm,0mm) rectangle (150mm,210mm);}
+% Vertical light brown transparent trails on the front cover by a tikz code
+\setbookcover{bgtikz}{spine}{
+\fill[opacity=0.8,color=lightbrown]
+(0mm,0mm) rectangle (15mm,307mm);}
+%% Remark
+%\setbookcover{fgfirst}{remark}{
+%\bfseries\color{blue}SAMPLE DUST JACKET}
+% Text on the front cover
+
+% FRONT PAGE
+%----------------------------------------------------------------------------------------
+\setbookcover{fgfirst}{front}{
+\centering
+\begin{minipage}[c]{180mm}
+\centering
+\vspace{20mm}
+\color{title}
+
+\textsc{\LARGE \bf Universitat Politècnica de Catalunya}\\[1.5cm] % University name
+\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{\large Author:}\\
+%\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
+{\Large Oriol \textsc{Colomés Gené}} % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{\large Supervisor:} \\
+%\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
+{\Large  Dr. Santiago \textsc{Badia}} % Supervisor name - remove the \href bracket to remove the link  
+\end{flushright}
+\end{minipage}\\[3cm]
+
+\vspace{60mm}
+\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of Doctor of Philosophy}\\[0.3cm] % University requirement text
+\textit{in the}\\[0.4cm]
+{\large \bf Departament de Resistència de Materials i Estructures a l'Enginyeria}\\[2cm] % Research group name and department name
+
+{\Large Barcelona, February 2016}
+
+\vspace{15mm}
+\centering
+\includegraphics[width=8cm]{../Figures/Cover/logo_escola_blanc_fons_transparent.png}
+\end{minipage}
+}
+
+% SPINE
+%----------------------------------------------------------------------------------------
+% Text on the spine
+\setbookcover{fgfirst}{spine}{
+\centering
+\color{title}
+\vspace{1cm}
+{\footnotesize Ph.D. thesis}\\
+\vfill
+\rotatebox[origin=c]{90}{\parbox{14cm}{\centering \Large \bf Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}}
+\vfill
+\rotatebox[origin=c]{90}{\Large \bf Oriol Colomés Gené}\\
+\vfill
+{\footnotesize February 2016}
+\vspace{1cm}}
+
+
+% BACK PAGE
+%----------------------------------------------------------------------------------------
+% Text on the back cover
+\setbookcover{fgfirst}{back}{
+\centering
+\vspace{20mm}
+\parbox{110mm}{\color{white}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.}}
+% Text and picture (dice.png) on the front flap
+\setbookcover{fgfirst}{front flap}{
+\centering
+\vspace{20mm}
+\parbox{40mm}{\color{white}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.}
+\vfill
+\includegraphics[width=30mm]{./figures/dice.png}
+\vspace{10mm}}
+% Text on the back flap
+\setbookcover{fgfirst}{back flap}{
+\centering
+\vspace{20mm}
+\parbox{40mm}{\color{white}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.}}
+% Making the dust jucket
+\makebookcover
+\end{document}

@@ -56,30 +56,30 @@ A turbulent flow is characterized by the fact that, superimposed on the mean flo
 \subsection{Vorticity}
 %%% REVIEW!!!
 The vorticity is a measure of the rotation of individual fluid elements and it is defined by the following expression
-$$\omega\cdot d\mathbf{S}=\oint_C\mathbf{u}\cdot d\mathbf{l}.$$
+$$\boldsymbol{\omega}\cdot d\mathbf{S}=\oint_C\mathbf{u}\cdot d\mathbf{l}.$$
 %%%
 
 Vorticity cannot be created within the interior of a fluid unless there are body forces present, but it spreads by diffusion and can be intensified by stretching of fluid elements. Boundary layers can be thought as diffusion layers for the vorticity generated on a surface.
 
-Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\omega$ are somewhat simpler than those governing $\u$. The second reason is that many flows are characterized by localized regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{davidson_turbulence:_2004}.
+Sometimes it is more fruitful to work with the vorticity field instead than the velocity field. First, because the rules governing the evolution of $\boldsymbol{\omega}$ are somewhat simpler than those governing $\u$. The second reason is that many flows are characterized by localized regions of intense rotation. When we are interested in rotation, it is natural to focus on angular momentum rather than linear momentum. Operating with the angular momentum, one can obtain an equation describing the vorticity motion, see \cite{davidson_turbulence:_2004}.
 \begin{equation}
 \label{eq-vorticity}
-I\frac{D\omega}{Dt}=-\omega\frac{DI}{Dt}+2\nu\mathbf{T}
+I\frac{D\boldsymbol{\omega}}{Dt}=-\boldsymbol{\omega}\frac{DI}{Dt}+2\nu\mathbf{T}
 \end{equation}
 where $I$ is the moment of inertia of a small material element that is \textit{instantaneously} spherical and $\nu\mathbf{T}$ denotes the viscous torque acting on the sphere. The equation \Eq{vorticity} suggest several results:
 \begin{itemize}
-\item $\omega$ evolves independently of $ p $.
-\item If $\omega$ is initially zero, and the flow is inviscid ($ \nu=0 $), then $\omega$ should remain zero in each fluid particle.
+\item $ \boldsymbol{\omega} $ evolves independently of $ p $.
+\item If $ \boldsymbol{\omega} $ is initially zero, and the flow is inviscid ($ \nu=0 $), then $ \boldsymbol{\omega} $ should remain zero in each fluid particle.
 \item If $I$ decreases (the vortex is stretching) in a inviscid fluid element, then the vorticity of that element should increase.
 \end{itemize}
-Alternatively to \Eq{vorticity}, introducing the identity $\nabla(\u^2/2)=(\u\cdot\nabla)\u+\u\times\omega$ into the linear momentum equation and operating, we obtain another expression of the vorticity motion in terms of the velocity field
+Alternatively to \Eq{vorticity}, introducing the identity $\nabla(\u^2/2)=(\u\cdot\nabla)\u+\u\times\boldsymbol{\omega}$ into the linear momentum equation and operating, we obtain another expression of the vorticity motion in terms of the velocity field
 \begin{equation}
 \label{eq-vorticity_velocity}
-\frac{D\omega}{Dt}=(\omega\cdot\nabla)\mathbf{u}+\nu\Delta\omega.
+\frac{D\boldsymbol{\omega}}{Dt}=(\boldsymbol{\omega}\cdot\nabla)\mathbf{u}+\nu\Delta\boldsymbol{\omega}.
 \end{equation}
 From \Eq{vorticity} and \Eq{vorticity_velocity} we can easily see that the rate of rotation of a fluid blob may increase or decrease due to changes in its moment of inertia, or changes because it is spun up or slowed down by viscous stresses. We also can state from equation \Eq{vorticity_velocity} that vorticity is advected by $\u$ and diffused by viscous stresses.
 
-Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\omega\cdot\nabla)\u$ represents intensification of vorticity by the stretching fluid elements, a justification of this suggestion can be fount in \cite{pope_turbulent_2000}.
+Looking at the equation \Eq{vorticity_velocity} we can see that in three-dimensional flows the first term on the right hand side is non-zero. Comparing this equation with the angular momentum equation \Eq{vorticity}, we can say that $(\boldsymbol{\omega}\cdot\nabla)\u$ represents intensification of vorticity by the stretching fluid elements, a justification of this suggestion can be fount in \cite{pope_turbulent_2000}.
 
 \subsection{Reynolds stresses and turbulence models}
 It is an empirical observation that if $Re$ is large enough a flow invariably becomes unstable and then turbulent. Suppose we have a turbulent flow in which $\u$ and $p$ consist of a time-averaged component, $\overline{\u}$ and $\overline{p}$, plus a fluctuating part, $\u'$ and $p'$:
