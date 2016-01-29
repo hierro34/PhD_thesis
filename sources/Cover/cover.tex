@@ -6,6 +6,7 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \contourlength{1pt}
 \definecolor{lightbrown}{RGB}{200,100,0}
+\definecolor{lightblue}{RGB}{0,80,120}
 \colorlet{title}{white}
 
 
@@ -16,7 +17,8 @@
 % white background color on the whole cover
 \setbookcover{bgcolor}{whole}{color=white}
 % Brown background picture on the whole cover, without the flaps
-\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover}
+%\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover}
+\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover_blue}
 
 
 %% Vertical light brown transparent trails on the back cover by a tikz code
@@ -26,7 +28,8 @@
 %(100mm,0mm) rectangle (150mm,210mm);}
 % Vertical light brown transparent trails on the front cover by a tikz code
 \setbookcover{bgtikz}{spine}{
-\fill[opacity=0.8,color=lightbrown]
+%\fill[opacity=0.8,color=lightbrown]
+\fill[opacity=0.8,color=lightblue]
 (0mm,0mm) rectangle (15mm,307mm);}
 %% Remark
 %\setbookcover{fgfirst}{remark}{
