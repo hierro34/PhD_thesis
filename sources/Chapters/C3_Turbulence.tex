@@ -1,8 +1,8 @@
 \chapter{The turbulence phenomena}
 \label{chap-Turbulence}
-One of the main topics of this thesis is the turbulence phenomena that appear in incompressible fluid flows. In order to put the reader in context, it worth describing the main properties and definitions of such kind of flows, albeit rather briefly. 
+One of the main topics of this thesis is the turbulence phenomena that appear in incompressible fluid flows. In order to put the reader in context, it is mandatory to describe the main properties and definitions of such kind of flows, albeit rather briefly. 
 
-Some elementary definitions are established in the first section of this chapter. Thereafter, a short introduction to the vorticity is given, together with some characteristic properties of this field. The definition of the Reynolds stresses is stated subsequently, giving some insights of what does \textit{turbulence modelling} mean. In forthcoming chapters, some turbulent quantities will be used to characterize the fluid flow, so we dedicate some lines in this chapter on the explanation of such quantities. Finally, particular characteristics of isotropic turbulence and wall bounded turbulent flows are detailed. Here we introduce the turbulence tests performed during the thesis.
+Some elementary definitions are established in the first section of this chapter. Thereafter, a short introduction to the vorticity is given, together with some characteristic properties of this field. The definition of the Reynolds stresses is stated subsequently, giving some insights of what does \textit{turbulence modelling} mean. In forthcoming chapters, some turbulent quantities will be used to characterize the fluid flow, so we dedicate some lines in this chapter on the explanation of such quantities. Finally, particular characteristics of isotropic turbulence and wall-bounded turbulent flows are detailed. Here we introduce the turbulence tests performed during the thesis.
 
 For a deeper explanation of turbulence phenomena we refer to \cite{pope_turbulent_2000,davidson_turbulence:_2004,orlandi_fluid_2012,tennekes_first_1972,lesieur_turbulence_2012}.
 
@@ -11,7 +11,7 @@ For a deeper explanation of turbulence phenomena we refer to \cite{pope_turbulen
 \subsection{Elementary concepts}
 In the coming chapters some elementary concepts will be used. Here we give a brief definition of the most important ones:
 \begin{itemize}
-\item\keyword{Categories of fluid flow:}\\Fluid mechanics and fluid flows are often divided into different regimes. In particular, one can make three different sub-divisions. The first division distinguishes between fluids that may be treated as inviscid or fluids in where the finite viscosity must be taken into account. The second sub-division distinguishes between laminar (organized) and turbulent (chaotic) flow. The final sub-division is between irrotational(or potential) flow and rotational flow.
+\item\keyword{Categories of fluid flow:}\\Fluid mechanics and fluid flows are often divided into different regimes. In particular, one can make three different sub-divisions. The first division distinguishes between fluids that may be treated as inviscid or fluids in where the finite viscosity must be taken into account. The second sub-division distinguishes between laminar (organized) and turbulent (chaotic) flow. The final sub-division is between irrotational (or potential) flow and rotational flow.
 
 In this thesis we will mainly focus on the second sub-division, distinguishing between laminar and turbulent flows. Except when stated, the fluid will be considered to be viscous and rotational.
 
@@ -33,7 +33,7 @@ When $ Re $ is small, viscous forces outweight inertial forces (laminar regimes)
 
 \item\keyword{Boundary layers}\\ Let us consider a high Reynolds number flow. Since $Re$ is large, we might be tempted to solve the inviscid equations of motion, 
 $$(\u\cdot\nabla)\u=-\nabla\left(\frac{p}{\rho}\right)$$
-subject to the inviscid boundary condition $\u\cdot dS=0$ on all solid surfaces. This determines the so-called \textit{external problem}. If the fluid satisfies the no-slip condition $\mathbf{u}=0$, there must be some region where the velocity adjust to zero. This region is the called \textit{Boundary Layer}. In this region the only mechanical forces available to cause a drop in velocity are viscous shear stresses. Thus the viscous term must be of the same order as the other terms within the boundary layer, 
+subject to the inviscid boundary condition $\u\cdot dS=0$ on all solid surfaces. This determines the so-called \textit{external problem}. If the fluid satisfies the no-slip condition $\mathbf{u}=0$ on $ \Gamma_D $, there must be some region where the velocity adjust to zero. This region is the called \textit{Boundary Layer}. In this region the only mechanical forces available to cause a drop in velocity are viscous shear stresses. Thus the viscous term must be of the same order as the other terms within the boundary layer, 
 $$\nu\Delta\u\sim(\u\cdot\nabla)\u,$$
 
 If the inertial forces are of the same order than the viscous forces in the boundary layer, we can establish the following relation
@@ -126,10 +126,10 @@ It can be shown that this system of equations is not closed, in the sense that, 
 Leonard (1974) introduced a decomposition of $\tau_{ij}^R$ into three component stresses.
 $$\tau_{ij}^R=L_{ij}+C_{ij}+R_{ij},$$
 where $L_{ij}=\overline{\overline{u}_i\overline{u}_j}-\overline{u}_i\overline{u}_j$ are the Leonard stresses. The cross stresses are $C_{ij}=\overline{\overline{u}_iu_j'}+\overline{u_i'\overline{u}_j}$ and finally, $R_{ij}=\overline{u_i'u_j'}$ are the subgrid scale (SGS) Reynolds stresses. Decomposing Reynolds stresses into Leonard, cross and SGS Reynolds stresses we can reformulate \Eq{NS_strong_momentum} as
-$$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\Lbf+\nabla\cdot\Cbf+\nabla\cdot\Rbf$$
+$$\frac{\partial \overline{\u}}{\partial t}+(\overline{\u}\cdot\nabla)\overline{\u}=-\frac{\partial\overline{p}}{\partial x}+\nu\nabla^2\overline{\u}+\nabla\cdot\Lbf+\nabla\cdot\Cbf+\nabla\cdot\Rbf.$$
 
 \subsection{Definition of some turbulent quantities}
-Turbulent flows are considered to be chaotic since, superimposed on the mean flow pattern, there appear a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremely fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow pattern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the larges is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and with which we can compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
+Turbulent flows are considered to be chaotic since, superimposed on the mean flow pattern, there appears a fluctuating and random, both in space and time, motion. In general, the simulation of this kind of flows requires a large amount of computational resources. This occurs because the size of spatial and temporal scales needed to accurately reproduce the flow are extremely fine. In order to simplify the simulation, instead of resolving all fluid flow scales, we can simulate the mean flow pattern, \textit{i.e.} the largest scales, which in most engineering problems is enough, and consider how the unresolved scales interact with the largest ones taking into account their gross statistical properties. Then, if we want to ensure that the simulation reflects the correct mean flow and the effect of the small scales on the largest ones is accurately predicted we need some verification tools. These tools are some turbulent quantities that we can evaluate in our simulation and we can use to compare with analytical or more accurate results. In general, these quantities are obtained through an averaging procedure of the fluctuating fluid motion. We define the averaging procedure for a generic quantity $q$ as
 $$\left\langle q\right\rangle=\frac{1}{\Pi_{i=1}^{n_d}N_i}\sum_{j_1,...,j_{n_d}}q_{j_1,...,j_{n_d}},$$
 that is averaged over $n_d$ dimensions, each dimension $i$ having $N_i$ evaluation points. 
 
@@ -185,8 +185,8 @@ The skewness factor for a decaying turbulent flow depends slightly on the Reynol
 $$u=\left(\frac{2}{3}\int_0^\infty E(k)dk\right)^{1/2}.$$
 \item\keyword{Kolmogorov scale}\\The viscous dissipation acts most efficiently at small scales. Then, for wavenumbers greater than certain wavenumber $k_\eta$, the viscous dissipation will become important, and the energy spectrum $E(k)$ will decay more rapidly than the inertial range. It can be shown that $$k_\eta\sim\left(\frac{\varepsilon}{\nu^3}\right)^{1/4},$$ with $\varepsilon$ the total energy dissipation rate. The Kolmogorov scale is the inverse of this wave number $\eta:=1/k_\eta$, then $$\eta\sim\left(\nu^3/\varepsilon\right)^{1/4}.$$
 \item\keyword{Integral length scale}\\The integral length scale is the scale of the energy-containing eddies. From the Kolmogorov spectrum \Eq{kolmogorov_spectrum} we can determine the wavenumber that defines this scale, $k_\ell$, in terms of the energy dissipation rate  $$k_\ell\sim\frac{\varepsilon}{u^3}.$$ Then, the integral length scale, $\ell$, will be $\ell\sim u^3/\varepsilon$. Taking the ratio between the integral and Kolmogorov scales we have that
-$$\frac{\ell}{\eta}\sim\frac{u^3}{\varepsilon^{3/4}\nu^{3/4}}\sim\left(\frac{u\ell}{\nu}\right)^{3/4}\sim Re_\ell^{3/4}.$$
-Where $Re_l$ is the integral Reynolds number. Thus, the inertial range includes a set of scales growing with $Re_\ell^{3/4}$. If we want to accurately simulate the inertial range, the number grid points on an uniform 3D mesh should be $N\sim\left((Re_\ell)^{3/4}\right)^3=(Re_\ell)^{9/4}$. 
+$$\frac{\ell}{\eta}\sim\frac{u^3}{\varepsilon^{3/4}\nu^{3/4}}\sim\left(\frac{u\ell}{\nu}\right)^{3/4}\sim Re_\ell^{3/4},$$
+where $Re_l$ is the integral Reynolds number. Thus, the inertial range includes a set of scales growing with $Re_\ell^{3/4}$. If we want to accurately simulate the inertial range, the number grid points on an uniform 3D mesh should be $N\sim\left((Re_\ell)^{3/4}\right)^3=(Re_\ell)^{9/4}$. 
 \item\keyword{Taylor microscale}\\Apart from the Kolmogorov and integral length scale, there is another length scale that can characterize a turbulent flow. This is the Taylor microscale and provides a convenient estimate for the fluctuating strain rate field. It is a standard turbulent length that identifies the inertial subrange. The Taylor microscale is defined as $$\lambda^2=\frac{15u^2}{\left\langle\boldsymbol{\omega}^2\right\rangle}=\frac{15\nu u^2}{\varepsilon}.$$
 \item\keyword{Taylor-microscale Reynolds number}\\The Taylor-microscale Reynolds number is associated to the characteristic Taylor-microscale length and it is defined as $$Re_\lambda=\frac{u\lambda}{\nu}=\sqrt{15}\frac{u^2}{\left(\nu\varepsilon\right)^{1/2}}=\frac{1}{\nu}\sqrt{\frac{20}{3}}\frac{\int_0^\infty E(k)dk}{\left(\int_0^\infty k^2E(k)dk\right)^{1/2}}.$$
 \item\keyword{Energy dissipation rate}\\For a closed domain with stationary boundaries, the total rate of energy dissipation per unit of mass is given by
@@ -207,7 +207,7 @@ Multiplying the momentum equation \Eq{NS_strong_momentum} by the velocity, assum
 \label{eq-energy_equation}
 \frac{\partial\left(\u^2/2\right)}{\partial t}=-\nabla\cdot\left[\left(\u^2/2\right)\u\right]-\nabla\cdot\left[\left(p\right)\u\right]+\nabla\cdot\left[\left(\nu(\boldomega\times\u)\right)\right]-\nu\boldomega^2.
 \end{equation}
-Noting that $\frac{\u^2}{2}$ is nothing else than the kinetic energy, equation \Eq{energy_equation} is giving information about how the kinetic energy is dissipated. If we integrate \Eq{energy_equation} over an arbitrary and fixed volume $V$, and using the divergence theorem, we can determine through which mechanisms the energy is dissipating
+Noting that $\frac{\u^2}{2}$ is nothing else than the kinetic energy, equation \Eq{energy_equation} is giving information about how the kinetic energy is dissipated. If we integrate \Eq{energy_equation} over an arbitrary and fixed volume $V$, and using the divergence theorem, we can determine through which mechanisms the energy is dissipating:
 \begin{align}
 \label{eq-energy_dissipation}
 &\frac{d}{dt}\int_V\left(\u^2/2\right)dV=\\\nonumber
@@ -216,7 +216,7 @@ Noting that $\frac{\u^2}{2}$ is nothing else than the kinetic energy, equation \
 &+\left[\mbox{rate at which the viscous forces do work on the boundary}\right]\\\nonumber
 &-\int_V\nu\boldomega^2dV.
 \end{align}
-Averaging \Eq{energy_dissipation} and assuming that for homogeneous and isotropic turbulence the average flux through the boundaries is negligible, we obtain a relation between the averaged total kinetic energy $K$ with the enstrophy $Z$.
+Averaging \Eq{energy_dissipation} and assuming that for homogeneous and isotropic turbulence the average flux through the boundaries is negligible, we obtain a relation between the averaged total kinetic energy $K$ with the enstrophy $Z$
 \begin{equation}
 \label{eq-energy_enstrophy}
 \frac{d K}{dt}=-2\nu Z,
@@ -506,7 +506,8 @@ where $i=1,...,np_y$ with $np_y$ the total amount of nodes in the wall-normal di
 
 \section{Conclusions}
 \label{sec-C3_conclusions}
-With the aim of having a self-contained thesis, in this chapter we have described the basic concepts of turbulent flows. Any of the ideas exposed in this chapter have been extracted from the investigation carried out during the thesis development. Although there are not any innovative concepts in this chapter, all the definitions given in it are basic for the development and interpretation of further investigations. In any case, all the information provided in this chapter have been properly referenced.
+With the aim of having a self-contained thesis, in this chapter we have described the basic concepts of turbulent flows. %Any of the ideas exposed in this chapter have been extracted from the investigation carried out during the thesis development. 
+Although there are not any innovative concepts in this chapter, all the definitions given in it are basic for the development and interpretation of further investigations. In any case, all the information provided in this chapter have been properly referenced.
 
 We have started the chapter with some basic definitions that will be used during al this thesis. We also have analyzed the vorticity field and its behaviour in a turbulent flow. The definition of the Reynolds stresses and some turbulent quantities have also been described in the first section of this chapter.
 

@@ -5,7 +5,7 @@ Let us consider the strong form of the Navier-Stokes problem \Eq{NS_strong_momen
 \label{eq-C2_varia_NS_u_space}
 &\mathcal{V}_g:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_{\Gamma_D}=\u_g\right\}\equiv\Hbf^1_g(\Omega),\\
 \label{eq-C2_varia_NS_v_space}
-&\mathcal{V}_0:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_\Gamma=0\right\}\equiv\Hbf^1_0(\Omega),\\
+&\mathcal{V}_0:=\left\{\v\in\Hbf^1(\Omega):\left.\v\right|_{\Gamma_D}=0\right\}\equiv\Hbf^1_0(\Omega),\\
 \label{eq-C2_varia_NS_p_space}
 &\mathcal{Q}:=\Lbf^2(\Omega)/\mathbb{R}.
 \end{align}
@@ -16,7 +16,7 @@ Given sufficiently smooth functions $ \v\in\mathcal{V}_0 $ and $ q\in\mathcal{Q}
 \label{eq-C2_varia_NS_weak_continuity}
 (\nabla\cdot\u,q)=&\ 0&\forall q\in\mathcal{Q}.
 \end{align}
-Adding up equations \Eq{C2_varia_NS_weak_momentum}-\Eq{C2_varia_NS_weak_continuity} we obtain an alternative weak form of the incompressible Navier-Stokes problem \Eq{NS_strong_momentum}-\Eq{NS_strong_Ini} consists, e.g., in finding $[\u,p]\in {L}^2(0,T;\mathcal{V}_g)\times {\cal D}'(0,T;\mathcal{Q})$ (distributions in time with values in $\mathcal{Q}_0$) such that
+Adding up equations \Eq{C2_varia_NS_weak_momentum}-\Eq{C2_varia_NS_weak_continuity} we obtain an alternative weak form of the incompressible Navier-Stokes problem \Eq{NS_strong_momentum}-\Eq{NS_strong_Ini} consists, e.g., in finding $[\u,p]\in {L}^2(0,T;\mathcal{V}_g)\times {\cal D}'(0,T;\mathcal{Q})$ (distributions in time with values in $\mathcal{Q}$) such that
 \begin{equation}
 \label{eq-C2_NS_weak}
 (\partial_t\u,\v) + B(\u;[\u,p],[\v,q]) = \left<\f,\v\right> 
@@ -61,16 +61,16 @@ In this thesis we will mainly use FE spaces composed by quadrilateral finite ele
 $$ Q_k:=\left\{\sum_jc_jp_j(x)q_j(y)r_j(z):\mbox{ with $ p_j $, $ q_j $ and $ r_j $ polynomials of degree $j \leq k $}\right\}, $$
 and $ \widetilde{\mathcal{N}} $ denoting the point evaluations at $ \left\{(t_l,t_m,t_n):\ l,m,n=0,1,...,k \right\} $ where \\$\left\{-1 = t_0 < t_1 < ... < t_k = 1 \right\}$.
 
-Let us now consider a FE partition $ \mathcal{T}_h $ of the domain $ \Omega $ composed by a set of elements $ \left\{K_e\right\}_{e=1}^{ne} $, being $ ne $ the total amount of elements in the domain. Let us consider $ F_K $ a mapping from $ K $ to $ \widetilde{K} $, i. e. $ F_K(K)=\widetilde{K} $ with its pull-back map defined as $ F^*_K(\hat{f}):=\hat{f}\circ F_K $, see ~\cite{ciarlet_general_1972,brenner_mathematical_2007} for more details on equivalence between FE.
+Let us now consider a FE partition $ \mathcal{T}_h $ of the domain $ \Omega $ composed by a set of elements $ \left\{K_e\right\}_{e=1}^{ne} $, being $ ne $ the total amount of elements in the domain. Let us consider $ F_K $ a mapping from $ K $ to $ \widetilde{K} $, i. e. $ F_K(K)=\widetilde{K} $ with its pull-back map defined as $ F^*_K(\hat{f}):=\hat{f}\circ F_K $, see ~\cite{ciarlet_general_1972,brenner_mathematical_2007} for more details on equivalence between FEs.
 
 Then the FE spaces for the velocity and pressure fields equivalent to \Eq{C2_varia_NS_u_space}-\Eq{C2_varia_NS_p_space} can be defined as
 \begin{align}
 \label{eq-C2_varia_NS_vh_space}
 &\mathcal{V}_{h}:=\left\{\v_h\in(\mathcal{C}^0(\Omega))^d:\left.\v_h\right|_K=\tilde{\v}\circ F_K^{-1},\ \tilde{\v}\in(Q_{k_v})^d,\ K\in\mathcal{T}_h\right\},\\
 \label{eq-C2_varia_NS_vgh_space}
-&\mathcal{V}_{g,h}:=\left\{\v_h\in\mathcal{V}_h:\left.\v_h\right|_{K\cap\Gamma}=\u_g\right\},\\
+&\mathcal{V}_{g,h}:=\left\{\v_h\in\mathcal{V}_h:\left.\v_h\right|_{K\cap\Gamma_D}=\u_g\right\},\\
 \label{eq-C2_varia_NS_v0h_space}
-&\mathcal{V}_{0,h}:=\left\{\v_h\in\mathcal{V}_h:\left.\v_h\right|_{\partial K}=0\right\},\\
+&\mathcal{V}_{0,h}:=\left\{\v_h\in\mathcal{V}_h:\left.\v_h\right|_{K\cap\Gamma_D}=0\right\},\\
 \label{eq-C2_varia_NS_qh_space}
 &\mathcal{Q}_h:=\left\{\mathcal{C}^0(\Omega)\cap\Lbf^2(\Omega)/\mathbb{R}:\left.q_h\right|_K=\tilde{q}\circ F_K^{-1},\ \tilde{q}\in Q_{kq},\ K\in\mathcal{T}_h \right\}.
 \end{align}

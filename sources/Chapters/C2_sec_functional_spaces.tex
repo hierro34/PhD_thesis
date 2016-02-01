@@ -1,9 +1,9 @@
 Before describing the variational formulation of Navier-Stokes equations we need an introduction to some functional spaces. In this section we define the notation used in following sections and we give some definitions of fundamental function spaces. A deeper explanation of the concepts introduced in this section can be found in any functional analysis text, for example we refer to ~\cite{Temam_1984}, where we find a numerical analysis for the Stokes and Navier-Stokes equations. Other texts also enhance the concepts briefly defined in this section, see ~\cite{brenner_mathematical_2007}.
 
-Let us start considering $\Omega$ to be an open set of $\mathbb{R}^n$ with boundary $\Gamma$. Otherwise stated, we assume that the boundary of $\Omega$ is locally Lipschitz. We denote by $L^p(\Omega)$, with $1<p<+\infty$ (or $L^\infty(\Omega)$), the space of real functions defined on $\Omega$ with the $p$-th power absolutely integrable (or essentially bounded real functions for the case $p=\infty$). Note that we have made an abuse of notation for $ p $, and the reader should not confuse the $ p $-th order with the pressure field symbol defined in previous section. This is a Banach space with the norm 
+Let us start considering $\Omega$ to be an open set of $\mathbb{R}^n$ with boundary $\Gamma$. Otherwise stated, we assume that the boundary of $\Omega$ is locally Lipschitz. We denote by $L^p(\Omega)$, with $1<p<+\infty$ (or $L^\infty(\Omega)$), the space of real functions defined on $\Omega$ with the $p$-th power absolutely integrable (or essentially bounded real functions for the case $p=\infty$). Note that we have made an abuse of notation for $ p $, and the reader should not confuse the $ p $-th order with the pressure field symbol defined in the previous section. This is a Banach space with the norm 
 $$\|\u\|_{L^p(\Omega)}:=\left(\int_\Omega|\u(\x)|^pd\Omega\right)^{\frac{1}{p}}$$
-(or, for $p=\infty$,
-$$\|\u\|_{L^\infty(\Omega)}:=\underset{\Omega}{\mbox{ess. sup}}|\u(\x)|).$$
+or, for $p=\infty$,
+$$\|\u\|_{L^\infty(\Omega)}:=\underset{\Omega}{\mbox{ess sup}}|\u(\x)|).$$
 For $p=2$, $L^2(\Omega)$ is a Hilbert space with the scalar product
 \begin{equation}
 \label{eq-C2_scalar_product}
@@ -11,7 +11,7 @@ For $p=2$, $L^2(\Omega)$ is a Hilbert space with the scalar product
 \end{equation}
 Henceforth, when considering the scalar product over all domain $\Omega$ we will exclude the subscript, reading $(\cdot,\cdot)$. Furthermore, in forthcoming sections, the $L^2(\Omega)$-norm will be simply denoted as $\|\cdot\|$.
 The Sobolev space  $W^{m,p}(\Omega)$ is the space of functions in $L^p(\Omega)$ with derivatives of order less than or equal to $m$ in $L^p(\Omega)$, being $m$ an integer and with $1\leq p\leq+\infty$. This is a Banach space with the norm
-$$\|\u(x)\|_{W^{m,p}(\Omega)}:\left(\sum_{j\leq m}\|D^j\u(\x)\|^p_{L^p(\Omega)}\right)^{\frac{1}{p}},$$
+$$\|\u(x)\|_{W^{m,p}(\Omega)}:=\left(\sum_{j\leq m}\|D^j\u(\x)\|^p_{L^p(\Omega)}\right)^{\frac{1}{p}},$$
 where $D^j$ is the differentiation operator. When $p=2$, $W^{m,2}(\Omega)=H^m(\Omega)$ is a Hilbert space with the scalar product
 $$(\u,\v)_{H^m(\Omega)}:=\sum_{j\leq m}\left(D^j\u,D^j\v\right).$$
 Often we are concerned about $n$-dimensional vector functions with components in one of the spaces defined above. In this case we use bold characters to denote a vectorial space
@@ -23,7 +23,7 @@ Let $\Dcal(\Omega)$ be the space of $\Ccal^\infty$ functions with compact suppor
 \|\u\|\leq c(\Omega)\|\nabla\u\|,\quad\forall\u\in\Hbf^m_0(\Omega).
 \end{equation}
 
-From a physical point of view, as noticed in ~\cite{foias_navier-stokes_2001}, we can think on the space $\Lbf^2(\Omega)$ as the space of all vector fields $\u$ with finite kinetic energy. Moreover, the $\Hbf^1(\Omega)$ can be though as the space of all vector fields $\u$ with finite enstrophy. Further explanation of the kinetic energy and enstrophy concepts is given in Chapter \ref{chap-Turbulence}.
+From a physical point of view, as noticed in ~\cite{foias_navier-stokes_2001}, we can think on the space $\Lbf^2(\Omega)$ as the space of all vector fields $\u$ with finite kinetic energy. Moreover, the $\Hbf^1(\Omega)$ can be thought as the space of all vector fields $\u$ with finite enstrophy. Further explanation of the kinetic energy and enstrophy concepts is given in Chapter \ref{chap-Turbulence}.
 
 Let $ q $ be the dual index to $ p $, being $ 1\le p\le+\infty $, i.e. $ \frac{1}{q}+\frac{1}{p}=1 $, and $ k $ a negative integer. The Sobolev space $ W^{k,p}(\Omega) $ is defined to be the dual space $ \left(W^{-k,q}(\Omega)\right)' $. For $ p=2 $, $ q=2 $, and the Hilbert space $ H^k(\Omega) $ is the dual space of $ H^{-k}(\Omega) $. We define the duality pairing 
 $$ \left\langle f,v\right\rangle_\Omega:=\int_{\Omega}f(x)v(x)\ d\Omega,\quad\mbox{for $ f\in H^{-1}(\Omega) $ and $ v\in H^1_0(\Omega) $}. $$

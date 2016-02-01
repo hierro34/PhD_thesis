@@ -1,15 +1,15 @@
-In this section we will briefly state the basic concepts that one have to know about fluid mechanics and its mathematical description, which will be used in the forthcoming chapters.
+In this section we will briefly state the basic concepts that one has to know about fluid mechanics and its mathematical description, which will be used in the forthcoming chapters.
 
 Let us start with a review of the equations that govern the fluid flow. In this thesis we will restrict to constant-property Newtonian fluids. 
 
 \subsection{The momentum equation}
 \label{subsec-momentum}
-From the Newton's second law, the momentum equation relates the fluid particle acceleration, $\frac{D\u}{Dt}$ to the external forces acting on such fluid particle. The external forces can be decomposed into the surface forces and the body forces, $\f$. The surface forces are described by the stress tensor $\boldsigma(\x,t)$ that is symmetric and, for constant-property Newtonian fluids, is defined by
+From the Newton's second law, the momentum equation relates the fluid particle acceleration, $\frac{D\u}{Dt}$, to the external forces acting on such fluid particle. The external forces can be decomposed into the surface forces and the body forces, $\f$. The surface forces are described by the stress tensor $\boldsigma(\x,t)$ that is symmetric and, for constant-property Newtonian fluids, is defined by
 \begin{equation}
 \label{eq-stress_tensor_def}
 \boldsigma = -\breve{p}\boldI + 2\mu\boldsymbol{\varepsilon}(\u), 
 \end{equation}
-where $\breve{p}$ is the pressure field, $\boldI$ the identity tensor, $\mu$ the viscosity and $\boldsymbol{\varepsilon}(\u)$ the strain rate tensor, which is defined by the following expression
+where $\breve{p}$ is the pressure field, $\boldI$ the identity tensor, $\mu$ the viscosity, $ \u $ the fluid velocity and $\boldsymbol{\varepsilon}(\u)$ the strain rate tensor, which is defined by the following expression
 \begin{equation}
 \label{eq-strain_tensor_def}
 \boldsymbol{\varepsilon}(\u)=\frac{1}{2}\left[\nabla\u+\left(\nabla\u\right)^T\right].
@@ -39,7 +39,7 @@ which for constant density can be simplified to the kinematic condition that the
 \label{eq-continuity_equation_def2}
 \nabla\cdot\u=0.
 \end{equation}
-Equation \Eq{continuity_equation_def2} is also called incompressibility constraint, since it is a constraint on the fluid velocity, $\u$.
+Equation \Eq{continuity_equation_def2} is also called incompressibility constraint, since it is a constraint on the fluid velocity.
 
 \subsection{Navier-Stokes equations}
 \label{subsec-NS_equations}
@@ -52,7 +52,7 @@ Let $\Omega$ be a bounded domain of $\mathbb{R}^d$, where $d=2,3$ is the number 
 \end{align}
 where the decomposition of the velocity material derivative into the temporal partial derivative plus the convective derivative, $\frac{D\u}{Dt}=\frac{\partial\u}{\partial t}+\u\cdot\nabla\u$, and the fact that the velocity field is solenoidal have been used to simplify the momentum equation \Eq{momentum_equation_def2} into \Eq{NS_strong_momentum}. In forthcoming sections, the temporal partial derivative $ \frac{\partial(\cdot)}{\partial t} $ will also be denoted as $ \partial_t(\cdot) $.
 
-Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be supplied with appropriate boundary and initial conditions. The boundary $\Gamma$ is divided into the Dirichlet ($\Gamma_D$) and the Neumann ($\Gamma_N$) parts such that $\Gamma_D\cup\Gamma_N=\Gamma$ and $\Gamma_D\cap\Gamma_N=\O$. Then, the boundary and initial conditions can be written as
+Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be supplied with appropriate boundary and initial conditions. The boundary $\Gamma$ is divided into the Dirichlet ($\Gamma_D$) and the Neumann ($\Gamma_N$) parts such that $\Gamma_D\cup\Gamma_N=\Gamma$ and $\Gamma_D\cap\Gamma_N=\emptyset$. Then, the boundary and initial conditions can be written as
 \begin{align}
 \label{eq-NS_strong_Dir}
 \u&=\u_g&\mbox{on $\Gamma_D\times(0,T]$,}\\
@@ -61,7 +61,7 @@ Equations \Eq{NS_strong_momentum} and \Eq{NS_strong_continuity} need to be suppl
 \label{eq-NS_strong_Ini}
 \u(\x,0)&=\u_0(\x)&\mbox{in $\Omega\times\{0\}$,}
 \end{align}
-$\mathbf{n}$ being the unit outward vector normal to $\Gamma$. For a solid wall, the velocity field on the Dirichlet boundary $\Gamma_D$ is governed by two conditions. The first of them is the no penetration condition, the flow can not penetrate the wall.
+$\mathbf{n}$ being the unit outward vector normal to $\Gamma$. For a solid wall, the velocity field on the Dirichlet boundary $\Gamma_D$ is governed by two conditions. The first of them is the no penetration condition, the flow cannot penetrate the wall.
 \begin{equation}
 \label{eq-NS_no_penetration}
 \u\cdot\n=0\quad\mbox{on $\Gamma_D\times(0,T]$}.
@@ -90,4 +90,4 @@ Hence, we can state that the satisfaction of the Poisson problem \Eq{NS_poisson}
 \label{eq-NS_poisson_solution}
 p(\x,t)=\frac{1}{4\pi}\int_\Omega\frac{\nabla\cdot(\u(\mathbf{y},t)\cdot\nabla\u(\mathbf{y},t))}{|\x-\mathbf{y}|}d\mathbf{y}.
 \end{equation}
-An important consequence of \Eq{NS_poisson_solution} is that the pressure field is non-local, that means that a fluctuation at the point $\mathbf{y}$ affects to the hole domain. A direct repercussion of the non-locality of the pressure is that the pressure waves sent from $\mathbf{y}$ induce far-field pressure forces ($-\nabla p$) that can agitate the fluid motion at large distances from that point. Then, every part of the flow feels every other part. This consequence is more relevant in the case of turbulent fluid flows, where eddies at different locations of the flow can interact each other. 
+An important consequence of \Eq{NS_poisson_solution} is that the pressure field is non-local, that means that a fluctuation at one point $\mathbf{y}$ affects to the hole domain. A direct repercussion of the non-locality of the pressure is that the pressure waves sent from $\mathbf{y}$ induce far-field pressure forces ($-\nabla p$) that can agitate the fluid motion at large distances from that point. Then, every part of the flow feels every other part. This consequence is more relevant in the case of turbulent fluid flows, where eddies at different locations of the flow can interact each other. 
