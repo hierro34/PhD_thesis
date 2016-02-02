@@ -1,0 +1,13 @@
+En aquesta tesi s'ha desenvolupat diferents algoritmes per la simulació a gran escala de fluxos turbulents incompressibles mitjançant el mètode dels Elements Finits.
+
+En primer lloc s'ha avaluat el comportament dels mètodes de multiescala variacional (VMS) basats en el residu, per la simulació de grans vòrtexs (LES) de fluxos turbulents. S'han considerat diferents models VMS tenint en compte diferents aproximacions de les subescales, que inclouen tant subescales estàtiques o dinàmiques, una definicó lineal o nolineal, i diferents seleccions de l'espai de les subescales. S'ha demostrat que els mètodes VMS pensats com a models LES poden ser una alternativa als models basats en la física del problema.
+
+Aquest tipus de mètode normalment es combina amb l'ús de parelles de velocitat i pressió amb igual ordre d'interpolació. En aquest treball, també s'ha considerat un enfocament diferent, basat en l'ús d'elements inf-sup estables conjuntament amb estabilització del terme convectiu. Amb aquest objectiu, s'ha definit un mètode d'estabilització amb projecció simètrica del terme convectiu mitjançant una descomposició ortogonal de les subescales. En aquesta tesi també s'ha valorat la precisió i eficiència d'aquest mètode comparat amb mètodes basats en el residu fent servir interpolacions amb igual ordre per velocitats i pressions.
+
+A més, s'ha proposat un esquema d'integració en temps basat en els mètodes de Runge-Kutta que té dues propietats destacables. En primer lloc, el càlcul de la velocitat i la pressió es segrega al nivell de la integració temporal, sense la necessitat d'introduir tècniques de fraccionament del pas de temps. En segon lloc, els esquemes segregats de Runge-Kutta proposats, mantenen el mateix ordre de precisió tant per les velocitats com per les pressions. 
+
+Precisament, els mètodes d'estabilització amb projecció simètrica són adequats per ser integrats en temps mitjançant esquemes segregats de Runge-Kutta. Aquesta conjunció, juntament amb l'ús de tècniques de precondicionament en blocs, dona lloc a problemes tipus elasticitat i Laplacià que poden ser òptimament precondicionats fent servir els anomenats \textit{balancing domain decomposition by constraints preconditioners}. La escalabilitat dèbil d'aquesta formulació s'ha demostrat en aquest document.
+
+Adicionalment, també s'ha contemplat la imposició de forma dèbil de les condicions de contorn de Dirichlet en problemes de fluxos turbulents delimitats per parets.
+
+En aquesta tesi principalment s'han considerat quatre problemes ben coneguts per fer els experiments numèrics: el decaïment de turbulència isotròpica i homogènia, el problema del vòrtex de Taylor-Green, el flux turbulent en un canal i el flux turbulent al voltant d'una ala.

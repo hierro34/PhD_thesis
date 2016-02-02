@@ -101,14 +101,18 @@
 % Text on the back cover
 \setbookcover{fgfirst}{back}{
 \centering
-\vspace{20mm}
-\parbox{110mm}{\color{white}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-sunt in culpa qui officia deserunt mollit anim id est laborum.}}
+\vspace{15mm}
+\parbox{155mm}{\color{white}
+In this thesis we have developed a path towards large scale Finite Element simulations of turbulent incompressible flows. 
+
+We have assessed the performance of residual-based variational multiscale (VMS) methods for the large eddy simulation (LES) of turbulent incompressible flows, showing that VMS thought as an implicit LES model can be an alternative to the widely used physical-based models. This method is traditionally combined with equal-order velocity-pressure pairs. But in this work we also consider a different approach, based on inf-sup stable elements and convection-only stabilization. In order to do so, we define a symmetric projection stabilization of the convective term using a orthogonal subscale decomposition. 
+%Moreover, a recursive block preconditioning strategy has been considered for the resolution of the problem with an implicit treatment of the projection terms.
+
+Furthermore, we propose Runge-Kutta time integration schemes with two salient properties. First, velocity and pressure computations are segregated at the time integration level. Second, the proposed methods keep the same order of accuracy for both velocities and pressures. Precisely, the symmetric projection stabilization approach is suitable for segregated Runge-Kutta time integration schemes. This conjunction, together with the use of block-preconditioning techniques, lead to problems that can be optimally preconditioned using the balancing domain decomposition by constraints preconditioners. 
+
+Additionally, we also contemplate the weak imposition of the Dirichlet boundary conditions for wall-bounded turbulent flows.
+
+Four well known problems have been mainly considered for the numerical experiments: the decay of homogeneous isotropic turbulence, the Taylor-Green vortex problem, the turbulent flow in a channel and the turbulent flow around an airfoil.}}
 % Text and picture (dice.png) on the front flap
 \setbookcover{fgfirst}{front flap}{
 \centering

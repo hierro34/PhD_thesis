@@ -301,19 +301,40 @@
 	\tttypeout{\abstractname}
 	\null\vfil
 	\begin{center}
-	{\normalsize \MakeUppercase{\univname} \par} % University name in capitals
-	\bigskip
+%	{\normalsize \MakeUppercase{\univname} \par} % University name in capitals
+%	\bigskip
 	{\huge\textit{\abstractname} \par}
-	\bigskip
-	{\normalsize \facname \par} % Faculty name
-	{\normalsize \deptname \par} % Department name
-	\bigskip
-	{\normalsize \degreename\par} % Degree name
-	\bigskip
-	{\normalsize\bfseries \@title \par} % Thesis title
-	\medskip
-	{\normalsize \byname{} \authorname \par} % Author name
-	\bigskip
+%	\bigskip
+%	{\normalsize \facname \par} % Faculty name
+%	{\normalsize \deptname \par} % Department name
+%	\bigskip
+%	{\normalsize \degreename\par} % Degree name
+%	\bigskip
+%	{\normalsize\bfseries \@title \par} % Thesis title
+%	\medskip
+%	{\normalsize \byname{} \authorname \par} % Author name
+%	\bigskip
+	\end{center}
+}
+{
+  \vfil\vfil\vfil\null
+}
+
+%----------------------------------------------------------------------------------------
+%	RESUM PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+%\providecaptionname{german,ngerman,austrian,naustrian}{\byname}{von}
+%\providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish}{\byname}{by}
+
+\newcommand*{\resumname}{Resum}
+
+\newenvironment{resum}{
+	\checktoopen
+	\tttypeout{\resumname}
+	\null\vfil
+	\begin{center}
+	{\huge\textit{\resumname} \par}
 	\end{center}
 }
 {

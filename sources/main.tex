@@ -130,7 +130,8 @@ onehalfspacing %singlespacing, % Single line spacing, alternatives: onehalfspaci
 %\groupname\\\deptname\\[2cm] % Research group name and department name
 \deptname\\[2cm] % Research group name and department name 
  
-{\large \today}\\[4cm] % Date
+{\large Barcelona, February 2016}\\[4cm] % Date+
+\includegraphics[width=8cm]{../Figures/Cover/logo_escola_pantone_201_C.png}
 %\includegraphics{Logo} % University/department logo - uncomment to place it
  
 \vfill
@@ -185,9 +186,21 @@ onehalfspacing %singlespacing, % Single line spacing, alternatives: onehalfspaci
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+\input{abstract}
 
 \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	RESUM
+%----------------------------------------------------------------------------------------
+
+\begin{resum}
+\addchaptertocentry{\resumname} % Add the abstract to the table of contents
+
+\input{resum}
+
+\end{resum}
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -196,7 +209,8 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 \begin{acknowledgements}
 \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
 
-The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
+%The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
+\input{acknowledgements}
 
 \end{acknowledgements}
 
@@ -290,7 +304,7 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 %	DEDICATION
 %----------------------------------------------------------------------------------------
 
-\dedicatory{For/Dedicated to/To my\ldots} 
+\dedicatory{To Raquel, my parents and my brother\ldots} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS

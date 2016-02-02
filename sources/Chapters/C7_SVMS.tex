@@ -337,7 +337,7 @@ The matricial form of the stabilized problem \Eq{C7_NS_vms_tbtoss} introducing t
 \end{array}\right]+\left[\begin{array}{ccc}
 \K+\C+\A_\tau&\G&\B_\tau\\
 \D&0&0\\
-\B_\tau^T&0&\M_\tau
+-\B_\tau^T&0&\M_\tau
 \end{array}\right]\left[\begin{array}{c}
 \U\\
 \P\\
@@ -368,7 +368,7 @@ which definition are given by
 &\G^{ab}:=-(\nabla\cdot\boldsymbol{\phi}_{a},\psi_{b}),&a=1,...,N_u,b=1,...,N_p,\\
 &\D^{ab}:=(\psi_{a},\nabla\cdot\boldsymbol{\phi}_{b}),&a=1,...,N_p,b=1,...,N_u,\\
 &\B_{\tau}^{ab}:=-\tau_m(\u\cdot\nabla\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b}),&a=1,...,N_u,b=1,...,N_\eta,\\
-&\B_{\tau}^{T,ab}:=\tau_m(\boldsymbol{\phi}_{a},\u\cdot\nabla\boldsymbol{\phi}_{b}),&a=1,...,N_\eta,b=1,...,N_u,\\
+%&\B_{\tau}^{T,ab}:=\tau_m(\boldsymbol{\phi}_{a},\u\cdot\nabla\boldsymbol{\phi}_{b}),&a=1,...,N_\eta,b=1,...,N_u,\\
 &\M_{\tau}^{ab}:=-\tau_m(\boldsymbol{\phi}_{a},\boldsymbol{\phi}_{b}),&a,b=1,...,N_\eta,
 \end{align*}
 being $a$ and $b$ the node identification. Note that $\D=-\G^T$, when boundary conditions are considered.
@@ -383,7 +383,7 @@ Let us now consider the matricial problem \Eq{C7_NSmatform}, which can be writte
 \label{eq-C7_SRK_u}
 \M\dot{\U}=\mathcal{F}(\U)+\mathcal{G}(\U,\ETA),\\
 \label{eq-C7_SRK_eta}
-\B_\tau^T\U+\M_\tau\ETA=\mathbf{0}.
+-\B_\tau^T\U+\M_\tau\ETA=\mathbf{0}.
 \end{align}
 \end{subequations}
 Where $\mathcal{F}$ and $\mathcal{G}$ are certain operators that contain the terms that will be integrated implicitly or explicitly, respectively. In particular we can define a SRK method in which the linear viscous term is integrated implicitly and the nonlinear terms, such as the convective and projection terms, and the pressure term are integrated explicitly. In this case, the operators $\mathcal{F}$ and $\mathcal{G}$ will read
@@ -402,7 +402,7 @@ We now proceed with the time integration scheme for equation \Eq{C7_SRK_u}. Let 
 \label{eq-C7_SRK_u_RK}
 &\frac{1}{\delta t}\M\U_i=\frac{1}{\delta t}\M\U_n+\sum_{j=1}^ia_{ij}\mathcal{F}(\U_j)+\sum_{j=1}^{i-1}\hat{a}_{ij}\mathcal{G}(\U_j,\ETA_j),\\
 \label{eq-C7_SRK_eta_RK}
-&\B_\tau^T\U_i+\M_\tau\ETA_i=\mathbf{0}.
+&-\B_\tau^T\U_i+\M_\tau\ETA_i=\mathbf{0}.
 \end{align}
 \end{subequations}
 where $a_{ij}$ and $\hat{a}_{ij}$ are the coefficients of the implicit and explicit Butcher tableau, respectively.  
@@ -413,7 +413,7 @@ After some manipulation, we can rewrite \Eq{C7_SRK_ueta_RK} as
 \label{eq-C7_SRK_upeta_RK_u}
 &\frac{1}{\delta t}\M\U_i=\frac{1}{\delta t}\M\U_n+\sum_{j=1}^ia_{ij}\mathcal{F}(\U_j)+\sum_{j=1}^{i-1}\hat{a}_{ij} \mathcal{G}(\U_j,\P_j,\ETA_j),\\
 \label{eq-C7_SRK_upeta_RK_eta}
-&\B_\tau^T\U_i+\M_\tau\ETA_i=\mathbf{0},\\
+&-\B_\tau^T\U_i+\M_\tau\ETA_i=\mathbf{0},\\
 \label{eq-C7_SRK_upeta_RK_p}
 &- \D\M^{-1}\G (\P_i)=\D\M^{-1}\left((\K+\C+\A_\tau)\U_i+\B_\tau\ETA_i-\F_u(t_i)\right).
 \end{align}
@@ -425,7 +425,7 @@ The final update after the $s$ stages will read as follows
 \label{eq-C7_SRK_upeta_RK_u_n+1}
 &\frac{1}{\delta t}\M\U_{n+1}=\frac{1}{\delta t}\M\U_n+\sum_{i=1}^sb_i\mathcal{F}(\U_i)+\hat{b}_{i} \mathcal{G}(\U_i,\P_i,\ETA_i),\\
 \label{eq-C7_SRK_upeta_RK_eta_n+1}
-&\B_\tau^T\U_{n+1}+\M_\tau\ETA_{n+1}=\mathbf{0},\\
+&-\B_\tau^T\U_{n+1}+\M_\tau\ETA_{n+1}=\mathbf{0},\\
 \label{eq-C7_SRK_upeta_RK_p_n+1}
 &- \D\M^{-1}\G (\P_{n+1})=\D\M^{-1}\left((\K+\C+\A_\tau)\U_{n+1}+\B_\tau\ETA_{n+1}-\F_u(t_{n+1})\right).
 \end{align}
@@ -462,7 +462,7 @@ The use of weak Dirichlet boundary conditions give a matricial equation equivale
 \end{array}\right]+\left[\begin{array}{ccc}
 \K+\K_\Gamma+\C+\C_\Gamma+\A_\tau+\M_\Gamma&\G+\G_\Gamma&\B_\tau\\
 \D+\D_\Gamma&0&0\\
-\B_\tau^T&0&\M_\tau
+-\B_\tau^T&0&\M_\tau
 \end{array}\right]\left[\begin{array}{c}
 \U\\
 \P\\
@@ -569,29 +569,29 @@ Let us assume that the matricial problem \Eq{C7_SRK_ueta} is solved with an IMEX
 \begin{equation}
 \label{eq-C7_SRK_u_mat}
 \A_u:=\left[\begin{array}{cc}
-\M_\tau&\B_\tau^T\\
+\M_\tau&-\B_\tau^T\\
 \B_\tau&\K_\tau
 \end{array}\right]=\left[\begin{array}{cc}
 \I&0\\
 \B_\tau\M_\tau^{-1}&\I
 \end{array}\right]\left[\begin{array}{cc}
-\M_\tau&\B_\tau^T\\
+\M_\tau&-\B_\tau^T\\
 0&\Sb_u
 \end{array}\right],
 \end{equation}
-where $ \Sb_u:=\K_\tau-\B_\tau^T\M_\tau^{-1}\B_\tau$ is the Schur complement with respect to $\U$. We define a block-preconditioner, $ P(\A_u) $, based on inexact factorization of $ \A_u $ given by the upper triangular matrix in \Eq{C7_SRK_u_mat}, reading
+where $ \Sb_u:=\K_\tau+\B_\tau^T\M_\tau^{-1}\B_\tau$ is the Schur complement with respect to $\U$. We define a block-preconditioner, $ P(\A_u) $, based on inexact factorization of $ \A_u $ given by the upper triangular matrix in \Eq{C7_SRK_u_mat}, reading
 \begin{equation}
 \label{eq-C7_SRK_u_prec}
 P(\A_u):=\left[\begin{array}{cc}
-\M_\tau&\B_\tau^T\\
+\M_\tau&-\B_\tau^T\\
 0&\Sb_u
 \end{array}\right]^{-1}=\left[\begin{array}{cc}
-\M_\tau^{-1}&-\M_\tau^{-1}\B_\tau^T\Sb_u^{-1}\\
+\M_\tau^{-1}&\M_\tau^{-1}\B_\tau^T\Sb_u^{-1}\\
 0&\Sb_u^{-1}
 \end{array}\right].
 \end{equation}
 
-To solve the system resulting from \Eq{C7_SRK_ueta} we use a preconditioned GMRES method with the preconditioner defined in \Eq{C7_SRK_u_prec}. The application of the preconditioner $ P(\A_u) $ simplifies to the computation of the inverse of the diagonal blocks, $ \M_\tau^{-1} $ and $ \Sb_u^{-1} $. The mass matrix inverse is approximated by one application of a diagonal DD preconditioner constructed from the diagonal values of $ \M_\tau $. The Schur complement is approximated to the velocity-velocity block matrix, $ \Sb_u\approx\K_\tau $, neglecting the contribution of the term coming from the projections $ -\B_\tau^T\M_\tau^{-1}\B_\tau $. This approximation is equivalent to consider a solution corresponding to a non-consistent formulation in which streamline diffusion is added, ensuring stability of the preconditioner. At his turn, the inverse $ \K_\tau^{-1} $ is approximated by one application of a BDDC preconditioner over this matrix.
+To solve the system resulting from \Eq{C7_SRK_ueta} we use a preconditioned GMRES method with the preconditioner defined in \Eq{C7_SRK_u_prec}. The application of the preconditioner $ P(\A_u) $ simplifies to the computation of the inverse of the diagonal blocks, $ \M_\tau^{-1} $ and $ \Sb_u^{-1} $. The mass matrix inverse is approximated by one application of a diagonal DD preconditioner constructed from the diagonal values of $ \M_\tau $. The Schur complement is approximated to the velocity-velocity block matrix, $ \Sb_u\approx\K_\tau $, neglecting the contribution of the term coming from the projections $ \B_\tau^T\M_\tau^{-1}\B_\tau $. This approximation is equivalent to consider a solution corresponding to a non-consistent formulation in which streamline diffusion is added, ensuring stability of the preconditioner. At his turn, the inverse $ \K_\tau^{-1} $ is approximated by one application of a BDDC preconditioner over this matrix.
 
 Focusing on the Darcy-type equation \Eq{C7_SRK_upeta_RK_p_darcy}, we also consider an LU factorization of the form
 \begin{equation}
@@ -768,7 +768,7 @@ Note that the first system solver is only needed at the first step, since after 
   \label{fig-TGV_SRK_scal}
 \end{figure}
 
-Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in \Fig{TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1}). This behaviour is also expected, since the preconditioner of the schur complement ...
+Looking at the solver iterations, we see that the number of iterations for each system resolution is kept constant when the number of processors is increased, independently of the local mesh size. We notice that when the local mesh sizes increase, the number of iterations decrease a little for all systems. Another thing that we must point out looking at the solver iterations column in \Fig{TGV_SRK_scal} is that, as expected, the velocity update and the projection update give the same number of solver iterations. This is caused by the fact that both systems solve a mass matrix, with the only difference that the velocity update mass matrix is scaled by $ \frac{1}{\delta t} $. We also see that, in terms of solver iterations, the hardest system is the pressure computation (equations \Eq{C7_SRK_upeta_RK_p} and \Eq{C7_SRK_upeta_RK_p_n+1}). % This behaviour is also expected, since the preconditioner of the schur complement ...
 
 In what refers to the consumed CPU time, a first conclusion we can take looking at \Fig{TGV_SRK_scal_time_4}, \Fig{TGV_SRK_scal_time_8} and \Fig{TGV_SRK_scal_time_12} is that the most expensive resolution is the momentum system (equations \Eq{C7_SRK_upeta_RK_u}-\Eq{C7_SRK_upeta_RK_eta}). Although the number of solver iterations is smaller than the pressure computations, in terms of time consumed, the momentum equations resolution is much expensive, even counting together the three pressure solvers. This difference in the computational time required for the momentum equations versus the pressure ones, is due to the number of DOFs that are being solved. We have to take into account that both velocity and projection fields are computed with a second order polynomial, $ Q_2 $, while the pressure is first order, $ Q_1 $. Then, we not only have two vectorial fields versus a scalar field, but we have a second order interpolation versus a first order. Leaving aside the mass matrix blocks, the size of the system of equations to be solved in the velocity block of the momentum computation is $ \sim24 $ times larger than the one that arise for the pressure block of the Darcy computations, taking into account that the pressure system is solved using \Eq{C7_SRK_upeta_RK_p_darcy_weak}.
 
@@ -878,7 +878,7 @@ The TCF test is solved from $ t=0.0 $ until the flow reach a statistically stabl
 	\label{fig-cha_vel}
 \end{figure}
 
-It is seen in \Fig{cha_umean} that the mean stream-wise velocity profile is a little bit far from the DNS results and also from the results obtained with strong boundary conditions in a stretched mesh. This behaviour is related to the energy evolution that we have shown in \Fig{TCF_ene_ktc}, where it is seen that the method does not dissipate the energy as it should.
+It is seen in \Fig{cha_umean} that the mean stream-wise velocity profile is a little bit far from the DNS results and also from the results obtained with strong boundary conditions in a stretched mesh. This behaviour is related to the energy evolution that we have shown in \Fig{TCF_ene_ktc}, where it is seen that the method does not dissipate the energy as it should. An explanation of such behaviour is the fact that the uniform mesh has the first node located too far from the wall, as seen in Table \ref{tab-y_plus}. 
 
 %Particularly accurate are the results obtained with the $ 16^3 $ $ Q_3/Q_2 $ elements mesh, in which all points except the nearest to the wall are almost on top of the DNS curve, giving a better agreement to the DNS solution than the solution obtained with a stretched mesh.
 %
@@ -895,3 +895,7 @@ One of the advantages of using SRK schemes is the easy implementation of time ad
 Another advantage of the SVMS methods is the possibility to use block preconditioning techniques that lead to the approximation of the inverse of Laplacian-type and elasticity-type matrices, which at his turn are suitable to be preconditioned with BDDC algorithms. The weak scalability of this approach for the resolution of one time step of the TGV test have been demonstrated up to 8000 cores. Furthermore, a three-level MLBDDC algorithm could be used to achieve weak scalability in a higher number of processors.
 
 Moreover, aside from the TGV test, we have also checked the performance of SVMS method for the wall-bounded TCF test. In this case, we have also proposed the use of weak Dirichlet boundary conditions with the particularity of considering a wall-law based tangential traction and also a weak imposition of the wall-normal component.
+
+This last test shows that the approach of imposing weakly the tangential and the normal velocity components on the Dirichlet boundary lead to acceptable results, even when uniform meshes with very coarse elements near the wall are considered. However, comparing the results against the ones obtained with a stretched mesh and strong boundary conditions imposition, we see that the near wall fluctuations are not properly captured. Then, in order to obtain more accurate results, a mesh with thinner elements near the wall should be considered.
+
+We have seen that the weak imposition of the Dirichlet boundary conditions is suitable when SRK methods are considered. First, because the continuity equation is not polluted by the strong imposition of the temporal derivative of the velocity divergence on the boundary. This occurs when time-dependent boundary conditions are imposed on the Dirichlet boundary. Furthermore, the weak imposition of the velocity wall-normal component considered in this chapter, avoids the complexity of imposing strongly such component on curved boundaries.
