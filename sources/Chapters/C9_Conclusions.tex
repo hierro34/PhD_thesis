@@ -54,15 +54,12 @@ Some lines of research could be considered to further investigate the applicabil
 \item {\bf Embedded methods and mesh refinement}\\
 One of the main problems we have faced during the dissertation is the need of defining good meshes a priory. Then, the development of adaptive meshes able to refine where the turbulent structures are being developed is one of the lines of research that could resolve this issue.
 
-The approach that could be followed is to consider the use of Cartesian meshes with embedded boundaries. This approach basically consist on having most of the domain covered by completely regular Cartesian cells and considering embedded boundary methods to impose the boundary conditions.
+The approach that could be followed is to consider the use of Cartesian meshes with embedded boundaries. This approach basically consist on having most of the domain covered by completely regular Cartesian cells and considering embedded boundary methods to impose the boundary conditions. This methodology could also be related to the work done in this thesis when weak boundary conditions are imposed considering a wall-law model.
 
 \item {\bf Parallel in time}\\
 The turbulent phenomena is characterized by having not only many spatial scales, but also a multiscale description in time. Then, the time discretization of Navier-Stokes equations at high Reynolds number becomes an important issue. Many efforts are being dedicated to the parallelization of the time discretization schemes. It could be interesting to seek the applicability of parallel time integration techniques when using SRK schemes for the time integration of the Navier-Stokes equations, with a particular interest on the simulation of turbulent flows.
 
 \item {\bf Divergence-free Finite Elements}\\
 It has been shown in this work that when using inf-sup stable elements, the grad-div stabilization term plays an important role to ensure the satisfaction of the incompressibility constraint. In order to address this weakness, we could consider to make use of FE types that are divergence-free, and inf-sup stable, by construction.
-
-\item {\bf Effect of the weak boundary conditions on the solver}\\
-In this work we have not analyzed the effect on the solver when the Dirichlet boundary conditions are imposed weakly. It is an open line of research the study of how the properties of the system matrix are modified when weak boundary conditions are considered, and how we can construct preconditioners able to deal with these modifications.
 
 \end{itemize}

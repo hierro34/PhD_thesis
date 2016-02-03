@@ -253,7 +253,7 @@ In order to present our recursive block-preconditioning technique, let us assume
 
 Assuming that $\u_h$, $p_h$, $\etaa_h$ and $\xii_h$ are defined by a FE interpolation from the nodal values $\{\U^a\}_{a=1,...,N_u}$, $\{P^b\}_{b=1,...,N_p}$, $\{\ETA^l\}_{l=1,...,N_\eta}$ and $\{\XI^m\}_{m=1,...,N_\xi}$, the FE approximation of the velocity, pressure and projection fields can be written as
 \begin{align*}
-&\u_h(\x)=\sum_{a=1}^{N_u}\boldsymbol{\phi}_a(\x)\U^a,\quad p_h(\x)=\sum_{b=1}^{N_p}\psi_b(\x)P^b,\quad \etaa_h(\x)=\sum_{l=1}^{N_\eta}\boldsymbol{\phi}_\eta(\x)\ETA^l,\quad \xii_h(\x)=\sum_{m=1}^{N_\xi}\boldsymbol{\phi}_\xi(\x)\XI^m,
+&\u_h(\x)=\sum_{a=1}^{N_u}\boldsymbol{\phi}_a(\x)\U^a,\quad p_h(\x)=\sum_{b=1}^{N_p}\psi_b(\x)P^b,\\ &\etaa_h(\x)=\sum_{l=1}^{N_\eta}\boldsymbol{\phi}_\eta(\x)\ETA^l,\quad \xii_h(\x)=\sum_{m=1}^{N_\xi}\boldsymbol{\phi}_\xi(\x)\XI^m,
 \end{align*}
 where $\{\boldsymbol{\phi}_{a,i}\}_{a=1,...,N_u;i=1,...,d}$, $\{\psi_b\}_{b=1,...,N_p}$, $\{\boldsymbol{\phi}_{l,i}\}_{l=1,...,N_\eta;i=1,...,d}$ and $\{\boldsymbol{\phi}_{m,i}\}_{m=1,...,N_\xi;i=1,...,d}$ are the Lagrangian basis associated to $\mathcal{V}_h$ and $\mathcal{Q}_h$. $N_u$, $N_p$, $N_\eta$ and $N_\xi$ are the total amount of nodes for the velocity, pressure and projection fields. 
 

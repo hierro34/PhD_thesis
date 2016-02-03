@@ -283,7 +283,8 @@
 \tttypeout{Dedicatory}
 \thispagestyle{plain}
 \null\vfil
-\begin{center}{\Large\slshape #1}\end{center}
+%\begin{center}{\large\slshape #1}\end{center}
+{\hfil\large\slshape #1}
 \vfil\null
 }
 
@@ -426,7 +427,7 @@
 bookmarksopen=true,
 bookmarksopenlevel=0,
 hypertexnames=false,
-colorlinks=true, % Set to false to disable coloring links
+colorlinks=false, % Set to false to disable coloring links
 citecolor=green, % The color of citations
 linkcolor=red, % The color of references to document elements (sections, figures, etc)
 urlcolor=magenta, % The color of hyperlinks (URLs)
