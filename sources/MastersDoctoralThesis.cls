@@ -251,6 +251,7 @@
 \newcommand*{\addresses}[1]{\def\addressname{#1}}
 \newcommand*{\university}[1]{\def\univname{#1}}
 \newcommand*{\department}[1]{\def\deptname{#1}}
+\newcommand*{\program}[1]{\def\progname{#1}}
 \newcommand*{\group}[1]{\def\groupname{#1}}
 \newcommand*{\faculty}[1]{\def\facname{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
