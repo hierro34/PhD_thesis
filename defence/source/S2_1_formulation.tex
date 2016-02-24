@@ -1,0 +1,572 @@
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Incomp. Navier Stokes equations}
+Find $ \mathbf{u}$ and $p$ defined in $\Omega$
+\begin{align*}
+\partial _{t}\mathbf{u}+ {\color<4>{red} \mathbf{u}\cdot \mathbf{\nabla u} }+\mathbf{
+\nabla }p-\nu \nabla ^{2}\mathbf{u}& =\mathbf{f} \\
+\mathbf{\nabla }\cdot \mathbf{u}& =0
+\end{align*}
+with appropriate boundary conditions on $ \Gamma$.\vskip 0.3cm
+\only<2->{
+The weak problem is: $\forall \mathbf{v}\in \mathcal{V}_0$ and  $\forall q\in \mathcal{Q}_0$, 
+find $ \mathbf{u} \in \mathcal{V}$ and $ p \in \mathcal{Q}$ such that 
+\begin{align*}
+  \left( \mathbf{v},\partial_{t}\mathbf{u}\right)_{\Omega }
++ \left( \mathbf{\nabla v}, \nu \mathbf{\nabla u}\right)_{\Omega }  
+%+ {\color<4>{red} \langle \mathbf{v},\mathbf{a}\cdot \mathbf{\nabla u}\rangle _{\Omega }} 
++ {\color<4>{red} b\left(\mathbf{u},\mathbf{u}, \mathbf{v}\right)} % \\
+- \left( \mathbf{\nabla }\cdot \mathbf{v},p\right) _{\Omega } 
+& = 
+\left\langle \mathbf{v},\mathbf{f} \right\rangle _{\Omega } 
+\\
+\left(q, \mathbf{\nabla } \cdot \mathbf{u}\right)_{\Omega } 
+& = 0
+\end{align*}}
+\only<3->{where
+\begin{equation*}
+{\color<4>{red} 
+b\left(\mathbf{a},\mathbf{u}, \mathbf{v}\right) = {\color<1-3>{white} \frac{1}{2}}\langle \mathbf{v},\mathbf{a}\cdot \mathbf{\nabla u}\rangle_{\Omega }
+{\color<1-3>{white} - \frac{1}{2} \langle \mathbf{a}\cdot\mathbf{\nabla}\mathbf{v}, \mathbf{u}\rangle_{\Omega }
++ \frac{1}{2} \langle \mathbf{v},\mathbf{n} \cdot \mathbf{a}  \mathbf{u} \rangle_{\Gamma }}}
+\end{equation*}
+}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{VMS decomposition {\small (Hughes 1995)}}
+A decomposition of spaces $\mathcal{V}$ and $\mathcal{Q}$ given by 
+\begin{equation*}
+\mathcal{V}=\mathcal{V}_{h}\oplus \widetilde{\mathcal{V}},\quad
+\mathcal{Q}=\mathcal{Q}_{h}\oplus \widetilde{\mathcal{Q}}
+\end{equation*}
+\only<2->{is applied to the function and test spaces
+\begin{align*}
+\mathbf{u} = \mathbf{u}_{h} +\widetilde{\mathbf{u}}, \quad p = p_h + \widetilde{p} \\
+\mathbf{v} = \mathbf{v}_{h} +\widetilde{\mathbf{v}}, \quad q = q_h + \widetilde{q}
+\end{align*}}
+\only<3->{We keep all the (eight) contributions from the splitting of the convective
+term 
+\begin{equation*}
+  { \mathbf{u}} \cdot \mathbf{\nabla u}
+= { \mathbf{u}_{h}\cdot \mathbf{\nabla u}_{h} }
++ { \color<3->{red} \widetilde{\mathbf{u}}\cdot \mathbf{\nabla u}_{h} }
++ { \mathbf{u}_{h}\cdot \mathbf{\nabla }\widetilde{\mathbf{u}} }
++ { \color<3->{red} \widetilde{\mathbf{u}}\cdot \mathbf{\nabla }\widetilde{\mathbf{u}} }
+\end{equation*}
+}
+\only<4->{and all the (four) contributions from the temporal term 
+\begin{equation*}
+\partial _{t}\mathbf{u}=\partial _{t}\mathbf{u}_{h} + { \color<4->{red} \partial _{t}\widetilde{\mathbf{u}}}
+\end{equation*}
+}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Semidiscrete problem}
+\begin{block}{FEM equations}
+\begin{overlayarea}{\textwidth}{2.0cm}
+\vspace{-0.8cm}
+\begin{align*}
+% FEM EQUATIONS
+\only<1>{B\left(\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{v}_h,q_h\right)\right)=L\left(\mathbf{v}_h,q_h\right)}
+\only<2->{\left( \mathbf{v}_{h},\partial _{t}\mathbf{u}_{h}\right) _{\Omega }
+%+\langle \mathbf{v}_{h},\mathbf{a}\cdot \mathbf{\nabla u}_{h}\rangle _{\Omega}
++ b\left(\mathbf{a},\mathbf{u}_h, \mathbf{v}_h\right)
++\left( \mathbf{\nabla v}_{h},\nu \mathbf{\nabla u}_{h}\right) _{\Omega} &
+-\left( \mathbf{\nabla }\cdot \mathbf{v}_{h},p_{h}\right) _{\Omega }
+\\[0.05in]
+%
++\left( \mathbf{v}_{h},\partial _{t}\widetilde{\mathbf{u}}\right) _{\Omega}
++\left( \mathcal{L}^{\ast }\mathbf{v}_{h},\widetilde{\mathbf{u}}\right)_{\Omega^h}
+-\left( \mathbf{\nabla }\cdot \mathbf{v}_{h},\widetilde{p}\right) _{\Omega^h} &
+=\left\langle \mathbf{v}_{h},\mathbf{f}\right\rangle_{\Omega }
+\\[0.1in]
+%
+\left( q_{h},\mathbf{\nabla }\cdot \mathbf{u}_{h}\right) _{\Omega }
+-\left( \mathbf{\nabla }q_{h},\widetilde{\mathbf{u}}\right) _{\Omega^h} & =0}
+\end{align*}
+\end{overlayarea}
+\end{block}
+\begin{block}{SGS equations}
+\vspace{-0.4cm}
+\begin{align*}
+% SGS EQUATIONS
+\only<1>{B\left(\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{v}},\widetilde{q}\right)\right)=L\left(\widetilde{\mathbf{v}},\widetilde{q}\right)}
+%\only<1-4>{\left( \widetilde{\mathbf{v}},\partial_{t} \widetilde{\mathbf{u}} \right)_{\Omega }}
+%\only<1-2>{\color<2>{red}  + \left( \widetilde{\mathbf{v}},\mathcal{L}\widetilde{\mathbf{u}}\right )_{\Omega^h}}
+%\only<3-4>{\color<3>{red}  + \tau _{m}^{-1} \left( \widetilde{\mathbf{v}},\widetilde{\mathbf{u}} \right)_{\Omega^h}}
+%\only<1-2>{\color<2>{blue} + \left( \widetilde{\mathbf{v}},\mathbf{\nabla }\widetilde{p}\right)_{\Omega^h} }
+%%\only<1-4>{\color{white}\tau _{m}^{-1}} % This is needed to avoid a vertical blinking 
+\only<2-> {{\color<5>{red} \partial_{t}\widetilde{\mathbf{u}}} + {\color<2>{red}\tau_{m}^{-1}} \widetilde{\mathbf{u}}}
+&
+\only<2-> { = {\color<4>{red}\mathcal{P}} {\color<3>{red}\mathbf{R}_{m} }}
+\only<1>{\\[0.05in]}
+%
+%\only<1->{{ \color{white}\tau_{c}^{-1} }}
+%\only<1-4>{ \color<4>{red}
+%+\left( \widetilde{\mathbf{v}},\partial _{t}\mathbf{u}_{h}\right)_{\Omega}
+%+\left( \widetilde{\mathbf{v}},\mathcal{L}\mathbf{u}_{h}\right)_{\Omega^h}
+%+\left( \widetilde{\mathbf{v}},\mathbf{\nabla }p_{h}\right)_{\Omega^h}
+%& = 
+%\color<4>{red} \left\langle \widetilde{\mathbf{v}},\mathbf{f}\right\rangle _{\Omega} }
+%%
+\\[0.1in]
+%%
+%%\only<1->{{ \color{white}\tau_{c}^{-1} }}
+%\only<1-2>{{\color<2>{blue} \left(( \widetilde{q},\mathbf{\nabla} \cdot \widetilde{\mathbf{u}}\right)_{\Omega }}}
+%\only<3-4>{{\color<3>{blue} \tau_{c}^{-1} \left( \widetilde{q},\widetilde{p}\right) _{\Omega^h }}}
+%\only<1-4>{ + {\color<4>{blue} \left( \widetilde{q},\mathbf{\nabla}\cdot \mathbf{u}_{h}\right)_{\Omega } }} 
+%\only<1-4>{& = 0}
+\only<2->{ {\color<2>{blue} \tau _{c}^{-1}} \widetilde{p} & = {\color<4>{blue}\mathcal{P}} {\color<3>{blue}R_{c}}}
+\end{align*}
+\end{block}
+%\end{overlayarea}
+\vspace{-0.2cm}
+\begin{overlayarea}{\textwidth}{3.0cm}
+\only<1>{
+\vspace*{-1.0cm}
+\begin{equation*}
+%\mathcal{L}=-\nu \nabla ^{2}+\mathbf{a}\cdot \mathbf{\nabla },\quad 
+%\mathcal{L}^{\ast }=-\nu \nabla ^{2}-\mathbf{a}\cdot \mathbf{\nabla },\quad
+%\mathbf{a=u}_{h}+\widetilde{\mathbf{u}}
+\end{equation*}
+}
+\only<2>{
+\begin{equation*}
+{ \color<2>{red} \tau_{m}=\left( \frac{c_{1}\nu }{h^{2}}+\frac{c_{2}\left| \mathbf{a}\right| }{h}\right) ^{-1}},\quad
+{ \color<2>{blue}\tau_{c}=\frac{h^{2}}{c_{1}\tau _{m}} }
+\end{equation*}
+}
+\only<3>{
+\begin{equation*}
+{ \color<3>{red} \mathbf{R}_{m}} := \mathbf{f} - \partial_{t}\mathbf{u}_{h} - \mathcal{L} \mathbf{u}_{h} - \mathbf{\nabla }p_{h}, \quad
+{ \color<3>{blue} R_{c}} := - \mathbf{\nabla }\cdot \mathbf{u}_{h}
+\end{equation*}
+}
+\only<4->{
+\begin{equation*}
+\only<4>{{\color<4>{red} \mathcal{P} = I \quad \rm{(ASGS)}}, \quad \quad {\color<4>{blue} \mathcal{P} = P_h^{\perp}=I-P_h \quad \rm{(OSS)}} }
+\only<5->{{\color<5>{magenta} \mathcal{P} = I \quad \rm{(ASGS)}, \quad \quad  \mathcal{P} = P_h^{\perp}=I-P_h \quad \rm{(OSS)} }}
+\end{equation*}
+}
+\only<2,5>{
+\vspace{-0.2cm}
+\begin{equation*}
+{\color<5>{blue} \mathbf{a=u}_{h}+\widetilde{\mathbf{u}} }
+\end{equation*}
+}
+\end{overlayarea}
+%
+%\begin{overlayarea}{\textwidth}{1.5cm}
+%%\only<3->{
+%\begin{equation*}
+%{\color<6>{blue} \mathbf{a=u}_{h}+\widetilde{\mathbf{u}}} 
+%{\color<1-2>{white}, \quad \tau_{m}=\left(( \frac{c_{1}\nu }{h^{2}}+\frac{c_{2}\left| \mathbf{a}\right| }{h}\right) ^{-1},\quad
+%\tau_{c}=\frac{h^{2}}{c_{1}\tau _{m}} }
+%\end{equation*}
+%%}
+%\end{overlayarea}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Summary}
+% \begin{table}[h]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|}
+% \hline
+% & Sgs space & Sgs dynamics                         &  Advection velocity ($\mathbf{a}$)  \\
+% \hline
+% 1&ASGS      & Static  ($\tilde{\mathbf{u}}=f(\mathbf{R}_m)$) &  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 2&ASGS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 3&ASGS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Nonlinear ($\mathbf{a}=\mathbf{u}_h+\tilde{\mathbf{u}}$) \\
+% \hline
+% 4&OSS      & Static  ($\tilde{\mathbf{u}}=f(\mathbf{R}_m)$)  &  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 5&OSS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 6&OSS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Nonlinear ($\mathbf{a}=\mathbf{u}_h+\tilde{\mathbf{u}}$) \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& Sgs space & Sgs dynamics  &  Advection\\
+\hline
+1&ASGS      & Static  &  Linear    \\
+2&ASGS      & Dynamic &  Linear    \\
+3&ASGS      & Dynamic &  Nonlinear \\
+\hline
+4&OSS      & Static  &  Linear   \\
+5&OSS      & Dynamic &  Linear   \\
+6&OSS      & Dynamic &  Nonlinear \\
+\hline
+\end{tabular}
+\end{table}
+\vskip 0.5 cm
+\begin{itemize}
+\item[1] It is the most standard method (SUPG for linear elements) up to the choice of the
+stabilization parameters. Unknown stability properties.
+%\item[2] Proven stability for the linearized problem (Oseen) without $\delta t$ restrictions (Codina et al. 2006)
+\item[4] Strictly pointwise positive for linear elements (no backscatter).
+\item[5] Convergent to weak solutions of NS equations (Badia \& Gutierrez 2012).
+\end{itemize}
+\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+%  \frametitle{DHIT{\small Decay of Homogeneous Isotropic Turbulence}}
+%  \textbf{Problem setting:}
+%  \begin{itemize}
+%  \itemsep0cm
+%  \item Prescribed initial energy spectra corresponding to $Re_{\lambda}=952$.
+%  \item Setting defined in AGARD database (Mansour \& Wray 1993). 
+%  \item A (very simple) time step adaptation technique is used.
+%  \item Different mesh discretizations ($ Q_1/Q_1 $ and $ Q_2/Q_2 $).
+%  \end{itemize}
+%  \vspace{-0.4cm}
+%  \begin{figure}
+%      \centering	
+%      \includegraphics[clip=true,trim=19cm 2cm 19cm 2cm,width=0.45\textwidth]{Figures/iso_vorti_1.jpg}
+%  \end{figure}
+%%  \vspace*{-0.5cm}
+%%  \begin{columns}
+%%  \begin{column}{0.5\textwidth}
+%%  \hspace*{0.5cm}
+%%  \begin{itemize}
+%%    \item Mesh resolutions:
+%%    \vspace*{-0.3cm}
+%%	{\footnotesize
+%%	\begin{table}
+%%		\begin{tabular}{|c|c|}
+%%  			\hline
+%%  			Size&Element type\\
+%%  			\hline
+%%  			$32^3$, $64^3$, $128^3$&$Q1$\\
+%%  			$32^3$, $64^3$&$Q2$\\
+%%  			$32^3$&$Q3$\\
+%%  			\hline
+%% 		 \end{tabular}
+%%	\end{table}}
+%%	\vspace*{-0.5cm}
+%%    \item Model parameters:
+%%    	\vspace*{-0.2cm}
+%%    	\begin{itemize}
+%%    		\item  $\tau_c = 0$ 
+%%    		\item  $\tau_m$ defined with $c_1=12$ and $c_2=2$.
+%%    	\end{itemize}
+%%  \end{itemize}
+%%  \end{column}
+%%  \begin{column}{0.5\textwidth}
+%%  \begin{figure}
+%%    \centering	
+%%    \includegraphics[clip=true,trim=19cm 2cm 19cm 2cm,width=0.8\textwidth]{Figures/iso_vorti_1.jpg}
+%%  \end{figure}
+%%  \end{column}
+%%  \end{columns}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}[t]
+%  \frametitle{DHIT{\small Decay of Homogeneous Isotropic Turbulence}}
+%  \textbf{Energy espectra (models):}
+%  \vspace*{-0.8cm}
+%  \begin{columns}
+%  \begin{column}{0.5\textwidth}
+%  \begin{figure}
+%    \centering	
+%    \includegraphics[width=1.1\textwidth]{Figures/spec_32_02_scaled}
+%    \caption{$32^3-Q1$, $t=0.2s$}
+%  \end{figure}
+%  \end{column}
+%  \begin{column}{0.5\textwidth}
+%    \begin{figure}
+%    \centering	
+%    \includegraphics[width=1.1\textwidth]{Figures/spec_64_08}
+%    \caption{$64^3-Q1$, $t=0.8s$}
+%  \end{figure}
+%  \end{column}
+%  \end{columns}
+%  \begin{overlayarea}{\textwidth}{1.5cm}
+%  \only<2->{
+%  \begin{itemize}
+%  	\item \alert<2>{Small differences} between methods (physical sense).
+%  	\only<3->{\item Even \alert<3>{more similar when we refine} the mesh.}
+%  \end{itemize}}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}[t]
+%  \frametitle{DHIT{\small Decay of Homogeneous Isotropic Turbulence}}
+%  \textbf{Energy espectra (models):}
+%  \vspace*{-0.8cm}
+%  \begin{columns}
+%  \begin{column}{0.5\textwidth}
+%  \begin{figure}
+%    \centering	
+%    \includegraphics[width=1.1\textwidth]{Figures/spec_32_02_scaled}
+%    \vspace*{-0.3cm}
+%    \caption{$32^3-Q1$, $t=0.2s$}
+%  \end{figure}
+%  \end{column}
+%  \begin{column}{0.5\textwidth}
+%    \begin{figure}
+%    \centering	
+%    \includegraphics[width=1.1\textwidth]{Figures/spec_64_08}
+%    \vspace*{-0.3cm}
+%    \caption{$64^3-Q1$, $t=0.8s$}
+%  \end{figure}
+%  \end{column}
+%  \end{columns}
+%  \begin{overlayarea}{\textwidth}{1.5cm}
+%  \vspace*{-0.6cm}
+%  \only<2->{
+%  \begin{itemize}
+%  	\itemsep0cm
+%  	\item \alert<2>{Small differences} between methods (physical sense).
+%  	\only<3->{\item Even \alert<3>{more similar when we refine} the mesh.}
+%  \end{itemize}}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+%\frametitle{DHIT{\small Decay of Homogeneous Isotropic Turbulence}}
+%\textbf{Computational cost (models):}
+% \vspace*{-0.8cm}
+% \begin{columns}
+% \begin{column}{0.5\textwidth}
+% \begin{figure}
+%  \centering
+%  \includegraphics[width=1.1\textwidth]{Figures/Acsoliter_32_scaled_cnvgd}
+%  \vspace*{-0.3cm}
+%  \caption{$32^3-Q1$}
+%  \end{figure}
+%  \end{column}
+%  \begin{column}{0.5\textwidth}
+%   \begin{figure}
+%  \centering
+%  \includegraphics[width=1.1\textwidth]{Figures/Acsoliter_64}
+%  \vspace*{-0.3cm}
+%  \caption{$64^3-Q1$}
+%  \end{figure}
+%  \end{column}
+%  \end{columns}
+%  \begin{overlayarea}{\textwidth}{1.5cm}
+%  \vspace*{-0.6cm}
+%  \only<2->{
+%  \begin{itemize}
+%  	\itemsep0cm
+%  	\item \alert<2>{Big differences} between methods (computational sense).
+%  	\only<3->{\item \alert<3>{Dynamic} versions of \alert<3>{OSS} method are \alert<3>{the most efficient}.}
+%  \end{itemize}}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}[t]
+%  \frametitle{DHIT{\small Decay of Homogeneous Isotropic Turbulence}}
+%  \textbf{Energy espectra (refinement):}
+%  \begin{figure}
+%    \centering	
+%    \includegraphics[width=0.7\textwidth]{Figures/spec_hp_1}
+%  \end{figure}
+%  \begin{overlayarea}{\textwidth}{1.5cm}
+%  \vspace*{-0.6cm}
+%  \begin{itemize}
+%  	\item Results become \alert<1->{closer to the DNS when we refine} the mesh.
+%  \end{itemize}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+%  \frametitle{TGV {\small Taylor-Green Vortex flow}}
+%  \textbf{Problem setting:}
+%  \begin{itemize}
+%    \itemsep-0.10cm
+% 	\item Prescribed initial condition.
+%  	\item $Re=1600$. 
+%	\item Different mesh discretizations ($ Q_1/Q_1 $ and $ Q_2/Q_2 $).
+%  \end{itemize}
+%  \only<1>{
+%  	  \vspace*{-0.3cm}
+%	  \begin{figure}
+%	    \centering	
+%	    \includegraphics[trim=18cm 1cm 14cm 1cm, clip=true, width=0.45\textwidth]{Figures/isovorti_veloc_1.pdf}
+%	    \vspace*{-0.2cm}
+%	    \caption{Initial vorticity isosurface $|\omega|=1$}
+%	  \end{figure}}
+%  \only<2>{
+%    	  \vspace*{-0.3cm}
+%	  \begin{figure}
+%	    \centering	
+%	    \includegraphics[trim=18cm 1cm 14cm 1cm, clip=true, width=0.45\textwidth]{Figures/isovorti_veloc_6.pdf}
+%	    \vspace*{-0.2cm}
+%	    \caption{Vorticity isosurfaces $|\omega|=9.0$}
+%	  \end{figure}}
+%%  \begin{columns}
+%%  \begin{column}{0.5\textwidth}
+%%  \begin{itemize}
+%%  	\item Prescribed initial condition:
+%%  	\vspace*{-0.3cm}
+%%  	{\footnotesize
+%% 	\begin{align*}
+%%  		&u_x=u_0\cos(x)\sin(y)\sin(z),\\
+%%  		&u_y=-u_0\sin(x)\cos(y)\sin(z),\\
+%%  		&u_z=0,
+%%  	\end{align*}}
+%%  	\vspace*{-1.0cm}
+%%  	\item $Re=1600$. 
+%%  	\vspace*{-0.1cm}
+%%    \item Mesh resolutions:
+%%    \vspace*{-0.3cm}
+%%	{\footnotesize
+%%	\begin{table}
+%%		\begin{tabular}{|c|c|}
+%%  			\hline
+%%  			Size&Element type\\
+%%  			\hline
+%%  			$32^3$, $64^3$, $128^3$&$Q1$\\
+%%  			$32^3$, $64^3$&$Q2$\\
+%%  			$20^3$, $32^3$&$Q3$\\
+%%  			\hline
+%% 		 \end{tabular}
+%%	\end{table}}
+%%	\vspace*{-0.5cm}
+%%    \item Model parameters:
+%%    	\vspace*{-0.2cm}
+%%    	\begin{itemize}
+%%    		\item  $\tau_c = 0$ 
+%%    		\item  $\tau_m$ defined with $c_1=12$ and $c_2=2$.
+%%    	\end{itemize}
+%%  \end{itemize}
+%%  \end{column}
+%%  \begin{column}{0.5\textwidth}
+%%  \only<1>{{\small Initial vorticity isosurface $|\omega|=1$:}
+%%  \begin{figure}
+%%    \centering	
+%%    \includegraphics[trim=18cm 1cm 14cm 1cm, clip=true, width=1.0\textwidth]{Figures/isovorti_veloc_1.pdf}
+%%  \end{figure}}
+%%  \only<2>{{\small Vorticity isosurfaces $|\omega|=9.0$} % and $|\omega|=9.0$:}
+%%  \begin{figure}
+%%    \centering	
+%%    \includegraphics[trim=18cm 1cm 14cm 1cm, clip=true, width=1.0\textwidth]{Figures/isovorti_veloc_6.pdf}
+%%  \end{figure}}
+%%  \end{column}
+%%  \end{columns}
+%
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+% \frametitle{TGV {\small Taylor-Green Vortex flow}}
+% \textbf{Energy dissipation rate (refinement):}
+% \vspace*{-0.8cm}
+% \begin{columns}
+%   \begin{column}{0.5\textwidth}
+%   \begin{figure}
+%     \centering	
+%     \includegraphics[width=1.1\textwidth]{Figures/ens_hp_10_new_resolved.pdf}
+%     \vspace*{-0.2cm}
+%     \caption{Resolved scales}
+%   \end{figure}
+%   \end{column}
+%   \begin{column}{0.5\textwidth}
+%   \begin{figure}
+%     \centering	
+%     \includegraphics[width=1.1\textwidth]{Figures/ens_hp_10_new_total.pdf}
+%     \vspace*{-0.2cm}
+%     \caption{Total}
+%   \end{figure}
+%   \end{column}
+% \end{columns}
+% \begin{overlayarea}{\textwidth}{1.5cm}
+% \only<2->{
+% \vspace*{-0.6cm}
+% \begin{itemize}
+% 	\itemsep-0.1cm
+%  	\item \alert<2>{Good agreement with the DNS} taking account the subscales.
+%  	\only<3->{\item \alert<3>{More accurate results increasing the order} of approximation.}
+%  \end{itemize}}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\addtocounter{framenumber}{-1}
+%\begin{frame}
+% \frametitle{TGV {\small Taylor-Green Vortex flow}}
+% {\large
+% \begin{itemize}
+% 	\item All results until now are compared against \textbf{DNS}.
+% \end{itemize}
+% \vspace*{0.5cm}
+%  \begin{itemize}
+%  	\item Are our methods comparable with \textbf{LES} models?
+% \end{itemize}}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+% \frametitle{TGV {\small Taylor-Green Vortex flow}}
+% \textbf{Energy dissipation rate (against LES model):}
+% \vspace*{-0.8cm}
+% \begin{columns}
+%   \begin{column}{0.5\textwidth}
+%   \begin{figure}
+%     \centering	
+%     \includegraphics[width=1.1\textwidth]{Figures/ens_64dofs_dynsmag_resolved.pdf}
+%     \vspace*{-0.2cm}
+%     \caption{Resolved scales}
+%   \end{figure}
+%   \end{column}
+%   \begin{column}{0.5\textwidth}
+%   \begin{figure}
+%     \centering	
+%     \includegraphics[width=1.1\textwidth]{Figures/ens_64dofs_dynsmag_total.pdf}
+%     \vspace*{-0.2cm}
+%     \caption{Total}
+%   \end{figure}
+%   \end{column}
+% \end{columns}
+% \begin{overlayarea}{\textwidth}{1.5cm}
+%  \only<2->{
+%  \vspace*{-0.6cm}
+% \begin{itemize}
+%  	\itemsep-0.1cm
+%  	\item \alert<2>{Good agreement with the LES models} on resolved scales.
+%  	\only<3->{\item \alert<3>{Better results than LES models} adding subscales counterpart.}
+%  \end{itemize}}
+%  \end{overlayarea}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+%\frametitle{RB-VMS Conclusions}
+%\begin{itemize}
+%	\onslide<1->{\item VMS formulations of NS equations can be used for the numerical simulation of turbulent flows.}
+%	\onslide<2->{\item Our particular VMS modelling ingredients
+%  	\begin{itemize}
+%  		\item Dynamic subscales
+%  		\item Nonlinear subscales
+%  		\item Orthgonal subscales
+%  	\end{itemize}
+%	seem to be important to simulate turbulent flows.}
+%	%(semidicrete stability, convergence to weak solutions).
+%	\onslide<3->{\item Among them dynamic and orthogonal subscales (linear or nonlinear) are the most effective.}
+%	%\onslide<4->{\item The skewsymmetric formulation is important to keep stability.}
+%	%\item Further numerical examples are being carried out (Taylor Green, Channel flow).
+%\end{itemize}
+%\end{frame}
+%%----------------------------------------------------------------------------------------
+%\begin{frame}
+%\frametitle{RB-VMS Limitations}
+%\begin{itemize}
+%	\item<1-> \textbf{ASGS:}
+%	\begin{itemize}
+%		\item<2-> Poorly matrix conditioning $ \Rightarrow $ \alert{High} number of \alert{solver} iterations.
+%		\item<3-> No explicit projections $ \Rightarrow $ \alblue{3-}{Low} number of \alblue{3-}{nonlinear} iterations.
+%	\end{itemize}
+%	\item<4-> \textbf{OSS:}
+%	\begin{itemize}
+%		\item<5-> Better matrix conditioning $ \Rightarrow $ \alblue{5-}{Low} number of \alblue{5-}{solver} iterations.
+%		\item<6-> Explicit projection treatment $ \Rightarrow $ \alert{High} number of \alert{nonlinear} iterations.
+%	\end{itemize}
+%	\item<7-> \textbf{Desired:} 
+%		\begin{itemize}
+%		\item<7-> OSS with implicit projections.
+%		\end{itemize}
+%\end{itemize}
+%\end{frame}
