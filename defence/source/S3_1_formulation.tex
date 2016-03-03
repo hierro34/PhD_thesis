@@ -106,7 +106,7 @@
 \item<1-> ASGS:
 \begin{equation*}
 \left[\begin{array}{c}
-\M\dot{\U}\\
+M\overset{.}{\U}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{cc}
 K+C+A_\tau&G\\
@@ -122,15 +122,15 @@ D&L_\tau
 \item<2-> Term-by-term OSS:
 \begin{equation*}
 \left[\begin{array}{c}
-M\dot{\U}\\
+M\overset{.}{\U}\\
 \mathbf{0}\\
 \mathbf{0}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{cccc}
 K+C+A_\tau&G&B_{\eta,\tau}&0\\
 D&L_\tau&0&B_{\xi,\tau}\\
-B_{\eta,\tau}^T&0&M_{\eta,\tau}&0\\
-0&B_{\xi,\tau}^T&0&M_{\xi,\tau}
+-B_{\eta,\tau}^T&0&M_{\eta,\tau}&0\\
+0&-B_{\xi,\tau}^T&0&M_{\xi,\tau}
 \end{array}\right]\left[\begin{array}{c}
 \U\\
 \P\\
@@ -146,13 +146,13 @@ B_{\eta,\tau}^T&0&M_{\eta,\tau}&0\\
 \item<3-> Term-by-term OSS with Inf-sup stable elements (mixed FE):
 \begin{equation*}
 \left[\begin{array}{c}
-M\dot{\U}\\
+M\overset{.}{\U}\\
 \mathbf{0}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{ccc}
 K+C+A_\tau&G&B_\tau\\
 D&0&0\\
-B_\tau^T&0&M_\tau
+-B_\tau^T&0&M_\tau
 \end{array}\right]\left[\begin{array}{c}
 \U\\
 \P\\
