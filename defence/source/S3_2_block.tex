@@ -1,6 +1,7 @@
 \begin{frame}
 \frametitle{Block-recursive preconditioning}
 %\begin{overlayarea}{\textwidth}{6.0cm}
+\vspace{-0.3cm}
 General case:
 \only<1>{
 \begin{equation*}
@@ -26,7 +27,7 @@ D&L_\tau&0&B_{\xi,\tau}\\
 \mathbf{0}
 \end{array}\right],
 \end{equation*}}
-\only<2->{
+\only<2-8>{
 \begin{equation*}
 \left[\begin{array}{c}
 M\overset{.}{\U}\\
@@ -50,32 +51,97 @@ D&L_\tau&0&B_{\xi,\tau}\\\hdashline
 \mathbf{0}
 \end{array}\right],
 \end{equation*}}
+\only<9->{
+\begin{equation*}
+\left[\begin{array}{c}
+M\overset{.}{\U}\\
+\mathbf{0}\\\hdashline
+\mathbf{0}\\
+\mathbf{0}
+\end{array}\right]+\left[\begin{array}{cc:cc}
+\multicolumn{1}{c|}{K+C+A_\tau}&G&B_{\eta,\tau}&0\\
+\cline{1-2}
+\multicolumn{1}{c|}{D}&L_\tau&0&B_{\xi,\tau}\\\hdashline
+-B_{\eta,\tau}^T&0&M_{\eta,\tau}&0\\
+0&-B_{\xi,\tau}^T&0&M_{\xi,\tau}
+\end{array}\right]\left[\begin{array}{c}
+\U\\
+\P\\\hdashline
+\ETA\\
+\XI
+\end{array}\right]=\left[\begin{array}{c}
+\F_u\\
+\mathbf{0}\\\hdashline
+\mathbf{0}\\
+\mathbf{0}
+\end{array}\right],
+\end{equation*}}
+\vspace{-0.5cm}
 \only<3->{
 \begin{itemize}
-\only<3-4>{\item Outer block matrix:}
+\only<3-8>{\item Outer block matrix:}
 \only<3>{
 \begin{equation*}
 \overset{\tilde{}}{A}=\left[\begin{array}{cc:cc}
-
 M_{\eta,\tau}&0&-B_{\eta,\tau}^T&0\\
 0&M_{\xi,\tau}&0&-B_{\xi,\tau}^T\\\hdashline
 B_{\eta,\tau}&0&K+C+A_\tau&G\\
 0&B_{\xi,\tau}&D&L_\tau
 \end{array}\right]
 \end{equation*}}
-\only<4->{
-\begin{equation*}
-\overset{\tilde{}}{A}=\left[\begin{array}{cc}
+\only<4-8>{
+\begin{align*}
+\onslide<5->{
+\overset{\tilde{}}{A}&=\left[\begin{array}{cc}
 \overset{\tilde{}}{M_{\tau}}&\overset{\tilde{}}{-B_{\tau}^T}\\
-\overset{\tilde{}}{B_{\tau}}&\overset{\tilde{}}{K}
-\end{array}\right]=LUdecomposition... S=...
-\end{equation*}
-\begin{equation*}
-P(\overset{\tilde{}}{A})=...\left[\begin{array}{cc}
+\overset{\tilde{}}{B_{\tau}}&\overset{\tilde{}}{K}_\tau
+\end{array}\right]=\left[\begin{array}{cc}
+I&0\\
+\overset{\tilde{}}{B_{\tau}}{\overset{\tilde{}}{M_{\tau}}}^{-1}&I
+\end{array}\right]\left[\begin{array}{cc}
 \overset{\tilde{}}{M_{\tau}}&\overset{\tilde{}}{-B_{\tau}^T}\\
-\overset{\tilde{}}{B_{\tau}}&\overset{\tilde{}}{K}
-\end{array}\right], S\approx...
-\end{equation*}}
+0&\overset{\tilde{}}{S}
+\end{array}\right],}\\
+\onslide<6->{
+\overset{\tilde{}}{S}&=\overset{\tilde{}}{K}_\tau+\overset{\tilde{}}{B_{\tau}}{\overset{\tilde{}}{M_{\tau}}}^{-1}\overset{\tilde{}}{B_{\tau}^T},}\\
+\onslide<7->{
+P_U(\overset{\tilde{}}{A})&=\left[\begin{array}{cc}
+\overset{\tilde{}}{M_{\tau}}&\overset{\tilde{}}{-B_{\tau}^T}\\
+0&\overset{\tilde{}}{S}
+\end{array}\right]^{-1}=\left[\begin{array}{cc}
+\overset{\tilde{}}{M_{\tau}}^{-1}&\overset{\tilde{}}{M_{\tau}}^{-1}\overset{\tilde{}}{B_{\tau}^T}\overset{\tilde{}}{S}^{-1}\\
+0&\overset{\tilde{}}{S}^{-1}
+\end{array}\right],}\\ 
+\onslide<8->{
+\overset{\tilde{}}{S}^{-1}&\approx\overset{\tilde{}}{K}_\tau^{-1}.}
+\end{align*}}
+\only<9-12>{\item Inner block matrix:}
+\only<9->{
+\begin{align*}
+\onslide<9->{
+\overset{\tilde{}}{K}_\tau&=\left[\begin{array}{cc}
+K_\tau&G\\
+D&L_\tau
+\end{array}\right]=\left[\begin{array}{cc}
+I&0\\
+D{K_\tau}^{-1}&I
+\end{array}\right]\left[\begin{array}{cc}
+K_\tau&G\\
+0&S
+\end{array}\right],}\\
+\onslide<10->{
+S&=L_\tau-DK_\tau G,}\\
+\onslide<11->{
+P_U(\overset{\tilde{}}{K}_\tau)&=\left[\begin{array}{cc}
+K_\tau&G\\
+0&S
+\end{array}\right]^{-1}=\left[\begin{array}{cc}
+K_\tau^{-1}&-K_\tau^{-1}GS^{-1}\\
+0&S^{-1}
+\end{array}\right],}\\ 
+\onslide<12->{
+\overset{\tilde{}}{S}^{-1}&\approx L_p^{-1}\quad(\delta tL_p^{-1}).}
+\end{align*}}
 \end{itemize}}
 %\end{overlayarea}
 \end{frame}
