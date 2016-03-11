@@ -1,0 +1,33 @@
+%----------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Large scale simulations} 
+\begin{overprint}
+\onslide<1->{
+\textbf{Momentum system matrix:} $\frac{1}{\delta t}M+a_{ii}K$
+\begin{itemize}
+\item Implicit viscous: Balancing domain decomposition (BDDC) for $M + \delta t K$
+\item Coercive operator, algorithmically scalable algorithm, freezed as mesh fixed
+\end{itemize} }
+\onslide<2->{
+\textbf{Pressure system matrix:} $D M^{-1} G$
+\begin{itemize}
+\item Spectrally equivalent to standard Laplacian $L$
+\item Written as 
+\begin{align*}
+\left[ 
+\begin{array}{cc}
+M & G \\ 
+D & 0
+\end{array}
+\right] \qquad \hbox{preconditioned w/} \qquad
+\left[ 
+\begin{array}{cc}
+M & 0 \\ 
+0 & L_{\rm BDDC}
+\end{array}
+\right] 
+\end{align*}
+\item Optimal + scalable method (BDDC)
+\end{itemize}}
+\end{overprint}
+\end{frame}

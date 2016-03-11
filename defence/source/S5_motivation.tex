@@ -1,0 +1,41 @@
+\begin{frame}
+\frametitle{Motivation}
+\vfill
+\textbf{Step by step...}
+\begin{itemize}
+\item \algreen{1}{Residual-based VMS as LES models.}
+\item \algreen{1}{Mixed FE formulations LES.}
+\item \algreen{1}{High-order FE methods.}
+\algreen{1}{\item High-order time integration schemes.}
+\algreen{1}{\item Adaptive time stepping techniques.}
+\algreen{1}{\item Velocity-pressure segregation.}
+\alert<1>{\item Scalable solvers.}
+\alert<1>{\item Application.}
+\end{itemize}
+\vfill
+\end{frame}
+%-----------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Looking backward...}
+\vfill
+\begin{overlayarea}{\textwidth}{0.5\textheight}
+\only<1-3>{
+\textbf{VMS as LES models:}} \only<1>{\alert<1>{Residual-based VMS} methods}\only<2-3>{\alert<2-3>{Mixed FE VMS} methods}
+\only<1>{
+\begin{itemize}
+\item Velocity + pressure stabilization, applied to equal-order FEs.
+\item Intensively tested methods (several works in the literature).
+\item Nature of the problem changes, not DAE-2 type (!).
+\item It prevents us to use segregated RK methods.
+\end{itemize}}
+\only<2-3>{\begin{itemize}
+\item Only the term that we need, i.e., convection stabilization.
+\item To keep accuracy, we use orthogonal projections ($ \mathcal{P}_h^\perp $).
+\item Many choices for the $\mathcal{P}_h$ projector: local, global (OSS).
+\item Discrete problem still index-2 DAE.
+\item Segregated RK schemes can be used.
+\end{itemize}
+\only<3>{Now, we can use \alert<3>{Segregated RK methods for ILES of turbulent flows}}}
+\end{overlayarea}
+\vfill
+\end{frame}
