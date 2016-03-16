@@ -11,13 +11,8 @@
 \end{align*}}
 \only<5>{
 \begin{align*}
-\dot{\U}+M^{-1}(K+C(\U))\U+ M^{-1}G\P&=\F,\\
-D\U&= \G,
-\end{align*}}
-\only<6>{
-\begin{align*}
-&\dot{\U}+M^{-1}(K+C(\U))\U+ M^{-1}G\P=\F,\\
-&-DM^{-1}G\P=DM^{-1}(K+C(\U)\U- \F) + \dot{\G},
+&M\dot{\U}+(K+C(\U))\U+ G\P=\F,\\
+&D\U= \G
 \end{align*}}
 with appropriate boundary conditions on $ \Gamma$.\vskip 0.3cm
 \only<2->{
@@ -25,67 +20,6 @@ with appropriate boundary conditions on $ \Gamma$.\vskip 0.3cm
 \item<2-> \alert<2>{Laminar} case (no convection stabilization required).
 \item<3-> Saddle-point structure (stability via \alert<3>{mixed FE}).
 \item<4-> \alert<4>{Index-2 DAE} system (time integration with care)
-\end{itemize}}
-\end{frame}
-%----------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Velocity-pressure splitting}
-\textbf{Existing methods: Fractional step / pressure segregation methods}
-\begin{align*}
-&\dot{\U}+M^{-1}(K+C(\U))\U+ M^{-1}G\alert{\P^*}=\F,&\mbox{in $(t^n,t^{n+1}]$,}\\
-&-DM^{-1}G\P=DM^{-1}(K+C(\U)\U- \F) + \dot{\G},&\mbox{in $t^{n+1}$,}
-\end{align*}
-\only<1>{Some properties:
-\begin{itemize}
-\item $P^*$ extrapolation from previous time steps
-\item Time-marching scheme for the momentum eq'on (ODE system!)
-\item Velocity and pressure computations are segregated
-\item A must for computational efficiency (coercive blocks)
-\item 2nd order splitting error ( $>2$ unstable)
-%\item Better preconditioning strategies (Poisson-type solvers)
-\end{itemize}}
-\onslide<2->{\emph{High-order} time integration:
-\begin{itemize}
-\item Fractional step techniques + (e.g.) Runge-Kutta for momentum equation: [Nikitin'06; Knikker'09; Kampanis et al'06...]
-\item Introduce segregation error (2nd order)
-\end{itemize}}
-\onslide<3>{Drawbacks: 
-\begin{itemize}
-\item Segregation error can jeopardize high order time integrators
-\item Effect of segregation on pressure error unclear (not reported in literature)
-\end{itemize}}
-\end{frame}
-%----------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Velocity-pressure splitting}
-\textbf{Existing methods: Half-explicit RK methods (HERK)}
-\vspace{-0.5cm}
-\begin{overprint}
-\onslide<1>
-\begin{align*}
-%\label{eq:IMEX_NS_iup_HE}
-\frac{1}{\delta t}\U_i=\frac{1}{\delta t}\U_n + \sum_{j=1}^{i-1}\hat{a}_{ij} M^{-1} (K U_j + C(U_j) U_j + G P_j), \\
- D \U_i = \G(t_i),
-\end{align*}
-\onslide<2->
-\begin{align*}
-%\label{eq:IMEX_NS_fup_HE}
-\frac{1}{\delta t}\U_i=\frac{1}{\delta t}\U_n - \sum_{j=1}^{i-1}\hat{a}_{ij} M^{-1} (K U_j + C(U_j) U_j + G P_j), \\
-D \U_n - \delta t \sum_{j=1}^{i-1}\hat{a}_{ij} DM^{-1}(K U_j + C(U_j) U_j + G P_j) = \G(t_i).
-\end{align*}
-\end{overprint}
-\vspace{0.3cm}
-\only<2>{\emph{High-order} time integration:
-\begin{itemize}
-\item Recently applied to the Navier-Stokes equations [Sanderse \& Koren'12]
-\item Velocity-pressure segregation by the time integrator 
-\item No additional splitting needed (high-order feasible, not spoiled)
-\end{itemize}}
-\only<3>{Drawbacks: 
-\begin{itemize}
-\item All terms must be treated explicitly (viscous + convective terms)
-\item Implicit treatment of interest when $\delta t_{\rm CFL}$ smaller than finest time scales of interest [Verstappen \& Veldman'03; Vreman \& Kuerten'14]
-\item A straightforward application with implicit/IMEX integrators leads to, e..g, $D (M + \delta t K_V)^{-1} G$ matrix for the pressure (not affordable)
 \end{itemize}}
 \end{frame}
 %----------------------------------------------------------------------------------------
@@ -151,7 +85,7 @@ After re-ordering (pressure again):
 \begin{itemize}
 \item Viscous / convective can be treated implicitly / explicitly
 \begin{align*}
-&\mathcal{F}(\U) :=-K\U + \F - C(\U)\U, \qquad &&\tilde{\mathcal{G}(\U,P)} = -G P \qquad 
+&\mathcal{F}(\U) :=-K\U + \F - C(\U)\U, \qquad &&\tilde{\mathcal{G}}(\U,P) = -G P \qquad 
 \hbox{ or } \\
 &\mathcal{F}(\U) :=-K\U + \F,  \qquad && \tilde{\mathcal{G}}(\U,P) = - C(\U)\U - G P
 \end{align*}
@@ -164,20 +98,5 @@ Features:
 \item Implicit LES turbulent model (stabilization terms)
 \end{enumerate}
 \end{overprint}
-\end{frame}
-%----------------------------------------------------------------------------------------
-\begin{frame}
-\frametitle{Some properties}
-\vfill
-Some proved results [Colom\'es \& SB'15]:
-\begin{itemize}
-\item HERK and SRK methods are \emph{equivalent} for full explicit treatment
-\item However, in SRK methods we are not enforcing implicitly the constraint...
-\item We have proved that $D U(t) = G$ as soon as strongly imposed velocity traces are polynomials or order $p$ and $D U(0) = G(0)$
-\\ {\small ($p$: order of IMEX RK time integrator) }
-\item Equivalent when weakly enforced boundary conditions (dG)
-\item Equal-order \& optimal velocity-pressure methods (of interest in FSI, etc.)
-\end{itemize}
-\vfill
 \end{frame}
 
