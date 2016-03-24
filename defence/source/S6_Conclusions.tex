@@ -1,13 +1,24 @@
 %---------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Final Conclusions}
-\vfill
+\vspace{-0.5cm}
+\begin{figure}
+\centering	
+\only<1>{\includegraphics[width=0.8\textwidth]{Figures/conclusions_1}}
+\only<2>{\includegraphics[width=0.8\textwidth]{Figures/conclusions_2}}
+\only<3>{\includegraphics[width=0.8\textwidth]{Figures/conclusions_3}}
+\only<4-5>{\includegraphics[width=0.8\textwidth]{Figures/conclusions}}
+\end{figure}
+\only<1-4>{
 \begin{itemize}
-\item<1-> Demonstrated suitability of \alert<1>{Residual-based VMS methods as LES models}.
-\item<2-> Defined \alert<2>{Mixed FE methods with convection stabilization}.
-\item<3-> Developed novel \alert<3>{Segregated Runge-Kutta methods}. 
-\item<4-> \alert<4>{Highly-scalable FE solvers} for the simulation of turbulent incompressible flows .
-\end{itemize}
+\item<1-> Demonstrated suitability of \alert<1>{Residual-based VMS methods as LES models}
+\item<2-> Defined \alert<2>{Mixed FE methods with convection stabilization}
+\item<3-> Developed novel \alert<3>{Segregated Runge-Kutta methods} 
+\item<4-> \alert<4>{Highly-scalable FE solvers} for the simulation of turbulent incompressible flows
+\end{itemize}}
+\only<5>{
+{\bf Thesis goal }\\
+Highly scalable Finite Element (FE) framework for Large Eddy Simulations (LES) of incompressible turbulent flows}
 \vfill
 \end{frame}
 %---------------------------------------------------------------------------

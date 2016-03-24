@@ -53,7 +53,7 @@ M\dot{\U}=\mathcal{F}(\U\only<4-6>{,\alert<6>{\ETA}})+\mathcal{G}(\U\only<7>{,\a
 %----------------------------------------------------------------------------------------
 \begin{frame}[t]
 \frametitle{Final discrete problem}
-At each stage of the Runge-Kutta scheme: (explicit convection version)
+At each stage of the Runge-Kutta scheme: (explicit convective term and projection version)
 \begin{align*}
 \only<1>{&\frac{1}{\delta t}M\U_i=\frac{1}{\delta t}M\U_n+\sum_{j=1}^ia_{ij}\mathcal{F}(\U_j)+\sum_{j=1}^{i-1}\hat{a}_{ij}  \mathcal{G}(\U_j,\ETA_j,\P_j),}
 \only<2->{&\alert<3>{\left(\frac{1}{\delta t}M+a_{ii}K\right)}\U_i=\frac{1}{\delta t}M\U_n+\sum_{j=1}^{i-1}\left[a_{ij}\mathcal{F}(\U_j)+\hat{a}_{ij}  \mathcal{G}(\U_j,\ETA_j,\P_j)\right],}\\

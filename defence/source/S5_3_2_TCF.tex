@@ -1,6 +1,26 @@
 %---------------------------------------------------------------------------
 \begin{frame}[t]
 \frametitle{TCF {\small Turbulent Channel Flow at $ Re_\tau=395 $}}
+\textbf{LES for wall bounded flows?}
+\vfill
+\onslide<1->{
+\textbf{Problem:} 
+\begin{itemize}
+\item LES models cannot accurately simulate boundary layers without stretched meshes
+\end{itemize}}
+\onslide<2->{
+\textbf{Solution:}
+\begin{itemize}
+\item Use of weak boundary conditions (Nitche's method)
+\item Impose the tangential traction on the wall from a wall law model [Bazilevs \textit{et al} '07]
+\item We aslo impose weakly the wall-normal component
+\end{itemize}
+} 
+\vfill
+\end{frame}
+%---------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{TCF {\small Turbulent Channel Flow at $ Re_\tau=395 $}}
 \textbf{Weak boundary conditions:}
  \vspace*{-0.3cm}
   \begin{figure}

@@ -24,6 +24,7 @@
 \patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
 \def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax}%
 \makeatother
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
 
 \def\algreen#1#2{{\only<#1>{\textcolor{tangocolordarkchameleon}{#2}}}}
 
@@ -35,7 +36,7 @@
 \textsc{Oriol Colomés Gené}\\[0.2cm]
 \emph{supervisor:}\\
 \textsc{Santiago Badia}}
-\title[Large scale FE solvers for LES of incomprssible turbulent flows]{Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}
+\title[Large scale FE solvers for LES of incompressible turbulent flows]{Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}
 \institute{Departament d'Enginyeria Civil i Ambiental}
 \titlegraphic{\includegraphics[width=0.5\textwidth]{../../sources/Figures/Cover/logo_escola_pantone_201_C}}
 \date{March 31 2016}

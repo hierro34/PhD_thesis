@@ -79,8 +79,7 @@
 \\[0.05in]
 &+\only<2>{\alert<2>{\left(\tau_m \mathbf{a}\cdot\nabla\mathbf{v}_{h},\mathcal{P}_h^\perp(\mathbf{a}\cdot\nabla\mathbf{u}_{h})\right)_{\Omega^h}}}
 \only<3>{\alert<3>{\left(\tau_m \mathbf{a}\cdot\nabla\mathbf{v}_{h},\mathbf{a}\cdot\nabla\mathbf{u}_{h}\right)_{\Omega^h}-\left(\tau_m \mathbf{a}\cdot\nabla\mathbf{v}_{h},\boldsymbol{\eta}_{h}\right)_{\Omega^h}}}\\
-&+\only<2>{\alert<2>{\left(\tau_c \nabla\cdot\mathbf{v}_{h},\mathcal{P}_h^\perp(\nabla\cdot\mathbf{u}_{h})\right) _{\Omega^h}} }
-\only<3>{\alert<3>{\left(\tau_c \nabla\cdot\mathbf{v}_{h},\nabla\cdot\mathbf{u}_{h}\right) _{\Omega^h}} }
+&+\alert<2-3>{\left(\tau_c \nabla\cdot\mathbf{v}_{h},\nabla\cdot\mathbf{u}_{h}\right) _{\Omega^h}} 
 =\left\langle \mathbf{v}_{h},\mathbf{f}\right\rangle_{\Omega }
 \\[0.1in]
 %
@@ -92,21 +91,20 @@
 \only<3->{
 \begin{align*}
 &\boldsymbol{\eta}_{h}:=\mathcal{P}_h(\mathbf{a}\cdot\nabla\mathbf{u}_{h})\\
-&\boldsymbol{\xi}_{h}:=\mathcal{P}_h(\nabla p_{h})\\
-&\mathcal{P}_h(\nabla\cdot\mathbf{u}_{h})\approx 0
+&\boldsymbol{\xi}_{h}:=\mathcal{P}_h(\nabla p_{h})
 \end{align*}}
 \end{overlayarea}
 \end{block}}
 \end{frame}
 %----------------------------------------------------------------------------------------
 \begin{frame}
-\frametitle{Matricial form}
+\frametitle{Matrix form}
 %\begin{overlayarea}{\textwidth}{6.0cm}
 \begin{itemize}
 \item<1-> ASGS:
 \begin{equation*}
 \left[\begin{array}{c}
-M\overset{.}{\U}\\
+M\dot{\U}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{cc}
 K+C+A_\tau&G+G_\tau\\
@@ -122,7 +120,7 @@ D+D_\tau&L_\tau
 \item<2-> Term-by-term OSS:
 \begin{equation*}
 \left[\begin{array}{c}
-M\overset{.}{\U}\\
+M\dot{\U}\\
 \mathbf{0}\\
 \mathbf{0}\\
 \mathbf{0}
@@ -146,7 +144,7 @@ D&L_\tau&0&B_{\xi,\tau}\\
 \item<3-> Term-by-term OSS with Inf-sup stable elements (mixed FE):
 \begin{equation*}
 \left[\begin{array}{c}
-M\overset{.}{\U}\\
+M\dot{\U}\\
 \mathbf{0}\\
 \mathbf{0}
 \end{array}\right]+\left[\begin{array}{ccc}
