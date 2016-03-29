@@ -5,8 +5,8 @@
 \begin{enumerate}
 \item<3-> Consider the projected momentum eq'on on the discretely divergence free space
 \item<4-> Integrate the resulting ODE system w/ preferred IMEX RK method (diagonally implicit)...
-\item<5-> $\mathcal{G}$ must include $G(DM^{-1}G)^{-1} \left( DM^{-1}(K+C(\U)+A_\tau)\U+B_\tau\ETA - \F_u) \right)$ for velocity-pressure segregation
-\item<6-> We treat the projection term implicit or explicit, according the convective term.
+\item<5-> $\mathcal{G}$ must include $G(DM^{-1}G)^{-1} \left( DM^{-1}(K+C(\U)+A_\tau)\U+B_\tau\ETA - \F_u) + \dot{\mathbf{G}}\right)$ for velocity-pressure segregation
+\item<6-> We treat the projection term implicit or explicit, according the convective term
 \end{enumerate}
 \begin{overprint}
 \only<1>{
@@ -25,7 +25,7 @@ D&\alert<4>{0}&0\\
 \ETA
 \end{array}\right]=\left[\begin{array}{c}
 \F_u\\
-\mathbf{0}\\
+\mathbf{G}\\
 \mathbf{0}
 \end{array}\right],
 \end{equation*}}
@@ -33,20 +33,20 @@ D&\alert<4>{0}&0\\
 \begin{align*}
 M\dot{\U}+(K+C(\U)+A_\tau)\U+G\P+B_\tau\ETA&=\F_u,\\
 M_\tau\ETA-B_\tau^T\U&=\mathbf{0},\\
-D\U&=\mathbf{0}.
+D\U&=\mathbf{G}.
 \end{align*}}
 \only<3>{
 \begin{align*}
 &M\dot{\U}+(K+C(\U)+A_\tau)\U+G\P+B_\tau\ETA=\F_u,\\
 &M_\tau\ETA-B_\tau^T\U=\mathbf{0},\\
-&-DM^{-1}G\P=DM^{-1}(K+C(\U)\U+B_\tau\ETA- \F_u).
+&-DM^{-1}G\P=DM^{-1}(K+C(\U)\U+B_\tau\ETA- \F_u)+\dot{\mathbf{G}}.
 \end{align*}}
 \only<4->{
 \begin{align*}
 &
 M\dot{\U}=\mathcal{F}(\U\only<4-6>{,\alert<6>{\ETA}})+\mathcal{G}(\U\only<7>{,\alert<7>{\ETA}},\alert<5>{\P}), \qquad \mathcal{F}: \hbox{ implicit terms},  \quad \mathcal{G}: \hbox{ explicit ones} \\
 &M_\tau\ETA-B_\tau^T\U=\mathbf{0},\\
-&-DM^{-1}G\P=DM^{-1}((K+C(\U)+A_\tau)\U+B_\tau\ETA- \F_u).
+&-DM^{-1}G\P=DM^{-1}((K+C(\U)+A_\tau)\U+B_\tau\ETA- \F_u)+\dot{\mathbf{G}}.
 \end{align*}}
 \end{overprint}
 \end{frame}
@@ -58,12 +58,12 @@ At each stage of the Runge-Kutta scheme: (explicit convective term and projectio
 \only<1>{&\frac{1}{\delta t}M\U_i=\frac{1}{\delta t}M\U_n+\sum_{j=1}^ia_{ij}\mathcal{F}(\U_j)+\sum_{j=1}^{i-1}\hat{a}_{ij}  \mathcal{G}(\U_j,\ETA_j,\P_j),}
 \only<2->{&\alert<3>{\left(\frac{1}{\delta t}M+a_{ii}K\right)}\U_i=\frac{1}{\delta t}M\U_n+\sum_{j=1}^{i-1}\left[a_{ij}\mathcal{F}(\U_j)+\hat{a}_{ij}  \mathcal{G}(\U_j,\ETA_j,\P_j)\right],}\\
 &\alert<4>{M_\tau}\ETA_i-B_\tau^T\U_i=\mathbf{0},\\
-&- \alert<5>{DM^{-1}G}(\P_i)=DM^{-1}((K+C(\U_i)+A_\tau)\U_i+B_\tau\ETA_i - \F_u(t_i)).
+&- \alert<5>{DM^{-1}G}(\P_i)=DM^{-1}((K+C(\U_i)+A_\tau)\U_i+B_\tau\ETA_i - \F_u(t_i))+\dot{\mathbf{G}}(t_i).
 \end{align*}
 \only<3->{
 \begin{itemize}
-\item<3-> \alert<3>{Elasticity-type} matrix for the momentum equation.
-\item<4-> \alert<4>{Mass-type} matrix for the projection equation.
-\item<5-> \alert<5>{Darcy-type} system for the pressure equation.
+\item<3-> \alert<3>{Elasticity-type} matrix for the momentum equation
+\item<4-> \alert<4>{Mass-type} matrix for the projection equation
+\item<5-> \alert<5>{Darcy-type} system for the pressure equation
 \end{itemize}}
 \end{frame}

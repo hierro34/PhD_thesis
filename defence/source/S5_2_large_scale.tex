@@ -5,8 +5,8 @@
 \onslide<1->{
 \textbf{Momentum system matrix:} $\frac{1}{\delta t}M+a_{ii}K$
 \begin{itemize}
-\item Implicit viscous: Balancing domain decomposition (BDDC) for $M + \delta t K$
-\item Coercive operator, algorithmically scalable algorithm keeping constant the local problem size
+\item Multilevel/overlapped Balancing domain decomposition (BDDC) for $M + \delta t K$
+\item Excellent weak scalability results (up to $ \sim 460,000 $ cores) [Badia \textit{et al} '15]
 \end{itemize} }
 \onslide<2->{
 \textbf{Pressure system matrix:} $D M^{-1} G$
@@ -23,11 +23,12 @@ D & 0
 \left[ 
 \begin{array}{cc}
 M & 0 \\ 
-0 & L_{\rm BDDC}
+0 & L_p
 \end{array}
 \right] 
 \end{align*}
-\item Optimal + scalable method (BDDC)
+\item Multilevel/overlapped Balancing domain decomposition (BDDC) for $L_p$
+\item Excellent weak scalability results (up to $ \sim 460,000 $ cores) [Badia \textit{et al} '15]
 \end{itemize}}
 \end{overprint}
 \end{frame}
