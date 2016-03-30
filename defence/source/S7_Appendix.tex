@@ -1,0 +1,157 @@
+%---------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}[t]
+\end{frame}
+%---------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}[t]
+\frametitle{Rb-VMS Summary}
+% \begin{table}[h]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|}
+% \hline
+% & Sgs space & Sgs dynamics                         &  Advection velocity ($\mathbf{a}$)  \\
+% \hline
+% 1&ASGS      & Static  ($\tilde{\mathbf{u}}=f(\mathbf{R}_m)$) &  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 2&ASGS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 3&ASGS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Nonlinear ($\mathbf{a}=\mathbf{u}_h+\tilde{\mathbf{u}}$) \\
+% \hline
+% 4&OSS      & Static  ($\tilde{\mathbf{u}}=f(\mathbf{R}_m)$)  &  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 5&OSS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Linear ($\mathbf{a}=\mathbf{u}_h$) \\
+% 6&OSS      & Dynamic ($\tilde{\mathbf{u}}=f(\mathbf{R}_m,\partial_t\tilde{\mathbf{u}})$)&  Nonlinear ($\mathbf{a}=\mathbf{u}_h+\tilde{\mathbf{u}}$) \\
+% \hline
+% \end{tabular}
+% \end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+& Sgs space & Sgs dynamics  &  Advection\\
+\hline
+1&ASGS      & Static  &  Linear    \\
+2&ASGS      & Dynamic &  Linear    \\
+3&ASGS      & Dynamic &  Nonlinear \\
+\hline
+4&OSS      & Static  &  Linear   \\
+5&OSS      & Dynamic &  Linear   \\
+6&OSS      & Dynamic &  Nonlinear \\
+\hline
+\end{tabular}
+\end{table}
+\vskip 0.5 cm
+\begin{itemize}
+\item[1] It is the most standard method (SUPG for linear elements) up to the choice of the
+stabilization parameters. Unknown stability properties.
+%\item[2] Proven stability for the linearized problem (Oseen) without $\delta t$ restrictions (Codina et al. 2006)
+\item[4] Strictly point-wise positive for linear elements (no backscatter).
+\item[5] Convergent to weak solutions of NS equations (Badia \& Gutierrez 2012).
+\end{itemize}
+\end{frame}
+%---------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\input{S2_2_energy}
+%---------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}[t]
+\frametitle{Rb-VMS TCF {\small Turbulent Channel Flow}}
+\textbf{Reynolds shear stress (models):}
+  \vspace*{-0.3cm}
+  \begin{figure}
+    \centering	
+    \includegraphics[width=0.7\textwidth]{Figures/Rb_TCF/reystr_395_Dyn_Nl_OSS.pdf}
+  \end{figure}
+  \vspace*{-0.5cm}
+  \begin{overlayarea}{\textwidth}{1.5cm}
+ \only<2->{
+ \begin{itemize}
+  	\item \alert<2>{Almost identical to the DNS}.
+  	\only<3->{\item \alert<3>{SGS counterpart does not contribute} to the Reynolds shear stress. }
+  \end{itemize}}
+  \end{overlayarea}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}
+ \frametitle{Mixed FE Colliding flow}
+ \textbf{Accuracy:} \only<1-2>{Velocity error}\only<3-4>{Pressure error}
+   \vspace*{-0.25cm}
+ \only<1-3>{
+ \begin{figure}
+     \centering	
+     \includegraphics[width=0.8\textwidth]{Figures/colliding_erru.pdf}
+   \end{figure}}
+\only<4->{
+\begin{figure}
+    \centering	
+    \includegraphics[width=0.8\textwidth]{Figures/colliding_errp.pdf}
+  \end{figure}}
+ \begin{overlayarea}{\textwidth}{1.5cm}
+  \vspace*{-0.5cm}
+ \only<2-3>{
+ \begin{itemize}
+  	\item \alert<2>{2nd order} convergence rate for ASGS and OSS methods.
+  	\only<3->{\item \alert<3>{3rd order} convergence rate for OSS-ISS method.}
+  \end{itemize}}
+   \only<5->{
+   \begin{itemize}
+    	\item \alert<5>{2nd order} convergence rate for all methods.
+    	\only<6->{\item \alert<6>{Best accuracy for OSS-ISS method}.}
+    \end{itemize}}
+  \end{overlayarea}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}
+ \frametitle{Mixed FE TGV {\small Taylor-Green Vortex flow}}
+ \textbf{Energy dissipation rate (different methods):}
+ \vspace*{-0.3cm}
+   \begin{figure}
+     \centering	
+     \includegraphics[width=0.65\textwidth]{Figures/oss_64_tot.pdf}
+     \vspace*{-0.3cm}
+     \caption{Total energy dissipation rate}
+   \end{figure}
+ \begin{overlayarea}{\textwidth}{1.5cm}
+ \only<2->{
+ \vspace*{-0.5cm}
+ \begin{itemize}
+   	\item \alert<2>{Good agreement with the DNS} (coarse mesh).
+   	\only<3->{\item \alert<3>{More accurate results with equal-order elements}.}
+  \end{itemize}}
+  \end{overlayarea}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}
+ \frametitle{Mixed FE TGV {\small Taylor-Green Vortex flow}}
+ \textbf{Energy dissipation rate (refinement OSS-ISS):}
+ \vspace*{-0.1cm}
+   \begin{figure}
+     \centering	
+     \includegraphics[width=0.75\textwidth]{Figures/TGV_OSS_ISS_refinement_tot.pdf}
+     \vspace*{-0.3cm}
+     \caption{Total energy dissipation rate}
+   \end{figure}
+ \begin{overlayarea}{\textwidth}{1.5cm}
+ \only<2->{
+ \vspace*{-0.5cm}
+ \begin{itemize}
+   	\item \alert<2>{Good agreement with the DNS}.
+   	\only<3->{\item \alert<3>{$ 32^3 $ $ Q3/Q2 $ elements mesh on top of DNS}.}
+  \end{itemize}}
+  \end{overlayarea}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\addtocounter{framenumber}{-1}
+\begin{frame}
+\frametitle{SRK 2D Laminar flow around a cylinder}
+\textbf{Adaptive time stepping:}
+\begin{figure}[h!]
+  \centering
+  \subfigure[Time step evolution]{\label{fig:IMEX_RK_cyl_adp_dt}\includegraphics[width=0.49\textwidth]{Figures/time_step}}    
+  \subfigure[Lift coefficient (zoom)]{\label{fig:IMEX_RK_cyl_adp_lift}\includegraphics[width=0.49\textwidth]{Figures/lift_close}}
+  \caption{Adaptive time stepping.}
+  \label{fig:IMEX_RK_cyl_adp}
+\end{figure}
+\end{frame}

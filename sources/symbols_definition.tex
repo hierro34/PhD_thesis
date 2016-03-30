@@ -1,54 +1,157 @@
 \begin{symbols}
 
-$\u(\x,t)$ & velocity field       & \si{\meter\per\second} \\
-$u_x$      & velocity x-component & \si{\meter\per\second} \\
-$u_y$      & velocity y-component & \si{\meter\per\second} \\
-$u_z$      & velocity z-component & \si{\meter\per\second} \\
+\multicolumn{3}{c}{{\Large \textbf{Lower-case Roman}}}\\
+$\a(\x,t)$ & advection velocity field       &  \\
+$\f$            & External body force              & \\
+$ f_\nu $       & viscous forces per unit volume   & \\
+$ f_{in} $      & inertial forces per unit volume  & \\
+$ k $           & wave number                      & \\
+$ k_\eta $      & Kolmogorov wave number           & \\
+$ k_\ell $      & integral scale wave number       & \\
+$\ell$          & integral length scale            & \\
+$\n$            & unit outward normal vector       & \\
+$\breve{p}$     & pressure field                   & \\
+$p(\x,t)$       & kinematic pressure field                   & \\  
+$\hat{p}(\k,t)$ & kinematic pressure field in the Fourier space & \\  
+$\overline{p}(\x)$  & time-averaged pressure component & \\  
+$p'(\x)$            & fluctuating pressure component   & \\  
+$ \tilde{p}(\x,t) $ & pressure subscale                & \\
+$ \mathbf{t} $  & unit vector tangential to the wall & \\
+$ \mathbf{t}_N $& traction on the Neumman boundary & \\
+$\u(\x,t)$      & velocity field       &  \\
+$\hat{\u}(\k,t)$& velocity field in the Fourier space &  \\
+$\overline{\u}(\x)$ & time-averaged velocity component &  \\
+$\u'(\x)$           & fluctuating velocity component   &  \\
+$ \tilde{\u}(\x,t)$ & velocity subscale                & \\
+$u_x$      & velocity x-component &  \\
+$u_y$      & velocity y-component &  \\
+$u_z$      & velocity z-component &  \\
 $u$        & velocity RMS & \\
-$\overline{\u}$ & time-averaged velocity component & \si{\meter\per\second} \\
-$\u'$           & fluctuating velocity component   & \si{\meter\per\second} \\
-$\hat{p}$       & pressure field                   & \si{\pascal}\\
-$p(x,t)$        & kinematic pressure field                   & \si{\pascal}\\  
-$\overline{p}$  & time-averaged pressure component & \si{\pascal}\\  
-$p'$            & fluctuating pressure component   & \si{\pascal}\\  
-$\f$            & External body force              & \si{\newton}\\
-$\n$            & unit outward normal vector       &       \\
-$l$             & integral length scale            &  \\
+$u_\tau$        & friction velocity                & \\
+$u_0$           & initial velocity            & \\
+$u^+$           & mean stream-wise velocity in wall units & \\
+$ u_\perp $     & velocity component perpendicular to a given surface & \\
+$ u_\parallel $ & velocity component parallel to a given surface & \\
+$y^+$           & distance to the wall in wall units & \\
 
 \addlinespace % Gap to separate the Roman lower from Roman Capital
+\addlinespace
 
-$Re$       & Reynolds number      & ?? \\
-%$\H$       & angular momentum     & ?? \\      % Turbulence - vorticity
-$\T$       & Reynolds stress tensor & ?? \\    % Turbulence - Reynolds stress
-$\L$       & Leonard stress tensor & ?? \\    % Turbulence - Reynolds stress
-$\C$       & Cross stress tensor & ?? \\    % Turbulence - Reynolds stress
-$\R$       & SGS Reynolds stress tensor & ?? \\    % Turbulence - Reynolds stress
+\multicolumn{3}{c}{{\Large \textbf{Upper-case Roman}}}\\
+$ \A_\tau $ & momentum stabilization terms matrix & \\
+$ \B_{\eta,\tau} $ & velocity-projection block matrix & \\
+$ \B_{\xi,\tau} $ & pressure-projection block matrix & \\
+$\Cbf$       & cross stress tensor & \\    % Turbulence - Reynolds stress
+$ \C $ & convective term matrix & \\
+$ \D $ & velocity divergence term matrix & \\
+$E(k)$     & energy spectrum & \\
+$ \F_u $ & momentum force term vector & \\
+$ \mathcal{F} $ & implicit momentum operator & \\
+$ \mathcal{G} $ & explicit momentum operator & \\
+$ \G $ & pressure gradient term matrix & \\
+$ \H $ & continuity force term vector & \\
+$ H^m(\Omega) $ & Sovolev space $W^{m,p}(\Omega)$ for $ p=2 $ & \\
+$ \boldI $   & identity tensor & \\
+$ \I $ & identity matrix & \\
+$ I $ & moment of inertia & \\
+$ \K $ & diffusive term matrix & \\
+$K$        & total kinetic energy & \\
+$\Lbf$       & Leonard stress tensor & \\    % Turbulence - Reynolds stress
+$ \mathcal{L}_\a $ & momentum operator with advection velocity $ \a $ & \\
+$ \mathcal{L}_\a^* $ & adjoint operator of the momentum equation with advection velocity $ \a $ & \\
+$ \L_\tau $ & pressure gradient stabilization terms matrix & \\
+$ L^p(\Omega) $ & space of real functions on $ \Omega $ with $ p $-th power integrable & \\
+$ L_i $ & domain length on the $ i $-direction & \\
+$ \M $ & mass matrix & \\
+$ \M_{\eta,\tau} $, $ \M_{\xi,\tau} $, $ \M_{\tau} $ & mass matrix weighted by $ \tau_m $ & \\
+$ \P $ & pressure unknowns vector & \\
+$ \mathcal{P} $ & projection & \\
+$ P_D $ & Diagonal block preconditioner & \\
+$ P_U $ & Upper block preconditioner & \\
+$ P_L $ & Lower block preconditioner & \\
+$ \mathcal{Q} $ & pressure variational space & \\
 $Q_{ij}$   & velocity correlation function & \\
-$\Delta u(r)$ & second-order structure function & \\
-$E(k)$     & Energy spectrum & \\
-$R(r)$     & Autocovariance function & \\
-$K$        & Total kinetic energy & \\
-$Z$        & enstrophy & \\
+$\Rbf$       & SGS Reynolds stress tensor & \\    % Turbulence - Reynolds stress
+$ \Rbf_u $ & momentum equation residual & \\
+$ \Rbb^d $ & Real coordinate space of $ d $ dimensions & \\
+$ R_p $    & continuity equation residual & \\
+$Re$       & Reynolds number      & \\
+$Re_l$     & integral Reynolds number      & \\
+$Re_\lambda$ & Taylor-micorscale Reynolds number      & \\
+$ Re_\tau $ & friction Reynolds number & \\
+$R(r)$     & autocovariance function & \\
+$ \mathbb{S} $ & Schur complement matrix & \\
+$ S(r) $   & skewness factor         & \\
+%$\H$       & angular momentum     & ?? \\      % Turbulence - vorticity
+$\Tbf$       & Reynolds stress tensor & \\    % Turbulence - Reynolds stress
+$ \mathcal{T}_h $ & Finite Element partition & \\
+$ T $ & upper bound of the temporal domain & \\
+$ \U $ & velocity unknowns vector & \\
+$ \mathcal{V} $ & velocity variational space & \\
 $W^{m,p}(\Omega)$ & Sovolev space & \\
-%$a$ & distance & \si{\meter} \\
-%$P$ & power & \si{\watt} (\si{\joule\per\second}) \\
-%Symbol & Name & Unit \\
+$Z$        & enstrophy & \\
 
-\addlinespace % Gap to separate the Roman symbols from the Greek
-$\boldsymbol{\sigma}(\x,t)$ & stress tensor & \si{\pascal}\\  % Governing equations
-$\tau$     & shear stress        & \si{\pascal}\\         % Turbulence - Elementary concepts
-$\tau_{xy}$ & shear stress $xy$-component & \si{\pascal}\\ % Turbulence - Elementary concepts
-$\gamma$   & angular distortion  & \\                     % Turbulence - Elementary concepts
-$\rho$     & density             & \si{\kg\per\metre^3}\\ % Turbulence - Elementary concepts
-$\nu$      & kinematic viscosity & ? \\                   % Turbulence - Elementary concepts
-$\mu$      & ??? viscosity       & ? \\                   % Turbulence - Elementary concepts
-$\omega$   & vorticity field     & ??? \\                 % Turbulence - vorticity
+\addlinespace % Gap to separate the Roman lower from Roman Capital
+\addlinespace
+
+\multicolumn{3}{c}{{\Large \textbf{Lower-case Greek}}}\\
+$\gamma$   & angular distortion  & \\            % Turbulence - Elementary concepts
+$ \delta $ & size of the boundary layer & \\
+$ \delta t $ & time step size & \\
+$\delta_\nu$  & viscous length scale & \\
+$ \partial_t $ & temporal partial derivative & \\
+$ \partial\Omega $ & domain boundary & \\
+$\boldsymbol{\varepsilon}(\u)$ & strain rate tensor & \\
+$\varepsilon$ & mechanical energy dissipation rate & \\
+$ \varepsilon_h $ & energy transfer from Finite Element scale to subscales & \\
+$ \tilde{\varepsilon} $ & energy transfer from subscales to Finite Element scale & \\
+$ \boldsymbol{\eta}_h $ & convective term Finite Element projection & \\
 $\eta$     & Kolmogorov length scale & \\
+$ \lambda $ & Taylor-microscale & \\
+$\mu$      & viscosity           & \\                   % Turbulence - Elementary concepts
+$\nu$      & kinematic viscosity & \\                   % Turbulence - Elementary concepts
+$\rho$     & density             & \\ % Turbulence - Elementary concepts
+$ \boldsymbol{\xi}_h $ & pressure gradient term Finite Element projection & \\
+$ \boldsymbol{\xi}_m $ & momentum residual Finite Element weighted projection & \\
+$ \boldsymbol{\xi}_c $ & continuity residual Finite Element weighted projection & \\
+$\boldsymbol{\sigma}(\x,t)$ & stress tensor & \\  % Governing equations
+$\tau$     & shear stress        & \\         % Turbulence - Elementary concepts
+$\tau_{xy}$ & shear stress $xy$-component & \\ % Turbulence - Elementary concepts
+$\tau_w$   & wall shear stress   & \\
+$ \tau_m $ & momentum stabilization parameter & \\
+$ \tau_c $ & continuity stabilization parameter & \\
+$\boldsymbol{\omega}$ & vorticity field & \\                 % Turbulence - vorticity
 
 \addlinespace % Gap to separate the Greek lower symbols from the Greek Capital
-$\Omega$  & bounded domain of $\mathbb{R}^d$ & \\
+\addlinespace
+
+\multicolumn{3}{c}{{\Large \textbf{Upper-case Greek}}}\\
 $\Gamma$  & domain boundary ($\Gamma=\partial\Omega$) & \\
 $\Gamma_D$ & Dirichlet boundary & \\
 $\Gamma_N$ & Newmann boundary & \\
+$\Delta u(r)$ & second-order structure function & \\
+$ \Delta x $ & stream-wise elemental length & \\
+$ \Delta y $ & wall-normal elemental length & \\
+$ \Delta z $ & span-wise elemental length & \\
+$ \Pi_h $ & projection into the Finite Element space & \\
+$ \Pi_m $ & projection into the Finite Element space weighted by $ \tau_m $ & \\
+$ \Pi_c $ & projection into the Finite Element space weighted by $ \tau_c $ & \\
+$ \ETA $ & convective term projection unknowns vector & \\
+$ \XI $ & pressure gradient projection unknowns vector & \\
+$\Omega$  & bounded domain of $\mathbb{R}^d$ & \\
+
+\addlinespace % Gap to separate the Greek capital symbols from the subscripts
+\addlinespace
+
+\multicolumn{3}{c}{{\Large \textbf{Superscripts and subscripts}}}\\
+$ \tilde{(\cdot)} $ & subscale component & \\
+$ \dot{(\cdot)} $ & time derivative & \\
+$ \bar{(\cdot)} $ & time-averaged component & \\
+$ (\cdot)' $ &  fluctuating component & \\
+$ (\cdot)^+ $ & quantity in wall units & \\
+$ (\cdot)_h $ & Finite Element component & \\
+$ (\cdot)_{n+1} $ & current time step & \\
+$ (\cdot)_n $ & previous time step & \\
+$ (\cdot)_\Gamma $ & boundary term & \\
 
 \end{symbols}

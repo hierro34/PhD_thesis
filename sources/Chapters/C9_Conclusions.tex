@@ -1,0 +1,65 @@
+\chapter{Conclusions and future work}
+\label{chap-conclusions}
+
+\section{Conclusions}
+\label{sec-C9_conclusions}
+The development of new algorithms based on the FE method for the simulation of large scale turbulent incompressible flows has been studied in this thesis.
+
+In order to take advantage of the continuously increasing computational power acquired with the new improvements on super-computers, an advance in software design is imperative. New algorithms need to be designed to be used in the exascale computing environment. In this thesis we have proposed a framework for the High Performance Computing of turbulent incompressible flows that relies on the extreme scalability of Balancing Domain Decomposition by Constraints preconditioners and the use of Variational Multiscale stabilization methods as Large Eddy Simulation models. Furthermore, a novel time integration scheme that segregates velocity and pressure computations through Runge-Kutta schemes has been developed.
+
+The thesis has sought to address the main objectives that we have defined in the introduction chapter, whose fulfillment is discussed in what follows.
+
+\begin{itemize}
+\item {\bf RB-VMS methods as LES models for turbulent incompressible flows}\\
+The applicability of RB-VMS methods as LES models for the simulation of turbulent incompressible flows has been demonstrated in \Chap{Rb_VMS}. In that chapter, some theoretical aspects have been discussed, such as the dissipative structure of the methods and the way energy is conserved, which we have numerically verified.
+
+The most important conclusion that we can point out from the results obtained in \Chap{Rb_VMS} is that OSS and ASGS methods yield similar results, all displaying the features of turbulent flows, reproducing appropriately global outputs such as energy spectra. Moreover, the methods are stable and converge to reference solutions, both when the mesh is refined and when the polynomial order is increased.
+
+\item {\bf Mixed FE formulations for LES of turbulent incompressible flows}\\
+With respect to this objective, in \Chap{TBT_OSS} the comparison of three methods, ASGS, term-by-term OSS, and convection-only OSS with ISS elements have been tested. It has been shown that the accuracy is similar for the same order of interpolation of the velocity for all methods, the OSS-ISS being slightly inferior in this respect. But on the other hand, when computational cost is analyzed the OSS-ISS is clearly the cheapest one so a finer discretization can be used for a given computational cost.
+
+\item {\bf High-order FE methods}\\
+The use of high-order FE methods, up to third order, have been considered in the core chapters of the thesis. Besides, all the proposed algorithms can be used with arbitrary order of interpolation, making them extensible for orders greater than three.
+
+\item {\bf High-order time integration methods}\\
+One of the main concerns of this work has been the use of high-order schemes for the time integration. The use of such methods has motivated the Segregated Runge-Kutta algorithm proposed in \Chap{SRK} and later also used in \Chap{SVMS} and \Chap{NACA}. The proposed SRK method has been used with orders of convergence in time up to three, for both velocity and pressure fields. Nevertheless, the SRK scheme is not restricted to third order since the order only depends on the definition of the Butcher tableaus.
+
+\item {\bf Adaptive time integration schemes}\\
+Related to the previous point, the Segregated Runge-Kutta methods also allows the easy implementation of adaptive time-stepping techniques. These techniques has been successfully analyzed in \Chap{SRK} and effectively used for the simulation of turbulent flows in the tests done in \Chap{SVMS} and \Chap{NACA}.
+
+\item {\bf Segregation of velocity and pressure fields}\\
+The segregated Runge-Kutta methods proposed in this work allows the velocity and pressure segregation at the time integration level (without the need to perform additional fractional step techniques that spoil high orders of accuracy). The use of such schemes is very appealing for large scale computations of incompressible flows, since the monolithic indefinite system is replaced by segregated positive-definite velocity and pressure blocks. The pressure block involves a Poisson solver, whereas the velocity block is a vector-Laplacian or elasticity matrix when the convective term is treated explicitly.
+
+\item {\bf Large scale and scalable FE solvers}\\
+The use of massively parallel and scalable solvers for the problems that arise after the segregation introduced by the SRK scheme, have been considered in \Chap{SVMS}. This approach also enables the use of block preconditioning techniques that lead to the approximation of Laplacian-type and elasticity-type problems, suitable to be preconditioned with BDDC algorithms. The weak scalability of this approach for the resolution of one time step of the TGV test have been demonstrated up to 8000 cores.
+
+\item {\bf Application}\\
+In \Chap{NACA} the methods proposed in \Chap{SVMS} have been used to assess their performance when simulating turbulent flows around an airfoil, in particular a NACA 0012 profile. This is a widely used  benchmark in the aerospace industry since many airplane and wind turbines wings are based on these kind of profiles.
+
+\end{itemize}
+
+Although all the objectives stated at the introduction have been addressed in this work, there are some limitations that worth pointing out. 
+
+One of the weakness of the proposed VMS methods is the high dependency on the algorithmic constants that appear on the formulation, especially when coarse meshes are used. Albeit the constant election is not critical when laminar flows are simulated, their influence for turbulent incompressible flows have been revealed in all tests performed in the thesis.
+
+Furthermore, it has been shown that the best configuration of the algorithmic constants is problem dependent. Meaning that in order to obtain the best results for a given turbulent problem, e.g. isotropic turbulence, wall-bounded flow, etc., the setting of the algorithmic constants change. Even for different mesh configurations, i.e. stretched meshes versus uniform meshes, the influence of the constant parameters is notorious.
+
+However, it is important to stress that this high algorithmic parameter influence is important when very coarse meshes are used, being less important for fine meshes.
+
+\section{Open lines of research}
+\label{sec-C9_open_lines}
+Some lines of research could be considered to further investigate the applicability of the proposed methods, as well as to deal with the limitations inherent to them. These open lines of research are described below:
+
+\begin{itemize}
+\item {\bf Embedded methods and mesh refinement}\\
+One of the main problems we have faced during the dissertation is the need of defining good meshes a priory. Then, the development of adaptive meshes able to refine where the turbulent structures are being developed is one of the lines of research that could resolve this issue.
+
+The approach that could be followed is to consider the use of Cartesian meshes with embedded boundaries. This approach basically consist on having most of the domain covered by completely regular Cartesian cells and considering embedded boundary methods to impose the boundary conditions. This methodology could also be related to the work done in this thesis when weak boundary conditions are imposed considering a wall-law model.
+
+\item {\bf Parallel in time}\\
+The turbulent phenomena is characterized by having not only many spatial scales, but also a multiscale description in time. Then, the time discretization of Navier-Stokes equations at high Reynolds number becomes an important issue. Many efforts are being dedicated to the parallelization of the time discretization schemes. It could be interesting to seek the applicability of parallel time integration techniques when using SRK schemes for the time integration of the Navier-Stokes equations, with a particular interest on the simulation of turbulent flows.
+
+\item {\bf Divergence-free Finite Elements}\\
+It has been shown in this work that when using inf-sup stable elements, the grad-div stabilization term plays an important role to ensure the satisfaction of the incompressibility constraint. In order to address this weakness, we could consider to make use of FE types that are divergence-free, and inf-sup stable, by construction.
+
+\end{itemize}

@@ -1,0 +1,31 @@
+%---------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Segregated VMS Conclusions}
+\vfill
+\begin{itemize}
+\item Implicit LES for mixed FEs + convection stabilization
+\begin{itemize}
+\item Similar behavior as VMS-type solvers
+\item Not affecting nature of the system (index-2 DAE)
+\end{itemize}
+\item Large scale computations
+\begin{itemize}
+\item Segregation leads to coercive blocks to be solved
+\item Highly scalable multilevel/overlapped implementation of BDDC
+\end{itemize}
+\item Weak boundary conditions on all components
+\end{itemize}
+\onslide<4->{
+\textbf{Contribution:}
+\begin{thebibliography}{1}
+{
+\footnotesize
+\bibitem{bmp1}
+OC and Santiago Badia
+\newblock Segregated Runge-Kutta time integration of convection-stabilized mixed finite element schemes for wall-unresolved LES of incompressible flows
+\newblock Submitted, 2016
+}
+\end{thebibliography}
+}
+\vfill
+\end{frame}

@@ -251,6 +251,7 @@
 \newcommand*{\addresses}[1]{\def\addressname{#1}}
 \newcommand*{\university}[1]{\def\univname{#1}}
 \newcommand*{\department}[1]{\def\deptname{#1}}
+\newcommand*{\program}[1]{\def\progname{#1}}
 \newcommand*{\group}[1]{\def\groupname{#1}}
 \newcommand*{\faculty}[1]{\def\facname{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
@@ -282,7 +283,8 @@
 \tttypeout{Dedicatory}
 \thispagestyle{plain}
 \null\vfil
-\begin{center}{\Large\slshape #1}\end{center}
+%\begin{center}{\large\slshape #1}\end{center}
+{\hfil\large\slshape #1}
 \vfil\null
 }
 
@@ -301,19 +303,40 @@
 	\tttypeout{\abstractname}
 	\null\vfil
 	\begin{center}
-	{\normalsize \MakeUppercase{\univname} \par} % University name in capitals
-	\bigskip
+%	{\normalsize \MakeUppercase{\univname} \par} % University name in capitals
+%	\bigskip
 	{\huge\textit{\abstractname} \par}
-	\bigskip
-	{\normalsize \facname \par} % Faculty name
-	{\normalsize \deptname \par} % Department name
-	\bigskip
-	{\normalsize \degreename\par} % Degree name
-	\bigskip
-	{\normalsize\bfseries \@title \par} % Thesis title
-	\medskip
-	{\normalsize \byname{} \authorname \par} % Author name
-	\bigskip
+%	\bigskip
+%	{\normalsize \facname \par} % Faculty name
+%	{\normalsize \deptname \par} % Department name
+%	\bigskip
+%	{\normalsize \degreename\par} % Degree name
+%	\bigskip
+%	{\normalsize\bfseries \@title \par} % Thesis title
+%	\medskip
+%	{\normalsize \byname{} \authorname \par} % Author name
+%	\bigskip
+	\end{center}
+}
+{
+  \vfil\vfil\vfil\null
+}
+
+%----------------------------------------------------------------------------------------
+%	RESUM PAGE DESIGN
+%----------------------------------------------------------------------------------------
+
+%\providecaptionname{german,ngerman,austrian,naustrian}{\byname}{von}
+%\providecaptionname{american,australian,british,canadian,english,newzealand,UKenglish,USenglish}{\byname}{by}
+
+\newcommand*{\resumname}{Resum}
+
+\newenvironment{resum}{
+	\checktoopen
+	\tttypeout{\resumname}
+	\null\vfil
+	\begin{center}
+	{\huge\textit{\resumname} \par}
 	\end{center}
 }
 {
@@ -404,7 +427,7 @@
 bookmarksopen=true,
 bookmarksopenlevel=0,
 hypertexnames=false,
-colorlinks=true, % Set to false to disable coloring links
+colorlinks=false, % Set to false to disable coloring links
 citecolor=green, % The color of citations
 linkcolor=red, % The color of references to document elements (sections, figures, etc)
 urlcolor=magenta, % The color of hyperlinks (URLs)

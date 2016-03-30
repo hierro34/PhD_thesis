@@ -1,0 +1,231 @@
+
+@article{guasch_statistical_2013,
+	title = {Statistical behavior of the orthogonal subgrid scale stabilization terms in the finite element large eddy simulation of turbulent flows},
+	volume = {261–262},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782513001047},
+	doi = {10.1016/j.cma.2013.04.006},
+	abstract = {Abstract
+Numerical simulations have proved that Variational Multiscale Methods (VMM) perform well as pure numerical large eddy simulation (LES) models. In this paper we focus on the orthogonal subgrid scale (OSS) finite element method and make an analysis of the statistical behavior of its stabilization terms in the quasi static approximation. This is done by resorting to results from classical statistical fluid mechanics concerning two point velocity, pressure and combined correlation functions of various orders. Given a fine enough mesh with characteristic element size h in the inertial subrange of a turbulent flow, it is shown that the rate of transfer of subgrid kinetic energy provided by the OSS stabilization terms does not depend on h and that it equals the molecular physical dissipation rate (up to a dimensionless constant that only depends on the finite element shapes) for a proper redesign of the standard parameters of the formulation. This is a noteworthy fact taking into account that the subgrid stabilization terms do not arise from physical considerations, but from the mathematical necessity to allow equal interpolation for the pressure and velocity fields, as well as to control convection. Therefore, the obtained results contribute somehow to the line of reasoning supporting that pure numerical approaches (i.e., without introducing additional physical models) could probably suffice in the LES simulation of turbulent flows.},
+	urldate = {2013-09-10},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Guasch, Oriol and Codina, Ramon},
+	year = {2013},
+	keywords = {Large eddy simulation, Orthogonal subgrid scales, Stabilized finite elements, Subgrid scale modeling, Turbulent flows, Variational multiscale},
+	pages = {154--166}
+}
+
+@article{colomes_mixed_2015,
+	title = {Mixed finite element methods with convection stabilization for the large eddy simulation of incompressible turbulent flows},
+	journal = {Submitted},
+	author = {Oriol Colomés and Santiago Badia and Javier Principe},
+	year = {2015},
+	file = {MFE_LES_manuscript.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/DIANQ8AS/MFE_LES_manuscript.pdf:application/pdf}
+}
+
+
+@article{bazilevs_weak_2007,
+	title = {Weak {Dirichlet} boundary conditions for wall-bounded turbulent flows},
+	volume = {196},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782507002885},
+	doi = {10.1016/j.cma.2007.06.026},
+	abstract = {In turbulence applications, strongly imposed no-slip conditions often lead to inaccurate mean flow quantities for coarse boundary-layer meshes. To circumvent this shortcoming, weakly imposed Dirichlet boundary conditions for fluid dynamics were recently introduced in [Y. Bazilevs, T.J.R. Hughes, Weak imposition of Dirichlet boundary conditions in fluid mechanics, Comput. Fluids 36 (2007) 12–26]. In the present work, we propose a modification of the original weak boundary condition formulation that consistently incorporates the well-known “law of the wall”. To compare the different methods, we conduct numerical experiments for turbulent channel flow at Reynolds number 395 and 950. In the limit of vanishing mesh size in the wall-normal direction, the weak boundary condition acts like a strong boundary condition. Accordingly, strong and weak boundary conditions give essentially identical results on meshes that are stretched to better capture boundary layers. However, on uniform meshes that are incapable of resolving boundary layers, weakly imposed boundary conditions deliver significantly more accurate mean flow quantities than their strong counterparts. Hence, weakly imposed boundary conditions present a robust technique for flows of industrial interest, where optimal mesh design is usually not feasible and resolving boundary layers is prohibitively expensive. Our numerical results show that the formulation that incorporates the law of the wall yields an improvement over the original method.},
+	number = {49–52},
+	urldate = {2014-05-30},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Bazilevs, Y. and Michler, C. and Calo, V. M. and Hughes, T. J. R.},
+	year = {2007},
+	keywords = {Boundary layers, Fluids, Isogeometric analysis, Law of the wall, Navier–Stokes equations, Turbulence, Weakly imposed boundary conditions},
+	pages = {4853--4862}
+}
+
+@article{bazilevs_weak_2007-1,
+	series = {Challenges and {Advances} in {Flow} {Simulation} and {Modeling}},
+	title = {Weak imposition of {Dirichlet} boundary conditions in fluid mechanics},
+	volume = {36},
+	issn = {0045-7930},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045793005001258},
+	doi = {10.1016/j.compfluid.2005.07.012},
+	abstract = {Weakly enforced Dirichlet boundary conditions are compared with strongly enforced conditions for boundary layer solutions of the advection–diffusion equation and incompressible Navier–Stokes equations. It is found that weakly enforced conditions are effective and superior to strongly enforced conditions. The numerical tests involve low-order finite elements and a quadratic NURBS basis utilized in the Isogeometric Analysis approach. The convergence of the mean velocity profile for a turbulent channel flow suggests that weak no-slip conditions behave very much like a wall function model, although the design of the boundary condition is based purely on numerical, rather than physical or empirical, conditions.},
+	number = {1},
+	urldate = {2014-05-30},
+	journal = {Computers \& Fluids},
+	author = {Bazilevs, Y. and Hughes, T. J. R.},
+	year = {2007},
+	pages = {12--26}
+}
+
+@article{john_slip_2002,
+	title = {Slip with friction and penetration with resistance boundary conditions for the {Navier}–{Stokes} equations—numerical tests and aspects of the implementation},
+	volume = {147},
+	issn = {0377-0427},
+	url = {http://www.sciencedirect.com/science/article/pii/S0377042702004375},
+	doi = {10.1016/S0377-0427(02)00437-5},
+	abstract = {We consider slip with friction and penetration with resistance boundary conditions in the steady state Navier–Stokes equations. This paper describes some aspects of the implementation of these boundary conditions for finite element discretizations. Numerical tests on two- and three-dimensional channel flows across a step using the slip with friction boundary condition study the influence of the friction parameter on the position of the reattachment point and the reattachment line of the recirculating vortex, respectively.},
+	number = {2},
+	urldate = {2015-09-15},
+	journal = {Journal of Computational and Applied Mathematics},
+	author = {John, Volker},
+	year = {2002},
+	keywords = {Finite element methods, Navier–Stokes equations, Penetration with resistance boundary condition, Slip with friction boundary condition},
+	pages = {287--300},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/4S5883F5/John - 2002 - Slip with friction and penetration with resistance.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/XJEJ23A8/S0377042702004375.html:text/html}
+}
+
+@inproceedings{davidson_lesfoil:_2000,
+	title = {{LESFOIL}: {A} {European} {Project} on {Large} {Eddy} {Simulations} {Around} a {High}-lift {Airfoil} at {High} {Reynolds} {Number}},
+	shorttitle = {{LESFOIL}},
+	url = {http://publications.lib.chalmers.se/publication/21481-lesfoil-a-european-project-on-large-eddy-simulations-around-a-high-lift-airfoil-at-high-reynolds-num},
+	abstract = {Chalmers Publication Library (CPL). Forskningspublikationer från Chalmers Tekniska Högskola.},
+	language = {English},
+	urldate = {2016-01-19},
+	booktitle = {Chalmers {Publication} {Library} ({CPL})},
+	author = {Davidson, Lars},
+	year = {2000},
+	file = {Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/4EUM26AN/21481.html:text/html}
+}
+
+@article{forti_semi-implicit_2015,
+	title = {Semi-implicit {BDF} time discretization of the {Navier}–{Stokes} equations with {VMS}-{LES} modeling in a {High} {Performance} {Computing} framework},
+	volume = {117},
+	issn = {0045-7930},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045793015001668},
+	doi = {10.1016/j.compfluid.2015.05.011},
+	abstract = {In this paper, we propose a semi-implicit approach for the time discretization of the Navier–Stokes equations with Variational Multiscale-Large Eddy Simulation turbulence modeling (VMS-LES). For the spatial approximation of the problem, we use the Finite Element method, while we employ the Backward Differentiation Formulas (BDF) for the time discretization. We treat the nonlinear terms arising in the variational formulation of the problem with a semi-implicit approach leading to a linear system associated to the fully discrete problem which needs to be assembled and solved only once at each discrete time instance. We solve this linear system by means of the GMRES method by employing a multigrid (ML) right preconditioner for the parallel setting. We validate the proposed fully discrete scheme towards the benchmark problem of the flow past a squared cylinder at high Reynolds number and we show the computational efficiency and scalability results of the solver in a High Performance Computing framework.},
+	urldate = {2016-01-19},
+	journal = {Computers \& Fluids},
+	author = {Forti, Davide and Dedè, Luca},
+	year = {2015},
+	keywords = {Backward Differentiation Formulas, finite element method, High Performance Computing, Large eddy simulation, Navier–Stokes equations, Variational Multiscale modeling},
+	pages = {168--182},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/TDPNGTWU/Forti y Dedè - 2015 - Semi-implicit BDF time discretization of the Navie.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/IJ4ZXBXX/S0045793015001668.html:text/html}
+}
+
+@article{dohrmann_preconditioner_2003,
+	title = {A {Preconditioner} for {Substructuring} {Based} on {Constrained} {Energy} {Minimization}},
+	volume = {25},
+	issn = {10648275},
+	url = {http://link.aip.org/link/SJOCE3/v25/i1/p246/s1&Agg=doi},
+	doi = {10.1137/S1064827502412887},
+	number = {1},
+	urldate = {2012-02-27},
+	journal = {SIAM Journal on Scientific Computing},
+	author = {Dohrmann, Clark R.},
+	year = {2003},
+	pages = {246--258},
+	file = {A Preconditioner for Substructuring Based on Constrained Energy Minimization | Browse SISC - SIAM J. on Scientific Computing:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/CVBX7C9V/p246_s1.html:text/html;GetPDFServlet.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/X79XUAPQ/GetPDFServlet.pdf:application/pdf}
+}
+
+@article{badia_highly_2014,
+	title = {A {Highly} {Scalable} {Parallel} {Implementation} of {Balancing} {Domain} {Decomposition} by {Constraints}},
+	volume = {36},
+	issn = {1064-8275},
+	url = {http://epubs.siam.org/doi/abs/10.1137/130931989},
+	doi = {10.1137/130931989},
+	abstract = {In this work we propose a novel parallelization approach of two-level balancing domain decomposition by constraints preconditioning based on overlapping of fine-grid and coarse-grid duties in time. The global set of MPI tasks is split into those that have fine-grid duties and those that have coarse-grid duties, and the different computations and communications in the algorithm are then rescheduled and mapped  in such a way that the maximum degree of overlapping is achieved while preserving data dependencies among them. In many ranges of interest, the extra cost associated to the coarse-grid problem can be fully masked by fine-grid related computations (which are embarrassingly parallel). Apart from discussing code implementation details, the paper also presents a comprehensive set of numerical experiments that includes weak scalability analyses with structured and unstructured meshes for the three-dimensional Poisson and linear elasticity problems on a pair of state-of-the-art multicore-based distributed-memory machines. This experimental study reveals remarkable weak scalability in the solution of problems with thousands of millions of unknowns on several tens of thousands of computational cores.,  In this work we propose a novel parallelization approach of two-level balancing domain decomposition by constraints preconditioning based on overlapping of fine-grid and coarse-grid duties in time. The global set of MPI tasks is split into those that have fine-grid duties and those that have coarse-grid duties, and the different computations and communications in the algorithm are then rescheduled and mapped  in such a way that the maximum degree of overlapping is achieved while preserving data dependencies among them. In many ranges of interest, the extra cost associated to the coarse-grid problem can be fully masked by fine-grid related computations (which are embarrassingly parallel). Apart from discussing code implementation details, the paper also presents a comprehensive set of numerical experiments that includes weak scalability analyses with structured and unstructured meshes for the three-dimensional Poisson and linear elasticity problems on a pair of state-of-the-art multicore-based distributed-memory machines. This experimental study reveals remarkable weak scalability in the solution of problems with thousands of millions of unknowns on several tens of thousands of computational cores.},
+	number = {2},
+	urldate = {2014-06-12},
+	journal = {SIAM Journal on Scientific Computing},
+	author = {Badia, S. and Martín, A. F. and Principe, J.},
+	year = {2014},
+	pages = {C190--C218},
+	file = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/MSC3T65H/Badia et al. - 2014 - A Highly Scalable Parallel Implementation of Balan.pdf:application/pdf}
+}
+
+@article{alberto_f._martin_santiago_badia_and_javier_principe_multilevel_????,
+	title = {Multilevel balancing domain decomposition at extreme scales},
+	url = {http://badia.rmee.upc.edu/docs/badia/art047_preprint.pdf},
+	journal = {Submitted},
+	year = {2015},
+	urldate = {2016-01-19},
+	author = {Martín, A. and Badia, S. and Principe, J.},
+	file = {art047_preprint.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/UGQQX864/art047_preprint.pdf:application/pdf}
+}
+
+@misc{_0c9605232f307402e8000000.pdf_????,
+	title = {0c9605232f307402e8000000.pdf},
+	url = {http://www.researchgate.net/profile/Michael_Strelets/publication/236888805_Comments_on_the_Feasability_of_LES_for_Wings_and_on_a_Hybrid_RANSLES_Approach/links/0c9605232f307402e8000000.pdf},
+	urldate = {2016-01-19},
+	file = {0c9605232f307402e8000000.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/AZFKVSB6/0c9605232f307402e8000000.pdf:application/pdf}
+}
+
+@article{spalart1997comments,
+  title={Comments on the feasibility of LES for wings, and on a hybrid RANS/LES approach},
+  author={Spalart, PR and Jou, WH and Strelets, M and Allmaras, SR},
+  journal={Advances in DNS/LES},
+  volume={1},
+  pages={4--8},
+  year={1997},
+  publisher={Greyden Press, Columbus, OH}
+}
+
+@misc{_comments_????,
+	title = {Comments on the feasibility of {LES} for wings, and on a hybrid {RANS}/{LES} approach. - {Google} {Acadèmic}},
+	url = {https://scholar.google.es/scholar?q=Comments+on+the+feasibility+of+LES+for+wings%2C+and+on+a+hybrid+RANS%2FLES+approach.&btnG=&hl=ca&as_sdt=0%2C5},
+	urldate = {2016-01-19},
+	annote = {
+Spalart, P. R., Jou, W. H., Strelets, M., \& Allmaras, S. R. (1997). Comments on the feasibility of LES for wings, and on a hybrid RANS/LES approach. Advances in DNS/LES, 1, 4-8.
+},
+	file = {Comments on the feasibility of LES for wings, and on a hybrid RANS/LES approach. - Google Acadèmic:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/K2G66A5S/scholar.html:text/html}
+}
+
+@article{spalart_strategies_2000,
+	title = {Strategies for turbulence modelling and simulations},
+	volume = {21},
+	issn = {0142-727X},
+	url = {http://www.sciencedirect.com/science/article/pii/S0142727X00000072},
+	doi = {10.1016/S0142-727X(00)00007-2},
+	abstract = {This is an attempt to clarify and size up the many levels possible for the numerical prediction of a turbulent flow, the target being a complete airplane, turbine, or car. Not all the author's opinions will be accepted, but his hope is to stimulate reflection, discussion, and planning. These levels still range from a solution of the steady Reynolds-Averaged Navier–Stokes (RANS) equations to a Direct Numerical Simulation, with Large-Eddy Simulation in between. However recent years have added intermediate strategies, dubbed “VLES”, “URANS” and “DES”. They are in experimental use and, although more expensive, threaten complex RANS models especially for bluff-body and similar flows. Turbulence predictions in aerodynamics face two principal challenges: (I) growth and separation of the boundary layer, and (II) momentum transfer after separation. (I) is simpler, but makes very high accuracy demands, and appears to give models of higher complexity little advantage. (II) is now the arena for complex RANS models and the newer strategies, by which time-dependent three-dimensional simulations are the norm even over two-dimensional geometries. In some strategies, grid refinement is aimed at numerical accuracy; in others it is aimed at richer turbulence physics. In some approaches, the empirical constants play a strong role even when the grid is very fine; in others, their role vanishes. For several decades, practical methods will necessarily be RANS, possibly unsteady, or RANS/LES hybrids, pure LES being unaffordable. Their empirical content will remain substantial, and the law of the wall will be particularly resistant. Estimates are offered of the grid resolution needed for the application of each strategy to full-blown aerodynamic calculations, feeding into rough estimates of its feasibility date, based on computing-power growth.},
+	number = {3},
+	urldate = {2016-01-19},
+	journal = {International Journal of Heat and Fluid Flow},
+	author = {Spalart, P. R},
+	year = {2000},
+	keywords = {Aerodynamics, Simulation, Turbulence},
+	pages = {252--263},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/HGEXRX5V/Spalart - 2000 - Strategies for turbulence modelling and simulation.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/4TKVG9TP/S0142727X00000072.html:text/html}
+}
+
+@article{nitsche_uber_1971,
+	title = {Über ein {Variationsprinzip} zur {Lösung} von {Dirichlet}-{Problemen} bei {Verwendung} von {Teilräumen}, die keinen {Randbedingungen} unterworfen sind},
+	volume = {36},
+	issn = {0025-5858},
+	url = {http://www.springerlink.com/content/e6p74q1818245qu3/abstract/},
+	doi = {10.1007/BF02995904},
+	number = {1},
+	urldate = {2012-06-04},
+	journal = {Abhandlungen aus dem Mathematischen Seminar der Universität Hamburg},
+	author = {Nitsche, J.},
+	year = {1971},
+	keywords = {Mathematics and Statistics},
+	pages = {9--15}
+}
+
+@article{stenberg_techniques_1995,
+	series = {Proceedings of the {International} {Symposium} on {Mathematical} {Modelling} and {Computational} {Methods} {Modelling} 94},
+	title = {On some techniques for approximating boundary conditions in the finite element method},
+	volume = {63},
+	issn = {0377-0427},
+	url = {http://www.sciencedirect.com/science/article/pii/0377042795000577},
+	doi = {10.1016/0377-0427(95)00057-7},
+	abstract = {We discuss the stabilization of finite element methods in which essential boundary conditions are approximated by Babuška's method of Lagrange multipliers and we show that there is a close connection with this technique and a classical method by Nitsche.},
+	number = {1–3},
+	urldate = {2015-10-28},
+	journal = {Journal of Computational and Applied Mathematics},
+	author = {Stenberg, Rolf},
+	year = {1995},
+	keywords = {Boundary conditions, FEM, Lagrange multipliers, Nitsche's method, stabilization},
+	pages = {139--148},
+	file = {ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/W4QZVKU4/0377042795000577.html:text/html}
+}
+
+@article{santiago_badia_hieu_nguyen_balancing_2015,
+	title = {Balancing {Domain} {Decomposition} by perturbation},
+	url = {https://web.cimne.upc.edu/users/hnguyen/files/bddc-perturbed.pdf},
+	urldate = {2016-01-19},
+	journal = {Submitted},
+	author = {Santiago Badia and Hieu Nguyen},
+	year = {2015},
+	file = {bddc-perturbed.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/TB4CX2UG/bddc-perturbed.pdf:application/pdf}
+}

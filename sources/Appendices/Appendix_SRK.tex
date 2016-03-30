@@ -1,0 +1,223 @@
+\chapter{Butcher tableaus for the Segregated Runge-Kutta schemes} % Main appendix title
+\label{appendix-butcher_tableaus}
+\appendix
+\section*{Butcher tableaus} %\label{annex1}
+%\subsection{Butcher tableaus}
+\label{appendix:Butcher_tab}
+We define different settings of the Butcher tableaus, depending on the stages and the order of accuracy of the time integration scheme. For the DIRK tableaus we use the following notation:
+\begin{equation*}
+\begin{array}{c|c}
+\mathbf{c}&A\\
+\hline
+&\mathbf{b}
+\end{array}=\begin{array}{c|cccc}
+c_1&a_{11}&0&...&0\\
+c_2&a_{21}&a_{22}&...&0\\
+\vdots&\vdots&\vdots&\ddots&\vdots\\
+c_s&a_{s1}&a_{s2}&...&a_{ss}\\
+\hline
+&b_1&b_2&...&b_s
+\end{array}
+\end{equation*}
+with the convention $c_i=\sum_{j=1}^sa_{ij}$.
+
+In the explicit case the tables are similar, but with zeros on the diagonal. A $r$-stage explicit scheme can be written as follows.
+\begin{equation*}
+\begin{array}{c|c}
+\hat{\mathbf{c}}&\hat{A}\\
+\hline
+&\hat{\mathbf{b}}
+\end{array}=\begin{array}{c|ccccc}
+0&0&0&0&...&0\\
+\hat{c}_2&\hat{a}_{21}&0&0&...&0\\
+\hat{c}_3&\hat{a}_{31}&\hat{a}_{32}&0&...&0\\
+\vdots&\vdots&\vdots&\vdots&\ddots&\vdots\\
+\hat{c}_r&\hat{a}_{r1}&\hat{a}_{r2}&\hat{a}_{r3}&...&0\\
+\hline
+&\hat{b}_1&\hat{b}_2&\hat{b}_3&...&\hat{b}_r
+\end{array}
+\end{equation*}
+Note that in general the number of implicit stages ($s$) are not the same than the explicit ones ($r$). In fact, usually we have one additional stage for the explicit Butcher Tableau ($r=s+1$). Then, in order to facilitate the IMEX schemes implementation, we pad the implicit $s$-stage scheme with zeroes, obtaining a new tableau with the same size than the explicit one. We can easily see that with this procedure we will always have $\U_1=\U_n$ since the first rows for the explicit and the implicit tableaus are filled with zeros. Given that, no computation is needed at the first stage, so we will say that the IMEX scheme has $s$ stages when the associated Butcher tableaus are of the size $(s+1)$.
+
+We select from the literature some Butcher table settings for IMEX RK schemes that have been already tested for convection-diffusion type problems, mostly from \cite{ascher_implicit-explicit_1997}, but also from \cite{boscarino_accurate_2009}. It is important to keep in mind that the properties described below are given for the ODE system in time that arises from the convection-diffusion equation and may not be preserved for an index 2 DAE system like the semi-discrete incompressible Navier-Stokes problem.
+\begin{itemize}
+\item \textbf{1 stage, 1st order (1-1):}
+This is the so called \textit{Forward-Backward Euler} and was proposed by Ascher \emph{et al.} in \cite{ascher_implicit-explicit_1997}. There are two different versions of this scheme, one that satisfies $\hat{\mathbf{b}}=\mathbf{b}$ and another that does not satisfy this condition. We use the first version, just to be consistent with the following schemes, although it requires an extra evaluation per step of the explicit counterpart. Note that this scheme has stability problems when the implicit operator is zero. Furthermore, the choice $\hat{\mathbf{b}}=\mathbf{b}$ preserves the incompressibility constraint under the conditions stated in Proposition \ref{prop2}.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|cc}
+$0$&$0$&$0$\\
+$1$&$0$&$1$\\
+\hline
+&$0$&$1$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|cc}
+$0$&$0$&$0$\\
+$1$&$1$&$0$\\
+\hline
+&$0$&$1$
+\end{tabular}
+\end{tabular}
+\end{center}
+\item \textbf{1 stage, 2nd order (1-2):}
+This scheme was also proposed in \cite{ascher_implicit-explicit_1997}, where they called it as \textit{Implicit-explicit midpoint}. It is second-order accurate and as stated in \cite{ascher_implicit-explicit_1997} performs comparably to the popular Crank-Nicolson Adams-Bashforth method, with the addition that it has better symmetry properties. It is important to remark that it does not have any attenuation at the stiffness limit.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|cc}
+$0$&$0$&$0$\\
+$\frac{1}{2}$&$0$&$\frac{1}{2}$\\
+\hline
+&$0$&$1$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|cc}
+$0$&$0$&$0$\\
+$\frac{1}{2}$&$\frac{1}{2}$&$0$\\
+\hline
+&$0$&$1$
+\end{tabular}
+\end{tabular}
+\end{center}
+\item \textbf{2 stages, 2nd order, case 1 (2-2/1):}
+Another second-order IMEX RK scheme was proposed in \cite{ascher_implicit-explicit_1997}, but in this case it has two stages. This scheme turns out to be \textit{L}-stable and it is based on a stiffly accurate two-stage, second-order DIRK scheme.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$0$&$\gamma$&$0$\\
+$1$&$0$&$1-\gamma$&$\gamma$\\
+\hline
+&$0$&$1-\gamma$&$\gamma$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$\gamma$&$0$&$0$\\
+$1$&$\delta$&$1-\delta$&$0$\\
+\hline
+&$0$&$1-\gamma$&$\gamma$
+\end{tabular}
+\end{tabular}
+\end{center}
+with $\gamma=(2-\sqrt{2})/2$ and $\delta=-2\sqrt{2}/3$.
+\item \textbf{2 stages, 2nd order, case 2 (2-2/2):}
+An alternative definition of the previous scheme is also proposed in \cite{ascher_implicit-explicit_1997}, where the explicit table is defined satisfying the condition $\hat{b}_j=\hat{a}_{sj}$ for all $j=1,...,s$ instead of satisfying that $\hat{\mathbf{b}}=\mathbf{b}$. The resulting scheme is also \textit{L}-stable and second-order accurate in time. Note that this scheme will not satisfy the incompressibility constrain under the assumptions exposed in Proposition \ref{prop2}.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$0$&$\gamma$&$0$\\
+$1$&$0$&$1-\gamma$&$\gamma$\\
+\hline
+&$0$&$1-\gamma$&$\gamma$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$\gamma$&$0$&$0$\\
+$1$&$\delta$&$1-\delta$&$0$\\
+\hline
+&$\delta$&$1-\delta$&$0$
+\end{tabular}
+\end{tabular}
+\end{center}
+with $\gamma=(2-\sqrt{2})/2$ and $\delta=1-1/(2\gamma)$.
+\item \textbf{2 stages, 3rd order (2-3):}
+A two-stage combination, third-order accurate in time IMEX scheme is defined in \cite{ascher_implicit-explicit_1997}. In this case, the implicit table is based on a two-stage, third-order DIRK scheme.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$0$&$\gamma$&$0$\\
+$1-\gamma$&$0$&$1-2\gamma$&$\gamma$\\
+\hline
+&$0$&$\frac{1}{2}$&$\frac{1}{2}$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|ccc}
+$0$&$0$&$0$&$0$\\
+$\gamma$&$\gamma$&$0$&$0$\\
+$1-\gamma$&$\gamma-1$&$2(1-\gamma)$&$0$\\
+\hline
+&$0$&$\frac{1}{2}$&$\frac{1}{2}$
+\end{tabular}
+\end{tabular}
+\end{center}
+with $\gamma=(3+\sqrt{3})/6$.
+\item \textbf{3 stages, 3rd order (3-3):}
+A stiffly accurate third-order, three-stage DIRK scheme combined with a four-stage third-order explicit RK scheme is proposed in \cite{ascher_implicit-explicit_1997}. The resulting scheme is third-order accurate in time and \textit{L}-stable.
+\begin{center}
+\begin{tabular}{l}
+\textit{Implicit:}\\
+\begin{tabular}{c|cccc}
+$0$&$0$&$0$&$0$&$0$\\
+$0.4358665215$&$0$&$0.4358665215$&$0$&$0$\\
+$0.7179332608$&$0$&$0.2820667392$&$0.4358665215$&$0$\\
+$1$&$0$&$1.208496649$&$-0.644363171$&$0.4358665215$\\
+\hline
+&$0$&$1.208496649$&$-0.644363171$&$0.4358665215$
+\end{tabular}\\
+\textit{Explicit:}\\
+\begin{tabular}{c|cccc}
+$0$&$0$&$0$&$0$&$0$\\
+$0.4358665215$&$0.4358665215$&$0$&$0$&$0$\\
+$0.7179332608$&$0.3212788860$&$0.3966543747$&$0$&$0$\\
+$1$&$-0.105858296$&$0.5529291479$&$0.5529291479$&$0$\\
+\hline
+&$0$&$1.208496649$&$-0.644363171$&$0.4358665215$
+\end{tabular}
+\end{tabular}
+\end{center}
+\item \textbf{4 stages, 3rd order (4-3):}
+Finally, it is proposed in \cite{ascher_implicit-explicit_1997} a four-stage third-order accurate in time IMEX scheme.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|ccccc}
+$0$&$0$&$0$&$0$&$0$&$0$\\
+$1/2$&$0$&$1/2$&$0$&$0$&$0$\\
+$2/3$&$0$&$1/6$&$1/2$&$0$&$0$\\
+$1/2$&$0$&$-1/2$&$1/2$&$1/2$&$0$\\
+$1$&$0$&$3/2$&$-3/2$&$1/2$&$1/2$\\
+\hline
+&$0$&$3/2$&$-3/2$&$1/2$&$1/2$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|ccccc}
+$0$&$0$&$0$&$0$&$0$&$0$\\
+$1/2$&$1/2$&$0$&$0$&$0$&$0$\\
+$2/3$&$11/18$&$1/18$&$0$&$0$&$0$\\
+$1/2$&$5/6$&$-5/6$&$1/2$&$0$&$0$\\
+$1$&$1/4$&$7/4$&$3/4$&$-7/4$&$0$\\
+\hline
+&$1/4$&$7/4$&$3/4$&$-7/4$&$0$
+\end{tabular}
+\end{tabular}
+\end{center}
+\item \textbf{5 stages, 3rd order (5-3):}
+Boscarino developed in \cite{boscarino_accurate_2009} a third-order five-stage IMEX RK scheme that does not suffer from order reduction phenomena when stiff problems containing a non-stiff term and a stiff term are solved. Note that in this case we say that the method has five stages because the first column of the implicit table is not zero, although the first row is still full of zeros so the first stage will give $\U_1=\U_n$.
+\begin{center}
+\begin{tabular}{ll}
+\textit{Implicit:}$\quad$&$\quad\quad$\textit{Explicit:}\\
+\begin{tabular}{c|ccccc}
+$0$&$0$&$0$&$0$&$0$&$0$\\
+$c_2$&$\gamma$&$\gamma$&$0$&$0$&$0$\\
+$c_3$&$a_{31}$&$a_{32}$&$\gamma$&$0$&$0$\\
+$c_4$&$a_{41}$&$a_{42}$&$a_{43}$&$\gamma$&$0$\\
+$1$&$b_1$&$b_2$&$b_3$&$b_4$&$\gamma$\\
+\hline
+&$b_1$&$b_2$&$b_3$&$b_4$&$\gamma$
+\end{tabular}$\quad$&
+$\quad\quad$\begin{tabular}{c|ccccc}
+$0$&$0$&$0$&$0$&$0$&$0$\\
+$c_2$&$\gamma$&$0$&$0$&$0$&$0$\\
+$c_3$&$\hat{a}_{31}$&$\hat{a}_{32}$&$0$&$0$&$0$\\
+$c_4$&$\hat{a}_{41}$&$\hat{a}_{42}$&$\hat{a}_{43}$&$0$&$0$\\
+$1$&$\hat{a}_{51}$&$\hat{a}_{52}$&$\hat{a}_{53}$&$\hat{a}_{54}$&$0$\\
+\hline
+&$b_1$&$b_2$&$b_3$&$b_4$&$\gamma$
+\end{tabular}
+\end{tabular}
+\end{center}
+The parameter values can be found in the appendix of \cite{boscarino_accurate_2009}.
+\end{itemize}

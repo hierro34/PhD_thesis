@@ -1,0 +1,81 @@
+\begin{frame}[t]
+\frametitle{Energy statements}
+\begin{overlayarea}{\textwidth}{0.25\textheight}
+\textbf{FE counterpart:}
+\vspace*{-0.3cm}
+\only<1>{
+\begin{align*}
+&B\left(\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right)\right)=L\left(\mathbf{u}_h,p_h\right)
+\end{align*}}
+\only<2->{
+\begin{align*}
+&\alert<3>{\frac{1}{2}d_t\|\u_h\|^2}+\alert<4>{\nu\|\nabla\u_h\|^2}+\alert<5>{b(\a,\u_h,\u_h)}\\
+&\alert<7>{+\left( \partial _{t}\widetilde{\u},\u_{h}\right)
++\left( \mathcal{L}^{\ast }_a(\u_{h},p_h),\widetilde{\u}\right)
+-\left( \mathbf{\nabla }\cdot \u_{h},\widetilde{p}\right)}
+=\alert<8>{\left\langle \mathbf{f},\u_{h}\right\rangle}
+\end{align*}}
+\end{overlayarea}
+\begin{overlayarea}{\textwidth}{0.25\textheight}
+\textbf{SGS counterpart:}
+\vspace*{-0.3cm}
+\only<1>{
+\begin{align*}
+&B\left(\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right)\right)=L\left(\widetilde{\mathbf{u}},\widetilde{p}\right)
+\end{align*}}
+\only<2->{
+\begin{align*}
+&\alert<3>{\frac{1}{2}d_t\|\widetilde{\u}\|^2}\alert<6>{+\tau_m^{-1}\|\widetilde{\u}\|^2+\tau_c^{-1}\|\widetilde{p}\|^2}\\
+&\alert<7>{+\left( \mathcal{P}(\partial _{t}\u_{h}),\widetilde{\u}\right)
++\left( \mathcal{P}(\mathcal{L}^{\ast }_a(\u_{h},p_h)),\widetilde{\u}\right)
+-\left( \mathcal{P}(\mathbf{\nabla }\cdot \u_{h}),\widetilde{p}\right)}
+=\alert<8>{\left\langle \mathcal{P}(\mathbf{f}),\widetilde{\u}\right\rangle}
+\end{align*}}
+\end{overlayarea}
+\begin{overlayarea}{\textwidth}{0.5\textheight}
+\textbf{TOTAL:}
+\only<9>{\alert<9>{\textbf{ Static subscales}}}
+\only<10->{\alert<10->{\textbf{ Dynamic subscales}}}
+\only<10>{\alert<10>{\textbf{- ASGS}}}
+\only<11>{\alert<11>{\textbf{- OSS}}}
+\only<1>{
+\begin{align*}
+&B\left(\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right)\right)\\
++&B\left(\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right)\right)=L\left(\mathbf{u}_h,p_h\right)+L\left(\widetilde{\mathbf{u}},\widetilde{p}\right)
+\end{align*}}
+\only<3-8>{
+\begin{align*}
+&\alert<3>{\frac{1}{2}d_t\|\u_h\|^2+\frac{1}{2}d_t\|\widetilde{\u}\|^2}
+\onslide<4-8>{
+\alert<4>{+\nu\|\nabla\u_h\|^2}
+\onslide<6-8>{
+\alert<6>{+\tau_m^{-1}\|\widetilde{\u}\|^2+\tau_c^{-1}\|\widetilde{p}\|^2}\\
+\onslide<7-8>{
+&\alert<7>{+\left( \partial _{t}\widetilde{\u},\u_{h}\right)+\left( \mathcal{P}(\partial _{t}\u_{h}),\widetilde{\u}\right)
++\left( \mathcal{L}^{\ast }_a(\u_{h},p_h),\widetilde{\u}\right)+\left( \mathcal{P}(\mathcal{L}^{\ast }_a(\u_{h},p_h)),\widetilde{\u}\right)}\\
+&\alert<7>{
+-\left( \mathbf{\nabla }\cdot \u_{h},\widetilde{p}\right)
+-\left( \mathcal{P}(\mathbf{\nabla }\cdot \u_{h}),\widetilde{p}\right)}
+\onslide<8>{
+=\alert<8>{\left\langle \mathbf{f},\u_{h}\right\rangle+\left\langle \mathcal{P}(\mathbf{f}),\widetilde{\u}\right\rangle}
+}}}}
+\end{align*}}
+\only<9->{
+\begin{align*}
+&\only<9,11>{\frac{1}{2}d_t\|\u_h\|^2}
+\only<10>{\frac{1}{2}d_t\|\u_h+\widetilde{\u}\|^2}
+\onslide<11>{+\frac{1}{2}d_t\|\widetilde{\u}\|^2}
++\nu\|\nabla\u_h\|^2
++\tau_m^{-1}\|\widetilde{\u}\|^2+\tau_c^{-1}\|\widetilde{p}\|^2\\
+&\only<9>{\onslide<11>{+\left( \partial _{t}\widetilde{\u},\u_{h}\right)}+\left( \mathcal{P}(\partial _{t}\u_{h}),\widetilde{\u}\right)
++\left( \mathcal{L}^{\ast }_a(\u_{h},p_h),\widetilde{\u}\right)+\left( \mathcal{P}(\mathcal{L}^{\ast }_a(\u_{h},p_h)),\widetilde{\u}\right)}
+\only<10,11>{-2\left( \nu\Delta\u_h,\widetilde{\u}\right)}\\
+&\onslide<9>{-\left( \mathbf{\nabla }\cdot \u_{h},\widetilde{p}\right)
+-\left( \mathcal{P}(\mathbf{\nabla }\cdot \u_{h}),\widetilde{p}\right)}
+=\left\langle \mathbf{f},\u_{h}\right\rangle
+\only<9,11>{+\left\langle \mathcal{P}(\mathbf{f}),\widetilde{\u}\right\rangle}
+\only<10>{+\left\langle \mathbf{f},\widetilde{\u}\right\rangle}
+\end{align*}}
+\end{overlayarea}
+
+\end{frame}

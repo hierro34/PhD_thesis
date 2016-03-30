@@ -1,0 +1,159 @@
+\documentclass[11pt,spinewidth=15mm,coverwidth=210mm,coverheight=297mm,flapwidth=0mm]{bookcover}
+
+\usepackage{contour}
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\contourlength{1pt}
+\definecolor{lightbrown}{RGB}{200,100,0}
+\definecolor{lightblue}{RGB}{0,80,120}
+\colorlet{title}{white}
+
+
+
+\begin{document}
+% BACKGROUND
+%----------------------------------------------------------------------------------------
+% white background color on the whole cover
+\setbookcover{bgcolor}{whole}{color=white}
+% Brown background picture on the whole cover, without the flaps
+%\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover}
+\setbookcover{bgpic}{whole without flaps}{../Figures/Cover/cover_blue}
+
+
+%% Vertical light brown transparent trails on the back cover by a tikz code
+%\setbookcover{bgtikz}{back}{
+%\fill[opacity=0.3,color=lightbrown]
+%(0mm,0mm) rectangle (20mm,210mm)
+%(100mm,0mm) rectangle (150mm,210mm);}
+% Vertical light brown transparent trails on the front cover by a tikz code
+\setbookcover{bgtikz}{spine}{
+%\fill[opacity=0.8,color=lightbrown]
+\fill[opacity=0.8,color=lightblue]
+(0mm,0mm) rectangle (15mm,307mm);}
+%% Remark
+%\setbookcover{fgfirst}{remark}{
+%\bfseries\color{blue}SAMPLE DUST JACKET}
+% Text on the front cover
+
+% FRONT PAGE
+%----------------------------------------------------------------------------------------
+\setbookcover{fgfirst}{front}{
+\centering
+\begin{minipage}[c]{180mm}
+\centering
+\vspace{20mm}
+\color{title}
+
+\textsc{\LARGE \bf Universitat Politècnica de Catalunya}\\[1.5cm] % University name
+\textsc{\Large Doctoral Thesis}\\[0.5cm] % Thesis type
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{\large Author:}\\
+%\href{http://www.johnsmith.com}{\authorname} % Author name - remove the \href bracket to remove the link
+{\Large Oriol \textsc{Colomés Gené}} % Author name - remove the \href bracket to remove the link
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{\large Supervisor:} \\
+%\href{http://www.jamessmith.com}{\supname} % Supervisor name - remove the \href bracket to remove the link  
+{\Large  Prof. Santiago \textsc{Badia}} % Supervisor name - remove the \href bracket to remove the link  
+\end{flushright}
+\end{minipage}\\[3cm]
+
+\vspace{60mm}
+\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of Doctor of Philosophy}\\[0.3cm] % University requirement text
+\textit{in the}\\[0.4cm]
+{\large \bf Doctorat en Enginyeria Civil}\\[0.5cm]
+{\large \bf Departament d'Enginyeria Civil i Ambiental}\\[1.5cm] % Research group name and department name
+
+{\Large Barcelona, February 2016}
+
+\vspace{15mm}
+\centering
+\includegraphics[width=8cm]{../Figures/Cover/logo_escola_blanc_fons_transparent.png}
+\end{minipage}
+}
+
+% SPINE
+%----------------------------------------------------------------------------------------
+% Text on the spine
+\setbookcover{fgfirst}{spine}{
+\centering
+\color{title}
+\vspace{1cm}
+{\footnotesize Ph.D. thesis}\\
+\vfill
+\rotatebox[origin=c]{90}{\parbox{14cm}{\centering \Large \bf Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows}}
+\vfill
+\rotatebox[origin=c]{90}{\Large \bf Oriol Colomés Gené}\\
+\vfill
+{\footnotesize February 2016}
+\vspace{1cm}}
+
+
+% BACK PAGE
+%----------------------------------------------------------------------------------------
+% Text on the back cover
+\setbookcover{fgfirst}{back}{
+\centering
+\vspace{15mm}
+\parbox{155mm}{\color{white}
+In this thesis we have developed a path towards large scale Finite Element simulations of turbulent incompressible flows.
+
+We have assessed the performance of residual-based variational multiscale (VMS) methods for the large eddy simulation (LES) of turbulent incompressible flows, showing that VMS thought as an implicit LES model can be an alternative to the widely used physical-based models. This method is traditionally combined with equal-order velocity-pressure pairs, but in this work we also consider an approach based on inf-sup stable elements and symmetric projection stabilization of the convective term using an orthogonal subscale decomposition.
+
+Furthermore, we propose a segregated Runge-Kutta time integration scheme in which the velocity and pressure computations are segregated at the time integration level, and that keep the same order of accuracy for both velocities and pressures. Precisely, the symmetric projection stabilization approach is suitable for this time integration scheme. This combination, together with block-preconditioning techniques, lead to problems that can be optimally preconditioned using the balancing domain decomposition by constraints preconditioners.
+
+Additionally, we also contemplate the weak imposition of the Dirichlet boundary conditions for wall-bounded turbulent flows.
+
+Four well known problems have been mainly considered for the numerical experiments: the decay of homogeneous isotropic turbulence, the Taylor-Green vortex problem, the turbulent flow in a channel and the turbulent flow around an airfoil.
+
+
+%In this thesis we have developed a path towards large scale Finite Element simulations of turbulent incompressible flows. 
+%
+%We have assessed the performance of residual-based variational multiscale (VMS) methods for the large eddy simulation (LES) of turbulent incompressible flows. We consider VMS models obtained by different subgrid scale approximations which include either static or dynamic subscales, linear or nonlinear multiscale splitting, and different choices of the subscale space. We show that VMS thought as an implicit LES model can be an alternative to the widely used physical-based models. This method is traditionally combined with equal-order velocity-pressure pairs, since it provides pressure stabilization. In this work, we also consider a different approach, based on inf-sup stable elements and convection-only stabilization. In order to do so, we define a symmetric projection stabilization of the convective term
+%using an orthogonal subscale decomposition. The accuracy and efficiency of this method compared with residual-based algebraic subgrid scales and orthogonal subscales methods for equal-order interpolation is also assessed in this thesis. 
+%%Moreover, a recursive block preconditioning strategy has been considered for the resolution of the problem with an implicit treatment of the projection terms.
+%
+%Furthermore, we propose Runge-Kutta time integration schemes for the incompressible Navier-Stokes equations with two salient properties. First, velocity and pressure computations are segregated at the time integration level, without the need to perform additional fractional step techniques that spoil high orders of accuracy. Second, the proposed methods keep the same order of accuracy for both velocities and pressures. 
+%%The segregated Runge-Kutta methods are motivated as an implicit-explicit Runge-Kutta time integration of the projected Navier-Stokes system onto the discrete divergence-free space, and its re-statement in a velocity-pressure setting using a discrete pressure Poisson equation.
+%Precisely, the symmetric projection stabilization approach is suitable for segregated Runge-Kutta time integration schemes. This combination, together with the use of block-preconditioning techniques, lead to elasticity-type and Laplacian-type problems that can be optimally preconditioned using the balancing domain decomposition by constraints preconditioners. The weak scalability of this formulation have been demonstrated in this document.
+%
+%Additionally, we also contemplate the weak imposition of the Dirichlet boundary conditions for wall-bounded turbulent flows.
+%
+%Four well known problems have been mainly considered for the numerical experiments: the decay of homogeneous isotropic turbulence, the Taylor-Green vortex problem, the turbulent flow in a channel and the turbulent flow around an airfoil.
+}}
+% Text and picture (dice.png) on the front flap
+\setbookcover{fgfirst}{front flap}{
+\centering
+\vspace{20mm}
+\parbox{40mm}{\color{white}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.}
+\vfill
+\includegraphics[width=30mm]{./figures/dice.png}
+\vspace{10mm}}
+% Text on the back flap
+\setbookcover{fgfirst}{back flap}{
+\centering
+\vspace{20mm}
+\parbox{40mm}{\color{white}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum.}}
+% Making the dust jucket
+\makebookcover
+\end{document}

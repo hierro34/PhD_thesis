@@ -1,0 +1,34 @@
+%----------------------------------------------------------------------------------------
+\begin{frame}
+\frametitle{Large scale simulations} 
+\begin{overprint}
+\onslide<1->{
+\textbf{Momentum system matrix:} $\frac{1}{\delta t}M+a_{ii}K$
+\begin{itemize}
+\item Multilevel/overlapped Balancing domain decomposition (BDDC) for $M + \delta t K$
+\item Excellent weak scalability results (up to $ \sim 460,000 $ IBM BG/Q cores) [Badia \textit{et al} '15]
+\end{itemize} }
+\onslide<2->{
+\textbf{Pressure system matrix:} $D M^{-1} G$
+\begin{itemize}
+\item Spectrally equivalent to standard Laplacian $L_p$
+\item Written as 
+\begin{align*}
+\left[ 
+\begin{array}{cc}
+M & G \\ 
+D & 0
+\end{array}
+\right] \qquad \hbox{preconditioned w/} \qquad
+\left[ 
+\begin{array}{cc}
+M & 0 \\ 
+0 & L_p
+\end{array}
+\right] 
+\end{align*}
+\item Multilevel/overlapped Balancing domain decomposition (BDDC) for $L_p$
+\item Excellent weak scalability results (up to $ \sim 460,000 $ IBM BG/Q cores) [Badia \textit{et al} '15]
+\end{itemize}}
+\end{overprint}
+\end{frame}

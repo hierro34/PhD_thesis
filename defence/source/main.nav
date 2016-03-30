@@ -1,0 +1,209 @@
+\beamer@endinputifotherversion {3.24pt}
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\sectionentry {1}{Motivation}{3}{Motivation}{0}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\slideentry {1}{0}{3}{3/3}{}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\slideentry {1}{0}{4}{4/8}{}{0}}
+\headcommand {\beamer@framepages {4}{8}}
+\headcommand {\slideentry {1}{0}{5}{9/13}{}{0}}
+\headcommand {\beamer@framepages {9}{13}}
+\headcommand {\slideentry {1}{0}{6}{14/19}{}{0}}
+\headcommand {\beamer@framepages {14}{19}}
+\headcommand {\sectionentry {2}{Residual-based VMS}{20}{Residual-based VMS}{0}}
+\headcommand {\beamer@sectionpages {3}{19}}
+\headcommand {\beamer@subsectionpages {3}{19}}
+\headcommand {\slideentry {2}{0}{7}{20/20}{}{0}}
+\headcommand {\beamer@framepages {20}{20}}
+\headcommand {\slideentry {2}{0}{8}{21/21}{}{0}}
+\headcommand {\beamer@framepages {21}{21}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{22}{Formulation}}\headcommand {\beamer@subsectionpages {20}{21}}
+\headcommand {\slideentry {2}{1}{1}{22/25}{Formulation}{0}}
+\headcommand {\beamer@framepages {22}{25}}
+\headcommand {\slideentry {2}{1}{2}{26/29}{Formulation}{0}}
+\headcommand {\beamer@framepages {26}{29}}
+\headcommand {\slideentry {2}{1}{3}{30/34}{Formulation}{0}}
+\headcommand {\beamer@framepages {30}{34}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{35}{Numerical experiments}}\headcommand {\beamer@subsectionpages {22}{34}}
+\headcommand {\slideentry {2}{2}{1}{35/35}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {35}{35}}
+\headcommand {\beamer@subsubsectionentry {0}{2}{2}{1}{36}{DHIT}}
+\headcommand {\slideentry {2}{2}{2}{36/36}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {36}{36}}
+\headcommand {\slideentry {2}{2}{3}{37/39}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {37}{39}}
+\headcommand {\slideentry {2}{2}{4}{40/42}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {40}{42}}
+\headcommand {\slideentry {2}{2}{5}{43/43}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {43}{43}}
+\headcommand {\beamer@subsubsectionentry {0}{2}{2}{2}{44}{TGV}}
+\headcommand {\slideentry {2}{2}{6}{44/46}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {44}{46}}
+\headcommand {\slideentry {2}{2}{7}{47/49}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {47}{49}}
+\headcommand {\slideentry {2}{2}{8}{50/50}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {50}{50}}
+\headcommand {\slideentry {2}{2}{9}{51/53}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {51}{53}}
+\headcommand {\beamer@subsubsectionentry {0}{2}{2}{3}{54}{TCF}}
+\headcommand {\slideentry {2}{2}{10}{54/55}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {54}{55}}
+\headcommand {\slideentry {2}{2}{11}{56/61}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {56}{61}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{62}{Conclusions}}\headcommand {\beamer@subsectionpages {35}{61}}
+\headcommand {\slideentry {2}{3}{1}{62/66}{Conclusions}{0}}
+\headcommand {\beamer@framepages {62}{66}}
+\headcommand {\slideentry {2}{3}{2}{67/73}{Conclusions}{0}}
+\headcommand {\beamer@framepages {67}{73}}
+\headcommand {\sectionentry {3}{Mixed FE VMS}{74}{Mixed FE VMS}{0}}
+\headcommand {\beamer@sectionpages {20}{73}}
+\headcommand {\beamer@subsectionpages {62}{73}}
+\headcommand {\slideentry {3}{0}{3}{74/74}{}{0}}
+\headcommand {\beamer@framepages {74}{74}}
+\headcommand {\slideentry {3}{0}{4}{75/75}{}{0}}
+\headcommand {\beamer@framepages {75}{75}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{76}{Formulation}}\headcommand {\beamer@subsectionpages {74}{75}}
+\headcommand {\slideentry {3}{1}{1}{76/77}{Formulation}{0}}
+\headcommand {\beamer@framepages {76}{77}}
+\headcommand {\slideentry {3}{1}{2}{78/80}{Formulation}{0}}
+\headcommand {\beamer@framepages {78}{80}}
+\headcommand {\slideentry {3}{1}{3}{81/84}{Formulation}{0}}
+\headcommand {\beamer@framepages {81}{84}}
+\headcommand {\beamer@subsectionentry {0}{3}{2}{85}{Block-preconditioning}}\headcommand {\beamer@subsectionpages {76}{84}}
+\headcommand {\slideentry {3}{2}{1}{85/96}{Block-preconditioning}{0}}
+\headcommand {\beamer@framepages {85}{96}}
+\headcommand {\beamer@subsectionentry {0}{3}{3}{97}{Numerical experiments}}\headcommand {\beamer@subsectionpages {85}{96}}
+\headcommand {\slideentry {3}{3}{1}{97/97}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {97}{97}}
+\headcommand {\beamer@subsubsectionentry {0}{3}{3}{1}{98}{Analytical colliding flow}}
+\headcommand {\slideentry {3}{3}{2}{98/98}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {98}{98}}
+\headcommand {\slideentry {3}{3}{3}{99/101}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {99}{101}}
+\headcommand {\slideentry {3}{3}{4}{102/104}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {102}{104}}
+\headcommand {\beamer@subsubsectionentry {0}{3}{3}{2}{105}{TGV}}
+\headcommand {\slideentry {3}{3}{5}{105/105}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {105}{105}}
+\headcommand {\slideentry {3}{3}{6}{106/113}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {106}{113}}
+\headcommand {\beamer@subsubsectionentry {0}{3}{3}{3}{114}{TCF}}
+\headcommand {\slideentry {3}{3}{7}{114/116}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {114}{116}}
+\headcommand {\beamer@subsectionentry {0}{3}{4}{117}{Conclusions}}\headcommand {\beamer@subsectionpages {97}{116}}
+\headcommand {\slideentry {3}{4}{1}{117/121}{Conclusions}{0}}
+\headcommand {\beamer@framepages {117}{121}}
+\headcommand {\slideentry {3}{4}{2}{122/123}{Conclusions}{0}}
+\headcommand {\beamer@framepages {122}{123}}
+\headcommand {\sectionentry {4}{Segregated Runge-Kutta}{124}{Segregated Runge-Kutta}{0}}
+\headcommand {\beamer@sectionpages {74}{123}}
+\headcommand {\beamer@subsectionpages {117}{123}}
+\headcommand {\slideentry {4}{0}{3}{124/124}{}{0}}
+\headcommand {\beamer@framepages {124}{124}}
+\headcommand {\slideentry {4}{0}{4}{125/125}{}{0}}
+\headcommand {\beamer@framepages {125}{125}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{126}{Formulation}}\headcommand {\beamer@subsectionpages {124}{125}}
+\headcommand {\slideentry {4}{1}{1}{126/133}{Formulation}{0}}
+\headcommand {\beamer@framepages {126}{133}}
+\headcommand {\slideentry {4}{1}{2}{134/136}{Formulation}{0}}
+\headcommand {\beamer@framepages {134}{136}}
+\headcommand {\slideentry {4}{1}{3}{137/140}{Formulation}{0}}
+\headcommand {\beamer@framepages {137}{140}}
+\headcommand {\slideentry {4}{1}{4}{141/143}{Formulation}{0}}
+\headcommand {\beamer@framepages {141}{143}}
+\headcommand {\slideentry {4}{1}{5}{144/149}{Formulation}{0}}
+\headcommand {\beamer@framepages {144}{149}}
+\headcommand {\slideentry {4}{1}{6}{150/152}{Formulation}{0}}
+\headcommand {\beamer@framepages {150}{152}}
+\headcommand {\slideentry {4}{1}{7}{153/153}{Formulation}{0}}
+\headcommand {\beamer@framepages {153}{153}}
+\headcommand {\beamer@subsectionentry {0}{4}{2}{154}{Numerical experiments}}\headcommand {\beamer@subsectionpages {126}{153}}
+\headcommand {\slideentry {4}{2}{1}{154/154}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {154}{154}}
+\headcommand {\beamer@subsubsectionentry {0}{4}{2}{1}{155}{Analytical solution}}
+\headcommand {\slideentry {4}{2}{2}{155/155}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {155}{155}}
+\headcommand {\slideentry {4}{2}{3}{156/157}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {156}{157}}
+\headcommand {\beamer@subsubsectionentry {0}{4}{2}{2}{158}{Flow around a cylinder}}
+\headcommand {\slideentry {4}{2}{4}{158/158}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {158}{158}}
+\headcommand {\slideentry {4}{2}{5}{159/159}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {159}{159}}
+\headcommand {\beamer@subsectionentry {0}{4}{3}{160}{Conclusions}}\headcommand {\beamer@subsectionpages {154}{159}}
+\headcommand {\slideentry {4}{3}{1}{160/163}{Conclusions}{0}}
+\headcommand {\beamer@framepages {160}{163}}
+\headcommand {\slideentry {4}{3}{2}{164/165}{Conclusions}{0}}
+\headcommand {\beamer@framepages {164}{165}}
+\headcommand {\sectionentry {5}{Segregated VMS}{166}{Segregated VMS}{0}}
+\headcommand {\beamer@sectionpages {124}{165}}
+\headcommand {\beamer@subsectionpages {160}{165}}
+\headcommand {\slideentry {5}{0}{3}{166/166}{}{0}}
+\headcommand {\beamer@framepages {166}{166}}
+\headcommand {\slideentry {5}{0}{4}{167/167}{}{0}}
+\headcommand {\beamer@framepages {167}{167}}
+\headcommand {\slideentry {5}{0}{5}{168/170}{}{0}}
+\headcommand {\beamer@framepages {168}{170}}
+\headcommand {\beamer@subsectionentry {0}{5}{1}{171}{Formulation}}\headcommand {\beamer@subsectionpages {166}{170}}
+\headcommand {\slideentry {5}{1}{1}{171/177}{Formulation}{0}}
+\headcommand {\beamer@framepages {171}{177}}
+\headcommand {\slideentry {5}{1}{2}{178/182}{Formulation}{0}}
+\headcommand {\beamer@framepages {178}{182}}
+\headcommand {\beamer@subsectionentry {0}{5}{2}{183}{Large-scale solvers}}\headcommand {\beamer@subsectionpages {171}{182}}
+\headcommand {\slideentry {5}{2}{1}{183/184}{Large-scale solvers}{0}}
+\headcommand {\beamer@framepages {183}{184}}
+\headcommand {\beamer@subsectionentry {0}{5}{3}{185}{Numerical experiments}}\headcommand {\beamer@subsectionpages {183}{184}}
+\headcommand {\slideentry {5}{3}{1}{185/185}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {185}{185}}
+\headcommand {\beamer@subsubsectionentry {0}{5}{3}{1}{186}{TGV}}
+\headcommand {\slideentry {5}{3}{2}{186/188}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {186}{188}}
+\headcommand {\slideentry {5}{3}{3}{189/194}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {189}{194}}
+\headcommand {\beamer@subsubsectionentry {0}{5}{3}{2}{195}{TCF}}
+\headcommand {\slideentry {5}{3}{4}{195/196}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {195}{196}}
+\headcommand {\slideentry {5}{3}{5}{197/200}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {197}{200}}
+\headcommand {\beamer@subsubsectionentry {0}{5}{3}{3}{201}{Flow around a NACA profile}}
+\headcommand {\slideentry {5}{3}{6}{201/201}{Numerical experiments}{0}}
+\headcommand {\beamer@framepages {201}{201}}
+\headcommand {\beamer@subsectionentry {0}{5}{4}{202}{Conclusions}}\headcommand {\beamer@subsectionpages {185}{201}}
+\headcommand {\slideentry {5}{4}{1}{202/205}{Conclusions}{0}}
+\headcommand {\beamer@framepages {202}{205}}
+\headcommand {\sectionentry {6}{Conclusions}{206}{Conclusions}{0}}
+\headcommand {\beamer@sectionpages {166}{205}}
+\headcommand {\beamer@subsectionpages {202}{205}}
+\headcommand {\slideentry {6}{0}{2}{206/206}{}{0}}
+\headcommand {\beamer@framepages {206}{206}}
+\headcommand {\slideentry {6}{0}{3}{207/211}{}{0}}
+\headcommand {\beamer@framepages {207}{211}}
+\headcommand {\slideentry {6}{0}{4}{212/212}{}{0}}
+\headcommand {\beamer@framepages {212}{212}}
+\headcommand {\slideentry {6}{0}{5}{213/213}{}{0}}
+\headcommand {\beamer@framepages {213}{213}}
+\headcommand {\slideentry {6}{0}{6}{214/214}{}{0}}
+\headcommand {\beamer@framepages {214}{214}}
+\headcommand {\slideentry {6}{0}{7}{215/215}{}{0}}
+\headcommand {\beamer@framepages {215}{215}}
+\headcommand {\slideentry {6}{0}{8}{216/226}{}{0}}
+\headcommand {\beamer@framepages {216}{226}}
+\headcommand {\slideentry {6}{0}{9}{227/229}{}{0}}
+\headcommand {\beamer@framepages {227}{229}}
+\headcommand {\slideentry {6}{0}{10}{230/235}{}{0}}
+\headcommand {\beamer@framepages {230}{235}}
+\headcommand {\slideentry {6}{0}{11}{236/238}{}{0}}
+\headcommand {\beamer@framepages {236}{238}}
+\headcommand {\slideentry {6}{0}{12}{239/241}{}{0}}
+\headcommand {\beamer@framepages {239}{241}}
+\headcommand {\slideentry {6}{0}{13}{242/242}{}{0}}
+\headcommand {\beamer@framepages {242}{242}}
+\headcommand {\beamer@partpages {1}{242}}
+\headcommand {\beamer@subsectionpages {206}{242}}
+\headcommand {\beamer@sectionpages {206}{242}}
+\headcommand {\beamer@documentpages {242}}
+\headcommand {\def \inserttotalframenumber {62}}

@@ -26,7 +26,7 @@
 11pt, % The default document font size, options: 10pt, 11pt, 12pt
 %oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
 english, % ngerman for German
-singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+onehalfspacing %singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
 %draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 %nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
 %liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
@@ -39,14 +39,29 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 
 \usepackage{palatino} % Use the Palatino font by default
 
-\usepackage[backend=bibtex,style=authoryear,natbib=true]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
-
-\addbibresource{example.bib} % The filename of the bibliography
+%\usepackage[backend=bibtex,style=trad-unsrt,sorting=nyt,natbib=true,isbn=false,doi=false,url=false]{biblatex} % User the bibtex backend with the authoryear citation style (which resembles APA)
+%\addbibresource{C2_preliminaries.bib} % The filename of the bibliography
+%\addbibresource{C3_turbulence.bib} % The filename of the bibliography
+%\addbibresource{C4_RB_VMS.bib} % The filename of the bibliography
+%\addbibresource{C5_TBT_OSS.bib} % The filename of the bibliography
+%\addbibresource{C6_SRK.bib} % The filename of the bibliography
+%\addbibresource{C7_SVMS.bib} % The filename of the bibliography
+%\addbibresource{C8_NACA.bib} % The filename of the bibliography
+\bibliographystyle{abbrv}
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 
 \usepackage{amssymb,amsmath}
 \usepackage{amsfonts}
+\usepackage{subfigure}
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+\usepackage{pifont}
+\usepackage{amsthm}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[ruled,vlined]{algorithm2e}
 
 %----------------------------------------------------------------------------------------
 %	INCLUDE DEFINITIONS FILE
@@ -57,18 +72,19 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\supervisor{Dr. Santiago \textsc{Badia}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
+\thesistitle{Large scale Finite Element solvers for the large eddy simulation of incompressible turbulent flows} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\supervisor{Prof. Santiago \textsc{Badia}} % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Doctor of Philosophy} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
-\author{Oriol \textsc{Colomés}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
+\author{Oriol \textsc{Colomés Gené}} % Your name, this is used in the title page and abstract, print it elsewhere with \authorname
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 \keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{\href{http://www.upc.edu}{Universitat Politècnica de Catalunya}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
-\department{\href{http://www.cimne.com}{Centre Internacional de Mètodes Numèrics en Enginyeria}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
-\group{\href{http://www.cimne.com/spacehome/2/1156}{Large Scale Scientific Computing group}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
+\program{Doctorat en Enginyeria Civil}
+\department{Departament d'Enginyeria Civil i Ambiental} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
+\group{} %{\href{http://www.cimne.com/spacehome/2/1156}{Large Scale Scientific Computing group}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{http://www.camins.upc.edu}{Escola Tècnica Superior d'Enginyeria de Camins, Canals i Ports de Barcelona}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
@@ -110,12 +126,14 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 \end{flushright}
 \end{minipage}\\[3cm]
  
-%\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
-\large \textit{\degreename}\\[0.3cm] % University requirement text
+\large \textit{A thesis submitted in fulfilment of the requirements\\ for the degree of \degreename}\\[0.3cm] % University requirement text
 \textit{in the}\\[0.4cm]
-\groupname\\\deptname\\[2cm] % Research group name and department name
+%\groupname\\\deptname\\[2cm] % Research group name and department name
+\progname\\[0.5cm]
+\deptname\\[2cm] % Research group name and department name 
  
-{\large \today}\\[4cm] % Date
+{\large Barcelona, February 2016}\\[2cm] % Date+
+\includegraphics[width=8cm]{../Figures/Cover/logo_escola_pantone_201_C.png}
 %\includegraphics{Logo} % University/department logo - uncomment to place it
  
 \vfill
@@ -123,30 +141,36 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 \end{titlepage}
 
 %----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+
+\dedicatory{To Raquel, my parents and my brother\ldots} 
+
+%----------------------------------------------------------------------------------------
 %	DECLARATION PAGE
 %----------------------------------------------------------------------------------------
 
-\begin{declaration}
-\addchaptertocentry{\authorshipname}
-
-\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
-
-\begin{itemize} 
-\item This work was done wholly or mainly while in candidature for a research degree at this University.
-\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
-\item Where I have consulted the published work of others, this is always clearly attributed.
-\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
-\item I have acknowledged all main sources of help.
-\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
-\end{itemize}
- 
-\noindent Signed:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
- 
-\noindent Date:\\
-\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
-\end{declaration}
-
+%\begin{declaration}
+%\addchaptertocentry{\authorshipname}
+%
+%\noindent I, \authorname, declare that this thesis titled, \enquote{\ttitle} and the work presented in it are my own. I confirm that:
+%
+%\begin{itemize} 
+%\item This work was done wholly or mainly while in candidature for a research degree at this University.
+%\item Where any part of this thesis has previously been submitted for a degree or any other qualification at this University or any other institution, this has been clearly stated.
+%\item Where I have consulted the published work of others, this is always clearly attributed.
+%\item Where I have quoted from the work of others, the source is always given. With the exception of such quotations, this thesis is entirely my own work.
+%\item I have acknowledged all main sources of help.
+%\item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
+%\end{itemize}
+% 
+%\noindent Signed:\\
+%\rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
+% 
+%\noindent Date:\\
+%\rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
+%\end{declaration}
+%
 \cleardoublepage
 
 %----------------------------------------------------------------------------------------
@@ -155,9 +179,13 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 
 \vspace*{0.2\textheight}
 
-\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+%\noindent\enquote{\itshape Thanks to my solid academic training, today I can write hundreds of words on virtually any topic without possessing a shred of information, which is how I got a good job in journalism.}\bigbreak
+%
+%\hfill Dave Barry
 
-\hfill Dave Barry
+\noindent\enquote{\itshape Science is a way of life. Science is a perspective. Science is the process that takes us from confusion to understanding in a manner that's precise, predictive and reliable - a transformation, for those lucky enough to experience it, that is empowering and emotional.}\bigbreak
+
+\hfill Brian Greene
 
 %----------------------------------------------------------------------------------------
 %	ABSTRACT PAGE
@@ -166,9 +194,21 @@ singlespacing, % Single line spacing, alternatives: onehalfspacing or doublespac
 \begin{abstract}
 \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
 
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+%The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+\input{abstract}
 
 \end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	RESUM
+%----------------------------------------------------------------------------------------
+
+\begin{resum}
+\addchaptertocentry{\resumname} % Add the abstract to the table of contents
+
+\input{resum}
+
+\end{resum}
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -177,7 +217,8 @@ The Thesis Abstract is written here (and usually kept to just this page). The pa
 \begin{acknowledgements}
 \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
 
-The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
+%The acknowledgements and the people to thank go here, don't forget to include your project advisor\ldots
+\input{acknowledgements}
 
 \end{acknowledgements}
 
@@ -199,9 +240,50 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 
 %\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere\\
 %\textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
+\textbf{ASGS} & \textbf{A}lgebraic \textbf{S}ub\textbf{G}rid \textbf{S}cale \\
+\textbf{BDDC} & \textbf{B}alancing \textbf{D}omain \textbf{D}ecomposition by \textbf{C}onstraints \\
+\textbf{BDF} & \textbf{B}ackward \textbf{D}ifferentiation \textbf{F}ormulas \\
+\textbf{BE} & \textbf{B}ackward \textbf{E}uler \\
+\textbf{CFD} & \textbf{C}omputational \textbf{F}luid \textbf{D}ynamics \\
+\textbf{CFL} & \textbf{C}ourant-\textbf{F}riedrichs-\textbf{L}ewy \\
+\textbf{DAE} & \textbf{D}ifferential \textbf{A}lgebraic \textbf{E}quation \\
+\textbf{DD} & \textbf{D}omain \textbf{D}ecomposition \\
 \textbf{DFFT} & \textbf{D}iscrete \textbf{F}ast \textbf{F}ourier \textbf{T}ransform \\
-\textbf{SGS} & \textbf{S}ub\textbf{G}rid \textbf{S}cale\\
+\textbf{DHIT} & \textbf{D}ecay of \textbf{H}omogeneous \textbf{I}sotropic \textbf{T}urbulence \\
+\textbf{DIRK} & \textbf{D}iagonally \textbf{I}mplicit \textbf{RK} \\
+\textbf{DNS} & \textbf{D}irect \textbf{N}umerical \textbf{S}imulation \\
+\textbf{DOF} & \textbf{D}egree \textbf{O}f \textbf{F}reedom \\
+\textbf{EPS} & \textbf{E}rror \textbf{P}er \textbf{S}tep \\
+\textbf{EPUS} & \textbf{E}rror \textbf{P}er \textbf{U}nit \textbf{S}tep \\
+\textbf{FD} & \textbf{F}inite \textbf{D}ifferences \\
+\textbf{FE} & \textbf{F}inite \textbf{E}lement \\
+\textbf{FV} & \textbf{F}inite \textbf{V}olume \\
+\textbf{HERK} & \textbf{H}alf-\textbf{E}xplicit \textbf{RK} \\
+\textbf{HPC} & \textbf{H}igh \textbf{P}erformance \textbf{C}omputing \\
+\textbf{ILES} & \textbf{Implicit} \textbf{L}arge \textbf{E}ddy \textbf{S}imulation \\
+\textbf{IMEX} & \textbf{IM}plicit-\textbf{EX}plicit \\
+\textbf{ISS} & \textbf{I}nf-\textbf{S}up \textbf{S}table \\
+\textbf{LES} & \textbf{L}arge \textbf{E}ddy \textbf{S}imulation \\
+\textbf{LPS} & \textbf{L}ocal \textbf{P}rojection \textbf{S}tabilization \\
+\textbf{MG} & \textbf{M}ulti\textbf{G}rid \\
+\textbf{MHD} & \textbf{M}agneto\textbf{H}ydro\textbf{D}ynamics \\
+\textbf{MILES} & \textbf{M}onotone \textbf{I}ntegrated \textbf{L}arge \textbf{E}ddy \textbf{S}imulation \\
+\textbf{MLBDDC} & \textbf{M}ulti-\textbf{L}evel \textbf{BDDC}\\
+\textbf{ODE} & \textbf{O}rdinary \textbf{D}ifferential \textbf{E}quation \\
+\textbf{OO} & \textbf{O}bject-\textbf{O}riented \\
+\textbf{OSS} & \textbf{O}rthogonal \textbf{S}ub\textbf{S}cales \\
+\textbf{PDE} & \textbf{P}artial \textbf{D}ifferential \textbf{E}quation \\
+\textbf{RB} & \textbf{R}esidual-\textbf{B}ased \\
+\textbf{RK} & \textbf{R}unge-\textbf{K}utta \\
 \textbf{RMS} & \textbf{R}oot \textbf{M}ean \textbf{S}quare\\
+\textbf{SGS} & \textbf{S}ub\textbf{G}rid \textbf{S}cale\\
+\textbf{SRK} & \textbf{S}egregated \textbf{R}unge-\textbf{K}utta \\
+\textbf{SV} & \textbf{S}cott-\textbf{V}ogelius \\
+\textbf{TCF} & \textbf{T}urbulent \textbf{C}hannel \textbf{F}low \\
+\textbf{TGV} & \textbf{T}aylor-\textbf{G}reen \textbf{V}ortex flow \\
+\textbf{VMS} & \textbf{V}ariational \textbf{M}ulti\textbf{S}cale \\
+\textbf{WMLES} & \textbf{W}all-\textbf{M}odelled \textbf{L}arge \textbf{E}ddy \textbf{S}imulation \\
+\textbf{WRLES} & \textbf{W}all-\textbf{R}esolved \textbf{L}arge \textbf{E}ddy \textbf{S}imulation \\
 
 \end{abbreviations}
 
@@ -209,14 +291,14 @@ The acknowledgements and the people to thank go here, don't forget to include yo
 %	PHYSICAL CONSTANTS/OTHER DEFINITIONS
 %----------------------------------------------------------------------------------------
 
-\begin{constants}%{lr@{${}={}$}l} % The list of physical constants is a three column table
-
- %The \SI{}{} command is provided by the siunitx package, see its documentation for instructions on how to use it
-
-Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
-%Constant Name & $Symbol$ & $Constant Value$ with units\\
-
-\end{constants}
+%\begin{constants}%{lr@{${}={}$}l} % The list of physical constants is a three column table
+%
+% %The \SI{}{} command is provided by the siunitx package, see its documentation for instructions on how to use it
+%
+%Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
+%%Constant Name & $Symbol$ & $Constant Value$ with units\\
+%
+%\end{constants}
 
 %----------------------------------------------------------------------------------------
 %	SYMBOLS
@@ -225,12 +307,6 @@ Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
 %\begin{symbols}%{lll} % Include a list of Symbols (a three column table)
 \input{symbols_definition}
 %\end{symbols}
-
-%----------------------------------------------------------------------------------------
-%	DEDICATION
-%----------------------------------------------------------------------------------------
-
-\dedicatory{For/Dedicated to/To my\ldots} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
@@ -246,7 +322,13 @@ Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
 \input{Chapters/C1_Introduction} 
 \input{Chapters/C2_Preliminaries}
 \input{Chapters/C3_Turbulence}
-\input{Chapters/Chapter1} 
+\input{Chapters/C4_RB_VMS}
+\input{Chapters/C5_TBT_OSS}
+\input{Chapters/C6_SRK}
+\input{Chapters/C7_SVMS}
+\input{Chapters/C8_NACA}
+\input{Chapters/C9_Conclusions}
+%\input{Chapters/Chapter1} 
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -258,14 +340,15 @@ Speed of Light & $c$ & \SI{2.99792458e8}{\meter\per\second} (exact)\\
 % Uncomment the lines as you write the Appendices
 
 \input{Appendices/AppendixA}
-%\input{Appendices/AppendixB}
-%\input{Appendices/AppendixC}
+\input{Appendices/Appendix_VMS}
+\input{Appendices/Appendix_SRK}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\printbibliography[heading=bibintoc]
+%\printbibliography[heading=bibintoc]
+\bibliography{C2_preliminaries,C3_turbulence,C4_RB_VMS,C5_TBT_OSS,C6_SRK,C7_SVMS,C8_NACA}
 
 %----------------------------------------------------------------------------------------
 

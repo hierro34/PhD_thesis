@@ -1,0 +1,217 @@
+% Appendix B
+
+\chapter{VMS methods implementation} % Main appendix title
+\label{appendix-VMS_implementation}
+
+In this appendix we give some tips and some comments on how the VMS methods defined in Chapter \ref{chap-Rb_VMS} are implemented in a FE software.
+
+We will describe the algorithms used to implement the dynamic and nonlinear versions for both the ASGS and the OSS methods. The quasi-static alternatives and the linear subscales definition can be though as a particular case of the former version.
+
+\subsection*{Algebraic Subgrid Scale (ASGS)}
+The Algebraic Subgrid Scale (ASGS) method is characterized by the projection $\mathcal{P}$ appearing in the right-hand side of \Eq{C2_velo_sgs} and \Eq{C2_press_sgs} defined as
+\begin{equation}
+\label{4}
+\mathcal{P}:=\mathbf{I}
+\end{equation}
+
+Then, the equivalent Navier-Stokes problem expressions are given by
+\begin{align}
+\label{5}
+(\partial_t\u_h,\v_h)+(\partial_t\tilde{\u},\v_h)&+B(\a;[\u_h,p_h],[\v_h,q_h])\\\nonumber
+&+\left(\tilde{\u},\mathcal{L}_{\a}^*(\v_h,q_h)\right)_h-\left(\tilde{p},\nabla\cdot\v_h\right)=\left<\f,\v_h\right>,
+\end{align}
+together with the subscales equations
+\begin{align}
+\label{eq-A2_velo_asgs}
+\partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\R_u,\\
+\label{eq-A2_press_asgs}
+\tau_c^{-1}\tilde{p}=R_p.
+\end{align}
+
+The previous expressions are solved using the Picard method for nonlinear equations. Once discretized in time using a Backward Euler discretization, we have that at the step $ n+1 $ and each nonlinear iteration $ i $, the values of $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculated solving the following decomposed equations
+\begin{align}
+\label{7}
+&\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+&+(q_h,\nabla\cdot\mathbf{u}_h^{n+1,i})-\tau_{m,t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)\\\nonumber
+&+\tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&=\left<\mathbf{f},\mathbf{v}_h\right>+\frac{1}{\delta t}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{f},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^n,\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)+\tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\mathbf{v}_h),
+\end{align}
+where
+\begin{equation}
+\label{8}
+\tilde{\mathbf{u}}^{n+1,i}=\tau_{m,t}\frac{1}{\delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}\left[\mathbf{f}-(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i})\right].
+\end{equation}
+With $ \mathbf{a}^i=\mathbf{u}_h^{n+1,i-1}+\tilde{\mathbf{u}}^{n+1,i-1} $ and $ \tau_{m,t}=\left[\frac{1}{\delta t}+\frac{1}{\tau_m}\right]^{-1} $
+
+The implementation of the dynamic subscales has been done only for a linear approximation. It means that the terms involving the laplacian $ \Delta(\cdot) $ are equal to zero. Given this assumption, the simplified expressions of (\ref{7}) and (\ref{8}) are:
+\begin{align}
+\label{9}
+&\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+&+(q_h,\nabla\cdot\mathbf{u}_h^{n+1,i})s-\tau_{m,t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+&+\tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&=\left<\mathbf{f},\mathbf{v}_h\right>+\frac{1}{\delta t}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{f},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+&+\tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\mathbf{v}_h),
+\end{align}
+with
+\begin{equation}
+\label{10}
+\tilde{\mathbf{u}}^{n+1,i}=\tau_{m,t}\frac{1}{\delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}\left[\mathbf{f}-(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i})\right].
+\end{equation}
+An alternative equation to (\ref{10}) can be the equivalent to \Eq{C4_velo_sgs_discrete_impl}.
+
+\subsection*{Orthogonal Subscales (OSS)}
+The Orthogonal Subscales (OSS) method is characterized by the following projection definition.
+\begin{equation}
+\label{11}
+\mathcal{P}:=\Pi_\tau^\bot=\mathbf{I}-\Pi_\tau
+\end{equation}
+Then, the equivalent subscales equations to \Eq{A2_velo_asgs}-\Eq{A2_press_asgs} are given by
+\begin{align}
+\label{eq-A2_velo_oss}
+\partial_t\tilde{\u}+\tau_m^{-1}\tilde{\u}=\Pi_\tau^\bot(\R_u),\\
+\label{eq-A2_press_oss}
+\tau_c^{-1}\tilde{p}=\Pi_\tau^\bot(R_p).
+\end{align}
+
+As we have done for the ASGS method, using a Backward Euler time discretization and the Picard method for solving the nonlinearity, at the time step $ n+1 $ and at each iteration $ i $, $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ are calculated solving the following decomposed equations
+\begin{align}
+\label{14}
+&\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+&+(q_h,\nabla\cdot\mathbf{u}_h^{n+1,i})-\tau_{m,t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)\\\nonumber
+&+\tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+&=\left<\mathbf{f},\mathbf{v}_h\right>+\frac{1}{\delta t}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{f},\mathbf{v}_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^n,\mathbf{v}_h)\\\nonumber
+&+\tau_{m,t}(\Pi_\tau(\mathbf{R}_u^{i-1}),-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)+\tau_c(\Pi_\tau(\nabla\cdot\mathbf{u}^{n+1,i-1}),\nabla\cdot\mathbf{v}_h)\\\nonumber
+&+\tau_{m,t}\frac{1}{\delta t}(\Pi_\tau(\mathbf{R}_u^{i-1}),\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nu\Delta\mathbf{v}_h-\nabla q_h)+\tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\mathbf{v}_h),
+\end{align}
+where
+\begin{equation}
+\label{15}
+\tilde{\mathbf{u}}^{n+1,i}=\tau_{m,t}\frac{1}{\delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}\left[\mathbf{f}-(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i})\right]-\tau_{m,t}\Pi_\tau(\mathbf{R}_u^{i-1}).
+\end{equation}
+With $ \mathbf{R}_u^i=\mathbf{f}-(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}-\nu\Delta\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i})$.
+
+As the ASGS method, the implementation of the dynamic subscales has been done only for a linear approximation. Moreover, some of the terms that appear in (\ref{15}) can be neglected, see Chapter \ref{chap-Rb_VMS}. So the resulting expressions are the following.
+\begin{align}
+\label{16}
+%&\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+%&+(q_h,\nabla\cdot\mathbf{u}_h^{n+1,i})-\tau_{m,t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+%&+\tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+%&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)\\\nonumber
+%&=\left<\mathbf{f},\mathbf{v}_h\right>+\frac{1}{\delta t}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t}(\mathbf{f},\mathbf{v}_h)\\\nonumber
+%&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)-\tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^n,\mathbf{v}_h)+\tau_{m,t}(\Pi_\tau(\mathbf{R}_u^{i-1}),-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+%&+\tau_c(\Pi_\tau(\nabla\cdot\mathbf{u}^{n+1,i-1}),\nabla\cdot\mathbf{v}_h)+\tau_{m,t}\frac{1}{\delta t}(\Pi_\tau(\mathbf{R}_u^{i-1}),\mathbf{v}_h)-\tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+%&+\tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\mathbf{v}_h),
+&\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i},\mathbf{v}_h)+\nu(\nabla\mathbf{u}_h^{n+1,i},\nabla\mathbf{v}_h)-(p_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+&+(q_h,\nabla\cdot\mathbf{u}_h^{n+1,i})-\tau_{m,t}(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)+\tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h)\\\nonumber
+&=\left<\mathbf{f},\mathbf{v}_h\right>+\frac{1}{\delta t}(\mathbf{u}_h^n,\mathbf{v}_h)-\tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+&+\tau_{m,t}(\Pi_\tau(\mathbf{R}_u^{i-1}),-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)\\\nonumber
+&-\tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\mathbf{v}_h-\nabla q_h)+\tau_c(\Pi_\tau(\nabla\cdot\mathbf{u}^{n+1,i-1}),\nabla\cdot\mathbf{v}_h), %\\\nonumber
+%&+\tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\mathbf{v}_h),
+\end{align}
+with
+\begin{equation}
+\label{17}
+\tilde{\mathbf{u}}^{n+1,i}=\tau_{m,t}\frac{1}{\delta t}\tilde{\mathbf{u}}^n+\tau_{m,t}\left[\mathbf{f}-(\mathbf{a}^i\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1,i})\right]-\tau_{m,t}\Pi_\tau(\mathbf{R}_u^{i-1}).
+\end{equation}
+
+\section*{Terms to be implemented}
+In the following table (Table \ref{tab-A2_list_terms}) we list the terms needed to be implemented for each version of the VMS methods used in Chapter \ref{chap-Rb_VMS}.
+
+{\renewcommand*\arraystretch{1.5}
+\begin{table}
+\centering
+\caption{List of VMS terms}
+\label{tab-A2_list_terms}
+\begin{tabular}{ccccc}
+\toprule
+\multirow{3}{*}{Term}&\multicolumn{4}{c}{Subgrid method}\\ \cline{2-5}
+ &\multicolumn{2}{c}{ASGS}&\multicolumn{2}{c}{OSS}\\ \cline{2-5}
+ &\multicolumn{1}{c}{QS}&\multicolumn{1}{c}{DYN}&\multicolumn{1}{c}{QS}&\multicolumn{1}{c}{DYN}\\ 
+\midrule
+\midrule
+$ \frac{1}{\delta t}(\u_h^{n+1,i},\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ (\mathbf{a}^i\cdot\nabla\u_h^{n+1,i},\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \nu(\nabla\u_h^{n+1,i},\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ (p_h^{n+1,i},\nabla\cdot\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ (q_h,\nabla\cdot\u_h^{n+1,i}) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\mathbf{a}^i\cdot\nabla\u_h^{n+1,i},\mathbf{a}^i\cdot\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\mathbf{a}^i\cdot\nabla\u_h^{n+1,i},\nabla q_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\nabla p_h^{n+1,i},\mathbf{a}^i\cdot\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\nabla p_h^{n+1,i},\nabla q_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_c(\nabla\cdot\mathbf{u}_h^{n+1,i},\nabla\cdot\mathbf{v}_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t}(\mathbf{a}^i\cdot\nabla\u_h^{n+1,i},\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t}(\nabla p_h^{n+1,i},\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t}(\u_h^{n+1,i},-\mathbf{a}^i\cdot\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t}(\u_h^{n+1,i},-\nabla q_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t^2}(\u_h^{n+1,i},\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \left<\mathbf{f},\v_h\right> $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \frac{1}{\delta t}(\mathbf{u}_h^n,\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\mathbf{f},-\mathbf{a}^i\cdot\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}(\mathbf{f},-\nabla q_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t}(\mathbf{f},\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\mathbf{a}^i\cdot\nabla\v_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t}(\mathbf{u}_h^n,-\nabla q_h) $ & \tickYes & \tickYes & \tickYes & \tickYes \\
+$ \tau_{m,t}\frac{1}{\delta t^2}(\mathbf{u}_h^n,\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}(\Pi_\tau(\mathbf{R}_u^{i-1}),-\mathbf{a}^i\cdot\nabla\v_h) $ & \tickNo & \tickNo & \tickYes & \tickYes \\
+$ \tau_{m,t}(\Pi_\tau(\mathbf{R}_u^{i-1}),-\nabla q_h) $ & \tickNo & \tickNo & \tickYes & \tickYes \\
+$ \tau_c(\Pi_\tau(\nabla\cdot\mathbf{u}^{n+1,i-1}),\nabla\cdot\v_h) $ & \tickNo & \tickNo & \tickYes & \tickYes \\
+%$ \tau_{m,t}\frac{1}{\delta t}(\Pi_\tau(\mathbf{R}^{i-1}),\v_h) $ & \tickNo & \tickNo & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\mathbf{a}^i\cdot\nabla\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t}(\tilde{\mathbf{u}}^n,-\nabla q_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tau_{m,t}\frac{1}{\delta t\tau_m}(\tilde{\mathbf{u}}^n,\v_h) $ & \tickNo & \tickYes & \tickNo & \tickNo \\
+$ \tilde{\mathbf{u}}^{n+1,i} $ & \tickNo & \tickYes & \tickNo & \tickYes \\
+\bottomrule
+\end{tabular}
+\end{table}
+}
+Note that the quasi-static and the dynamic versions of the OSS method, have to compute almost the same terms. The difference between these two versions is the need to compute explicitly $ \tilde{\u}^{n+1,i} $ even for the linear definition of the subscales, and the definition of the parameter $ \tau_{m,t} $, which for the quasi-static version is $ \tau_{m,t}=\tau_m $.
+
+
+\section*{Algorithm}
+In this section, the generic algorithm followed to implement the VMS methods used in Chapter \ref{chap-Rb_VMS} is described. The nonlinear description of the subscales is considered in Algorithm \ref{alg-A2_vms_algorithm}.
+
+\begin{algorithm}
+\caption{VMS method algorithm}
+\label{alg-A2_vms_algorithm}
+Read (or compute) $ \mathbf{u}_h^0 $ and set $ p_h^0=0 $, $ \tilde{\mathbf{u}}^0=\mathbf{0} $.\\
+FOR $ n=0,...,N-1 $ DO:\\
+$\quad$ Set $ i=0 $\\
+$\quad$ Set $ \mathbf{u}_h^{n+1,0}=\mathbf{u}_h^n $, $ p_h^{n+1,0}=p_h^n $, $ \tilde{\mathbf{u}}^{n+1,0}=\tilde{\mathbf{u}}^n $\\
+$\quad$ WHILE (not converged) DO:\\
+$\quad\quad$ $ i\leftarrow i+1 $\\
+$\quad\quad$ Set $ \mathbf{a}^i=\mathbf{u}_h^{n+1,i-1}+\tilde{\mathbf{u}}^{n+1,i-1} $\\
+$\quad\quad$ Compute $ \tau_m $, $ \tau_{m,t} $ and $ \tau_c $\\
+$\quad\quad$ Compute $ \mathbf{u}_h^{n+1,i} $ and $ p_h^{n+1,i} $ by solving (\ref{9}) or (\ref{16})\\
+$\quad\quad$ Update the subscales $ \tilde{\mathbf{u}}^{n+1,i} $ from (\ref{10}) or (\ref{17}), see Algorithm \ref{alg-A2_sgs_algorithm}\\
+$\quad\quad$ For OSS, compute the projections $ \Pi_\tau(\mathbf{R}_u^{i}) $ and $ \Pi_\tau(\nabla\cdot\mathbf{u}^{n+1,i}) $\\
+$\quad\quad$ Check convergence\\
+$\quad$ END\\
+$\quad$ Set up the converged values $ \mathbf{u}_h^{n+1}=\mathbf{u}_h^{n+1,i} $, $ p_h^{n+1}=p_h^{n+1,i} $ and $ \tilde{\mathbf{u}}^{n+1}=\tilde{\mathbf{u}}^{n+1,i} $\\
+END
+\end{algorithm}
+
+In order to compute the velocity subscale $ \tilde{\mathbf{u}}^{n+1,i} $, we must have an explicit implementation of the residual projection. For the global nonlinear iterations, the residual projection is treated implicitly. In Algorithm \ref{alg-A2_sgs_algorithm}, the steps followed to compute the velocity subscale are described.
+
+\begin{algorithm}
+\caption{Velocity subscale computation algorithm}
+\label{alg-A2_sgs_algorithm}
+Compute the residual without the contribution of the subscale on the convective term. That is:\\
+$\quad\quad\quad\mathbf{R}_u^{n+1,i}=\mathbf{f}-\left(\frac{1}{\delta t}(\mathbf{u}_h^{n+1,i}-\mathbf{u}_h^{n})+\mathbf{u}_h^{n+1,i}\cdot\nabla\mathbf{u}_h^{n+1,i}+\nabla p_h^{n+1}\right)$\\
+If OSS, substract the projection. Here we have the projection $\Pi(\mathbf{R}_u^{n+1,i-1})$ \\
+$\quad\quad\quad\mathbf{R}_u^{n+1,i}-\Pi(\mathbf{R}_u^{n+1,i-1})\rightarrow\mathbf{R}_u^{n+1,i}$\\
+WHILE (not converged) DO:\\
+$\quad$ Compute, and add to the residual, the contribution of the subscale on the convective term:\\ $\quad\quad\quad\mathbf{R}_u^{n+1,i}-(\tilde{\mathbf{u}}^{n+1,i,k-1}\cdot\nabla\mathbf{u}_h^{n+1,i})\rightarrow\hat{\mathbf{R}}_u^{n+1,i,k-1}$\\
+$\quad$ Compute $ \tau_m $, $ \tau_{m,t} $ and $ \tau_c $\\
+$\quad$ Update the subscale:\\
+$\quad\quad\quad\tilde{\mathbf{u}}^{n+1,i,k}=\tau_{m,t}\left(\frac{1}{\delta t}\tilde{\mathbf{u}}^{n}+\hat{\mathbf{R}}_u^{n+1,i,k-1}\right)$\\
+$\quad$ Check convergence\\
+END
+\end{algorithm}

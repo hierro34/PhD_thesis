@@ -15,7 +15,33 @@
 %----------------------------------------------------------------------------------------
 
 \section{The Governing equations of Fluid Mechanics}
+\label{sec-C2_gov_eq}
 \input{Chapters/C2_sec_governing_equations.tex}
 
 \section{The function spaces}
+\label{sec-C2_functional_spaces}
 \input{Chapters/C2_sec_functional_spaces.tex}
+
+\section{The variational formulation}
+\label{sec-C2_variational}
+\input{Chapters/C2_sec_variational_formulation.tex}
+
+\section{The Variational Multiscale method}
+\label{sec-C2_vms}
+\input{Chapters/C2_sec_vms.tex}
+
+\section{Time integration}
+\label{sec-C2_time_integration}
+\input{Chapters/C2_sec_time_integration.tex}
+
+\section{Conclusions}
+\label{sec-C2_conclusions}
+In this chapter we have settled, with a certain degree of detail, the formulations that will be used during the forthcoming chapters. If the reader is interested in going further on the description of the concepts stated during the chapter, more information can be found in the references that have been provided along this introductory part.
+
+We have defined the governing equations of the flow motion, which lead to the well-known Navier-Stokes equations for incompressible flows. Some insights are also given in the first section of this chapter related to the influence of the pressure field and the incompressibility constraint in the fluid motion.
+
+Some mathematical notation have been introduced in the second section of this chapter. This notation is a basic tool for the definition of the variational formulation of the Navier-Stokes equations, which has been stated in the third section. We have split the description of the variational formulation in three different subsections, starting with the definition of such formulation at the continuous level. After that, the definition of the FE method is stated, before the development of the semi-discrete problem.
+
+Once we have settled the variational formulation of the Navier-Stokes equations, the Variational Multiscale method has been introduced in the fourth section. A deep description of this method is given focusing on the three different ingredients that define a particular version of such method. More precisely, we have studied the effects of the selecting the subscales to be quasi-static or dynamic, linear or nonlinear and orthogonal or non-orthogonal with respect to the FE space.
+
+Finally, the time integration of the semi-discrete problem has been analyzed in the fifth section of this chapter. We have defined two different groups of time integration schemes. One based on the called \textit{$\theta$-method} and the other based on the \textit{Runge-Kutta} schemes. Basic concepts of stability and order of convergence have been given in this last section.

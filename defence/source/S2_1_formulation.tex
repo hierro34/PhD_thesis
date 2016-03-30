@@ -1,0 +1,170 @@
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Incomp. Navier Stokes equations}
+Find $ \mathbf{u}$ and $p$ defined in $\Omega$
+\begin{align*}
+\partial _{t}\mathbf{u}+ {\color<4>{red} \mathbf{u}\cdot \mathbf{\nabla u} }+\mathbf{
+\nabla }p-\nu \nabla ^{2}\mathbf{u}& =\mathbf{f} \\
+\mathbf{\nabla }\cdot \mathbf{u}& =0
+\end{align*}
+with appropriate boundary conditions on $ \Gamma$\vskip 0.3cm
+\only<2->{
+The weak problem is: $\forall \mathbf{v}\in \mathcal{V}_0$ and  $\forall q\in \mathcal{Q}_0$, 
+find $ \mathbf{u} \in \mathcal{V}$ and $ p \in \mathcal{Q}$ such that 
+\begin{align*}
+  \left( \mathbf{v},\partial_{t}\mathbf{u}\right)_{\Omega }
++ \left( \mathbf{\nabla v}, \nu \mathbf{\nabla u}\right)_{\Omega }  
+%+ {\color<4>{red} \langle \mathbf{v},\mathbf{a}\cdot \mathbf{\nabla u}\rangle _{\Omega }} 
++ {\color<4>{red} b\left(\mathbf{u},\mathbf{u}, \mathbf{v}\right)} % \\
+- \left( \mathbf{\nabla }\cdot \mathbf{v},p\right) _{\Omega } 
+& = 
+\left\langle \mathbf{v},\mathbf{f} \right\rangle _{\Omega } 
+\\
+\left(q, \mathbf{\nabla } \cdot \mathbf{u}\right)_{\Omega } 
+& = 0
+\end{align*}}
+\only<3->{where
+\begin{equation*}
+{\color<4>{red} 
+b\left(\mathbf{a},\mathbf{u}, \mathbf{v}\right) = {\color<1-3>{white} \frac{1}{2}}\langle \mathbf{v},\mathbf{a}\cdot \mathbf{\nabla u}\rangle_{\Omega }
+{\color<1-3>{white} - \frac{1}{2} \langle \mathbf{a}\cdot\mathbf{\nabla}\mathbf{v}, \mathbf{u}\rangle_{\Omega }
++ \frac{1}{2} \langle \mathbf{v},\mathbf{n} \cdot \mathbf{a}  \mathbf{u} \rangle_{\Gamma }}}
+\end{equation*}
+}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{VMS decomposition {\small (Hughes 1995)}}
+A decomposition of spaces $\mathcal{V}$ and $\mathcal{Q}$ given by 
+\begin{equation*}
+\mathcal{V}=\mathcal{V}_{h}\oplus \widetilde{\mathcal{V}},\quad
+\mathcal{Q}=\mathcal{Q}_{h}\oplus \widetilde{\mathcal{Q}}
+\end{equation*}
+\only<2->{is applied to the function and test spaces
+\begin{align*}
+\mathbf{u} = \mathbf{u}_{h} +\widetilde{\mathbf{u}}, \quad p = p_h + \widetilde{p} \\
+\mathbf{v} = \mathbf{v}_{h} +\widetilde{\mathbf{v}}, \quad q = q_h + \widetilde{q}
+\end{align*}}
+\only<3->{We keep all the (eight) contributions from the splitting of the convective
+term 
+\begin{equation*}
+  { \mathbf{u}} \cdot \mathbf{\nabla u}
+= { \mathbf{u}_{h}\cdot \mathbf{\nabla u}_{h} }
++ { \color<3->{red} \widetilde{\mathbf{u}}\cdot \mathbf{\nabla u}_{h} }
++ { \mathbf{u}_{h}\cdot \mathbf{\nabla }\widetilde{\mathbf{u}} }
++ { \color<3->{red} \widetilde{\mathbf{u}}\cdot \mathbf{\nabla }\widetilde{\mathbf{u}} }
+\end{equation*}
+}
+\only<4->{and all the (four) contributions from the temporal term 
+\begin{equation*}
+\partial _{t}\mathbf{u}=\partial _{t}\mathbf{u}_{h} + { \color<4->{red} \partial _{t}\widetilde{\mathbf{u}}}
+\end{equation*}
+}
+\end{frame}
+%----------------------------------------------------------------------------------------
+\begin{frame}[t]
+\frametitle{Semidiscrete problem}
+\begin{block}{FEM equations}
+\begin{overlayarea}{\textwidth}{2.0cm}
+\vspace{-0.8cm}
+\begin{align*}
+% FEM EQUATIONS
+\only<1>{B\left(\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{v}_h,q_h\right)\right)=L\left(\mathbf{v}_h,q_h\right)}
+\only<2->{\left( \mathbf{v}_{h},\partial _{t}\mathbf{u}_{h}\right) _{\Omega }
+%+\langle \mathbf{v}_{h},\mathbf{a}\cdot \mathbf{\nabla u}_{h}\rangle _{\Omega}
++ b\left(\mathbf{a},\mathbf{u}_h, \mathbf{v}_h\right)
++\left( \mathbf{\nabla v}_{h},\nu \mathbf{\nabla u}_{h}\right) _{\Omega} &
+-\left( \mathbf{\nabla }\cdot \mathbf{v}_{h},p_{h}\right) _{\Omega }
+\\[0.05in]
+%
++\left( \mathbf{v}_{h},\partial _{t}\widetilde{\mathbf{u}}\right) _{\Omega}
++\left( \mathcal{L}^{\ast }\mathbf{v}_{h},\widetilde{\mathbf{u}}\right)_{\Omega^h}
+-\left( \mathbf{\nabla }\cdot \mathbf{v}_{h},\widetilde{p}\right) _{\Omega^h} &
+=\left\langle \mathbf{v}_{h},\mathbf{f}\right\rangle_{\Omega }
+\\[0.1in]
+%
+\left( q_{h},\mathbf{\nabla }\cdot \mathbf{u}_{h}\right) _{\Omega }
+-\left( \mathbf{\nabla }q_{h},\widetilde{\mathbf{u}}\right) _{\Omega^h} & =0}
+\end{align*}
+\end{overlayarea}
+\end{block}
+\begin{block}{SGS equations}
+\vspace{-0.4cm}
+\begin{align*}
+% SGS EQUATIONS
+\only<1>{B\left(\left(\widetilde{\mathbf{u}},\widetilde{p}\right);\left(\mathbf{u}_h,p_h\right);\left(\widetilde{\mathbf{v}},\widetilde{q}\right)\right)=L\left(\widetilde{\mathbf{v}},\widetilde{q}\right)}
+%\only<1-4>{\left( \widetilde{\mathbf{v}},\partial_{t} \widetilde{\mathbf{u}} \right)_{\Omega }}
+%\only<1-2>{\color<2>{red}  + \left( \widetilde{\mathbf{v}},\mathcal{L}\widetilde{\mathbf{u}}\right )_{\Omega^h}}
+%\only<3-4>{\color<3>{red}  + \tau _{m}^{-1} \left( \widetilde{\mathbf{v}},\widetilde{\mathbf{u}} \right)_{\Omega^h}}
+%\only<1-2>{\color<2>{blue} + \left( \widetilde{\mathbf{v}},\mathbf{\nabla }\widetilde{p}\right)_{\Omega^h} }
+%%\only<1-4>{\color{white}\tau _{m}^{-1}} % This is needed to avoid a vertical blinking 
+\only<2-> {{\color<5>{red} \partial_{t}\widetilde{\mathbf{u}}} + {\color<2>{red}\tau_{m}^{-1}} \widetilde{\mathbf{u}}}
+&
+\only<2-> { = {\color<4>{red}\mathcal{P}} {\color<3>{red}\mathbf{R}_{m} }}
+\only<1>{\\[0.05in]} \onslide<5>{{\color<5>{red}\quad(static/dynamic)}}
+%
+%\only<1->{{ \color{white}\tau_{c}^{-1} }}
+%\only<1-4>{ \color<4>{red}
+%+\left( \widetilde{\mathbf{v}},\partial _{t}\mathbf{u}_{h}\right)_{\Omega}
+%+\left( \widetilde{\mathbf{v}},\mathcal{L}\mathbf{u}_{h}\right)_{\Omega^h}
+%+\left( \widetilde{\mathbf{v}},\mathbf{\nabla }p_{h}\right)_{\Omega^h}
+%& = 
+%\color<4>{red} \left\langle \widetilde{\mathbf{v}},\mathbf{f}\right\rangle _{\Omega} }
+%%
+\\[0.1in]
+%%
+%%\only<1->{{ \color{white}\tau_{c}^{-1} }}
+%\only<1-2>{{\color<2>{blue} \left(( \widetilde{q},\mathbf{\nabla} \cdot \widetilde{\mathbf{u}}\right)_{\Omega }}}
+%\only<3-4>{{\color<3>{blue} \tau_{c}^{-1} \left( \widetilde{q},\widetilde{p}\right) _{\Omega^h }}}
+%\only<1-4>{ + {\color<4>{blue} \left( \widetilde{q},\mathbf{\nabla}\cdot \mathbf{u}_{h}\right)_{\Omega } }} 
+%\only<1-4>{& = 0}
+\only<2->{ {\color<2>{blue} \tau _{c}^{-1}} \widetilde{p} & = {\color<4>{blue}\mathcal{P}} {\color<3>{blue}R_{c}}}
+\end{align*}
+\end{block}
+%\end{overlayarea}
+\vspace{-0.2cm}
+\begin{overlayarea}{\textwidth}{3.0cm}
+\only<1>{
+\vspace*{-1.0cm}
+\begin{equation*}
+%\mathcal{L}=-\nu \nabla ^{2}+\mathbf{a}\cdot \mathbf{\nabla },\quad 
+%\mathcal{L}^{\ast }=-\nu \nabla ^{2}-\mathbf{a}\cdot \mathbf{\nabla },\quad
+%\mathbf{a=u}_{h}+\widetilde{\mathbf{u}}
+\end{equation*}
+}
+\only<2>{
+\begin{equation*}
+{ \color<2>{red} \tau_{m}=\left( \frac{c_{1}\nu }{h^{2}}+\frac{c_{2}\left| \mathbf{a}\right| }{h}\right) ^{-1}},\quad
+{ \color<2>{blue}\tau_{c}=\frac{h^{2}}{c_{1}\tau _{m}} }
+\end{equation*}
+}
+\only<3>{
+\begin{equation*}
+{ \color<3>{red} \mathbf{R}_{m}} := \mathbf{f} - \partial_{t}\mathbf{u}_{h} - \mathcal{L} \mathbf{u}_{h} - \mathbf{\nabla }p_{h}, \quad
+{ \color<3>{blue} R_{c}} := - \mathbf{\nabla }\cdot \mathbf{u}_{h}
+\end{equation*}
+}
+\only<4->{
+\begin{equation*}
+\only<4>{{\color<4>{red} \mathcal{P} = I \quad \rm{(ASGS)}}, \quad \quad {\color<4>{blue} \mathcal{P} = P_h^{\perp}=I-P_h \quad \rm{(OSS)}} }
+\only<5->{{\color<5>{magenta} \mathcal{P} = I \quad \rm{(ASGS)}, \quad \quad  \mathcal{P} = P_h^{\perp}=I-P_h \quad \rm{(OSS)} }}
+\end{equation*}
+}
+\only<2,5>{
+\vspace{-0.2cm}
+\begin{equation*}
+{\color<5>{blue} \mathbf{a=u}_{h}+\widetilde{\mathbf{u}} \onslide<5>{\quad(linear/nonlinear)}}
+\end{equation*}
+}
+\end{overlayarea}
+%
+%\begin{overlayarea}{\textwidth}{1.5cm}
+%%\only<3->{
+%\begin{equation*}
+%{\color<6>{blue} \mathbf{a=u}_{h}+\widetilde{\mathbf{u}}} 
+%{\color<1-2>{white}, \quad \tau_{m}=\left(( \frac{c_{1}\nu }{h^{2}}+\frac{c_{2}\left| \mathbf{a}\right| }{h}\right) ^{-1},\quad
+%\tau_{c}=\frac{h^{2}}{c_{1}\tau _{m}} }
+%\end{equation*}
+%%}
+%\end{overlayarea}
+\end{frame}

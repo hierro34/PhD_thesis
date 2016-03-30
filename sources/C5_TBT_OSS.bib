@@ -1,0 +1,882 @@
+
+@article{olshanskii_low_2002,
+	title = {A low order {Galerkin} finite element method for the {Navier}–{Stokes} equations of steady incompressible flow: a stabilization issue and iterative methods},
+	volume = {191},
+	issn = {0045-7825},
+	shorttitle = {A low order {Galerkin} finite element method for the {Navier}–{Stokes} equations of steady incompressible flow},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782502005133},
+	doi = {10.1016/S0045-7825(02)00513-3},
+	abstract = {A Galerkin finite element method is considered to approximate the incompressible Navier–Stokes equations together with iterative methods to solve a resulting system of algebraic equations. This system couples velocity and pressure unknowns, thus requiring a special technique for handling. We consider the Navier–Stokes equations in velocity––kinematic pressure variables as well as in velocity––Bernoulli pressure variables. The latter leads to the rotation form of nonlinear terms. This form of the equations plays an important role in our studies. A consistent stabilization method is considered from a new view point. Theory and numerical results in the paper address both the accuracy of the discrete solutions and the effectiveness of solvers and a mutual interplay between these issues when particular stabilization techniques are applied.},
+	number = {47–48},
+	urldate = {2015-10-16},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Olshanskii, Maxim A.},
+	year = {2002},
+	keywords = {Finite elements, Iterative methods, Navier–Stokes equations, Oseen problem, Stabilized method},
+	pages = {5515--5536},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/F2BHC8IS/Olshanskii - 2002 - A low order Galerkin finite element method for the.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/NHIPCUBX/S0045782502005133.html:text/html}
+}
+
+@article{calderer2013residual,
+  title={Residual-based variational multiscale turbulence models for unstructured tetrahedral meshes},
+  author={Calderer, Ramon and Masud, Arif},
+  journal={Computer Methods in Applied Mechanics and Engineering},
+  volume={254},
+  pages={238--253},
+  year={2013},
+  publisher={Elsevier}
+}
+
+@article{badia_stabilized_2012,
+	title = {On stabilized finite element methods based on the {Scott}–{Zhang} projector. {Circumventing} the inf–sup condition for the {Stokes} problem},
+	volume = {247–248},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782512002435},
+	doi = {10.1016/j.cma.2012.07.020},
+	abstract = {In this work we propose a stabilized finite element method that permits us to circumvent discrete inf–sup conditions, e.g. allowing equal order interpolation. The type of method we propose belongs to the family of symmetric stabilization techniques, which are based on the introduction of additional terms that penalize the difference between some quantities, i.e. the pressure gradient in the Stokes problem, and their finite element projections. The key feature of the formulation we propose is the definition of the projection to be used, a non-standard Scott–Zhang projector that is well-defined for L 1 ( Ω ) functions. The resulting method has some appealing features: the projector is local and nested meshes or enriched spaces are not required.},
+	number = {0},
+	urldate = {2012-09-20},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Badia, Santiago},
+	year = {2012},
+	keywords = {Indefinite systems, Stabilized finite elements, Stokes problem},
+	pages = {65--72}
+}
+
+@book{elman_finite_2005,
+	title = {Finite elements and fast iterative solvers: with applications in incompressible fluid dynamics},
+	isbn = {978-0-19-852867-8},
+	shorttitle = {Finite elements and fast iterative solvers},
+	abstract = {The subject of this book is the efficient solution of partial differential equations (PDEs) that arise when modelling incompressible fluid flow. The material is organized into four groups of two chapters each, covering the Poisson equation (chapters 1 \& 2); the convection-diffucion equation (chapters 3 \& 4); the Stokes equations (chapters 5 \& 6); and the Navier-Stokes equations (chapters 7 \& 8). These equations represent important models within the domain of computational fluid dynamics, but they also arise in many other settings. For each PDE model, there is a chapter concerned with finite element discretization. For each problem and associated solvers there is a description of how to compute along with theoretical analysis which guides the choice of approaches. Illustrative numerical results occur throughout the book, which have been computed with the freely downloadable IFISS software. All numerical results should be reproducible by readers who have access to MATLAB and there is considerable scope for experimentation in the 'computational laboratory' provided by the software. This book provides an excellent introduction to finite elements, iterative linear solvers and scientific computing aimed at graduates in engineering, numerical analysis, applied mathematics and interdisciplinary scientific computing. Including theoretical problems and practical exercises closely tied with freely downloadable MATLAB software, this book is an ideal teaching and learning resource.},
+	language = {en},
+	publisher = {Oxford University Press},
+	author = {Elman, Howard C. and Silvester, David J. and Wathen, Andrew J.},
+	year = {2005},
+	keywords = {Differential equations, Partial, finite element method, Fluid dynamics, Fluid dynamics - Data processing, Fluid dynamics/ Data processing, Iterative methods (Mathematics), Mathematics / Applied, Mathematics / Differential Equations, Mathematics / General, Poisson's equation, Science / Mechanics / Dynamics / Fluid Dynamics, Science / Mechanics / Fluids, Stokes equations, Technology \& Engineering / Hydraulics}
+}
+
+@article{badia_algebraic_2008,
+	title = {Algebraic Pressure Segregation Methods for the Incompressible {Navier}-{Stokes} Equations},
+	volume = {15},
+	issn = {1134-3060, 1886-1784},
+	url = {http://link.springer.com/article/10.1007/s11831-008-9020-3},
+	doi = {10.1007/s11831-008-9020-3},
+	abstract = {This work is an overview of algebraic pressure segregation methods for the incompressible Navier-Stokes equations. These methods can be understood as an inexact LU block factorization of the original system matrix. We have considered a wide set of methods: algebraic pressure correction methods, algebraic velocity correction methods and the Yosida method. Higher order schemes, based on improved factorizations, are also introduced. We have also explained the relationship between these pressure segregation methods and some widely used preconditioners, and we have introduced predictor-corrector methods, one-loop algorithms where nonlinearity and iterations towards the monolithic system are coupled.},
+	language = {en},
+	number = {3},
+	urldate = {2014-06-12},
+	journal = {Archives of Computational Methods in Engineering},
+	author = {Badia, S. and Codina, R.},
+	year = {2008},
+	keywords = {Appl.Mathematics/Computational Methods of Engineering},
+	pages = {343--369}
+}
+
+@article{yano_bddc_2010,
+	title = {{BDDC} preconditioning for high-order {Galerkin} {Least}-{Squares} methods using inexact solvers},
+	volume = {199},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782510001738},
+	doi = {10.1016/j.cma.2010.06.006},
+	abstract = {A high-order Galerkin Least-Squares (GLS) finite element discretization is combined with a Balancing Domain Decomposition by Constraints (BDDC) preconditioner and inexact local solvers to provide an efficient solution technique for large-scale, convection-dominated problems. The algorithm is applied to the linear system arising from the discretization of the two-dimensional advection–diffusion equation and Euler equations for compressible, inviscid flow. A Robin–Robin interface condition is extended to the Euler equations using entropy-symmetrized variables. The BDDC method maintains scalability for the high-order discretization of the diffusion-dominated flows, and achieves low iteration count in the advection-dominated regime. The BDDC method based on inexact local solvers with incomplete factorization and p\&\#xa0;=\&\#xa0;1 coarse correction maintains the performance of the exact counterpart for the wide range of the Peclet numbers considered while at significantly reduced memory and computational costs.},
+	number = {45–48},
+	urldate = {2012-03-01},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Yano, Masayuki and Darmofal, David L.},
+	year = {2010},
+	keywords = {BDDC, Domain decomposition methods, Galerkin Least-Squares, High-order methods, preconditioners},
+	pages = {2958--2969},
+	file = {ScienceDirect Full Text PDF:/home/sbadia/.mozilla/firefox/38g6z3d4.default/zotero/storage/863X62BJ/Yano and Darmofal - 2010 - BDDC preconditioning for high-order Galerkin Least.pdf:application/pdf;ScienceDirect Snapshot:/home/sbadia/.mozilla/firefox/38g6z3d4.default/zotero/storage/S5SZ9SWW/Yano and Darmofal - 2010 - BDDC preconditioning for high-order Galerkin Least.html:text/html}
+}
+
+@article{hughes_variational_1998,
+	title = {The variational multiscale method--a paradigm for computational mechanics},
+	volume = {166},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782598000796},
+	doi = {10.1016/S0045-7825(98)00079-6},
+	abstract = {We present a general treatment of the variational multiscale method in the context of an abstract Dirichlet problem. We show how the exact theory represents a paradigm for subgrid-scale models and a posteriori error estimation. We examine hierarchical p-methods and bubbles in order to understand and, ultimately, approximate the ‘fine-scale Green's function’ which appears in the theory. We review relationships between residual-free bubbles, element Green's functions and stabilized methods. These suggest the applicability of the methodology to physically interesting problems in fluid mechanics, acoustics and electromagnetics.},
+	number = {1-2},
+	urldate = {2012-02-27},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Hughes, Thomas J.R. and Feijóo, Gonzalo R. and Mazzei, Luca and Quincy, Jean-Baptiste},
+	year = {1998},
+	pages = {3--24}
+}
+
+@incollection{piomelli_large-eddy_1996,
+	series = {{ERCOFTAC} {Series}},
+	title = {Large-{Eddy} {Simulations}: {Theory} and {Applications}},
+	copyright = {©1996 Springer Science+Business Media B.V.},
+	isbn = {978-90-481-4707-6 978-94-015-8666-5},
+	shorttitle = {Large-{Eddy} {Simulations}},
+	url = {http://link.springer.com/chapter/10.1007/978-94-015-8666-5_7},
+	abstract = {Over twenty years have passed since the first large eddy simulation (Les) results by Deardorff (1970) were published. During this period, this technique has matured considerably: the underlying theory has been advanced, new models have been developed and tested, more efficient numerical schemes have been used. The progress in computer power and memory has made possible the application of Les to a variety of flows, compressible and incompressible, including heat transfer, stratification, passive scalars and chemical reactions.},
+	language = {en},
+	number = {2},
+	urldate = {2013-09-10},
+	booktitle = {Turbulence and {Transition} {Modelling}},
+	publisher = {Springer Netherlands},
+	author = {Piomelli, U. and Chasnov, J. R.},
+	editor = {Hallbäck, M. and Henningson, D. S. and Johansson, A. V. and Alfredsson, P. H.},
+	year = {1996},
+	keywords = {Mechanics},
+	pages = {269--336}
+}
+
+@article{boris_new_1992,
+	title = {New insights into large eddy simulation},
+	volume = {10},
+	issn = {1873-7005},
+	url = {http://iopscience.iop.org/1873-7005/10/4-6/A01},
+	doi = {10.1016/0169-5983(92)90023-P},
+	abstract = {Fluid dynamic turbulence is one of the most challenging computational physics problems because of the extremely wide range of time and space scales involved, the strong nonlinearity of the governing equations, and the many practical and important applications. While most linear fluid instabilities are well understood, the nonlinear interactions among them makes even the relatively simple limit of homogeneous isotropic turbulence difficult to treat physically, mathematically, and computationally. Turbulence is modeled computationally by a two-stage bootstrap process. The first stage, direct numerical simulation, attempts to resolve the relevant physical time and space scales but its application is limited to diffusive flows with a relatively small Reynolds number (Re). Using direct numerical simulation to provide a database, in turn, allows calibration of phenomenological turbulence models for engineering applications. Large eddy simulation incorporates a form of turbulence modeling applicable when the large-scale flows of interest are intrinsically time dependent, thus throwing common statistical models into question. A promising approach to large eddy simulation involves the use of high-resolution monotone computational fluid dynamics algorithms such as flux-corrected transport or the piecewise parabolic method which have intrinsic subgrid turbulence models coupled naturally to the resolved scales in the computed flow. The physical considerations underlying and evidence supporting this monotone integrated large eddy simulation approach are discussed.},
+	language = {en},
+	number = {4-6},
+	urldate = {2013-09-12},
+	journal = {Fluid Dynamics Research},
+	author = {Boris, J. P. and Grinstein, F. F. and Oran, E. S. and Kolbe, R. L.},
+	year = {1992},
+	pages = {199}
+}
+
+@book{pope_turbulent_2000,
+	title = {Turbulent {Flows}},
+	isbn = {978-0-521-59886-6},
+	abstract = {Turbulent Flows is an up-to-date and comprehensive graduate text on this important topic in fluid dynamics. The book consists of two parts: Part I provides a general introduction to turbulent flows, how they behave, how they can be described quantitatively, and their fundamental physical processes. Part II is concerned with different approaches for modeling, or simulating, turbulent flows. Key appendices present the necessary mathematical techniques. While primarily intended for engineering graduate students, this book will also be valuable to students in applied mathematics, physics, oceanography and atmospheric sciences, as well as to researchers and practicing engineers.},
+	language = {en},
+	publisher = {Cambridge University Press},
+	author = {Pope, S. B.},
+	year = {2000},
+	keywords = {Mathematics / General, Science / Mechanics / Dynamics, Science / Mechanics / Fluids, Science / Mechanics / General, Science / Physics / General, Technology \& Engineering / Engineering (General), Technology \& Engineering / Mechanical}
+}
+
+@article{masud_variational_2011,
+	title = {A variational multiscale method for incompressible turbulent flows: {Bubble} functions and fine scale fields},
+	volume = {200},
+	issn = {0045-7825},
+	shorttitle = {A variational multiscale method for incompressible turbulent flows},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782511001435},
+	doi = {10.1016/j.cma.2011.04.010},
+	abstract = {This paper presents a residual-based turbulence model for the incompressible Navier-Stokes equations. The method is derived employing the variational multiscale (VMS) framework. A multiscale decomposition of the continuous solution and a priori unique decomposition of the admissible spaces of functions lead to two coupled nonlinear problems termed as the coarse-scale and the fine-scale sub-problems. The fine-scale velocity field is assumed to be nonlinear and time-dependent and is modeled via the bubble functions approach applied directly to the fine-scale sub-problem. A significant contribution in this paper is a systematic and consistent derivation of the fine-scale variational operator, commonly termed as the stabilization tensor that possesses the right order in the advective and diffusive limits, and variationally projects the fine-scale solution onto the coarse-scale space. A direct treatment of the fine-scale problem via bubble functions offers several fine-scale approximation options with varying degrees of mathematical sophistication that are investigated via benchmark problems. Numerical accuracy of the proposed method is shown on a forced-isotropic turbulence problem, statistically stationary turbulent channel flow problems at ReT = 395 and 590, and non-equilibrium turbulent flow around a cylinder at Re = 3,900.},
+	number = {33-36},
+	urldate = {2012-10-31},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Masud, Arif and Calderer, Ramon},
+	year = {2011},
+	keywords = {Bubble Functions, large eddy simulation, Residual-based turbulence model, Stabilized finite elements, Turbulence modeling, Variational multiscale method},
+	pages = {2577--2593}
+}
+
+@article{hughes_multiscale_1995,
+	title = {Multiscale phenomena: {Green}'s functions, the {Dirichlet}-to-{Neumann} formulation, subgrid scale models, bubbles and the origins of stabilized methods},
+	volume = {127},
+	issn = {0045-7825},
+	shorttitle = {Multiscale phenomena},
+	url = {http://www.sciencedirect.com/science/article/pii/0045782595008449},
+	doi = {10.1016/0045-7825(95)00844-9},
+	abstract = {An approach is developed for deriving variational methods capable of representing multiscale phenomena. The ideas are first illustrated on the exterior problem for the Helmholtz equation. This leads to the well-known Dirichlet-to-Neumann formulation. Next, a class of subgrid scale models is developed and the relationships to ‘bubble function’ methods and stabilized methods are established. It is shown that both the latter methods are approximate subgrid scale models. The identification for stabilized methods leads to an analytical formula for τ, the ‘intrinsic time scale’, whose origins have been a mystery heretofore.},
+	number = {1-4},
+	urldate = {2012-05-02},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Hughes, Thomas J.R.},
+	year = {1995},
+	pages = {387--401}
+}
+
+@article{gamnitzer_time-dependent_2010,
+	title = {Time-dependent subgrid scales in residual-based large eddy simulation of turbulent channel flow},
+	volume = {199},
+	issn = {00457825},
+	url = {zotero://attachment/3162/},
+	doi = {10.1016/j.cma.2009.07.009},
+	language = {en},
+	number = {13-16},
+	urldate = {2014-06-27},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Gamnitzer, Peter and Gravemeier, Volker and Wall, Wolfgang A.},
+	year = {2010},
+	pages = {819--827}
+}
+
+@article{hughes_multiscale_2001,
+	title = {The multiscale formulation of large eddy simulation: {Decay} of homogeneous isotropic turbulence},
+	volume = {13},
+	issn = {10706631},
+	shorttitle = {The multiscale formulation of large eddy simulation},
+	url = {http://pof.aip.org/resource/1/phfle6/v13/i2/p505_s1},
+	doi = {doi:10.1063/1.1332391},
+	abstract = {The variational multiscale method is applied to the large eddy simulation (LES) of homogeneous, isotropic flows and compared with the classical Smagorinsky model, the dynamic Smagorinsky model, and direct numerical simulation (DNS) data. Overall, the multiscale method is in better agreement with the DNS data than both the Smagorinsky model and the dynamic Smagorinsky model. The results are somewhat remarkable when one realizes that the multiscale method is almost identical to the Smagorinsky model (the least accurate model!) except for removal of the eddy viscosity from a very small percentage of the lowest modes. © 2001 American Institute of Physics.},
+	number = {2},
+	urldate = {2012-10-03},
+	journal = {Physics of Fluids},
+	author = {Hughes, Thomas J. R. and Mazzei, Luca and Oberai, Assad A. and Wray, Alan A.},
+	year = {2001},
+	pages = {505--512}
+}
+@Article{hughes_large_2001,
+  Title                    = {Large eddy simulation of turbulent channel flows by the variational multiscale method},
+  Author                   = {Hughes, Thomas J. R. and Oberai, Assad A. and Mazzei, Luca},
+  Journal                  = {Physics of Fluids},
+  Year                     = {2001},
+  Number                   = {6},
+  Pages                    = {1784--1799},
+  Volume                   = {13},
+
+  Abstract                 = {The variational multiscale formulation of {LES} is applied to two-dimensional equilibrium and three-dimensional nonequilibrium channel flows. Simple, constant-coefficient Smagorinsky-type eddy viscosities, without wall damping functions, are used to model the decay of small scales, an approach which is not viable for wall-bounded flows within the traditional {LES} framework. Nevertheless, very good results are obtained. © 2001 American Institute of Physics.},
+  Doi                      = {doi:10.1063/1.1367868},
+  File                     = {AIP Journal PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/7H2SWQEW/p1784_s1.html:text/html;AIP Journal Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/EAUUDBVK/p1784_s1.html:text/html},
+  ISSN                     = {10706631},
+  Url                      = {http://pof.aip.org/resource/1/phfle6/v13/i6/p1784_s1},
+  Urldate                  = {2012-10-03}
+}
+
+@article{bazilevs_variational_2007,
+	title = {Variational multiscale residual-based turbulence modeling for large eddy simulation of incompressible flows},
+	volume = {197},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782507003027},
+	doi = {10.1016/j.cma.2007.07.016},
+	abstract = {We present an LES-type variational multiscale theory of turbulence. Our approach derives completely from the incompressible Navier-Stokes equations and does not employ any ad hoc devices, such as eddy viscosities. We tested the formulation on forced homogeneous isotropic turbulence and turbulent channel flows. In the calculations, we employed linear, quadratic and cubic NURBS. A dispersion analysis of simple model problems revealed NURBS elements to be superior to classical finite elements in approximating advective and diffusive processes, which play a significant role in turbulence computations. The numerical results are very good and confirm the viability of the theoretical framework.},
+	number = {1-4},
+	urldate = {2012-10-03},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Bazilevs, Y. and Calo, V.M. and Cottrell, J.A. and Hughes, T.J.R. and Reali, A. and Scovazzi, G.},
+	year = {2007},
+	keywords = {Homogeneous isotropic turbulence, Incompressible flows, Isogeometric analysis, large eddy simulation, NURBS, Optimality, Perturbation series, Projection, Small-scale Green’s function, Turbulence modeling, Turbulent channel flows, Variational multiscale methods},
+	pages = {173--201}
+}
+
+@article{moser_direct_1999,
+	title = {Direct numerical simulation of turbulent channel flow up to {$Re_\tau$}=590},
+	volume = {11},
+	issn = {1070-6631, 1089-7666},
+	url = {http://scitation.aip.org/content/aip/journal/pof2/11/4/10.1063/1.869966},
+	doi = {10.1063/1.869966},
+	abstract = {Numerical simulations of fully developed turbulent channel flow at three Reynolds numbers up to Re τ =590 are reported. It is noted that the higher Reynolds number simulations exhibit fewer low Reynolds number effects than previous simulations at Re τ =180. A comprehensive set of statistics gathered from the simulations is available on the web at http://www.tam.uiuc.edu/Faculty/Moser/channel.},
+	number = {4},
+	urldate = {2014-10-14},
+	journal = {Physics of Fluids},
+	author = {Moser, Robert D. and Kim, John and Mansour, Nagi N.},
+	year = {1999},
+	keywords = {Reynolds stress modeling, Turbulent channel flow},
+	pages = {943--945},
+	file = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/7SUKSQ82/Moser et al. - 1999 - Direct numerical simulation of turbulent channel f.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/C38C83HX/1.html:text/html}
+}
+
+@article{gustafsson_control-theoretic_1994,
+	title = {Control-theoretic {Techniques} for {Stepsize} {Selection} in {Implicit} {Runge}-{Kutta} {Methods}},
+	volume = {20},
+	issn = {0098-3500},
+	url = {http://doi.acm.org/10.1145/198429.198437},
+	doi = {10.1145/198429.198437},
+	abstract = {The problem of stepsize selection in implicit Runge-Kutta schemes is analyzed from a feedback control point of view. This approach leads to a better understanding of the relation between stepsize and error. A new dynamical model describing this relation is derived. The model is used as a basis for a new stepsize selection rule. This rule achieves better error control at little extra expense. The properties of the new model and the improved performance of the new error control are demonstrated using both analysis and numerical examples.},
+	number = {4},
+	urldate = {2014-10-22},
+	journal = {ACM Trans. Math. Softw.},
+	author = {Gustafsson, Kjell},
+	year = {1994},
+	keywords = {control theory, numerical integration, Runge-Kutta methods, Stability, stepsize selection},
+	pages = {496--517},
+	file = {ACM Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/38TBTKSD/Gustafsson - 1994 - Control-theoretic Techniques for Stepsize Selectio.pdf:application/pdf}
+}
+
+@article{codina_analysis_2008,
+	title = {Analysis of a stabilized finite element approximation of the {Oseen} equations using orthogonal subscales},
+	volume = {58},
+	issn = {0168-9274},
+	url = {http://www.sciencedirect.com/science/article/pii/S0168927406002194},
+	doi = {10.1016/j.apnum.2006.11.011},
+	abstract = {In this paper we present a stabilized finite element formulation to solve the Oseen equations as a model problem involving both convection effects and the incompressibility restriction. The need for stabilization techniques to solve this problem arises because of the restriction in the possible choices for the velocity and pressure spaces dictated by the inf-sup condition, as well as the instabilities encountered when convection is dominant. Both can be overcome by resorting from the standard Galerkin method to a stabilized formulation. The one presented here is based on the subgrid scale concept, in which unresolvable scales of the continuous solution are approximately accounted for. In particular, the approach developed herein is based on the assumption that unresolved subscales are orthogonal to the finite element space. It is shown that this formulation is stable and optimally convergent for an adequate choice of the algorithmic parameters on which the method depends.},
+	number = {3},
+	urldate = {2014-10-29},
+	journal = {Applied Numerical Mathematics},
+	author = {Codina, Ramon},
+	year = {2008},
+	keywords = {Convection-dominated flows, Inf-sup condition, Orthogonal subscales, Stabilized finite element methods},
+	pages = {264--283},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/ZKJGD26F/Codina - 2008 - Analysis of a stabilized finite element approximat.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/EWSRZN99/S0168927406002194.html:text/html}
+}
+
+@article{moin_numerical_1980,
+	title = {On the numerical solution of time-dependent viscous incompressible fluid flows involving solid boundaries},
+	volume = {35},
+	issn = {0021-9991},
+	url = {http://www.sciencedirect.com/science/article/pii/0021999180900765},
+	doi = {10.1016/0021-9991(80)90076-5},
+	abstract = {An inherent numerical problem associated with the fully explicit pseudospectral numerical simulation of the incompressible Navier-Stokes equation for viscous flows with no-slip walls is described. A semi-implicit scheme which circumvents this numerical difficulty is presented. In this algorithm the equation of continuity rather than the Poisson equation for pressure is solved directly. Pseudospectral formulation of the channel flow problem using Fourier series and Chebyshev polynominals expansions is given for this scheme. An example demonstrating the applicability of the method is given.},
+	number = {3},
+	urldate = {2014-12-05},
+	journal = {Journal of Computational Physics},
+	author = {Moin, P and Kim, J},
+	year = {1980},
+	pages = {381--392},
+	file = {ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/NDN98PQI/0021999180900765.html:text/html}
+}
+
+@article{gelhard_stabilized_2005,
+	title = {Stabilized finite element schemes with {LBB}-stable elements for incompressible flows},
+	volume = {177},
+	issn = {0377-0427},
+	url = {http://www.sciencedirect.com/science/article/pii/S0377042704004236},
+	doi = {10.1016/j.cam.2004.09.017},
+	abstract = {We study stabilized FE approximations of SUPG type to the incompressible Navier-Stokes problem. Revisiting the analysis for the linearized model, we show that for conforming LBB-stable elements the design of the stabilization parameters for many practical flows differs from that commonly suggested in literature and initially designed for the case of equal-order approximation. Then we analyze a reduced SUPG scheme often used in practice for LBB-stable elements. To provide the reduced scheme with appropriate stability estimates we introduce a modified LBB condition which is proved for a family of FE approximations. The analysis is given for the linearized equations. Numerical experiments for some linear and nonlinear benchmark problems support the theoretical results.},
+	number = {2},
+	urldate = {2014-12-29},
+	journal = {Journal of Computational and Applied Mathematics},
+	author = {Gelhard, Tobias and Lube, Gert and Olshanskii, Maxim A. and Starcke, Jan-Hendrik},
+	year = {2005},
+	keywords = {finite element method, LBB condition, Navier-Stokes equations, Stabilized method},
+	pages = {243--267},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/J4FDD454/Gelhard et al. - 2005 - Stabilized finite element schemes with LBB-stable .pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/Z89PETXE/S0377042704004236.html:text/html}
+}
+
+@article{hughes_new_1986,
+	title = {A new finite element formulation for computational fluid dynamics: {V}. {Circumventing} the babuška-brezzi condition: a stable {Petrov}-{Galerkin} formulation of the stokes problem accommodating equal-order interpolations},
+	volume = {59},
+	issn = {0045-7825},
+	shorttitle = {A new finite element formulation for computational fluid dynamics},
+	url = {http://www.sciencedirect.com/science/article/pii/0045782586900253},
+	doi = {10.1016/0045-7825(86)90025-3},
+	abstract = {A new Petrov-Galerkin formulation of the Stokes problem is proposed. The new formulation possesses better stability properties than the classical Galerkin/variational method. An error analysis is performed for the case in which both the velocity and pressure are approximated by C0 interpolations. Combinations of C0 interpolations which are unstable according to the Babuška-Brezzi condition (e.g., equal-order interpolations) are shown to be stable and convergent within the present framework. Calculations exhibiting the good behavior of the methodology are presented.},
+	number = {1},
+	urldate = {2012-05-02},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Hughes, Thomas J.R. and Franca, Leopoldo P. and Balestra, Marc},
+	year = {1986},
+	pages = {85--99}
+}
+
+@article{kim_turbulence_1987,
+	title = {Turbulence statistics in fully developed channel flow at low {Reynolds} number},
+	volume = {177},
+	issn = {1469-7645},
+	url = {http://journals.cambridge.org/article_S0022112087000892},
+	doi = {10.1017/S0022112087000892},
+	abstract = {A direct numerical simulation of a turbulent channel flow is performed. The unsteady Navier-Stokes equations are solved numerically at a Reynolds number of 3300, based on the mean centreline velocity and channel half-width, with about 4 × 106 grid points (192 × 129 × 160 in x, y, z). All essential turbulence scales are resolved on the computational grid and no subgrid model is used. A large number of turbulence statistics are computed and compared with the existing experimental data at comparable Reynolds numbers. Agreements as well as discrepancies are discussed in detail. Particular attention is given to the behaviour of turbulence correlations near the wall. In addition, a number of statistical correlations which are complementary to the existing experimental data are reported for the first time.},
+	urldate = {2015-02-12},
+	journal = {Journal of Fluid Mechanics},
+	author = {Kim, John and Moin, Parviz and Moser, Robert},
+	year = {1987},
+	pages = {133--166},
+	file = {Cambridge Journals Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/6QE8GMR7/displayAbstract.html:text/html;KMM-1987.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/ZT2ST76D/KMM-1987.pdf:application/pdf}
+}
+
+@article{soderlind_automatic_2002,
+	title = {Automatic {Control} and {Adaptive} {Time}-{Stepping}},
+	volume = {31},
+	issn = {1017-1398, 1572-9265},
+	url = {http://link.springer.com/article/10.1023/A%3A1021160023092},
+	doi = {10.1023/A:1021160023092},
+	abstract = {Adaptive time-stepping is central to the efficient solution of initial value problems in ODEs and DAEs. The error committed in the discretization method primarily depends on the time-step size h, which is varied along the solution in order to minimize the computational effort subject to a prescribed accuracy requirement. This paper reviews the recent advances in developing local adaptivity algorithms based on well established techniques from linear feedback control theory, which is introduced in a numerical context. Replacing earlier heuristics, this systematic approach results in a more consistent and robust performance. The dynamic behaviour of the discretization method together with the controller is analyzed. We also review some basic techniques for the coordination of nonlinear equation solvers with the primary stepsize controller in implicit time-stepping methods.},
+	language = {en},
+	number = {1-4},
+	urldate = {2013-08-13},
+	journal = {Numerical Algorithms},
+	author = {Söderlind, Gustaf},
+	year = {2002},
+	keywords = {Adaptivity, Algebra, Algorithms, control theory, error control, Mathematics, general, Numeric Computing, ordinary differential equations, stepsize control, Theory of Computation},
+	pages = {281--310},
+	file = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/FU2GN8W3/Söderlind - 2002 - Automatic Control and Adaptive Time-Stepping.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/3FQA6N9T/A1021160023092.html:text/html}
+}
+
+@techreport{kaltenbach_large-eddy_1995,
+	title = {Large-eddy simulation of flow around an airfoil on a structured mesh},
+	url = {http://ntrs.nasa.gov/search.jsp?R=19960022298},
+	abstract = {The diversity of flow characteristics encountered in a flow over an airfoil near maximum lift taxes the presently available statistical turbulence models. This work describes our first attempt to apply the technique of large-eddy simulation to a flow of aeronautical interest. The challenge for this simulation comes from the high Reynolds number of the flow as well as the variety of flow regimes encountered, including a thin laminar boundary layer at the nose, transition, boundary layer growth under adverse pressure gradient, incipient separation near the trailing edge, and merging of two shear layers at the trailing edge. The flow configuration chosen is a NACA 4412 airfoil near maximum lift. The corresponding angle of attack was determined independently by Wadcock  and Hastings \& Williams  to be close to 12 deg. The simulation matches the chord Reynolds number Uc/v = 1.64 x 10 of Wadcock's experiment.},
+	urldate = {2015-04-29},
+	author = {Kaltenbach, Hans-Jakob and Choi, Haecheon},
+	year = {1995},
+	keywords = {airfoils, flow characteristics, laminar boundary layer, mathematical models, reynolds number, separated flow, shear layers, structured grids, transition flow, turbulence models, vortices},
+	annote = {Document ID: 19960022298; Accession Number: 96N25319; Subject Category: FLUID MECHANICS AND HEAT TRANSFER; Financial Sponsor: NASA Ames Research Center; Moffett Field, CA United States; Organization Source: Stanford Univ.; Center for Turbulence Research.; CA United States; Description: 10p; In English},
+	annote = {Publication Information: Center for Turbulence Research Annual Research Briefs: 1995; 51-60; ;},
+	file = {NASA NTRS Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/D2K6G3FN/Kaltenbach y Choi - 1995 - Large-eddy simulation of flow around an airfoil on.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/JZSAUW4N/search.html:text/html}
+}
+
+@article{jansen_stabilized_1999,
+	title = {A stabilized finite element method for computing turbulence},
+	volume = {174},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782598003016},
+	doi = {10.1016/S0045-7825(98)00301-6},
+	abstract = {For many flows, Reynold-averaged Navier—Stokes simulation (RANSS) techniques do not give an acceptable description of the flow. In these cases a more detailed simulation of the turbulence is required. One such detailed simulation technique, large-eddy simulation (LES) has matured to the point of application to complex flows. Historically, these simulations have been carried out with structured grids which suffer from two major difficulties: the extension to higher Reynolds numbers leads to an impractical number of grid points, and most real world flows are rather difficult to represent geometrically with structured grids. Unstructured-grid methods offer a release from both of these constraints. Herein, we describe the development and validation of a massively parallel, stabilized finite element method for LES.},
+	number = {3-4},
+	urldate = {2015-05-05},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Jansen, Kenneth E.},
+	year = {1999},
+	pages = {299--317},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/KG9JSN6W/Jansen - 1999 - A stabilized finite element method for computing t.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/3BCMCWVE/S0045782598003016.html:text/html}
+}
+
+@inproceeding{schmidt_assessment_????,
+  title={Assessment of {SGS} Models in {LES} applied to a {NACA} 4412 airfoil},
+  author={Schmidt, Stefan and Franke, Martin and Thiele, Frank},
+  booktitle={39st AIAA Aerospace Sciences Meeting and Exhibit},
+  year={2001}
+}
+
+@techreport{wadcock_investigation_1987,
+	title = {Investigation of low-speed turbulent separated flow around airfoils},
+	url = {http://ntrs.nasa.gov/search.jsp?R=19880003089},
+	abstract = {Described is a low-speed wind tunnel experiment to measure the flowfield around a two-dimensional airfoil operating close to maximum lift. Boundary layer separation occurs on the upper surface at x/c=0.85. A three-component laser velocimeter, coupled with a computer-controlled data acquisition system, was used to obtain three orthogonal mean velocity components and three components of the Reynolds stress tensor in both the boundary layer and wake of the airfoil. Pressure distributions on the airfoil, skin friction distribution on the upper surface of the airfoil, and integral properties of the airfoil boudary layer are also documented. In addition to these near-field flow properties, static pressure distributions, both upstream and downstream from the airfoil and on the walls of the wind tunnel, are also presented.},
+	urldate = {2015-05-05},
+	author = {Wadcock, Alan J.},
+	year = {1987},
+	keywords = {airfoils, anemometers, Boundary layers, laser doppler velocimeters, low speed, separated flow, trailing edges, Turbulence},
+	annote = {Document ID: 19880003089; Accession Number: 88N12471; Subject Category: AERODYNAMICS; Publisher Information: United States; Financial Sponsor: NASA; United States; Organization Source: Analytical Methods, Inc.; Redmond, WA, United States; Description: 66p; In English},
+	annote = {Report/Patent Number: NASA-CR-177450, NAS 1.26:177450},
+	file = {NASA NTRS Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/NB9MGCFW/Wadcock - 1987 - Investigation of low-speed turbulent separated flo.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/MV4Q2GMC/search.html:text/html}
+}
+
+@article{badia_block_2014,
+	title = {Block recursive {LU} preconditioners for the thermally coupled incompressible inductionless {MHD} problem},
+	volume = {274},
+	issn = {00219991},
+	url = {http://linkinghub.elsevier.com/retrieve/pii/S0021999114004355},
+	doi = {10.1016/j.jcp.2014.06.028},
+	language = {en},
+	urldate = {2015-05-21},
+	journal = {Journal of Computational Physics},
+	author = {Badia, Santiago and Martín, Alberto F. and Planas, Ramon},
+	year = {2014},
+	pages = {562--591},
+	file = {1-s2.0-S0021999114004355-main.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/5QQ9XCTF/1-s2.0-S0021999114004355-main.pdf:application/pdf}
+}
+
+@book{sagaut_large_2000,
+	title = {Large {Eddy} {Simulations} for {Incompressible} {Flows}},
+	volume = {3},
+	url = {http://www.ulb.tu-darmstadt.de/tocs/133724328.pdf},
+	urldate = {2015-05-28},
+	publisher = {Springer Berlin},
+	author = {Sagaut, Pierre},
+	year = {2000},
+	file = {[PDF] de tu-darmstadt.de:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/6AINMTD7/Sagaut - 2000 - Large Eddy Simulations for Incompressible Flows.pdf:application/pdf}
+}
+
+@article{koobus_variational_2004,
+	series = {Recent {Advances} in {Stabilized} and {Multiscale} {Finite} {Element} {Methods}},
+	title = {A variational multiscale method for the large eddy simulation of compressible turbulent flows on unstructured meshes--application to vortex shedding},
+	volume = {193},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782504000398},
+	doi = {10.1016/j.cma.2003.12.028},
+	abstract = {The variational multiscale formulation of large eddy simulations developed by Hughes and his co-workers for incompressible turbulent flows is first extended to the case of compressible turbulent flows. Next, a finite volume/element discretization on tetrahedral meshes of this method is proposed. This discretization features an economical procedure based on agglomeration for separating a priori the scales, a corresponding projector for eliminating the small scales from the system of equations, and an effective control of the numerical dissipation induced by upwinding. The resulting LES method is validated with the three-dimensional numerical simulation of a low-speed flow past a square cylinder at M∞=0.1 and Re=22,000, and various comparisons with experimental data.},
+	number = {15-16},
+	urldate = {2015-05-28},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Koobus, Bruno and Farhat, Charbel},
+	year = {2004},
+	keywords = {12, 27, 29, 55, 60, 89, Agglomeration, Compressible turbulent flows, LES, Unstructured meshes, Variational multiscale, Vortex shedding},
+	pages = {1367--1383},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/JIWVKI9R/Koobus y Farhat - 2004 - A variational multiscale method for the large eddy.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/CG84NE2X/S0045782504000398.html:text/html}
+}
+
+@article{g_lube_local_2008,
+	title = {Local projection stabilization for incompressible flows: {Equal}-order vs. inf-sup stable interpolation},
+	volume = {32},
+	issn = {1068-9613},
+	url = {https://scholar.google.es/scholar?q=Lube+Rapin+applying&btnG=&hl=ca&as_sdt=0%2C5},
+	urldate = {2015-05-28},
+	journal = {Electronic Transactions on Numerical Analysis},
+	author = {{G Lube} and {G Rapin} and {J Löwe}},
+	year = {2008},
+	pages = {106--122},
+	file = {Lube Rapin applying - Google Acadèmic:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/AU5GGQ3V/scholar.html:text/html;pp106-122(1).pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/F5HIT4N6/pp106-122(1).pdf:application/pdf}
+}
+
+@article{case_connection_2011,
+	title = {A Connection Between {Scott}-{Vogelius} and Grad-Div Stabilized {Taylor}-{Hood} {FE} Approximations of the {Navier}-{Stokes} Equations},
+	volume = {49},
+	issn = {0036-1429},
+	url = {http://epubs.siam.org/doi/abs/10.1137/100794250},
+	doi = {10.1137/100794250},
+	abstract = {This article studies two methods for obtaining excellent mass conservation in finite element computations of the Navier-Stokes equations using continuous velocity fields. With a particular mesh construction, the Scott-Vogelius element pair has recently been shown to be inf-sup stable and have optimal approximation properties, while also providing pointwise mass conservation. We present herein the first numerical tests of this element pair for the time dependent Navier-Stokes equations. We also prove that the limit of the grad-div stabilized Taylor-Hood solutions to the Navier-Stokes problem converges to the Scott-Vogelius solution as the stabilization parameter tends to infinity. That is, we provide theoretical justification that choosing the grad-div parameter large does not destroy the solution. Numerical tests are provided which verify the theory and show how both Scott-Vogelius and grad-div stabilized Taylor-Hood (with large stabilization parameter) elements can provide accurate results with excellent mass conservation for Navier-Stokes approximations.,  This article studies two methods for obtaining excellent mass conservation in finite element computations of the Navier-Stokes equations using continuous velocity fields. With a particular mesh construction, the Scott-Vogelius element pair has recently been shown to be inf-sup stable and have optimal approximation properties, while also providing pointwise mass conservation. We present herein the first numerical tests of this element pair for the time dependent Navier-Stokes equations. We also prove that the limit of the grad-div stabilized Taylor-Hood solutions to the Navier-Stokes problem converges to the Scott-Vogelius solution as the stabilization parameter tends to infinity. That is, we provide theoretical justification that choosing the grad-div parameter large does not destroy the solution. Numerical tests are provided which verify the theory and show how both Scott-Vogelius and grad-div stabilized Taylor-Hood (with large stabilization parameter) elements can provide accurate results with excellent mass conservation for Navier-Stokes approximations.},
+	number = {4},
+	urldate = {2015-08-10},
+	journal = {SIAM Journal on Numerical Analysis},
+	author = {Case, M. and Ervin, V. and Linke, A. and Rebholz, L.},
+	year = {2011},
+	pages = {1461--1481},
+	file = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/ZF2AWF2G/Case et al. - 2011 - A Connection Between Scott-Vogelius and Grad-Div S.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/ETN95M9P/100794250.html:text/html}
+}
+
+@article{badia_implementation_2013,
+	title = {Implementation and {Scalability} {Analysis} of {Balancing} {Domain} {Decomposition} {Methods}},
+	volume = {20},
+	issn = {1134-3060, 1886-1784},
+	url = {http://link.springer.com/article/10.1007/s11831-013-9086-4},
+	doi = {10.1007/s11831-013-9086-4},
+	abstract = {In this paper we present a detailed description of a high-performance distributed-memory implementation of balancing domain decomposition preconditioning techniques. This coverage provides a pool of implementation hints and considerations that can be very useful for scientists that are willing to tackle large-scale distributed-memory machines using these methods. On the other hand, the paper includes a comprehensive performance and scalability study of the resulting codes when they are applied for the solution of the Poisson problem on a large-scale multicore-based distributed-memory machine with up to 4096 cores. Well-known theoretical results guarantee the optimality (algorithmic scalability) of these preconditioning techniques for weak scaling scenarios, as they are able to keep the condition number of the preconditioned operator bounded by a constant with fixed load per core and increasing number of cores. The experimental study presented in the paper complements this mathematical analysis and answers how far can these methods go in the number of cores and the scale of the problem to still be within reasonable ranges of efficiency on current distributed-memory machines. Besides, for those scenarios where poor scalability is expected, the study precisely identifies, quantifies and justifies which are the main sources of inefficiency.},
+	language = {en},
+	number = {3},
+	urldate = {2014-06-12},
+	journal = {Archives of Computational Methods in Engineering},
+	author = {Badia, Santiago and Martín, Alberto F. and Principe, Javier},
+	year = {2013},
+	keywords = {Appl.Mathematics/Computational Methods of Engineering},
+	pages = {239--262},
+	file = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/3M93V426/Badia et al. - 2013 - Implementation and Scalability Analysis of Balanci.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/PSEQ95Q2/10.html:text/html}
+}
+
+@article{olshanskii_graddiv_2009,
+	title = {Grad-div stabilization and subgrid pressure models for the incompressible {Navier}-{Stokes} equations},
+	volume = {198},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S004578250900303X},
+	doi = {10.1016/j.cma.2009.09.005},
+	abstract = {In this paper the grad-div stabilization for the incompressible Navier-Stokes finite element approximations is considered from two different viewpoints: (i) as a variational multiscale approach for the pressure subgrid modeling and (ii) as a stabilization procedure of least-square type. Some new error estimates for the linearized problem with the grad-div stabilization are proved with the help of norms induced by the pressure Schur complement operator. We discuss the stabilization parameter choice arising in the frameworks of least-square and multiscale methods and consider assumptions which allow to relate both approaches.},
+	number = {49-52},
+	urldate = {2015-09-09},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Olshanskii, Maxim and Lube, Gert and Heister, Timo and Löwe, Johannes},
+	year = {2009},
+	keywords = {Finite elements, Navier-Stokes, Stabilization parameters, Stabilized method, Variational multiscale method},
+	pages = {3975--3988},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/9QBF3UI8/Olshanskii et al. - 2009 - Grad-div stabilization and subgrid pressure models.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/Q3ZGTX3F/S004578250900303X.html:text/html}
+}
+
+@article{zhang_family_2009,
+	title = {A Family of {${Q}_{k+1,k}\times{Q}_{k,k+1}$} Divergence-Free Finite Elements on Rectangular Grids},
+	volume = {47},
+	issn = {0036-1429},
+	url = {http://epubs.siam.org/doi/abs/10.1137/080728949},
+	doi = {10.1137/080728949},
+	number = {3},
+	urldate = {2015-09-22},
+	journal = {SIAM Journal on Numerical Analysis},
+	author = {Zhang, S.},
+	year = {2009},
+	pages = {2090--2107}
+}
+
+@Article{john_variants_2008,
+  Title                    = {Variants of projection-based finite element variational multiscale methods for the simulation of turbulent flows},
+  Author                   = {John, Volker and Kindl, Adela},
+  Journal                  = {International Journal for Numerical Methods in Fluids},
+  Year                     = {2008},
+  Number                   = {8},
+  Pages                    = {1321--1328},
+  Volume                   = {56},
+
+  Abstract                 = {Some variants of a three-scale projection-based finite element variational multiscale ({VMS)} method are studied for turbulent channel flow computations at Reτ=180. Different spaces for the large scales, two eddy viscosity models and two ways of discretizing the projection terms in time are explored. The results obtained with the resolved small scales in the definition of the eddy viscosity are very sensitive to the temporal discretization of the projection terms. The computations were performed on three grids commonly used in turbulent channel flow simulations. Copyright © 2007 John Wiley \& Sons, Ltd.},
+  Copyright                = {Copyright © 2007 John Wiley \& Sons, Ltd.},
+  Doi                      = {10.1002/fld.1712},
+  File                     = {Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/NDV8ZQAZ/John y Kindl - 2008 - Variants of projection-based finite element variat.pdf:application/pdf;Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/CNT3CH7H/abstract.html:text/html},
+  ISSN                     = {1097-0363},
+  Keywords                 = {finite element methods, Turbulent channel flow, {VMS} methods},
+  Language                 = {en},
+  Url                      = {http://onlinelibrary.wiley.com/doi/10.1002/fld.1712/abstract},
+  Urldate                  = {2012-10-03}
+}
+@article{john_numerical_2010,
+	series = {Turbulence {Modeling} for {Large} {Eddy} {Simulations}},
+	title = {Numerical studies of finite element variational multiscale methods for turbulent flow simulations},
+	volume = {199},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782509000395},
+	doi = {10.1016/j.cma.2009.01.010},
+	abstract = {Different realizations of variational multiscale (VMS) methods within the framework of finite element methods are studied in turbulent channel flow simulations. One class of VMS methods uses bubble functions to model resolved small scales whereas the other class contains the definition of the resolved small scales by an explicit projection in its set of equations. All methods are employed with eddy viscosity models of Smagorinsky type. The simulations are performed on grids for which a Direct Numerical Simulation blows up in finite time.},
+	number = {13-16},
+	urldate = {2015-09-23},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {John, Volker and Kindl, Adela},
+	year = {2010},
+	keywords = {Finite element methods, Residual free bubble functions, Turbulent channel flow, Variational multiscale methods},
+	pages = {841--852},
+	file = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/FTSGQ4NN/John y Kindl - 2010 - Numerical studies of finite element variational mu.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/KU5HWKMI/S0045782509000395.html:text/html}
+}
+
+@article{linke_role_2014,
+	title = {On the role of the {Helmholtz} decomposition in mixed methods for incompressible flows and a new variational crime},
+	volume = {268},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782513002636},
+	doi = {10.1016/j.cma.2013.10.011},
+	abstract = {According to the Helmholtz decomposition, the irrotational parts of the momentum balance equations of the incompressible Navier-Stokes equations are balanced by the pressure gradient. Unfortunately, nearly all mixed methods for incompressible flows violate this fundamental property, resulting in the well-known numerical instability of poor mass conservation. The origin of this problem is the lack of L 2 -orthogonality between discretely divergence-free velocities and irrotational vector fields. Therefore, a new variational crime for the nonconforming Crouzeix-Raviart element is proposed, where divergence-free, lowest-order Raviart-Thomas velocity reconstructions reestablish L 2 -orthogonality. This approach allows to construct a cheap flow discretization for general 2d and 3d simplex meshes that possesses the same advantageous robustness properties like divergence-free flow solvers. In the Stokes case, optimal a priori error estimates for the velocity gradients and the pressure are derived. Moreover, the discrete velocity is independent of the continuous pressure. Several detailed linear and nonlinear numerical examples illustrate the theoretical findings.},
+	urldate = {2015-10-05},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Linke, Alexander},
+	year = {2014},
+	keywords = {Divergence-free methods, Helmholtz decomposition, incompressible Navier-Stokes equations, Mixed finite elements, Poor mass conservation},
+	pages = {782--800}
+}
+
+@article{jenkins_parameter_2013,
+	title = {On the parameter choice in grad-div stabilization for the {Stokes} equations},
+	volume = {40},
+	issn = {1019-7168, 1572-9044},
+	url = {http://link.springer.com/article/10.1007/s10444-013-9316-1},
+	doi = {10.1007/s10444-013-9316-1},
+	language = {en},
+	number = {2},
+	urldate = {2015-10-05},
+	journal = {Advances in Computational Mathematics},
+	author = {Jenkins, Eleanor W. and John, Volker and Linke, Alexander and Rebholz, Leo G.},
+	year = {2013},
+	keywords = {65N30, 76M10, Computational Mathematics and Numerical Analysis, Computational Science and Engineering, Error estimates, Grad-div stabilization, Incompressible Stokes equations, Mathematical and Computational Biology, Mathematical Modeling and Industrial Mathematics, Mixed finite elements, Pointwise divergence-free subspace, Visualization},
+	pages = {491--516}
+}
+
+@article{colomes_segregated_2015,
+	author = {Colomés, Oriol and Badia, Santiago},
+	title = {Segregated {Runge–Kutta} methods for the incompressible {Navier–Stokes} equations},
+	journal = {International Journal for Numerical Methods in Engineering},
+	volume = {105},
+	number = {5},
+	issn = {1097-0207},
+	url = {http://dx.doi.org/10.1002/nme.4987},
+	doi = {10.1002/nme.4987},
+	pages = {372--400},
+	keywords = {time integration, Runge–Kutta, incompressible Navier–Stokes, pressure-segregation, high-order, adaptive time stepping},
+	year = {2016},
+	note = {nme.4987},
+}
+
+
+@article{scott_conforming_1985,
+	title = {Conforming finite element methods for incompressible and nearly incompressible continua},
+	volume = {22},
+	journal = {Lectures in Applied Mathematics},
+	author = {Scott, L. Ridgway and Vogelius, Micheal},
+	year = {1985},
+	pages = {221--244}
+}
+
+@article{codina_time_2007,
+	title = {Time dependent subscales in the stabilized finite element approximation of incompressible flow problems},
+	volume = {196},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782507000035},
+	doi = {10.1016/j.cma.2007.01.002},
+	abstract = {In this paper we analyze a stabilized finite element approximation for the incompressible Navier-Stokes equations based on the subgrid-scale concept. The essential point is that we explore the properties of the discrete formulation that results allowing the subgrid-scales to depend on time. This apparently “natural” idea avoids several inconsistencies of previous formulations and also opens the door to generalizations.},
+	number = {21-24},
+	urldate = {2012-02-10},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Codina, Ramon and Principe, Javier and Guasch, Oriol and Badia, Santiago},
+	year = {2007},
+	keywords = {Incompressible flows, Stabilized finite elements, Transient subscales},
+	pages = {2413--2430}
+}
+
+@article{braack_local_2006,
+	title = {Local {Projection} {Stabilization} for the {Oseen} {Problem} and {Its} {Interpretation} as a {Variational} {Multiscale} {Method}},
+	volume = {43},
+	issn = {0036-1429},
+	url = {http://www.jstor.org/stable/40232751},
+	abstract = {We propose to apply the recently introduced local projection stabilization to the numerical computation of the Oseen equation at high Reynolds number. The discretization is done by nested finite element spaces. Using a priori error estimation techniques, we prove the convergence of the method. The a priori estimates are independent of the local Peclet number and give a sufficient condition for the size of the stabilization parameters in order to ensure optimality of the approximation when the exact solution is smooth. Moreover, we show how this method may be cast in the framework of variational multiscale methods. We indicate what modeling assumptions must be made to use the method for large eddy simulations.},
+	number = {6},
+	urldate = {2012-04-23},
+	journal = {SIAM Journal on Numerical Analysis},
+	author = {Braack, M. and Burman, E.},
+	year = {2006},
+	pages = {2544--2566}
+}
+
+@article{brachet_small-scale_1983,
+	title = {Small-scale structure of the {Taylor}-{Green} vortex},
+	volume = {130},
+	doi = {10.1017/S0022112083001159},
+	journal = {Journal of Fluid Mechanics},
+	author = {Brachet, Marc E. and Meiron, Daniel I. and Orszag, Steven A. and Nickel, B. G. and Morf, Rudolf H. and Frisch, Uriel},
+	year = {1983},
+	pages = {411--452},
+	file = {Cambridge Journals Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/8TD6AA6F/displayAbstract\;jsessionid=6ED205E002637E28AAA29F74910DC53A.html:text/html}
+}
+
+@book{elman_finite_2005,
+	title = {Finite elements and fast iterative solvers: with applications in incompressible fluid dynamics},
+	isbn = {978-0-19-852867-8},
+	shorttitle = {Finite elements and fast iterative solvers},
+	abstract = {The subject of this book is the efficient solution of partial differential equations (PDEs) that arise when modelling incompressible fluid flow. The material is organized into four groups of two chapters each, covering the Poisson equation (chapters 1 \& 2); the convection-diffucion equation (chapters 3 \& 4); the Stokes equations (chapters 5 \& 6); and the Navier-Stokes equations (chapters 7 \& 8). These equations represent important models within the domain of computational fluid dynamics, but they also arise in many other settings. For each PDE model, there is a chapter concerned with finite element discretization. For each problem and associated solvers there is a description of how to compute along with theoretical analysis which guides the choice of approaches. Illustrative numerical results occur throughout the book, which have been computed with the freely downloadable IFISS software. All numerical results should be reproducible by readers who have access to MATLAB and there is considerable scope for experimentation in the 'computational laboratory' provided by the software. This book provides an excellent introduction to finite elements, iterative linear solvers and scientific computing aimed at graduates in engineering, numerical analysis, applied mathematics and interdisciplinary scientific computing. Including theoretical problems and practical exercises closely tied with freely downloadable MATLAB software, this book is an ideal teaching and learning resource.},
+	language = {en},
+	publisher = {Oxford University Press},
+	author = {Elman, Howard C. and Silvester, David J. and Wathen, Andrew J.},
+	year = {2005},
+	keywords = {Differential equations, Partial, finite element method, Fluid dynamics, Fluid dynamics - Data processing, Fluid dynamics/ Data processing, Iterative methods (Mathematics), Mathematics / Applied, Mathematics / Differential Equations, Mathematics / General, Poisson's equation, Science / Mechanics / Dynamics / Fluid Dynamics, Science / Mechanics / Fluids, Stokes equations, Technology \& Engineering / Hydraulics}
+}
+
+@article{brachet_direct_1991,
+	title = {Direct simulation of three-dimensional turbulence in the {Taylor}—{Green} vortex},
+	volume = {8},
+	issn = {0169-5983},
+	url = {http://www.sciencedirect.com/science/article/pii/016959839190026F},
+	doi = {10.1016/0169-5983(91)90026-F},
+	abstract = {The incompressible Navier-Stokes equations are numerically integrated on a Cray-2 machine with the periodic Taylor-Green initial data. Using a spectral method taking advantage of the symmetries of the flow, a resolution of 8643 and corresponding high Reynolds numbers (Rλ = 140) are obtained Visualisations of the resulting turbulent flow show that the turbulent activity is strongly correlated with low-pressure zones. We demonstrate that this behavior of the pressure field is linked to the fact that the square vorticity is spatially more concentrated than the energy dissipation.},
+	number = {1-4},
+	urldate = {2012-10-19},
+	journal = {Fluid Dynamics Research},
+	author = {Brachet, M.E.},
+	year = {1991},
+	pages = {1--8},
+	file = {0169-5983%2891%2990026-F.pdf:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/X5C8GNCJ/0169-5983%2891%2990026-F.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/ME22F2RW/016959839190026F.html:text/html}
+}
+
+@article{brooks_streamline_1982,
+	title = {Streamline upwind/{Petrov}-{Galerkin} formulations for convection dominated flows with particular emphasis on the incompressible {Navier}-{Stokes} equations},
+	volume = {32},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/0045782582900718},
+	doi = {10.1016/0045-7825(82)90071-8},
+	abstract = {A new finite element formulation for convection dominated flows is developed. The basis of the formulation is the streamline upwind concept, which provides an accurate multidimensional generalization of optimal one-dimensional upwind schemes. When implemented as a consistent Petrov-Galerkin weighted residual method, it is shown that the new formulation is not subject to the artificial diffusion criticisms associated with many classical upwind methods. The accuracy of the streamline upwind/Petrov-Galerkin formulation for the linear advection diffusion equation is demonstrated on several numerical examples. The formulation is extended to the incompressible Navier-Stokes equations. An efficient implicit pressure/explicit velocity transient algorithm is developed which accomodates several treatments of the incompressibility constraint and allows for multiple iterations within a time step. The effectiveness of the algorithm is demonstrated on the problem of vortex shedding from a circular cylinder at a Reynolds number of 100.},
+	number = {1-3},
+	urldate = {2013-03-30},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Brooks, Alexander N. and Hughes, Thomas J.R.},
+	year = {1982},
+	pages = {199--259}
+}
+
+@article{codina_stabilization_2000,
+	title = {Stabilization of incompressibility and convection through orthogonal sub-scales in finite element methods},
+	volume = {190},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782500002541},
+	doi = {10.1016/S0045-7825(00)00254-1},
+	abstract = {Two apparently different forms of dealing with the numerical instability due to the incompressibility constraint of the Stokes problem are analyzed in this paper. The first of them is the stabilization through the pressure gradient projection, which consists of adding a certain least-squares form of the difference between the pressure gradient and its L2 projection onto the discrete velocity space in the variational equations of the problem. The second is a sub-grid scale method, whose stabilization effect is very similar to that of the Galerkin/least-squares (GLS) method for the Stokes problem. It is shown here that the first method can also be recast in the framework of sub-grid scale methods with a particular choice for the space of sub-scales. This leads to a new stabilization procedure, whose applicability to stabilize convection is also studied in this paper.},
+	number = {13-14},
+	urldate = {2013-03-29},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Codina, Ramon},
+	year = {2000},
+	pages = {1579--1599}
+}
+@Article{codina_stabilized_2002,
+  Title                    = {Stabilized finite element approximation of transient incompressible flows using orthogonal subscales},
+  Author                   = {Codina, Ramon},
+  Journal                  = {Computer Methods in Applied Mechanics and Engineering},
+  Year                     = {2002},
+  Number                   = {39--40},
+  Pages                    = {4295--4321},
+  Volume                   = {191},
+
+  Abstract                 = {In this paper we present a stabilized finite element method to solve the transient {Navier-Stokes} equations based on the decomposition of the unknowns into resolvable and subgrid scales. The latter are approximately accounted for, so as to end up with a stable finite element problem which, in particular, allows to deal with convection-dominated flows and the use of equal velocity-pressure interpolations. Three main issues are addressed. The first is a method to estimate the behavior of the stabilization parameters based on a Fourier analysis of the problem for the subscales. Secondly, the way to deal with transient problems discretized using a finite difference scheme is discussed. Finally, the treatment of the nonlinear term is also analyzed. A very important feature of this work is that the subgrid scales are taken as orthogonal to the finite element space. In the transient case, this simplifies considerably the numerical scheme.},
+  Doi                      = {10.1016/S0045-7825(02)00337-7},
+  File                     = {ScienceDirect Full Text PDF:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/7UNW32KV/Codina - 2002 - Stabilized finite element approximation of transie.pdf:application/pdf;ScienceDirect Snapshot:/home/ocolomes/.mozilla/firefox/x6wyo4f0.default/zotero/storage/2M6MSXVA/S0045782502003377.html:text/html},
+  ISSN                     = {0045-7825},
+  Url                      = {http://www.sciencedirect.com/science/article/pii/S0045782502003377},
+  Urldate                  = {2013-04-11}
+}
+@PhdThesis{Calo_2004,
+  Title                    = {Residual based mulstiscale turbulence modeling: finite volume simulations of bypass transition},
+  Author                   = {V.M. Calo},
+  School                   = {Department of Civil and Environmental Engineering},
+  Year                     = {2004},
+
+  Address                  = {Stanford University},
+
+  Owner                    = {principe},
+  Timestamp                = {2013.05.20},
+  Url                      = {http://users.ices.utexas.edu/~victor/}
+}
+
+@article{franca_two_1988,
+	title = {Two classes of mixed finite element methods},
+	volume = {69},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/0045782588901685},
+	doi = {10.1016/0045-7825(88)90168-5},
+	abstract = {Finite element methods are presented in an abstract settings for mixed variational formulations. The methods are constructed by adding to the classical Galerkin method various least-squares like terms. The additional terms involve integrals over element interiors, and include mesh-parameter dependent coefficients. The methods are designed to enhance stability. Consistency is achieved in the sense that exact solutions identically satisfy the variational equations. Applied to various problems, simple finite element interpolations are rendered convergent, including convenient equal-order interpolations which are generally unstable within the Galerkin approach.
+
+The methods are subdivided into two classes according to the manner in which stability is attained: 1.
+(1) Circumventing Babuška-Brezzi condition methods.
+2.
+(2) Satisfying Babuška-Brezzi condition methods.
+
+
+Convergence is established for each class of methods. Applications of the first class of methods to Stokes flow and compressible linear elasticity are presented. The second class of methods is applied to compressible and incompressible elasticity problems.},
+	number = {1},
+	urldate = {2015-10-19},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Franca, Leopoldo P. and Hughes, Thomas J. R.},
+	year = {1988},
+	pages = {89--129},
+	file = {ScienceDirect Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/539EXCZW/0045782588901685.html:text/html}
+}
+@article{linke_collision_2009,
+	title = {Collision in a cross-shaped domain - {A} steady 2d {Navier}-{Stokes} example demonstrating the importance of mass conservation in {CFD}},
+	volume = {198},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782509002138},
+	doi = {10.1016/j.cma.2009.06.016},
+	abstract = {In the numerical simulation of the incompressible Navier-Stokes equations different numerical instabilities can occur. While instability in the discrete velocity due to dominant convection and instability in the discrete pressure due to a vanishing discrete Ladyzhenskaya-Babuska-Brezzi (LBB) constant are well-known, instability in the discrete velocity due to a poor mass conservation at high Reynolds numbers sometimes seems to be underestimated. At least, when using conforming Galerkin mixed finite element methods like the Taylor-Hood element, the classical grad-div stabilization for enhancing discrete mass conservation is often neglected in practical computations. Though simple academic flow problems showing the importance of mass conservation are well-known, these examples differ from practically relevant ones, since specially designed force vectors are prescribed. Therefore, we present a simple steady Navier-Stokes problem in two space dimensions at Reynolds number 1024, a colliding flow in a cross-shaped domain, where the instability of poor mass conservation is studied in detail and where no force vector is prescribed.},
+	number = {41-44},
+	urldate = {2015-10-16},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Linke, Alexander},
+	year = {2009},
+	keywords = {incompressible Navier-Stokes equations, Mixed finite elements, Numerical instability, Poor mass conservation},
+	pages = {3278--3286},
+	file = {ScienceDirect Full Text PDF:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/USA7XDM9/Linke - 2009 - Collision in a cross-shaped domain - A steady 2d N.pdf:application/pdf;ScienceDirect Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/MQQIJA6R/S0045782509002138.html:text/html}
+}
+
+@article{olshanskii_grad-div_2004,
+	title = {Grad-div stablilization for {Stokes} equations},
+	volume = {73},
+	issn = {0025-5718, 1088-6842},
+	url = {http://www.ams.org/mcom/2004-73-248/S0025-5718-03-01629-6/},
+	doi = {10.1090/S0025-5718-03-01629-6},
+	abstract = {In this paper a stabilizing augmented Lagrangian technique for the Stokes equations is studied. The method is consistent and hence does not change the continuous solution. We show that this stabilization improves the well-posedness of the continuous problem for small values of the viscosity coefficient. We analyze the influence of this stabilization on the accuracy of the finite element solution and on the convergence properties of the inexact Uzawa method.},
+	number = {248},
+	urldate = {2015-10-16},
+	journal = {Mathematics of Computation},
+	author = {Olshanskii, Maxim and Reusken, Arnold},
+	year = {2004},
+	keywords = {Augmented Lagrangian, Finite elements, inexact Uzawa, Stokes equations},
+	pages = {1699--1718},
+	file = {Full Text PDF:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/XZGGTBX9/Olshanskii and Reusken - 2004 - Grad-div stablilization for Stokes equations.pdf:application/pdf;Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/59SKBC83/home.html:text/html}
+}
+
+@article{heister_efficient_2013,
+	title = {Efficient augmented {Lagrangian}-type preconditioning for the {Oseen} problem using {Grad}-{Div} stabilization},
+	volume = {71},
+	copyright = {Copyright © 2012 John Wiley \& Sons, Ltd.},
+	issn = {1097-0363},
+	url = {http://onlinelibrary.wiley.com/doi/10.1002/fld.3654/abstract},
+	doi = {10.1002/fld.3654},
+	abstract = {Efficient preconditioning for Oseen-type problems is an active research topic. We present a novel approach leveraging stabilization for inf-sup stable discretizations. The Grad-Div stabilization shares the algebraic properties with an augmented Lagrangian-type term. Both simplify the approximation of the Schur complement, especially in the convection-dominated case. We exploit this for the construction of the preconditioner. Solving the discretized Oseen problem with an iterative Krylov-type method shows that the outer iteration numbers are retained independent of mesh size, viscosity, and finite element order. Thus, the preconditioner is very competitive. Copyright © 2012 John Wiley \& Sons, Ltd.},
+	language = {en},
+	number = {1},
+	urldate = {2015-10-20},
+	journal = {International Journal for Numerical Methods in Fluids},
+	author = {Heister, Timo and Rapin, Gerd},
+	year = {2013},
+	keywords = {Augmented Lagrangian, Grad-div stabilization, Navier-Stokes, Oseen problem, Preconditioning, Schur complement},
+	pages = {118--134},
+	file = {Full Text PDF:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/PSA3H9QV/Heister and Rapin - 2013 - Efficient augmented Lagrangian-type preconditionin.pdf:application/pdf;Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/4QKUKVFT/abstract.html:text/html}
+}
+
+@article{linke_convergence_2011,
+	title = {On the convergence rate of grad-div stabilized {Taylor}-{Hood} to {Scott}-{Vogelius} solutions for incompressible flow problems},
+	volume = {381},
+	issn = {0022-247X},
+	url = {http://www.sciencedirect.com/science/article/pii/S0022247X1100240X},
+	doi = {10.1016/j.jmaa.2011.03.019},
+	abstract = {It was recently proven in Case et al. (2010) [2] that, under mild restrictions, grad-div stabilized Taylor-Hood solutions of Navier-Stokes problems converge to the Scott-Vogelius solution of that same problem. However, even though the analytical rate was only shown to be γ − 1 2 (where γ is the stabilization parameter), the computational results suggest the rate may be improvable to γ − 1 . We prove herein the analytical rate is indeed γ − 1 , and extend the result to other incompressible flow problems including Leray-α and MHD. Numerical results are given that verify the theory.},
+	number = {2},
+	urldate = {2015-10-21},
+	journal = {Journal of Mathematical Analysis and Applications},
+	author = {Linke, Alexander and Rebholz, Leo G. and Wilson, Nicholas E.},
+	year = {2011},
+	keywords = {Leray-α, MHD, Navier-Stokes equations, Scott-Vogelius, Strong mass conservation, Taylor-Hood},
+	pages = {612--626},
+	file = {ScienceDirect Full Text PDF:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/3IK8J4R2/Linke et al. - 2011 - On the convergence rate of grad-div stabilized Tay.pdf:application/pdf;ScienceDirect Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/NUEMNQVC/S0022247X1100240X.html:text/html}
+}
+@article{colomes_assessment_2015,
+	title = {Assessment of variational multiscale models for the large eddy simulation of turbulent incompressible flows},
+	volume = {285},
+	issn = {0045-7825},
+	url = {http://www.sciencedirect.com/science/article/pii/S0045782514004113},
+	doi = {10.1016/j.cma.2014.10.041},
+	abstract = {In this work we study the performance of some variational multiscale models (VMS) in the large eddy simulation (LES) of turbulent flows. We consider VMS models obtained by different subgrid scale approximations which include either static or dynamic subscales, linear or nonlinear multiscale splitting, and different choices of the subscale space. After a brief review of these models, we discuss some implementation aspects particularly relevant to the simulation of turbulent flows, namely the use of a skew symmetric form of the convective term and the computation of projections when orthogonal subscales are used. We analyze the energy conservation (and numerical dissipation) of the alternative VMS formulations, which is numerically evaluated. In the numerical study, we have considered three well known problems: the decay of homogeneous isotropic turbulence, the Taylor-Green vortex problem and the turbulent flow in a channel. We compare the results obtained using different VMS models, paying special attention to the effect of using orthogonal subscale spaces. The VMS results are also compared against classical LES scheme based on filtering and the dynamic Smagorinsky closure. Altogether, our results show the tremendous potential of VMS for the numerical simulation of turbulence. Further, we study the sensitivity of VMS to the algorithmic constants and analyze the behavior in the small time step limit. We have also carried out a computational cost comparison of the different formulations. Out of these experiments, we can state that the numerical results obtained with the different VMS formulations (as far as they converge) are quite similar. However, some choices are prone to instabilities and the results obtained in terms of computational cost are certainly different. The dynamic orthogonal subscales model turns out to be best in terms of efficiency and robustness.},
+	urldate = {2015-01-12},
+	journal = {Computer Methods in Applied Mechanics and Engineering},
+	author = {Colom\'es, Oriol and Badia, Santiago and Codina, Ramon and Principe, Javier},
+	year = {2015},
+	keywords = {large eddy simulation, stabilization, Turbulence, Variational multiscale},
+	pages = {32--63},
+	file = {ScienceDirect Full Text PDF:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/TGD5QNH5/Colomés et al. - 2015 - Assessment of variational multiscale models for th.pdf:application/pdf;ScienceDirect Snapshot:/home/principe/.mozilla/firefox/9n958zvb.default-1412782913427/zotero/storage/MNKD2FNG/S0045782514004113.html:text/html}
+}
+
+
